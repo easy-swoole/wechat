@@ -13,6 +13,9 @@ use EasySwoole\Spl\SplBean;
 
 class Request extends SplBean
 {
+    /*
+     * map to https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140453
+     */
     protected $ToUserName;
     protected $FromUserName;
     protected $CreateTime;
@@ -24,6 +27,17 @@ class Request extends SplBean
     protected $Ticket;
     protected $Latitude;
     protected $Longitude;
+    protected $Title;
+    protected $Description;
+    protected $Url;
+    protected $Location_X;
+    protected $Location_Y;
+    protected $Scale;
+    protected $Label;
+    protected $MediaId;
+    protected $ThumbMediaId;
+    protected $Format;
+    protected $Recognition;
 
     /**
      * @return mixed
