@@ -21,6 +21,7 @@ class Server extends ServiceBase
     private $onEvent;
     private $preOnEvent;
     private $onException;
+    private $onDefault;
 
     function __construct(OfficialAccount $officialAccount)
     {
