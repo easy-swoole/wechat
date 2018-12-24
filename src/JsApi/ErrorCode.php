@@ -59,7 +59,7 @@ class ErrorCode
     /**
      * appid 不能为空
      */
-    const APPID_NOT_EMPTY = 10012;
+    const APP_ID_NOT_EMPTY = 10012;
 
     /**
      * state(重定自定义参数) 不能为空
@@ -74,6 +74,6 @@ class ErrorCode
     /**
      * 不支持开放平台 Appid 请使用公众号 Appid
      */
-    const APPID_ERROR = 10016;
+    const APP_ID_ERROR = 10016;
 
 }
