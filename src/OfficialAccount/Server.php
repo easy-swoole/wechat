@@ -51,12 +51,15 @@ class Server extends ServiceBase
                 $callBack = $this->onMessage->get(SysConst::OFFICIAL_ACCOUNT_DEFAULT_ON_EVENT);
             }
         }
+        if(!is_callable($callBack)){
+            $callBack = $this->onDefault;
+        }
         if(is_callable($callBack)){
             try{
-                $response = call_user_func($callBack,$request,$server);
+                $response = call_user_func($callBack,$request,$server,$this->getOfficialAccount());
             }catch (\Throwable $throwable){
                 if(is_callable($this->onException)){
-                    $response = call_user_func($this->onException,$request,$throwable,$server);
+                    $response = call_user_func($this->onException,$request,$throwable,$server,$this->getOfficialAccount());
                 }else{
                     throw $throwable;
                 }
