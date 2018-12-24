@@ -78,4 +78,9 @@ class ErrorCode extends SplEnum
      */
     const APP_ID_ERROR = 10016;
 
+    function __toString()
+    {
+        $res = strtolower(parent::__toString());
+        return str_replace("_",' ',$res);
+    }
 }
