@@ -3,10 +3,10 @@
  * Created by PhpStorm.
  * User: yf
  * Date: 2018/12/24
- * Time: 9:05 PM
+ * Time: 9:33 PM
  */
 
-namespace EasySwoole\WeChat\OfficialAccount;
+namespace EasySwoole\WeChat\Utility;
 
 
 class SysConst

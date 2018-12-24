@@ -12,6 +12,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 use EasySwoole\Component\Event;
 use EasySwoole\WeChat\Bean\OfficialAccountAccessCheck;
 use EasySwoole\WeChat\Bean\OfficialAccountRequest;
+use EasySwoole\WeChat\Utility\SysConst;
 
 class OfficialAccount
 {
