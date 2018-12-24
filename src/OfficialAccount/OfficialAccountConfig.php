@@ -9,6 +9,9 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
+use EasySwoole\WeChat\AbstractInterface\AbstractStorage;
+use EasySwoole\WeChat\Utility\FileStorage;
+
 class OfficialAccountConfig
 {
     private $token;
@@ -16,6 +19,7 @@ class OfficialAccountConfig
     private $appId;
     private $appSecret;
     private $encrypt = false;
+    private $storage;
 
     /**
      * @return mixed
@@ -97,4 +101,22 @@ class OfficialAccountConfig
         $this->appSecret = $appSecret;
     }
 
+    /**
+     * @return AbstractStorage
+     */
+    public function getStorage()
+    {
+        if(!isset($this->storage)){
+            $this->storage = new FileStorage($this->getAppId());
+        }
+        return $this->storage;
+    }
+
+    /**
+     * @param AbstractStorage $storage
+     */
+    public function setStorage(AbstractStorage $storage): void
+    {
+        $this->storage = $storage;
+    }
 }

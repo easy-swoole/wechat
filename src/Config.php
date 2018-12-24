@@ -10,29 +10,31 @@ namespace EasySwoole\WeChat;
 
 
 use EasySwoole\Spl\SplBean;
+use EasySwoole\WeChat\AbstractInterface\AbstractStorage;
 
 class Config extends SplBean
 {
-    protected $OfficialAccountToken;
-    protected $OfficialAccountAesKey;
-    protected $OfficialAccountAppId;
-    protected $OfficialAccountAppSecret;
-    protected $OfficialAccountEncrypt = false;
+    protected $officialAccountToken;
+    protected $officialAccountAesKey;
+    protected $officialAccountAppId;
+    protected $officialAccountAppSecret;
+    protected $officialAccountEncrypt = false;
+    protected $officialAccountStorage;
 
     /**
      * @return mixed
      */
     public function getOfficialAccountToken()
     {
-        return $this->OfficialAccountToken;
+        return $this->officialAccountToken;
     }
 
     /**
-     * @param mixed $OfficialAccountToken
+     * @param mixed $officialAccountToken
      */
-    public function setOfficialAccountToken($OfficialAccountToken): void
+    public function setOfficialAccountToken($officialAccountToken): void
     {
-        $this->OfficialAccountToken = $OfficialAccountToken;
+        $this->officialAccountToken = $officialAccountToken;
     }
 
     /**
@@ -40,15 +42,15 @@ class Config extends SplBean
      */
     public function getOfficialAccountAesKey()
     {
-        return $this->OfficialAccountAesKey;
+        return $this->officialAccountAesKey;
     }
 
     /**
-     * @param mixed $OfficialAccountAesKey
+     * @param mixed $officialAccountAesKey
      */
-    public function setOfficialAccountAesKey($OfficialAccountAesKey): void
+    public function setOfficialAccountAesKey($officialAccountAesKey): void
     {
-        $this->OfficialAccountAesKey = $OfficialAccountAesKey;
+        $this->officialAccountAesKey = $officialAccountAesKey;
     }
 
     /**
@@ -56,15 +58,15 @@ class Config extends SplBean
      */
     public function getOfficialAccountAppId()
     {
-        return $this->OfficialAccountAppId;
+        return $this->officialAccountAppId;
     }
 
     /**
-     * @param mixed $OfficialAccountAppId
+     * @param mixed $officialAccountAppId
      */
-    public function setOfficialAccountAppId($OfficialAccountAppId): void
+    public function setOfficialAccountAppId($officialAccountAppId): void
     {
-        $this->OfficialAccountAppId = $OfficialAccountAppId;
+        $this->officialAccountAppId = $officialAccountAppId;
     }
 
     /**
@@ -72,15 +74,15 @@ class Config extends SplBean
      */
     public function getOfficialAccountAppSecret()
     {
-        return $this->OfficialAccountAppSecret;
+        return $this->officialAccountAppSecret;
     }
 
     /**
-     * @param mixed $OfficialAccountAppSecret
+     * @param mixed $officialAccountAppSecret
      */
-    public function setOfficialAccountAppSecret($OfficialAccountAppSecret): void
+    public function setOfficialAccountAppSecret($officialAccountAppSecret): void
     {
-        $this->OfficialAccountAppSecret = $OfficialAccountAppSecret;
+        $this->officialAccountAppSecret = $officialAccountAppSecret;
     }
 
     /**
@@ -88,15 +90,30 @@ class Config extends SplBean
      */
     public function isOfficialAccountEncrypt(): bool
     {
-        return $this->OfficialAccountEncrypt;
+        return $this->officialAccountEncrypt;
     }
 
     /**
-     * @param bool $OfficialAccountEncrypt
+     * @param bool $officialAccountEncrypt
      */
-    public function setOfficialAccountEncrypt(bool $OfficialAccountEncrypt): void
+    public function setOfficialAccountEncrypt(bool $officialAccountEncrypt): void
     {
-        $this->OfficialAccountEncrypt = $OfficialAccountEncrypt;
+        $this->officialAccountEncrypt = $officialAccountEncrypt;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOfficialAccountStorage()
+    {
+        return $this->officialAccountStorage;
+    }
+
+    /**
+     * @param AbstractStorage $officialAccountStorage
+     */
+    public function setOfficialAccountStorage(AbstractStorage $officialAccountStorage): void
+    {
+        $this->officialAccountStorage = $officialAccountStorage;
+    }
 }
