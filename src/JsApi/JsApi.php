@@ -11,5 +11,15 @@ namespace EasySwoole\WeChat\JsApi;
 
 class JsApi
 {
+    private $config;
 
+    function __construct($config)
+    {
+        $this->config = $config;
+    }
+
+    function auth()
+    {
+
+    }
 }
