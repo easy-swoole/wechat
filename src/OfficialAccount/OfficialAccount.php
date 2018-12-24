@@ -34,6 +34,9 @@ class OfficialAccount
 
     }
 
+    /*
+     * GET请求时候接入检查
+     */
     public function accessCheck($signature,$timestamp,$nonceStr)
     {
 
