@@ -18,7 +18,13 @@ class FileStorage extends AbstractStorage
     function __construct($recognizeId)
     {
         parent::__construct($recognizeId);
-        $this->dir = getcwd();
+        $this->dir = getcwd().'/Temp';
+        clearstatcache();
+        if(!is_dir($this->dir)){
+            if(!mkdir($this->dir)){
+                throw new \Exception("mkdir {$this->dir} fail");
+            }
+        }
     }
 
     public function get($key)
