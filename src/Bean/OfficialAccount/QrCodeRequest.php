@@ -3,15 +3,15 @@
  * Created by PhpStorm.
  * User: yf
  * Date: 2018/12/25
- * Time: 12:30 AM
+ * Time: 12:43 AM
  */
 
-namespace EasySwoole\WeChat\Bean;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
 use EasySwoole\Spl\SplBean;
 
-class OfficialAccountQrCodeRequest extends SplBean
+class QrCodeRequest extends SplBean
 {
     const QR_SCENE = 'QR_SCENE';
     const QR_STR_SCENE = 'QR_STR_SCENE';
@@ -103,5 +103,4 @@ class OfficialAccountQrCodeRequest extends SplBean
     {
         $this->scene_str = $scene_str;
     }
-
 }

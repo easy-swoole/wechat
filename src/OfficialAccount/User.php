@@ -9,16 +9,16 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-use EasySwoole\WeChat\Bean\OfficialAccountUser;
+use EasySwoole\WeChat\Bean\OfficialAccount\User as UserBean;
 
 class User extends ServiceBase
 {
-    function remark(OfficialAccountUser $user)
+    function remark(UserBean $user)
     {
 
     }
 
-    function info(OfficialAccountUser $user)
+    function info(UserBean $user):?UserBean
     {
 
     }
@@ -33,12 +33,12 @@ class User extends ServiceBase
 
     }
 
-    function setBlack(OfficialAccountUser $user)
+    function setBlack(UserBean $user)
     {
 
     }
 
-    function setWhite(OfficialAccountUser $user)
+    function setWhite(UserBean $user)
     {
 
     }

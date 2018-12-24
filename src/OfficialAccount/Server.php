@@ -9,8 +9,8 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 use EasySwoole\Component\Event;
-use EasySwoole\WeChat\Bean\OfficialAccountAccessCheck;
-use EasySwoole\WeChat\Bean\OfficialAccountRequest;
+use EasySwoole\WeChat\Bean\OfficialAccount\AccessCheck;
+use EasySwoole\WeChat\Bean\OfficialAccount\Request;
 use EasySwoole\WeChat\Utility\SysConst;
 
 
@@ -36,7 +36,7 @@ class Server extends ServiceBase
     {
         libxml_disable_entity_loader(true);
         $array = (array)simplexml_load_string($raw, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $request = new OfficialAccountRequest($array);
+        $request = new Request($array);
         $callBack = null;
         $response = null;
         if($request->getEvent() == SysConst::OFFICIAL_ACCOUNT_MSG_TYPE_TEXT){
@@ -66,7 +66,7 @@ class Server extends ServiceBase
     /*
      * GET请求时候接入检查
      */
-    public function accessCheck(OfficialAccountAccessCheck $accessCheck)
+    public function accessCheck(AccessCheck $accessCheck)
     {
         $accessCheck->setToken($this->getOfficialAccount()->getConfig()->getToken());
         $array = $accessCheck->toArray();

@@ -9,17 +9,19 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-use EasySwoole\WeChat\Bean\OfficialAccountQrCode;
-use EasySwoole\WeChat\Bean\OfficialAccountQrCodeRequest;
+
+
+use EasySwoole\WeChat\Bean\OfficialAccount\QrCodeRequest;
+use EasySwoole\WeChat\Bean\OfficialAccount\QrCode as QrCodeBean;
 
 class QrCode extends ServiceBase
 {
-    function getTick(OfficialAccountQrCodeRequest $codeRequest):?OfficialAccountQrCode
+    function getTick(QrCodeRequest $codeRequest):?QrCodeBean
     {
 
     }
 
-    public static function tickToImageUrl(OfficialAccountQrCode $code)
+    public static function tickToImageUrl(QrCodeBean $code)
     {
 
     }

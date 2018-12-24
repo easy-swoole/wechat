@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: yf
- * Date: 2018/12/24
- * Time: 9:09 PM
+ * Date: 2018/12/25
+ * Time: 12:44 AM
  */
 
-namespace EasySwoole\WeChat\Bean;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
 use EasySwoole\Spl\SplBean;
 
-class OfficialAccountRequest extends SplBean
+class Request extends SplBean
 {
     protected $ToUserName;
     protected $FromUserName;
@@ -126,7 +126,7 @@ class OfficialAccountRequest extends SplBean
      */
     public function getEvent()
     {
-        return $this->event;
+        return $this->Event;
     }
 
     /**
@@ -134,7 +134,6 @@ class OfficialAccountRequest extends SplBean
      */
     public function setEvent($event): void
     {
-        $this->event = $event;
+        $this->Event = $event;
     }
-
 }

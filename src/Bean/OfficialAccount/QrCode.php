@@ -3,15 +3,15 @@
  * Created by PhpStorm.
  * User: yf
  * Date: 2018/12/25
- * Time: 12:33 AM
+ * Time: 12:43 AM
  */
 
-namespace EasySwoole\WeChat\Bean;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
 use EasySwoole\Spl\SplBean;
 
-class OfficialAccountQrCode extends SplBean
+class QrCode extends SplBean
 {
     protected $ticket;
     protected $expire_seconds;
@@ -64,5 +64,4 @@ class OfficialAccountQrCode extends SplBean
     {
         $this->url = $url;
     }
-
 }

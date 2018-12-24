@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\JsApi;
 
 
-use EasySwoole\WeChat\Bean\OfficialAccountUser;
+use EasySwoole\WeChat\Bean\OfficialAccount\User;
 
 class Auth
 {
@@ -31,7 +31,7 @@ class Auth
     /*
      * 这里直接code换access token,再获取用户信息
      */
-    function codeToInfo($authCode):?OfficialAccountUser
+    function codeToInfo($authCode):?User
     {
         return null;
     }

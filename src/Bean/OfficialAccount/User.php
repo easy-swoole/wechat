@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: yf
- * Date: 2018/12/24
- * Time: 11:37 PM
+ * Date: 2018/12/25
+ * Time: 12:44 AM
  */
 
-namespace EasySwoole\WeChat\Bean;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
 use EasySwoole\Spl\SplBean;
 
-class OfficialAccountUser extends SplBean
+class User extends SplBean
 {
     protected $subscribe;
     protected $subscribe_time;
@@ -268,5 +268,4 @@ class OfficialAccountUser extends SplBean
     {
         $this->tagid_list = $tagid_list;
     }
-
 }

@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: yf
- * Date: 2018/12/24
- * Time: 8:49 PM
+ * Date: 2018/12/25
+ * Time: 12:42 AM
  */
 
-namespace EasySwoole\WeChat\Bean;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
 use EasySwoole\Spl\SplBean;
 
-class OfficialAccountAccessCheck extends SplBean
+class AccessCheck extends SplBean
 {
     protected $signature;
     protected $timestamp;
@@ -98,5 +98,4 @@ class OfficialAccountAccessCheck extends SplBean
     {
         $this->echostr = $echostr;
     }
-
 }
