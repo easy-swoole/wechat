@@ -10,7 +10,6 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 
 use EasySwoole\Component\Event;
-use EasySwoole\WeChat\Bean\Response;
 
 class OfficialAccount
 {

@@ -14,6 +14,7 @@ class OfficialAccountConfig
     private $token;
     private $aesKey;
     private $appId;
+    private $appSecret;
     private $encrypt = false;
 
     /**
@@ -79,4 +80,21 @@ class OfficialAccountConfig
     {
         $this->encrypt = $encrypt;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAppSecret()
+    {
+        return $this->appSecret;
+    }
+
+    /**
+     * @param mixed $appSecret
+     */
+    public function setAppSecret($appSecret): void
+    {
+        $this->appSecret = $appSecret;
+    }
+
 }
