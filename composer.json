@@ -16,7 +16,7 @@
         "easyswoole/component": "^1.3",
         "easyswoole/spl": "^1.1",
         "easyswoole/core" : "^1.1",
-        "ext-swoole": "^4.0"
+        "ext-swoole": "^4.2.6"
     },
     "autoload": {
         "psr-4": {
