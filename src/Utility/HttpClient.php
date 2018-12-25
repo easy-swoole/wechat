@@ -14,7 +14,7 @@ use Swoole\Coroutine\Http\Client;
 class HttpClient
 {
 
-    const header = [
+    const HEADER = [
         "User-Agent" => 'EasySwooleHttpClient/0.1',
         'Accept' => 'text/html,application/xhtml+xml,application/xml',
         'Accept-Encoding' => 'gzip',
@@ -59,7 +59,7 @@ class HttpClient
         $urlInfo = $this->getUrlInfo($url);
         $cli = new Client($urlInfo['host'], $urlInfo['port'], $urlInfo['scheme'] == 'http' ? false : true);
         $cli->set(['timeout' => $timeout]);
-        $cli->setHeaders(array_merge($header, self::header));
+        $cli->setHeaders(array_merge($header, self::HEADER));
         return [
             'cli' => $cli,
             'urlInfo' => $urlInfo
