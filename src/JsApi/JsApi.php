@@ -9,17 +9,16 @@
 namespace EasySwoole\WeChat\JsApi;
 
 
-class JsApi
-{
-    private $config;
+use EasySwoole\WeChat\OfficialAccount\ServiceBase;
 
-    function __construct($config)
-    {
-        $this->config = $config;
-    }
+class JsApi extends ServiceBase
+{
+    /*
+     * jsApi的入口在公众号那边
+     */
 
     function auth()
     {
-
+        return new Auth($this);
     }
 }

@@ -9,7 +9,9 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-class ErrorCode
+use EasySwoole\Spl\SplEnum;
+
+class ErrorCode extends SplEnum
 {
     /*
      * map to https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433747234

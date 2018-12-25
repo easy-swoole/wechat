@@ -8,92 +8,70 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
-
-use EasySwoole\Component\Event;
-use EasySwoole\WeChat\Bean\OfficialAccountAccessCheck;
-use EasySwoole\WeChat\Bean\OfficialAccountRequest;
-use EasySwoole\WeChat\Utility\SysConst;
+use EasySwoole\WeChat\JsApi\JsApi;
 
 class OfficialAccount
 {
-    private $onMessage;
-    private $preOnMessage;
-    private $onEvent;
-    private $preOnEvent;
-
     private $config;
+
+    private $server;
+    private $jsApi;
+    private $qrCode;
+
+    private $accessToken;
+    private $onError;
+
+    function onError(callable $onError)
+    {
+        $this->onError = $onError;
+    }
 
     function __construct(OfficialAccountConfig $config)
     {
         $this->config = $config;
-        $this->onEvent = new Event();
-        $this->onMessage = new Event();
     }
 
-    /*
-     * 解析raw数据
-     */
-    public function parserRequest(string $raw,\swoole_server $server = null)
+    function server():Server
     {
-        libxml_disable_entity_loader(true);
-        $array = (array)simplexml_load_string($raw, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $request = new OfficialAccountRequest($array);
-        $callBack = null;
-        if($request->getEvent() == SysConst::OFFICIAL_ACCOUNT_MSG_TYPE_TEXT){
-            $callBack = $this->onMessage->get($request->getContent());
-            if(!is_callable($callBack)){
-                $callBack = $this->onMessage->get(SysConst::OFFICIAL_ACCOUNT_DEFAULT_ON_MESSAGE);
-            }
-        }else if($request->getEvent() == SysConst::OFFICIAL_ACCOUNT_MSG_TYPE_EVENT){
-            $callBack = $this->onMessage->get($request->getEvent());
-            if(!is_callable($callBack)){
-                $callBack = $this->onMessage->get(SysConst::OFFICIAL_ACCOUNT_DEFAULT_ON_EVENT);
-            }
+        if(!isset($this->server))
+        {
+            $this->server = new Server($this);
         }
-        if(is_callable($callBack)){
-            try{
-                call_user_func($callBack,$request,$server);
-            }catch (\Throwable $throwable){
-
-            }
-        }
+        return $this->server;
     }
 
-    /*
-     * GET请求时候接入检查
-     */
-    public function accessCheck(OfficialAccountAccessCheck $accessCheck)
+    function jsApi():JsApi
     {
-        $accessCheck->setToken($this->config->getToken());
-        $array = $accessCheck->toArray();
-        unset($array['signature']);
-        unset($array['echostr']);
-        $array = array_values($array);
-        sort($array, SORT_STRING);
-        $tmpStr = implode($array);
-        return sha1($tmpStr) == $accessCheck->getSignature();
+        if(!isset($this->jsApi)){
+            $this->jsApi = new JsApi($this);
+        }
+        return $this->jsApi;
     }
 
-
-    /*
-     * 注册消息回调
-     */
-    function onMessage(callable $preOnMessage = null):Event
+    function accessToken():AccessToken
     {
-        if($preOnMessage){
-            $this->preOnMessage = $preOnMessage;
+        if(!isset($this->accessToken)){
+            $this->accessToken = new AccessToken($this);
         }
-        return $this->onMessage;
+        return $this->accessToken;
     }
 
-    /*
-     *注册事件回调
-     */
-    function onEvent(callable $preOnEvent = null):Event
+    function qrCode():QrCode
     {
-        if($preOnEvent){
-            $this->preOnEvent = $preOnEvent;
+        if(!isset($this->qrCode))
+        {
+            $this->qrCode = new QrCode($this);
         }
-        return $this->onEvent;
+        return $this->qrCode;
+    }
+
+    function getConfig():OfficialAccountConfig
+    {
+        return $this->config;
+    }
+
+    function getOnError()
+    {
+        return $this->onError;
     }
 }

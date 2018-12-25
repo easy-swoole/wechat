@@ -2,17 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: yf
- * Date: 2018/12/24
- * Time: 9:09 PM
+ * Date: 2018/12/25
+ * Time: 12:44 AM
  */
 
-namespace EasySwoole\WeChat\Bean;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
 use EasySwoole\Spl\SplBean;
 
-class OfficialAccountRequest extends SplBean
+class Request extends SplBean
 {
+    /*
+     * map to https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140453
+     */
     protected $ToUserName;
     protected $FromUserName;
     protected $CreateTime;
@@ -24,6 +27,17 @@ class OfficialAccountRequest extends SplBean
     protected $Ticket;
     protected $Latitude;
     protected $Longitude;
+    protected $Title;
+    protected $Description;
+    protected $Url;
+    protected $Location_X;
+    protected $Location_Y;
+    protected $Scale;
+    protected $Label;
+    protected $MediaId;
+    protected $ThumbMediaId;
+    protected $Format;
+    protected $Recognition;
 
     /**
      * @return mixed
@@ -126,7 +140,7 @@ class OfficialAccountRequest extends SplBean
      */
     public function getEvent()
     {
-        return $this->event;
+        return $this->Event;
     }
 
     /**
@@ -134,7 +148,6 @@ class OfficialAccountRequest extends SplBean
      */
     public function setEvent($event): void
     {
-        $this->event = $event;
+        $this->Event = $event;
     }
-
 }
