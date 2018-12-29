@@ -9,18 +9,46 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
+use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Exception\OfficialAccount;
+
+
 class AccessToken extends ServiceBase
 {
-    function getToken($forceRefresh = false)
+    /*
+     * 默认刷新一次
+     */
+    function getToken($refreshTimes = 1):?string
     {
-        /*
-         * 这里要实现过期识别
-         */
-//        $this->getOfficialAccount()->getConfig()->getStorage()->set();
+        if($refreshTimes < 0){
+            return null;
+        }
+        $data = $this->getOfficialAccount()->getConfig()->getStorage()->get('access_token');
+        if(!empty($data)){
+            return $data;
+        }else{
+            $this->refresh();
+            return $this->getToken($refreshTimes -1);
+        }
     }
 
-    function refresh():bool
+    function refresh():string
     {
-//        $this->getOfficialAccount()->getConfig()->getStorage()->set();
+        $config = $this->getOfficialAccount()->getConfig();
+        $url = ApiUrl::generateURL(ApiUrl::ACCESS_TOKEN,[
+            'APP_ID'=>$config->getAppId(),
+            'APP_SECRET'=>$config->getAppSecret()
+        ]);
+        $json = HttpClient::getForJson($url);
+        $ex = OfficialAccount::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+        $token = $json['access_token'];
+        /*
+         * 这里故意设置为7180
+         */
+        $config->getStorage()->set('access_token',$token,time()+7180);
+        return $token;
     }
 }

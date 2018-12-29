@@ -30,12 +30,11 @@ class OfficialAccountConfig
         return $this->token;
     }
 
-    /**
-     * @param mixed $token
-     */
-    public function setToken($token): void
+
+    public function setToken($token): OfficialAccountConfig
     {
         $this->token = $token;
+        return $this;
     }
 
     /**
@@ -46,12 +45,11 @@ class OfficialAccountConfig
         return $this->aesKey;
     }
 
-    /**
-     * @param mixed $aesKey
-     */
-    public function setAesKey($aesKey): void
+
+    public function setAesKey($aesKey): OfficialAccountConfig
     {
         $this->aesKey = $aesKey;
+        return $this;
     }
 
     /**
@@ -62,12 +60,11 @@ class OfficialAccountConfig
         return $this->appId;
     }
 
-    /**
-     * @param mixed $appId
-     */
-    public function setAppId($appId): void
+
+    public function setAppId($appId): OfficialAccountConfig
     {
         $this->appId = $appId;
+        return $this;
     }
 
     /**
@@ -78,12 +75,11 @@ class OfficialAccountConfig
         return $this->encrypt;
     }
 
-    /**
-     * @param bool $encrypt
-     */
-    public function setEncrypt(bool $encrypt): void
+
+    public function setEncrypt(bool $encrypt): OfficialAccountConfig
     {
         $this->encrypt = $encrypt;
+        return $this;
     }
 
     /**
@@ -94,12 +90,10 @@ class OfficialAccountConfig
         return $this->appSecret;
     }
 
-    /**
-     * @param mixed $appSecret
-     */
-    public function setAppSecret($appSecret): void
+    public function setAppSecret($appSecret): OfficialAccountConfig
     {
         $this->appSecret = $appSecret;
+        return $this;
     }
 
     public function getStorage():StorageInterface
@@ -110,12 +104,11 @@ class OfficialAccountConfig
         return $this->storage;
     }
 
-    /**
-     * @param StorageInterface $storage
-     */
-    public function setStorage(StorageInterface $storage): void
+
+    public function setStorage(StorageInterface $storage): OfficialAccountConfig
     {
         $this->storage = $storage;
+        return $this;
     }
 
     /**
@@ -126,11 +119,9 @@ class OfficialAccountConfig
         return $this->tempDir;
     }
 
-    /**
-     * @param mixed $tempDir
-     */
-    public function setTempDir($tempDir): void
+    public function setTempDir($tempDir): OfficialAccountConfig
     {
         $this->tempDir = $tempDir;
+        return $this;
     }
 }
