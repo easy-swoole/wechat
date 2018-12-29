@@ -21,7 +21,7 @@ class QrCode extends ServiceBase
 
     }
 
-    public static function tickToImageUrl(QrCodeBean $code)
+    public static function tickToImageUrl(QrCodeBean $code):?string
     {
 
     }
