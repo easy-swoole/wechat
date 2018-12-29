@@ -8,7 +8,9 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
+use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\JsApi\JsApi;
+use EasySwoole\WeChat\Utility\HttpClient;
 
 class OfficialAccount
 {
@@ -18,6 +20,7 @@ class OfficialAccount
     private $qrCode;
     private $accessToken;
     private $onError;
+    private $customerService;
 
     function onError(callable $onError)
     {
@@ -54,6 +57,17 @@ class OfficialAccount
         return $this->accessToken;
     }
 
+    /*
+     * 客服消息
+     */
+    function customerService()
+    {
+        if(!isset($this->customerService)){
+            $this->customerService = new CustomerService($this);
+        }
+        return $this->customerService;
+    }
+
     function qrCode():QrCode
     {
         if(!isset($this->qrCode))
@@ -71,5 +85,21 @@ class OfficialAccount
     function getOnError()
     {
         return $this->onError;
+    }
+    /*
+     * get wechat ip list
+     */
+    function ipList():array
+    {
+        $url = ApiUrl::generateURL(ApiUrl::IP_LIST,[
+            'ACCESS_TOKEN'=>$this->accessToken()->getToken()
+        ]);
+
+        $json = HttpClient::getForJson($url);
+        $ex = OfficialAccountError::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+        return $json['ip_list'];
     }
 }

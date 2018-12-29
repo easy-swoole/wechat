@@ -12,6 +12,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 class ApiUrl
 {
+    const IP_LIST = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=ACCESS_TOKEN';
     /*
      * 获取ACCESS_TOKEN
      */
