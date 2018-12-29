@@ -40,6 +40,9 @@ class Server extends ServiceBase
         $request = new Request($array);
         $callBack = null;
         $response = null;
+        /*
+         * 默认实现text 和event类型推送的回调，其余的走onDefault
+         */
         if($request->getEvent() == SysConst::OFFICIAL_ACCOUNT_MSG_TYPE_TEXT){
             $callBack = $this->onMessage->get($request->getContent());
             if(!is_callable($callBack)){
@@ -70,7 +73,7 @@ class Server extends ServiceBase
     /*
      * GET请求时候接入检查
      */
-    public function accessCheck(AccessCheck $accessCheck)
+    public function accessCheck(AccessCheck $accessCheck):bool
     {
         $accessCheck->setToken($this->getOfficialAccount()->getConfig()->getToken());
         $array = $accessCheck->toArray();
