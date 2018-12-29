@@ -11,7 +11,6 @@ namespace EasySwoole\WeChat\OfficialAccount;
 use EasySwoole\Component\Event;
 use EasySwoole\WeChat\Bean\OfficialAccount\AccessCheck;
 use EasySwoole\WeChat\Bean\OfficialAccount\Request;
-use EasySwoole\WeChat\Utility\SysConst;
 
 
 class Server extends ServiceBase
@@ -100,10 +99,13 @@ class Server extends ServiceBase
     /*
      *注册事件回调
      */
-    function onEvent(callable $preOnEvent = null):Event
+    function onEvent(callable $preOnEvent = null):EventContainer
     {
         if($preOnEvent){
             $this->preOnEvent = $preOnEvent;
+        }
+        if(!isset($this->onEvent)){
+            $this->onEvent = new EventContainer();
         }
         return $this->onEvent;
     }
