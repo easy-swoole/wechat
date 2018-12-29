@@ -10,7 +10,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 
 use EasySwoole\WeChat\Utility\HttpClient;
-use EasySwoole\WeChat\Exception\OfficialAccount;
+use EasySwoole\WeChat\Exception\OfficialAccountError;
 
 
 class AccessToken extends ServiceBase
@@ -40,7 +40,7 @@ class AccessToken extends ServiceBase
             'APP_SECRET'=>$config->getAppSecret()
         ]);
         $json = HttpClient::getForJson($url);
-        $ex = OfficialAccount::hasException($json);
+        $ex = OfficialAccountError::hasException($json);
         if($ex){
             throw $ex;
         }

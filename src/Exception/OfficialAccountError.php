@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\Exception;
 
 
-class OfficialAccount extends Exception
+class OfficialAccountError extends Exception
 {
     private $errorCode;
 
@@ -29,10 +29,10 @@ class OfficialAccount extends Exception
         $this->errorCode = $errorCode;
     }
 
-    public static function hasException(array $jsonData):?OfficialAccount
+    public static function hasException(array $jsonData):?OfficialAccountError
     {
         if(isset($jsonData['errcode']) && $jsonData['errcode'] != 0){
-            $ex = new OfficialAccount($jsonData['errmsg']);
+            $ex = new OfficialAccountError($jsonData['errmsg']);
             $ex->setErrorCode($jsonData['errcode']);
             return $ex;
         }

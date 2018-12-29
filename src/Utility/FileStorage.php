@@ -48,7 +48,7 @@ class FileStorage implements StorageInterface
 
     private function read():array
     {
-        if(!is_file($this->file)){
+        if(!file_exists($this->file)){
             return [];
         }
         $data = file_get_contents($this->file);
