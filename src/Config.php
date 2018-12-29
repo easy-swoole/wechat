@@ -10,110 +10,41 @@ namespace EasySwoole\WeChat;
 
 
 use EasySwoole\Spl\SplBean;
-use EasySwoole\WeChat\AbstractInterface\AbstractStorage;
+use EasySwoole\WeChat\OfficialAccount\OfficialAccountConfig;
+
 
 class Config extends SplBean
 {
-    protected $officialAccountToken;
-    protected $officialAccountAesKey;
-    protected $officialAccountAppId;
-    protected $officialAccountAppSecret;
-    protected $officialAccountEncrypt = false;
-    protected $officialAccountStorage;
-
-    /**
-     * @return mixed
+    /*
+     * 全局临时目录
      */
-    public function getOfficialAccountToken()
+    protected $tempDir;
+    /*
+     * 公众号配置
+     */
+    private $officialAccount;
+
+    function officialAccount():OfficialAccountConfig
     {
-        return $this->officialAccountToken;
+        if(!isset($this->officialAccount)){
+            $this->officialAccount = new OfficialAccountConfig();
+            $this->officialAccount->setTempDir($this->tempDir);
+        }
+        return $this->officialAccount;
     }
 
     /**
-     * @param mixed $officialAccountToken
+     * @param mixed $tempDir
      */
-    public function setOfficialAccountToken($officialAccountToken): void
+    public function setTempDir($tempDir): void
     {
-        $this->officialAccountToken = $officialAccountToken;
+        $this->tempDir = $tempDir;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOfficialAccountAesKey()
+    protected function initialize(): void
     {
-        return $this->officialAccountAesKey;
-    }
-
-    /**
-     * @param mixed $officialAccountAesKey
-     */
-    public function setOfficialAccountAesKey($officialAccountAesKey): void
-    {
-        $this->officialAccountAesKey = $officialAccountAesKey;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOfficialAccountAppId()
-    {
-        return $this->officialAccountAppId;
-    }
-
-    /**
-     * @param mixed $officialAccountAppId
-     */
-    public function setOfficialAccountAppId($officialAccountAppId): void
-    {
-        $this->officialAccountAppId = $officialAccountAppId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOfficialAccountAppSecret()
-    {
-        return $this->officialAccountAppSecret;
-    }
-
-    /**
-     * @param mixed $officialAccountAppSecret
-     */
-    public function setOfficialAccountAppSecret($officialAccountAppSecret): void
-    {
-        $this->officialAccountAppSecret = $officialAccountAppSecret;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOfficialAccountEncrypt(): bool
-    {
-        return $this->officialAccountEncrypt;
-    }
-
-    /**
-     * @param bool $officialAccountEncrypt
-     */
-    public function setOfficialAccountEncrypt(bool $officialAccountEncrypt): void
-    {
-        $this->officialAccountEncrypt = $officialAccountEncrypt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOfficialAccountStorage()
-    {
-        return $this->officialAccountStorage;
-    }
-
-    /**
-     * @param AbstractStorage $officialAccountStorage
-     */
-    public function setOfficialAccountStorage(AbstractStorage $officialAccountStorage): void
-    {
-        $this->officialAccountStorage = $officialAccountStorage;
+        if(empty($this->tempDir)){
+            $this->tempDir = getcwd();
+        }
     }
 }

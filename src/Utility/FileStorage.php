@@ -8,23 +8,13 @@
 
 namespace EasySwoole\WeChat\Utility;
 
+use EasySwoole\WeChat\AbstractInterface\StorageInterface;
 
-use EasySwoole\WeChat\AbstractInterface\AbstractStorage;
-
-class FileStorage extends AbstractStorage
+class FileStorage implements StorageInterface
 {
-    protected $dir;
-
-    function __construct($recognizeId)
+    public function __construct(string $tempDir, $appId)
     {
-        parent::__construct($recognizeId);
-        $this->dir = getcwd().'/Temp';
-        clearstatcache();
-        if(!is_dir($this->dir)){
-            if(!mkdir($this->dir)){
-                throw new \Exception("mkdir {$this->dir} fail");
-            }
-        }
+
     }
 
     public function get($key)

@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-use EasySwoole\WeChat\AbstractInterface\AbstractStorage;
+use EasySwoole\WeChat\AbstractInterface\StorageInterface;
 use EasySwoole\WeChat\Utility\FileStorage;
 
 class OfficialAccountConfig
@@ -20,6 +20,7 @@ class OfficialAccountConfig
     private $appSecret;
     private $encrypt = false;
     private $storage;
+    private $tempDir;
 
     /**
      * @return mixed
@@ -101,22 +102,35 @@ class OfficialAccountConfig
         $this->appSecret = $appSecret;
     }
 
-    /**
-     * @return AbstractStorage
-     */
-    public function getStorage()
+    public function getStorage():StorageInterface
     {
         if(!isset($this->storage)){
-            $this->storage = new FileStorage($this->getAppId());
+            $this->storage = new FileStorage($this->tempDir,$this->getAppId());
         }
         return $this->storage;
     }
 
     /**
-     * @param AbstractStorage $storage
+     * @param StorageInterface $storage
      */
-    public function setStorage(AbstractStorage $storage): void
+    public function setStorage(StorageInterface $storage): void
     {
         $this->storage = $storage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTempDir()
+    {
+        return $this->tempDir;
+    }
+
+    /**
+     * @param mixed $tempDir
+     */
+    public function setTempDir($tempDir): void
+    {
+        $this->tempDir = $tempDir;
     }
 }

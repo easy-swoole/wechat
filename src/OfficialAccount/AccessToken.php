@@ -13,11 +13,14 @@ class AccessToken extends ServiceBase
 {
     function getToken($forceRefresh = false)
     {
-
+        /*
+         * 这里要实现过期识别
+         */
+//        $this->getOfficialAccount()->getConfig()->getStorage()->set();
     }
 
-    function refresh()
+    function refresh():bool
     {
-
+//        $this->getOfficialAccount()->getConfig()->getStorage()->set();
     }
 }

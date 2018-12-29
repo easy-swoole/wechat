@@ -13,11 +13,9 @@ use EasySwoole\WeChat\JsApi\JsApi;
 class OfficialAccount
 {
     private $config;
-
     private $server;
     private $jsApi;
     private $qrCode;
-
     private $accessToken;
     private $onError;
 
