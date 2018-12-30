@@ -54,12 +54,12 @@ class Server extends OfficialAccountBase
         /*
          * 默认实现text 和event类型推送的回调，其余的走onDefault
          */
-        if($request->getEvent() == RequestConst::MSG_TYPE_TEXT){
+        if($request->getMsgType() == RequestConst::MSG_TYPE_TEXT){
             $callBack = $this->onMessage->get($request->getContent());
             if(!is_callable($callBack)){
                 $callBack = $this->onMessage->get(RequestConst::DEFAULT_ON_MESSAGE);
             }
-        }else if($request->getEvent() == RequestConst::MSG_TYPE_EVENT){
+        }else if($request->getMsgType() == RequestConst::MSG_TYPE_EVENT){
             $callBack = $this->onMessage->get($request->getEvent());
             if(!is_callable($callBack)){
                 $callBack = $this->onMessage->get(RequestConst::DEFAULT_ON_EVENT);
@@ -79,14 +79,16 @@ class Server extends OfficialAccountBase
                 }
             }
         }
-
-        if($response == null){
-            $response = 'success';
-        }else if($response instanceof RequestedReplyMsg){
-            $data = $response->toArray();
-            $response = (new SplArray($data))->toXML();
+        responsePack:{
+            if($response == null){
+                $response = 'success';
+            }else if($response instanceof RequestedReplyMsg){
+                $response->setFromUserName($request->getToUserName());
+                $response->setToUserName($request->getFromUserName());
+                $data = $response->toArray(null,$response::FILTER_NOT_NULL);
+                $response = (new SplArray($data))->toXML();
+            }
         }
-
         return $response;
     }
 
