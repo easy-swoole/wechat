@@ -36,27 +36,39 @@ class HttpClient
         return $client->exec();
     }
 
+    static function postFileForJson(string $url, PostFile $file)
+    {
+        $client = self::client($url);
+        if ($file->getPath()) {
+            $client->addFile($file->getPath(), $file->getName(), $file->getMimeType(), $file->getFilename(), $file->getOffset(), $file->getLength());
+        } else {
+            $client->addData($file->getData(), $file->getName(), $file->getMimeType(), $file->getFilename());
+        }
+        return self::parserJson($client->exec());
+    }
+
     static function getForJson(string $url):array
     {
-        $response = self::get($url);
-        $content = $response->getBody();
-        $json = json_decode($content,true);
-        //解包失败认为请求出错
-        if(!is_array($json)){
-            $ex = new RequestError();
-            $ex->setResponse($response);
-            throw $ex;
-        }
-        return $json;
+        return self::parserJson(self::get($url));
     }
 
     static function postJsonForJson(string $url,array $data):array
     {
-        $response = self::postJson($url,$data);
+        return self::parserJson(self::postJson($url, $data));
+    }
+
+    /**
+     * 返回Json进行解析
+     * @param Response $response
+     * @return mixed
+     * @throws RequestError
+     */
+    private static function parserJson(Response $response)
+    {
         $content = $response->getBody();
-        $json = json_decode($content,true);
+        $json = json_decode($content, true);
         //解包失败认为请求出错
-        if(!is_array($json)){
+        if (!is_array($json)) {
             $ex = new RequestError();
             $ex->setResponse($response);
             throw $ex;
