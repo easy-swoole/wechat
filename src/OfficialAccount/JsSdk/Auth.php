@@ -9,9 +9,12 @@
 namespace EasySwoole\WeChat\OfficialAccount\JsSdk;
 
 
+use EasySwoole\WeChat\Bean\OfficialAccount\JsAuthRequest;
+use EasySwoole\WeChat\OfficialAccount\User;
+
 class Auth extends JsApiBase
 {
-    function generateURL(AuthRequest $request)
+    function generateURL(JsAuthRequest $request)
     {
         $redirect_uri = urlencode($request->getRedirectUri());
     }
