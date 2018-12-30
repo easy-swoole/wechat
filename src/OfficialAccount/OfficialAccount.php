@@ -10,7 +10,6 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 use EasySwoole\WeChat\Bean\OfficialAccount\NetCheckRequest;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
-use EasySwoole\WeChat\JsApi\JsApi;
 use EasySwoole\WeChat\Utility\HttpClient;
 
 class OfficialAccount
