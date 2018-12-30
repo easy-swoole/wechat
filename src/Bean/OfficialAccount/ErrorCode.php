@@ -2,11 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: yf
- * Date: 2018/12/24
- * Time: 10:19 PM
+ * Date: 2018-12-30
+ * Time: 17:20
  */
 
-namespace EasySwoole\WeChat\OfficialAccount;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
 use EasySwoole\WeChat\AbstractInterface\AbstractErrorCodeEnum;
