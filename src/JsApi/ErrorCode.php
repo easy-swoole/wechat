@@ -7,11 +7,9 @@
  */
 
 namespace EasySwoole\WeChat\JsApi;
+use EasySwoole\WeChat\AbstractInterface\ErrorCodeEnum;
 
-
-use EasySwoole\Spl\SplEnum;
-
-class ErrorCode extends SplEnum
+class ErrorCode extends ErrorCodeEnum
 {
     /*
      * map to https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
@@ -77,10 +75,4 @@ class ErrorCode extends SplEnum
      * 不支持开放平台 Appid 请使用公众号 Appid
      */
     const APP_ID_ERROR = 10016;
-
-    function __toString()
-    {
-        $res = strtolower(parent::__toString());
-        return str_replace("_",' ',$res);
-    }
 }
