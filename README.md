@@ -147,7 +147,7 @@ $buttons = [
 ```
 
 #### JSAPI
-```
+```php
     // jsApi instance
     $jsApi = $wechat->officialAccount()->jsApi();
 
