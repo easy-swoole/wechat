@@ -45,3 +45,24 @@ $wechat->officialAccount()->accessToken()->getToken();
 ```php
 $wechat->officialAccount()->ipList()
 ```
+
+#### NetWork Check
+```
+use EasySwoole\WeChat\Bean\OfficialAccount\NetCheckRequest;
+$req = new NetCheckRequest();
+$wechat->officialAccount()->netCheck($req);
+```
+
+#### QrCode
+```
+namespace EasySwoole\WeChat;
+
+use EasySwoole\WeChat\Bean\OfficialAccount\QrCodeRequest;
+$qrRequest = new QrCodeRequest;
+$qrRequest->setActionName($qrRequest::QR_LIMIT_SCENE);
+$qrRequest->setSceneId(1);
+
+$qrCode = $wechat->officialAccount()->qrCode();
+$tick = $qrCode->getTick($qrRequest);
+$url = $qrCode::tickToImageUrl($tick);
+```

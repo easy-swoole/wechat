@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: yf
- * Date: 2018/12/24
- * Time: 11:57 PM
+ * Date: 2018-12-30
+ * Time: 00:24
  */
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-class Response
+class CustomerOfficialAccount extends OfficialAccountBase
 {
 
 }

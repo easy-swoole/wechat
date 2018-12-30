@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-class ServiceBase
+class OfficialAccountBase
 {
     private $officialAccount;
 

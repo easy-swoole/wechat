@@ -12,7 +12,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Utility\HttpClient;
 
-class Menu extends ServiceBase
+class Menu extends OfficialAccountBase
 {
     /**
      * @param array      $buttons       自定义菜单Array
