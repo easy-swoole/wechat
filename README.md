@@ -38,7 +38,61 @@ $wechat->officialAccount()->getConfig()->setAppId('your appid')->setAppSecret('y
 #### Server(ParserRequest)
 ```
 use EasySwoole\WeChat\WeChat;
-use \EasySwoole\WeChat\Bean\OfficialAccount\AccessCheck;
+use EasySwoole\WeChat\Bean\OfficialAccount\AccessCheck;
+use EasySwoole\WeChat\Bean\OfficialAccount\RequestMsg;
+use EasySwoole\WeChat\Bean\OfficialAccount\RequestedReplyMsg;
+use EasySwoole\WeChat\Bean\OfficialAccount\RequestConst;
+$wechat = new WeChat();
+$wechat->officialAccount()->getConfig()
+    ->setAppId('setAppId')
+    ->setAppSecret('setAppSecret')
+    ->setToken('setToken');
+
+/*
+ * will call for every request ,if you return false means break up the process,
+ * if return an RequestedReplyMsg means break up the process but also reply the msg,
+ * if none return ,continue the process
+ */
+
+$wechat->officialAccount()->server()->preCall(function (RequestMsg $msg){
+//    var_dump($msg->__toString());
+});
+
+/*
+ * if user send test msg
+ */
+$wechat->officialAccount()->server()->onMessage()->set('test',function (RequestMsg $msg){
+    $reply = new RequestedReplyMsg();
+    $reply->setMsgType(RequestConst::MSG_TYPE_TEXT);
+    $reply->setContent('hello from server');
+    return $reply;
+});
+
+$wechat->officialAccount()->server()->onMessage()->set(RequestConst::DEFAULT_ON_MESSAGE,function (RequestMsg $msg){
+    $reply = new RequestedReplyMsg();
+    $reply->setMsgType(RequestConst::MSG_TYPE_TEXT);
+    $reply->setContent('you say :'.$msg->getContent());
+    return $reply;
+});
+
+$wechat->officialAccount()->server()->onEvent()->onSubscribe(function (RequestMsg $msg){
+    var_dump("{$msg->getFromUserName()} has SUBSCRIBE");
+    $reply = new RequestedReplyMsg();
+    $reply->setMsgType(RequestConst::MSG_TYPE_TEXT);
+    $reply->setContent('Welcome to EasySwoole');
+    return $reply;
+});
+
+$wechat->officialAccount()->server()->onEvent()->onUnSubscribe(function (RequestMsg $msg){
+    var_dump("{$msg->getFromUserName()} has UBSCRIBE");
+});
+
+$wechat->officialAccount()->server()->onEvent()->set(RequestConst::DEFAULT_ON_EVENT,function (){
+    $reply = new RequestedReplyMsg();
+    $reply->setMsgType(RequestConst::MSG_TYPE_TEXT);
+    $reply->setContent('this is event default reply');
+    return $reply;
+});
 
 $http = new swoole_http_server("127.0.0.1", 9501);
 $http->on("request", function ($request, $response)use($wechat){

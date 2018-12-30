@@ -27,7 +27,7 @@ class Server extends OfficialAccountBase
     function __construct(OfficialAccount $officialAccount)
     {
         parent::__construct($officialAccount);
-        $this->onEvent = new Event();
+        $this->onEvent = new EventContainer();
         $this->onMessage = new Event();
     }
 
@@ -42,7 +42,15 @@ class Server extends OfficialAccountBase
         $response = null;
         if(is_callable($this->preCall)){
             //返回false 表示拦截,return 数据表示直接相应，不返回表示预处理并继续往下
-            $response = call_user_func($this->preCall,$request,$this->getOfficialAccount());
+            try{
+                $response = call_user_func($this->preCall,$request,$this->getOfficialAccount());
+            }catch (\Throwable $throwable){
+                if(is_callable($this->onException)){
+                    $response = call_user_func($this->onException,$request,$throwable,$this->getOfficialAccount());
+                }else{
+                    throw $throwable;
+                }
+            }
             if($response === false){
                 return null;
             }else if($response !== null){
@@ -60,7 +68,7 @@ class Server extends OfficialAccountBase
                 $callBack = $this->onMessage->get(RequestConst::DEFAULT_ON_MESSAGE);
             }
         }else if($request->getMsgType() == RequestConst::MSG_TYPE_EVENT){
-            $callBack = $this->onMessage->get($request->getEvent());
+            $callBack = $this->onEvent->get($request->getEvent());
             if(!is_callable($callBack)){
                 $callBack = $this->onMessage->get(RequestConst::DEFAULT_ON_EVENT);
             }
@@ -127,7 +135,7 @@ class Server extends OfficialAccountBase
         return $this->onEvent;
     }
 
-    private function preCall(callable $call):Server
+    public function preCall(callable $call):Server
     {
         $this->preCall = $call;
         return $this;
