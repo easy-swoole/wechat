@@ -3,15 +3,13 @@
  * Created by PhpStorm.
  * User: yf
  * Date: 2018-12-30
- * Time: 14:08
+ * Time: 15:00
  */
 
-namespace EasySwoole\WeChat\Bean\JsApi;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 
-use EasySwoole\Spl\SplBean;
-
-class AuthRequest extends SplBean
+class JsAuthRequest
 {
     const TYPE_BASE = 'snsapi_base';
     const TYPE_USER_INFO = 'snsapi_userinfo';
@@ -66,5 +64,4 @@ class AuthRequest extends SplBean
     {
         $this->type = $type;
     }
-
 }

@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: yf
  * Date: 2018-12-30
- * Time: 13:54
+ * Time: 14:58
  */
 
-namespace EasySwoole\WeChat\JsApi;
+namespace EasySwoole\WeChat\OfficialAccount\JsSdk;
 
 
-
-class Sdk extends JsApiBase
+class JsSdk extends JsApiBase
 {
     function jsTick()
     {
