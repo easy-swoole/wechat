@@ -9,20 +9,109 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
+use EasySwoole\WeChat\Exception\OfficialAccountError;
+use EasySwoole\WeChat\Utility\HttpClient;
+
 class Menu extends ServiceBase
 {
-    function create()
+    /**
+     * @param array      $buttons       自定义菜单Array
+     * @param array|null $matchRule     个性化菜单Array 默认无效
+     * @return bool|int  是否创建成功 个性化菜单则返回 menuid
+     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function create(array $buttons, array $matchRule = null)
     {
+        $postData = Array('button' => $buttons);
+        if (!is_null($matchRule)) {
+            $postData['matchrule'] = $matchRule;
+            $url = ApiUrl::generateURL(ApiUrl::MENU_ADD_CONDITIONAL, [
+                'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            ]);
+        }else{
+            $url = ApiUrl::generateURL(ApiUrl::MENU_CREATE, [
+                'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            ]);
+        }
 
+        $json = HttpClient::postJsonForJson($url, $postData);
+        $ex = OfficialAccountError::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+
+        return $json['menuid'] ?? true;
     }
 
-    function query()
+    /**
+     * match
+     *
+     * @param string $userId    openid OR 微信账号
+     * @return array    该用户的菜单配置
+     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function match(string $userId)
     {
+        $url = ApiUrl::generateURL(ApiUrl::MENU_MATCH_CONDITIONAL, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
 
+        $json = HttpClient::postJsonForJson($url, Array('user_id' => $userId));
+        $ex = OfficialAccountError::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+        return $json;
     }
 
-    function delete()
+    /**
+     * @return array    菜单配置
+     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function query()
     {
+        $url = ApiUrl::generateURL(ApiUrl::MENU_GET, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
 
+        $json = HttpClient::getForJson($url);
+        $ex = OfficialAccountError::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+        return $json;
+    }
+
+    /**
+     * delete
+     *
+     * @param int|null $menuId      个性化菜单ID (可以通过查询接口获取)　NULL时为删除全部
+     * @return bool    是否成功删除
+     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function delete(int $menuId = null)
+    {
+        if (is_null($menuId)) {
+            $url = ApiUrl::generateURL(ApiUrl::MENU_DELETE, [
+                'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            ]);
+            $json = HttpClient::getForJson($url);
+        }else{
+            $url = ApiUrl::generateURL(ApiUrl::MENU_DELETE_CONDITIONAL, [
+                'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            ]);
+            $json = HttpClient::postJsonForJson($url, Array('menuid' => $menuId));
+        }
+
+        $ex = OfficialAccountError::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+
+        return true;
     }
 }

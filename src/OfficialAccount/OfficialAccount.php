@@ -18,6 +18,7 @@ class OfficialAccount
     private $server;
     private $jsApi;
     private $qrCode;
+    private $menu;
     private $accessToken;
     private $onError;
     private $customerService;
@@ -75,6 +76,15 @@ class OfficialAccount
             $this->qrCode = new QrCode($this);
         }
         return $this->qrCode;
+    }
+
+    function menu():Menu
+    {
+        if(!isset($this->menu))
+        {
+            $this->menu = new Menu($this);
+        }
+        return $this->menu;
     }
 
     function getConfig():OfficialAccountConfig
