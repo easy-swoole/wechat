@@ -37,4 +37,5 @@ class RequestConst
     const EVENT_LOCATION = 'LOCATION';
     const EVENT_CLICK = 'CLICK';
     const EVENT_VIEW = 'VIEW';
+    const EVENT_TEMPLATE_SEND_JOB_FINISH = 'TEMPLATESENDJOBFINISH';
 }
