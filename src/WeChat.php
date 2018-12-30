@@ -9,7 +9,6 @@
 namespace EasySwoole\WeChat;
 
 
-use EasySwoole\WeChat\JsApi\JsApi;
 use EasySwoole\WeChat\MiniProgram\MiniProgram;
 use EasySwoole\WeChat\OfficialAccount\OfficialAccount;
 
@@ -30,11 +29,6 @@ class WeChat
     function config():Config
     {
         return $this->globalConfig;
-    }
-
-    function jsApi():JsApi
-    {
-
     }
 
     function miniProgram():MiniProgram

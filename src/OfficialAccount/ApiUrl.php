@@ -311,6 +311,36 @@ class ApiUrl
      * */
     const COMMENT_REPLY_DELETE = 'https://api.weixin.qq.com/cgi-bin/comment/reply/delete?access_token=ACCESS_TOKEN';
 
+    /**
+     * 网页授权跳转链接
+     */
+    const JSAPI_AUTHORIZE = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+
+    /**
+     * 网页授权CODE换取ACCESS_TOKEN
+     */
+    const JSAPI_CODE_TO_TOKEN = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code';
+
+    /**
+     * 网页授权令牌刷新
+     */
+    const JSAPI_REFRESH_TOKEN = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&grant_type=refresh_token&refresh_token=REFRESH_TOKEN';
+
+    /**
+     * 网页授权获取用户信息
+     */
+    const JSAPI_SNS_USERINFO = 'https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN';
+
+    /**
+     * 网页授权检验授权凭证
+     */
+    const JSAPI_SNS_AUTH_CHECK = 'https://api.weixin.qq.com/sns/auth?access_token=ACCESS_TOKEN&openid=OPENID';
+
+    /**
+     * 获取JSSDK授权票据
+     */
+    const JSAPI_GET_TICKET = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi';
+
     public static function generateURL(string $baseUrl, array $data): string
     {
         foreach ($data as $key => $item) {
