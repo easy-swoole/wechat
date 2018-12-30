@@ -45,3 +45,10 @@ $wechat->officialAccount()->accessToken()->getToken();
 ```php
 $wechat->officialAccount()->ipList()
 ```
+
+#### NetWork Check
+```
+use EasySwoole\WeChat\Bean\OfficialAccount\NetCheckRequest;
+$req = new NetCheckRequest();
+$wechat->officialAccount()->netCheck($req);
+```

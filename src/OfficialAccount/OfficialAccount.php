@@ -8,6 +8,7 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
+use EasySwoole\WeChat\Bean\OfficialAccount\NetCheckRequest;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\JsApi\JsApi;
 use EasySwoole\WeChat\Utility\HttpClient;
@@ -101,5 +102,19 @@ class OfficialAccount
             throw $ex;
         }
         return $json['ip_list'];
+    }
+
+    function netCheck(NetCheckRequest $request):array
+    {
+        $url = ApiUrl::generateURL(ApiUrl::NET_CHECK,[
+            'ACCESS_TOKEN'=>$this->accessToken()->getToken()
+        ]);
+
+        $json = HttpClient::postJsonForJson($url,$request->toArray());
+        $ex = OfficialAccountError::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+        return $json;
     }
 }
