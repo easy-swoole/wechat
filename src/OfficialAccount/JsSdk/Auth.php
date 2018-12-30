@@ -2,15 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: yf
- * Date: 2018/12/24
- * Time: 11:23 PM
+ * Date: 2018-12-30
+ * Time: 14:58
  */
 
-namespace EasySwoole\WeChat\JsApi;
-
-
-use EasySwoole\WeChat\Bean\JsApi\AuthRequest;
-use EasySwoole\WeChat\Bean\JsApi\User;
+namespace EasySwoole\WeChat\OfficialAccount\JsSdk;
 
 
 class Auth extends JsApiBase

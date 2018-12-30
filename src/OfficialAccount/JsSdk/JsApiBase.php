@@ -3,11 +3,13 @@
  * Created by PhpStorm.
  * User: yf
  * Date: 2018-12-30
- * Time: 13:57
+ * Time: 14:58
  */
 
-namespace EasySwoole\WeChat\JsApi;
+namespace EasySwoole\WeChat\OfficialAccount\JsSdk;
 
+
+use EasySwoole\WeChat\OfficialAccount\JsApi;
 
 class JsApiBase
 {
