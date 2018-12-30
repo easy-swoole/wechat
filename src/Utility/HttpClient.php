@@ -24,9 +24,35 @@ class HttpClient
         return self::client($url)->exec();
     }
 
+    static function post()
+    {
+
+    }
+
+    static function postJson($url,$data):Response
+    {
+        $client = self::client($url);
+        $client->postJSON(json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
+        return $client->exec();
+    }
+
     static function getForJson(string $url):array
     {
         $response = self::get($url);
+        $content = $response->getBody();
+        $json = json_decode($content,true);
+        //解包失败认为请求出错
+        if(!is_array($json)){
+            $ex = new RequestError();
+            $ex->setResponse($response);
+            throw $ex;
+        }
+        return $json;
+    }
+
+    static function postJsonForJson(string $url,array $data):array
+    {
+        $response = self::postJson($url,$data);
         $content = $response->getBody();
         $json = json_decode($content,true);
         //解包失败认为请求出错

@@ -15,6 +15,21 @@ $wechat->config()->setTempDir('my dir');
 
 OfficialAccount WeChat Sand Box: https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
 
+#### Exception Catch
+Exception for ***EasySwoole\WeChat\Exception\RequestError*** or ***EasySwoole\WeChat\Exception\OfficialAccountError*** will be throw when you exec any officialAccount action if your network was wrong or you had pass some invalid argument. So you must catch these Exception,just like :
+```
+use EasySwoole\WeChat\Exception\RequestError;
+use EasySwoole\WeChat\Exception\OfficialAccountError;
+
+try{
+    $wechat->officialAccount()->ipList();
+}catch (RequestError $requestError){
+
+}catch (OfficialAccountError $error){
+        
+}
+```
+
 #### Init OfficialAccount Config
 ```php
 $wechat->officialAccount()->getConfig()->setAppId('your appid')->setAppSecret('your aoo secret');
