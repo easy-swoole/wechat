@@ -11,7 +11,7 @@ namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 use EasySwoole\Spl\SplBean;
 
-class Request extends SplBean
+class RequestMsg extends SplBean
 {
     /*
      * map to https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140453

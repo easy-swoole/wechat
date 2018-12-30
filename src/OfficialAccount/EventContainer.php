@@ -10,6 +10,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 
 use EasySwoole\Component\Event;
+use EasySwoole\WeChat\Bean\OfficialAccount\RequestConst;
 
 class EventContainer extends Event
 {

@@ -9,16 +9,18 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 use EasySwoole\Component\Event;
+use EasySwoole\Spl\SplArray;
 use EasySwoole\WeChat\Bean\OfficialAccount\AccessCheck;
-use EasySwoole\WeChat\Bean\OfficialAccount\Request;
+use EasySwoole\WeChat\Bean\OfficialAccount\RequestConst;
+use EasySwoole\WeChat\Bean\OfficialAccount\RequestMsg;
+use EasySwoole\WeChat\Bean\OfficialAccount\RequestedReplyMsg;
 
 
 class Server extends OfficialAccountBase
 {
     private $onMessage;
-    private $preOnMessage;
+    private $preCall;
     private $onEvent;
-    private $preOnEvent;
     private $onException;
     private $onDefault;
 
@@ -36,10 +38,19 @@ class Server extends OfficialAccountBase
     {
         libxml_disable_entity_loader(true);
         $array = (array)simplexml_load_string($raw, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $request = new Request($array);
-        var_dump($request);
-        $callBack = null;
+        $request = new RequestMsg($array);
         $response = null;
+        if(is_callable($this->preCall)){
+            //返回false 表示拦截,return 数据表示直接相应，不返回表示预处理并继续往下
+            $response = call_user_func($this->preCall,$request,$this->getOfficialAccount());
+            if($response === false){
+                return null;
+            }else if($response !== null){
+                goto responsePack;
+            }
+        }
+
+        $callBack = null;
         /*
          * 默认实现text 和event类型推送的回调，其余的走onDefault
          */
@@ -68,7 +79,15 @@ class Server extends OfficialAccountBase
                 }
             }
         }
-        return null;
+
+        if($response == null){
+            $response = 'success';
+        }else if($response instanceof RequestedReplyMsg){
+            $data = $response->toArray();
+            $response = (new SplArray($data))->toXML();
+        }
+
+        return $response;
     }
 
     /*
@@ -90,26 +109,26 @@ class Server extends OfficialAccountBase
     /*
      * 注册消息回调
      */
-    function onMessage(callable $preOnMessage = null):Event
+    function onMessage():Event
     {
-        if($preOnMessage){
-            $this->preOnMessage = $preOnMessage;
-        }
         return $this->onMessage;
     }
 
     /*
      *注册事件回调
      */
-    function onEvent(callable $preOnEvent = null):EventContainer
+    function onEvent():EventContainer
     {
-        if($preOnEvent){
-            $this->preOnEvent = $preOnEvent;
-        }
         if(!isset($this->onEvent)){
             $this->onEvent = new EventContainer();
         }
         return $this->onEvent;
+    }
+
+    private function preCall(callable $call):Server
+    {
+        $this->preCall = $call;
+        return $this;
     }
 
     function onException(callable $onException):Server
@@ -117,4 +136,5 @@ class Server extends OfficialAccountBase
         $this->onException = $onException;
         return $this;
     }
+
 }
