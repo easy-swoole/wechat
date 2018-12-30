@@ -9,9 +9,9 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-use EasySwoole\WeChat\AbstractInterface\ErrorCodeEnum;
+use EasySwoole\WeChat\AbstractInterface\AbstractErrorCodeEnum;
 
-class ErrorCode extends ErrorCodeEnum
+class AbstractErrorCode extends AbstractErrorCodeEnum
 {
     /*
      * map to https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433747234

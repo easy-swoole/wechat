@@ -11,7 +11,7 @@ namespace EasySwoole\WeChat\AbstractInterface;
 
 use EasySwoole\Spl\SplEnum;
 
-class ErrorCodeEnum extends SplEnum
+class AbstractErrorCodeEnum extends SplEnum
 {
     function __toString()
     {
