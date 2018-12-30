@@ -32,7 +32,7 @@ try{
 
 #### Init OfficialAccount Config
 ```php
-$wechat->officialAccount()->getConfig()->setAppId('your appid')->setAppSecret('your aoo secret');
+$wechat->officialAccount()->getConfig()->setAppId('your appid')->setAppSecret('your aoo secret')->setToken('your token');
 ```
 #### Access Token
 ```php
