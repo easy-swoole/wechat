@@ -59,9 +59,10 @@ namespace EasySwoole\WeChat;
 
 use EasySwoole\WeChat\Bean\OfficialAccount\QrCodeRequest;
 $qrRequest = new QrCodeRequest;
-    $qrRequest->setActionName($qrRequest::QR_LIMIT_SCENE);
-    $qrRequest->setSceneId(1);
+$qrRequest->setActionName($qrRequest::QR_LIMIT_SCENE);
+$qrRequest->setSceneId(1);
+
 $qrCode = $wechat->officialAccount()->qrCode();
-    $tick = $qrCode->getTick($qrRequest);
-    $url = $qrCode::tickToImageUrl($tick);
+$tick = $qrCode->getTick($qrRequest);
+$url = $qrCode::tickToImageUrl($tick);
 ```
