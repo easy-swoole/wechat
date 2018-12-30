@@ -17,7 +17,7 @@ class Sdk extends JsApiBase
 
     }
 
-    function refreshTick()
+    function refreshJsTick()
     {
 
     }

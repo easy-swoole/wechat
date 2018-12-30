@@ -32,7 +32,7 @@ class Server extends OfficialAccountBase
     /*
      * 解析raw数据
      */
-    public function parserRequest(string $raw,\swoole_server $server = null)
+    public function parserRequest(string $raw,\swoole_server $server = null):?string
     {
         libxml_disable_entity_loader(true);
         $array = (array)simplexml_load_string($raw, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -42,15 +42,15 @@ class Server extends OfficialAccountBase
         /*
          * 默认实现text 和event类型推送的回调，其余的走onDefault
          */
-        if($request->getEvent() == SysConst::OFFICIAL_ACCOUNT_MSG_TYPE_TEXT){
+        if($request->getEvent() == RequestConst::MSG_TYPE_TEXT){
             $callBack = $this->onMessage->get($request->getContent());
             if(!is_callable($callBack)){
-                $callBack = $this->onMessage->get(SysConst::OFFICIAL_ACCOUNT_DEFAULT_ON_MESSAGE);
+                $callBack = $this->onMessage->get(RequestConst::DEFAULT_ON_MESSAGE);
             }
-        }else if($request->getEvent() == SysConst::OFFICIAL_ACCOUNT_MSG_TYPE_EVENT){
+        }else if($request->getEvent() == RequestConst::MSG_TYPE_EVENT){
             $callBack = $this->onMessage->get($request->getEvent());
             if(!is_callable($callBack)){
-                $callBack = $this->onMessage->get(SysConst::OFFICIAL_ACCOUNT_DEFAULT_ON_EVENT);
+                $callBack = $this->onMessage->get(RequestConst::DEFAULT_ON_EVENT);
             }
         }
         if(!is_callable($callBack)){
