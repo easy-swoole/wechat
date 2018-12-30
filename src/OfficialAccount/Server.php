@@ -13,7 +13,7 @@ use EasySwoole\WeChat\Bean\OfficialAccount\AccessCheck;
 use EasySwoole\WeChat\Bean\OfficialAccount\Request;
 
 
-class Server extends ServiceBase
+class Server extends OfficialAccountBase
 {
     private $onMessage;
     private $preOnMessage;

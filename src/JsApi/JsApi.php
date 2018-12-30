@@ -9,16 +9,31 @@
 namespace EasySwoole\WeChat\JsApi;
 
 
-use EasySwoole\WeChat\OfficialAccount\ServiceBase;
+use EasySwoole\WeChat\OfficialAccount\OfficialAccountBase;
 
-class JsApi extends ServiceBase
+class JsApi extends OfficialAccountBase
 {
+    private $sdk;
+    private $auth;
     /*
-     * jsApi的入口在公众号那边
+     * 用户网页授权
      */
-
-    function auth()
+    function auth():Auth
     {
-        return new Auth($this);
+        if(!isset($this->auth)){
+            $this->auth = new Auth($this);
+        }
+        return $this->auth;
+    }
+
+    /*
+     * js sdk
+     */
+    function sdk():Sdk
+    {
+        if(!isset($this->sdk)){
+            $this->sdk = new Sdk($this);
+        }
+        return $this->sdk;
     }
 }

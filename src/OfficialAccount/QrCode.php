@@ -14,7 +14,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 use EasySwoole\WeChat\Bean\OfficialAccount\QrCodeRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\QrCode as QrCodeBean;
 
-class QrCode extends ServiceBase
+class QrCode extends OfficialAccountBase
 {
     function getTick(QrCodeRequest $codeRequest):?QrCodeBean
     {

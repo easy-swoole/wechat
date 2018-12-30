@@ -11,7 +11,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 use EasySwoole\WeChat\Bean\OfficialAccount\User as UserBean;
 
-class User extends ServiceBase
+class User extends OfficialAccountBase
 {
     function remark(UserBean $user)
     {

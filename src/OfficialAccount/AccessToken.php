@@ -13,7 +13,7 @@ use EasySwoole\WeChat\Utility\HttpClient;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 
 
-class AccessToken extends ServiceBase
+class AccessToken extends OfficialAccountBase
 {
     /*
      * 默认刷新一次

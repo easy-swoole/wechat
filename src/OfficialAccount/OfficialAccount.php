@@ -64,7 +64,7 @@ class OfficialAccount
     function customerService()
     {
         if(!isset($this->customerService)){
-            $this->customerService = new CustomerService($this);
+            $this->customerService = new CustomerOfficialAccount($this);
         }
         return $this->customerService;
     }

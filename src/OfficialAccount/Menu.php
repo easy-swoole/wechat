@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-class Menu extends ServiceBase
+class Menu extends OfficialAccountBase
 {
     function create()
     {

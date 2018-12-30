@@ -11,17 +11,10 @@ namespace EasySwoole\WeChat\JsApi;
 
 use EasySwoole\WeChat\Bean\OfficialAccount\User;
 
-class Auth
+class Auth extends JsApiBase
 {
     const TYPE_BASE = 'snsapi_base';
     const TYPE_USER_INFO = 'snsapi_userinfo';
-
-    private $jsApi;
-
-    function __construct(JsApi $jsApi)
-    {
-        $this->jsApi = $jsApi;
-    }
 
     function generateURL($redirect_uri,$state = '',$type = self::TYPE_BASE)
     {

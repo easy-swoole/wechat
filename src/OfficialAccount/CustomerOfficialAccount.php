@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-class CustomerService extends ServiceBase
+class CustomerOfficialAccount extends OfficialAccountBase
 {
 
 }
