@@ -47,14 +47,14 @@ $wechat->officialAccount()->ipList()
 ```
 
 #### NetWork Check
-```
+```php
 use EasySwoole\WeChat\Bean\OfficialAccount\NetCheckRequest;
 $req = new NetCheckRequest();
 $wechat->officialAccount()->netCheck($req);
 ```
 
 #### QrCode
-```
+```php
 namespace EasySwoole\WeChat;
 
 use EasySwoole\WeChat\Bean\OfficialAccount\QrCodeRequest;
@@ -65,4 +65,59 @@ $qrRequest->setSceneId(1);
 $qrCode = $wechat->officialAccount()->qrCode();
 $tick = $qrCode->getTick($qrRequest);
 $url = $qrCode::tickToImageUrl($tick);
+```
+
+#### Menu
+```php
+$buttons = [
+        [
+            "type" => "click",
+            "name" => "今日歌曲",
+            "key"  => "V1001_TODAY_MUSIC"
+        ],
+        [
+            "name"       => "菜单",
+            "sub_button" => [
+                [
+                    "type" => "view",
+                    "name" => "搜索",
+                    "url"  => "http://www.soso.com/"
+                ],
+                [
+                    "type" => "view",
+                    "name" => "视频",
+                    "url"  => "http://v.qq.com/"
+                ],
+                [
+                    "type" => "click",
+                    "name" => "赞一下我们",
+                    "key" => "V1001_GOOD"
+                ],
+            ],
+        ],
+    ];
+
+    $matchRule = [
+        "tag_id" => "2",
+        "sex" => "1",
+        "country" => "中国",
+        "province" => "广东",
+        "city" => "广州",
+        "client_platform_type" => "2",
+        "language" => "zh_CN"
+    ];
+    
+    // create menu
+    $wechat->officialAccount()->menu()->create($buttons);
+    // create conditional menu
+    $menuId = $wechat->officialAccount()->menu()->create($buttons, $matchRule);
+    // query menu
+    $wechat->officialAccount()->menu()->query();
+    // menu conditional menu
+    $wechat->officialAccount()->menu()->match('openid OR wechat ID');
+    // delete all menu
+    $wechat->officialAccount()->menu()->delete();
+    // delete conditional menu
+    $wechat->officialAccount()->menu()->delete($menuId);
+
 ```

@@ -140,6 +140,16 @@ class ApiUrl
      */
     const MENU_ADD_CONDITIONAL = 'https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=ACCESS_TOKEN';
 
+    /**
+     * 测试个性化菜单
+     */
+    const MENU_MATCH_CONDITIONAL = 'https://api.weixin.qq.com/cgi-bin/menu/trymatch?access_token=ACCESS_TOKEN';
+
+    /**
+     * 删除个性化菜单
+     */
+    const MENU_DELETE_CONDITIONAL = 'https://api.weixin.qq.com/cgi-bin/menu/delconditional?access_token=ACCESS_TOKEN';
+
     /*
      * 获取自定义菜单配置
      */
