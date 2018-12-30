@@ -34,6 +34,30 @@ try{
 ```php
 $wechat->officialAccount()->getConfig()->setAppId('your appid')->setAppSecret('your aoo secret')->setToken('your token');
 ```
+
+#### Server(ParserRequest)
+```
+use EasySwoole\WeChat\WeChat;
+use \EasySwoole\WeChat\Bean\OfficialAccount\AccessCheck;
+
+$http = new swoole_http_server("127.0.0.1", 9501);
+$http->on("request", function ($request, $response)use($wechat){
+    if($request->server['request_method'] == 'GET'){
+        $bean = new AccessCheck($request->get);
+        $verify = $wechat->officialAccount()->server()->accessCheck($bean);
+        if($verify){
+            $response->write($bean->getEchostr());
+        }
+    }else{
+        $res = $wechat->officialAccount()->server()->parserRequest($request->rawContent());
+        if(is_string($res)){
+            $response->write($res);
+        }
+    }
+    $response->end();
+});
+$http->start();
+```
 #### Access Token
 ```php
 // if success return token

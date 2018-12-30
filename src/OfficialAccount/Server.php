@@ -32,11 +32,12 @@ class Server extends OfficialAccountBase
     /*
      * 解析raw数据
      */
-    public function parserRequest(string $raw,\swoole_server $server = null):?string
+    public function parserRequest(string $raw):?string
     {
         libxml_disable_entity_loader(true);
         $array = (array)simplexml_load_string($raw, 'SimpleXMLElement', LIBXML_NOCDATA);
         $request = new Request($array);
+        var_dump($request);
         $callBack = null;
         $response = null;
         /*
@@ -58,15 +59,16 @@ class Server extends OfficialAccountBase
         }
         if(is_callable($callBack)){
             try{
-                $response = call_user_func($callBack,$request,$server,$this->getOfficialAccount());
+                $response = call_user_func($callBack,$request,$this->getOfficialAccount());
             }catch (\Throwable $throwable){
                 if(is_callable($this->onException)){
-                    $response = call_user_func($this->onException,$request,$throwable,$server,$this->getOfficialAccount());
+                    $response = call_user_func($this->onException,$request,$throwable,$this->getOfficialAccount());
                 }else{
                     throw $throwable;
                 }
             }
         }
+        return null;
     }
 
     /*
