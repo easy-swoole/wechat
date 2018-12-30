@@ -22,6 +22,7 @@ class OfficialAccount
     private $accessToken;
     private $onError;
     private $customerService;
+    private $templateMsg;
 
     function onError(callable $onError)
     {
@@ -56,6 +57,14 @@ class OfficialAccount
             $this->accessToken = new AccessToken($this);
         }
         return $this->accessToken;
+    }
+
+    function templateMsg():TemplateMsg
+    {
+        if(!isset($this->templateMsg)){
+            $this->templateMsg = new TemplateMsg($this);
+        }
+        return $this->templateMsg;
     }
 
     /*
