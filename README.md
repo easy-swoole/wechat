@@ -145,3 +145,51 @@ $buttons = [
     $wechat->officialAccount()->menu()->delete($menuId);
 
 ```
+
+#### JSAPI
+```
+    // jsApi instance
+    $jsApi = $wechat->officialAccount()->jsApi();
+
+    // web authorization redirect link
+    $jsAuthRequest = new JsAuthRequest;
+    $jsAuthRequest->setRedirectUri('http://m.evalor.cn');
+    $jsAuthRequest->setState('test');
+    $jsAuthRequest->setType($jsAuthRequest::TYPE_USER_INFO); // 
+    $link = $jsApi->auth()->generateURL($jsAuthRequest);
+    
+    // code to access token
+    $code = '' // auth code from url param
+    $snsAuthBean  = $jsApi->auth()->codeToToken($code);
+    $snsAuthBean->getScope();
+    $snsAuthBean->getOpenid();
+    $snsAuthBean->getAccessToken();
+    $snsAuthBean->getRefreshToken();
+    
+    // access token to user info
+    $userInfo = $jsApi->auth()->tokenToUser($snsAuthBean->getAccessToken());
+    $user->getOpenid();
+    $user->getHeadimgurl();
+    $user->getNickname(); // ... and more
+    
+    // code to user info
+    $user = $jsApi->auth()->codeToUser($code);  // then get user info like above
+    
+    // refresh access token
+    $token = $snsAuthBean->getRefreshToken(); // refresh token need to be stored by yourself
+    $snsAuthBean = $jsApi->auth()->refreshToken($token);
+    
+    // ckeck token (openid and access token is required)
+    $snsAuthBean->setOpenid();
+    $snsAuthBean->setAccessToken();
+    $check = $jsApi->auth()->authCheck($snsAuthBean);
+    
+    $url = '';  // current request url given by yourself
+    // jsApi signature (this is the information wx.config needs)
+    $jsApiSignaturePack = $jsApi->sdk()->signature($url);
+    $jsApiSignaturePack->getAppId();
+    $jsApiSignaturePack->getNonceStr();
+    $jsApiSignaturePack->getSignature();
+    $jsApiSignaturePack->getTimestamp();
+    
+```
