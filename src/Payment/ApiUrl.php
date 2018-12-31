@@ -10,8 +10,9 @@ namespace EasySwoole\WeChat\Payment;
 
 class ApiUrl
 {
-    // 公共支付接口
-
+    /**
+     * 统一下单
+     */
     const PAY_UNIFIED_ORDER = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
 
     /**

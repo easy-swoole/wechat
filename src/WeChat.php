@@ -11,12 +11,14 @@ namespace EasySwoole\WeChat;
 
 use EasySwoole\WeChat\MiniProgram\MiniProgram;
 use EasySwoole\WeChat\OfficialAccount\OfficialAccount;
+use EasySwoole\WeChat\Payment\Payment;
 
 
 class WeChat
 {
     private $globalConfig;
     private $officialAccount;
+    private $payment;
 
     function __construct(Config $config = null)
     {
@@ -29,6 +31,18 @@ class WeChat
     function config():Config
     {
         return $this->globalConfig;
+    }
+
+    /**
+     * 微信支付
+     * @return Payment
+     */
+    function payment(): Payment
+    {
+        if(!isset($this->payment)){
+            $this->payment = new Payment($this->globalConfig->officialAccount());
+        }
+        return $this->payment;
     }
 
     function miniProgram():MiniProgram
