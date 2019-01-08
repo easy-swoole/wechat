@@ -46,10 +46,10 @@ class Media extends OfficialAccountBase
 
     /**
      * @param $mediaId
-     * @return MediaResponse
+     * @return MediaResponse || array
      * @throws OfficialAccountError
      */
-    public function get($mediaId) : MediaResponse
+    public function get($mediaId)
     {
         $url = ApiUrl::generateURL(ApiUrl::MEDIA_GET, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken(),
@@ -59,7 +59,12 @@ class Media extends OfficialAccountBase
         $response = HttpClient::get($url);
 
         if (empty($response->getBody()) || '{' === $response->getBody()[0]) {
-            throw OfficialAccountError::hasException(json_decode($response->getBody(), true));
+            $body = json_decode($response->getBody(), true);
+            $ex = OfficialAccountError::hasException($body);
+            if ($ex) {
+                throw $ex;
+            }
+            return $body;
         }
         return new MediaResponse($response);
     }
