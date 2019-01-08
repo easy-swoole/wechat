@@ -19,6 +19,7 @@ class OfficialAccount
     private $jsApi;
     private $qrCode;
     private $menu;
+    private $media;
     private $accessToken;
     private $onError;
     private $customerService;
@@ -94,6 +95,15 @@ class OfficialAccount
             $this->menu = new Menu($this);
         }
         return $this->menu;
+    }
+
+    function media():Media
+    {
+        if(!isset($this->media))
+        {
+            $this->media = new Media($this);
+        }
+        return $this->media;
     }
 
     function getConfig():OfficialAccountConfig

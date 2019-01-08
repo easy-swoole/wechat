@@ -32,7 +32,7 @@ class ApiUrl
     /*
      * 多媒体文件上传
      */
-    const MEDIA_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE&media=MEDIA';
+    const MEDIA_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE';
 
     /*
      * 上传图文消息内的图片获取URL
@@ -77,7 +77,7 @@ class ApiUrl
     /*
      * 下载多媒体文件
      */
-    const MEDIA_GET = 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID';
+    const MEDIA_GET = 'https://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID';
 
 
     /*

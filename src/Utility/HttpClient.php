@@ -36,13 +36,25 @@ class HttpClient
         return $client->exec();
     }
 
-    static function postFileForJson(string $url, PostFile $file)
+    static function postFileForJson(string $url, PostFile $file, array $form = null, int $timeout = 30)
     {
         $client = self::client($url);
         if ($file->getPath()) {
-            $client->addFile($file->getPath(), $file->getName(), $file->getMimeType(), $file->getFilename(), $file->getOffset(), $file->getLength());
+            // 兼容 swoole 4.2.12 版本以下 默认值识别错误的问题
+            if (version_compare(phpversion('swoole'), '4.2.12', '<')) {
+                $client->addFile($file->getPath(), $file->getName());
+            } else {
+                $client->addFile($file->getPath(), $file->getName(), $file->getMimeType(), $file->getFilename(), $file->getOffset(), $file->getLength());
+            }
         } else {
             $client->addData($file->getData(), $file->getName(), $file->getMimeType(), $file->getFilename());
+        }
+
+        if (!is_null($form)) {
+            $client->setTimeout($timeout);
+            foreach ($form as $name => $value) {
+                $client->addData($value, $name);
+            }
         }
         return self::parserJson($client->exec());
     }

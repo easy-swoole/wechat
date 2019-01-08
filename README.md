@@ -247,3 +247,45 @@ $buttons = [
     $jsApiSignaturePack->getTimestamp();
     
 ```
+
+#### Media
+```php
+    use Swoole\Coroutine;
+    use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
+    
+    // upload
+    $path = 'image.jpg';
+    $type = MediaRequest::TYPE_IMAGE;
+    
+    // the path type
+    $mediaBean = new MediaRequest(); // or new MediaRequest(['path' => $path, 'type' => $type);
+    $mediaBean->setPath($path);
+    $mediaBean->setType($type);
+    $response = $wechat->officialAccount()->media()->upload($mediaBean);
+    
+    // the stream
+    $stream = Coroutine::readFile($path);
+    $mediaBean = new MediaRequest();
+    $mediaBean->setType($type);
+    $mediaBean->setData($stream);
+    $response = $wechat->officialAccount()->media()->upload($mediaBean);
+    
+    // if media type is video
+    $mediaBean->setTitle('title');
+    $mediaBean->setIntroduction('introduction');
+    
+    
+    // get 
+    $response = $wechat->officialAccount()->media()->get($mediaId);
+    if($response instanceof \EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse) {
+        $response->save($directory); 
+        // or 
+        $response->saveAs($directory, $filename)
+    }
+    
+    // if get media type is video
+    $response = [
+        'video_url': $downUrl
+    ]
+    
+```
