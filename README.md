@@ -283,4 +283,9 @@ $buttons = [
         $response->saveAs($directory, $filename)
     }
     
+    // if get media type is video
+    $response = [
+        'video_url': $downUrl
+    ]
+    
 ```
