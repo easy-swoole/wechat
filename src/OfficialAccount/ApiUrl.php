@@ -12,8 +12,16 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 class ApiUrl
 {
+    /**
+     *
+     */
     const NET_CHECK = 'https://api.weixin.qq.com/cgi-bin/callback/check?access_token=ACCESS_TOKEN';
+
+    /**
+     *
+     */
     const IP_LIST = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=ACCESS_TOKEN';
+
     /*
      * 获取ACCESS_TOKEN
      */
@@ -30,19 +38,54 @@ class ApiUrl
     const CALLBACK_CHECK = 'https://api.weixin.qq.com/cgi-bin/callback/check?access_token=ACCESS_TOKEN';
 
     /*
-     * 多媒体文件上传
+     * 获取临时素材
+     */
+    const MEDIA_GET = 'https://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID';
+
+    /*
+     * 上传临时素材
      */
     const MEDIA_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE';
 
-    /*
-     * 上传图文消息内的图片获取URL
+    /**
+     * 上传永久素材
      */
-    const MEDIA_UPLOAD_IMG = 'https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN';
+    const MATERIAL_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN&type=TYPE';
+
+    /**
+     * 删除永久素材
+     */
+    const MATERIAL_DELETE = 'https://api.weixin.qq.com/cgi-bin/material/del_material?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取永久素材
+     */
+    const MATERIAL_GET = 'https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取永久素材总数
+     */
+    const MATERIAL_COUNT = 'https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取永久素材列表
+     */
+    const MATERIAL_LIST = 'https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN';
 
     /*
      * 上传图文消息素材
      */
-    const MEDIA_UPLOAD_NEWS = 'https://api.weixin.qq.com/cgi-bin/media/uploadnews?access_token=ACCESS_TOKEN';
+    const MATERIAL_UPLOAD_NEWS = 'https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=ACCESS_TOKEN';
+
+    /**
+     * 修改图文消息素材
+     */
+    const MATERIAL_UPDATE_NEWS = 'https://api.weixin.qq.com/cgi-bin/material/update_news?access_token=ACCESS_TOKEN';
+
+    /*
+     * 上传图文消息内的图片获取URL
+     */
+    const MATERIAL_UPLOAD_NEWS_IMG = 'https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN';
 
     /*
      * 根据标签进行群发图文消息
@@ -73,12 +116,6 @@ class ApiUrl
      * 获取群发速度
      */
     const MESSAGE_MASS_SPEED = 'https://api.weixin.qq.com/cgi-bin/message/mass/speed/get?access_token=ACCESS_TOKEN';
-
-    /*
-     * 下载多媒体文件
-     */
-    const MEDIA_GET = 'https://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID';
-
 
     /*
      * 发送客服消息

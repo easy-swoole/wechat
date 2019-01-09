@@ -14,6 +14,11 @@ use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Utility\HttpClient;
 use EasySwoole\WeChat\Utility\PostFile;
 
+/**
+ * Class Media
+ *
+ * @package EasySwoole\WeChat\OfficialAccount
+ */
 class Media extends OfficialAccountBase
 {
     /**
@@ -28,20 +33,7 @@ class Media extends OfficialAccountBase
             'TYPE' => $mediaBean->getType()
         ]);
 
-        $fileBean = $this->crateFileBean($mediaBean);
-
-        // 视频类型额外参数
-        if ($mediaBean->getType() === MediaRequest::TYPE_VIDEO) {
-            $form = ['description' => $mediaBean->getDescription()];
-        }
-
-        $json = HttpClient::postFileForJson($url, $fileBean, $form ?? null);
-        $ex = OfficialAccountError::hasException($json);
-        if($ex){
-            throw $ex;
-        }
-
-        return $json;
+        return $this->uploadMedia($url, $this->crateFileBean($mediaBean));
     }
 
     /**
@@ -56,7 +48,39 @@ class Media extends OfficialAccountBase
             'MEDIA_ID' => $mediaId
         ]);
 
-        $response = HttpClient::get($url);
+        return $this->getMedia($url);
+    }
+
+    /**
+     * @param string     $url
+     * @param PostFile   $fileBean
+     * @param array|null $form
+     * @return array
+     * @throws OfficialAccountError
+     */
+    protected function uploadMedia(string $url, PostFile $fileBean, array $form = null) : array
+    {
+        $responseArray = HttpClient::postFileForJson($url, $fileBean, $form);
+        $ex = OfficialAccountError::hasException($responseArray);
+        if($ex){
+            throw $ex;
+        }
+        return $responseArray;
+    }
+
+    /**
+     * @param string $url
+     * @param array  $data
+     * @return MediaResponse|mixed
+     * @throws OfficialAccountError
+     */
+    protected function getMedia(string $url, array $data = null)
+    {
+        if (!is_null($data)) {
+            $response = HttpClient::postJson($url, $data);
+        } else {
+            $response = HttpClient::get($url);
+        }
 
         if (empty($response->getBody()) || '{' === $response->getBody()[0]) {
             $body = json_decode($response->getBody(), true);
@@ -73,7 +97,7 @@ class Media extends OfficialAccountBase
      * @param MediaRequest $mediaBean
      * @return PostFile
      */
-    private function crateFileBean(MediaRequest $mediaBean) : PostFile
+    protected function crateFileBean(MediaRequest $mediaBean) : PostFile
     {
         $fileBean = new PostFile($mediaBean->toArray(null, MediaRequest::FILTER_NOT_EMPTY));
         $fileBean->setName('media');

@@ -20,6 +20,7 @@ class OfficialAccount
     private $qrCode;
     private $menu;
     private $media;
+    private $material;
     private $accessToken;
     private $onError;
     private $customerService;
@@ -106,6 +107,15 @@ class OfficialAccount
         return $this->media;
     }
 
+    function material():Material
+    {
+        if(!isset($this->material))
+        {
+            $this->material = new Material($this);
+        }
+        return $this->material;
+    }
+
     function getConfig():OfficialAccountConfig
     {
         return $this->config;
@@ -115,8 +125,12 @@ class OfficialAccount
     {
         return $this->onError;
     }
-    /*
+
+    /**
      * get wechat ip list
+     *
+     * @return array
+     * @throws OfficialAccountError
      */
     function ipList():array
     {
@@ -132,6 +146,11 @@ class OfficialAccount
         return $json['ip_list'];
     }
 
+    /**
+     * @param NetCheckRequest $request
+     * @return array
+     * @throws OfficialAccountError
+     */
     function netCheck(NetCheckRequest $request):array
     {
         $url = ApiUrl::generateURL(ApiUrl::NET_CHECK,[
