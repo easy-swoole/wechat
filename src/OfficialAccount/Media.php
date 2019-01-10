@@ -12,7 +12,6 @@ use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Utility\HttpClient;
-use EasySwoole\WeChat\Utility\PostFile;
 
 class Media extends OfficialAccountBase
 {
@@ -35,6 +34,9 @@ class Media extends OfficialAccountBase
             $form = ['description' => $mediaBean->getDescription()];
         }
 
+        /*
+         * 请在这里处理postFile 为data
+         */
         $json = HttpClient::postFileForJson($url, $fileBean, $form ?? null);
         $ex = OfficialAccountError::hasException($json);
         if($ex){
