@@ -295,7 +295,8 @@ $buttons = [
     // $mediaBean->setTitle('title');
     // $mediaBean->setIntroduction('introduction');
         
-    $thumbMediaId = $wechat->officialAccount()->material()->upload($mediaBean)['media_id'];
+    $mediaUploadResponse = $wechat->officialAccount()->material()->upload($mediaBean)['media_id'];
+    $thumbMediaId = $mediaUploadResponse['media_id'];
         
     // upload article
     $article = [
@@ -312,11 +313,9 @@ $buttons = [
     $mediaArticle_1 = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaArticle($article);
     // uploadArticle parameter is `Variable-length argument lists` but parameter must be MediaArticle object
     $uploadArticleResponse = $wechat->officialAccount()->material()->uploadArticle($mediaArticle_0, $mediaArticle_1);
-    var_dump($uploadArticleResponse);
 
     // get media
     $materialGetResponse = $wechat->officialAccount()->material()->get($uploadArticleResponse['media_id']);
-    var_dump($materialGetResponse);
 
     // upload article image
     $mediaBean = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest();
@@ -329,9 +328,7 @@ $buttons = [
     $newMediaArticle_0 = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaArticle($materialGetResponse['news_item'][0]);
     $newMediaArticle_0->setContent("<img src='{$imageUrl}' alt='image alt'>");
     $updateArticleResponse = $wechat->officialAccount()->material()->updateArticle($uploadArticleResponse['media_id'], $newMediaArticle_0, 0);
-    var_dump($updateArticleResponse);
 
     // delete media
     $materialDeleteResponse = $wechat->officialAccount()->material()->delete($uploadArticleResponse['media_id']);
-    var_dump($materialDeleteResponse);
 ```
