@@ -1,12 +1,13 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: evalor
- * Date: 2018-12-30
- * Time: 22:33
+ * User: yf
+ * Date: 2019-01-10
+ * Time: 20:54
  */
 
-namespace EasySwoole\WeChat\Utility;
+namespace EasySwoole\WeChat\Bean\OfficialAccount;
+
 
 use EasySwoole\Spl\SplBean;
 

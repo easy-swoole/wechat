@@ -8,11 +8,13 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
+use EasySwoole\Utility\MimeType;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
+use EasySwoole\WeChat\Bean\OfficialAccount\PostFile;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Utility\HttpClient;
-use EasySwoole\WeChat\Utility\PostFile;
+use Swoole\Coroutine;
 
 /**
  * Class Media
@@ -23,8 +25,9 @@ class Media extends OfficialAccountBase
 {
     /**
      * @param MediaRequest $mediaBean
-     * @return mixed
+     * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function upload(MediaRequest $mediaBean)
     {
@@ -57,10 +60,23 @@ class Media extends OfficialAccountBase
      * @param array|null $form
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     protected function uploadMedia(string $url, PostFile $fileBean, array $form = null) : array
     {
-        $responseArray = HttpClient::postFileForJson($url, $fileBean, $form);
+        $postData = Array();
+        array_push($postData, [$fileBean->getData(), $fileBean->getName(), $fileBean->getMimeType(), $fileBean->getFilename()]);
+        if (!is_null($form)) {
+            foreach ($form as $name => $content) {
+                if (version_compare(phpversion('swoole'), '4.2.12', '<')) {
+                    array_push($postData, [$name, $content, null, null]);
+                } else {
+                    array_push($postData, [$name, $content]);
+                }
+            }
+        }
+
+        $responseArray = HttpClient::postForJson($url, $postData, 30);
         $ex = OfficialAccountError::hasException($responseArray);
         if($ex){
             throw $ex;
@@ -102,10 +118,11 @@ class Media extends OfficialAccountBase
         $fileBean = new PostFile($mediaBean->toArray(null, MediaRequest::FILTER_NOT_EMPTY));
         $fileBean->setName('media');
 
-        if ($fileBean->getData() !== null) {
-            $fileBean->setFilename($fileBean->getName(). File::getStreamExt($fileBean->getData()));
-            $fileBean->setMimeType(File::getStreamMimeType($fileBean->getData()));
+        if (!is_null($fileBean->getPath())) {
+            $fileBean->setData(Coroutine::readFile($fileBean->getPath()));
         }
+        $fileBean->setMimeType(MimeType::getMimeTypeFromStream($fileBean->getData()));
+        $fileBean->setFilename($fileBean->getName(). MimeType::getExtByMimeType($fileBean->getMimeType()));
 
         return $fileBean;
     }

@@ -19,51 +19,81 @@ class HttpClient
     static $CONNECT_TIMEOUT = 1;
     static $TIMEOUT = 1;
 
+    /**
+     * @param string $url
+     * @return Response
+     */
     static function get(string $url):Response
     {
         return self::client($url)->exec();
     }
 
-    static function post()
+    /**
+     * @param string $url
+     * @return array
+     * @throws RequestError
+     */
+    static function getForJson(string $url):array
     {
-
+        return self::parserJson(self::get($url));
     }
 
-    static function postJson($url,$data):Response
+    /**
+     * @param string   $url
+     * @param          $data
+     * @param int|null $timeout
+     * @return Response
+     */
+    static function post(string $url, $data, int $timeout = null)
+    {
+        $client = self::client($url);
+        if (!is_null($timeout) && $timeout > self::$TIMEOUT) {
+            $client->setTimeout($timeout);
+        }
+
+        if (count($data) > 0) {
+            if (count($data) === count($data, COUNT_RECURSIVE)) {
+                $client->addData(...$data);
+            } else {
+                foreach ($data as $item) {
+                    $client->addData(...$item);
+                }
+            }
+        }
+
+        return $client->exec();
+    }
+
+    /**
+     * @param string   $url
+     * @param          $data
+     * @param int|null $timeout
+     * @return mixed
+     * @throws RequestError
+     */
+    static function postForJson(string $url, $data, int $timeout = null)
+    {
+        return self::parserJson(self::post($url, $data, $timeout));
+    }
+
+    /**
+     * @param string $url
+     * @param        $data
+     * @return Response
+     */
+    static function postJson(string $url,$data):Response
     {
         $client = self::client($url);
         $client->postJSON(json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
         return $client->exec();
     }
 
-    static function postFileForJson(string $url, PostFile $file, array $form = null, int $timeout = 30)
-    {
-        $client = self::client($url);
-        if ($file->getPath()) {
-            // 兼容 swoole 4.2.12 版本以下 默认值识别错误的问题
-            if (version_compare(phpversion('swoole'), '4.2.12', '<')) {
-                $client->addFile($file->getPath(), $file->getName());
-            } else {
-                $client->addFile($file->getPath(), $file->getName(), $file->getMimeType(), $file->getFilename(), $file->getOffset(), $file->getLength());
-            }
-        } else {
-            $client->addData($file->getData(), $file->getName(), $file->getMimeType(), $file->getFilename());
-        }
-
-        if (!is_null($form)) {
-            $client->setTimeout($timeout);
-            foreach ($form as $name => $value) {
-                $client->addData($value, $name);
-            }
-        }
-        return self::parserJson($client->exec());
-    }
-
-    static function getForJson(string $url):array
-    {
-        return self::parserJson(self::get($url));
-    }
-
+    /**
+     * @param string $url
+     * @param array  $data
+     * @return array
+     * @throws RequestError
+     */
     static function postJsonForJson(string $url,array $data):array
     {
         return self::parserJson(self::postJson($url, $data));

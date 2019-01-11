@@ -24,8 +24,9 @@ class Material extends Media
 {
     /**
      * @param MediaRequest $mediaBean
-     * @return array|mixed
-     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @return array
+     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function upload(MediaRequest $mediaBean)
     {
@@ -60,6 +61,7 @@ class Material extends Media
      * @param $mediaId
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function delete($mediaId)
     {
@@ -78,6 +80,7 @@ class Material extends Media
     /**
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function stats()
     {
@@ -99,6 +102,7 @@ class Material extends Media
      * @param int    $count
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function list(string $mediaType, int $offset = 0, int $count = 20)
     {
@@ -124,6 +128,7 @@ class Material extends Media
      * @param MediaArticle ...$articles
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function uploadArticle(MediaArticle ...$articles)
     {
@@ -150,6 +155,7 @@ class Material extends Media
      * @param int          $index
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function updateArticle($mediaId, MediaArticle $article, int $index = 0)
     {
@@ -175,6 +181,7 @@ class Material extends Media
      * @param MediaRequest $mediaBean
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function uploadArticleImage(MediaRequest $mediaBean)
     {
