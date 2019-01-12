@@ -9,7 +9,6 @@
 namespace EasySwoole\WeChat\Utility;
 use EasySwoole\HttpClient\Bean\Response;
 use EasySwoole\HttpClient\HttpClient as Client;
-use EasySwoole\WeChat\Bean\OfficialAccount\PostFile;
 use EasySwoole\WeChat\Exception\RequestError;
 
 class HttpClient
@@ -20,28 +19,81 @@ class HttpClient
     static $CONNECT_TIMEOUT = 1;
     static $TIMEOUT = 1;
 
+    /**
+     * @param string $url
+     * @return Response
+     */
     static function get(string $url):Response
     {
         return self::client($url)->exec();
     }
 
-    static function post()
+    /**
+     * @param string $url
+     * @return array
+     * @throws RequestError
+     */
+    static function getForJson(string $url):array
     {
-
+        return self::parserJson(self::get($url));
     }
 
-    static function postJson($url,$data):Response
+    /**
+     * @param string   $url
+     * @param          $data
+     * @param int|null $timeout
+     * @return Response
+     */
+    static function post(string $url, $data, int $timeout = null)
+    {
+        $client = self::client($url);
+        if (!is_null($timeout) && $timeout > self::$TIMEOUT) {
+            $client->setTimeout($timeout);
+        }
+
+        if (count($data) > 0) {
+            if (count($data) === count($data, COUNT_RECURSIVE)) {
+                $client->addData(...$data);
+            } else {
+                foreach ($data as $item) {
+                    $client->addData(...$item);
+                }
+            }
+        }
+
+        return $client->exec();
+    }
+
+    /**
+     * @param string   $url
+     * @param          $data
+     * @param int|null $timeout
+     * @return mixed
+     * @throws RequestError
+     */
+    static function postForJson(string $url, $data, int $timeout = null)
+    {
+        return self::parserJson(self::post($url, $data, $timeout));
+    }
+
+    /**
+     * @param string $url
+     * @param        $data
+     * @return Response
+     */
+    static function postJson(string $url,$data):Response
     {
         $client = self::client($url);
         $client->postJSON(json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
         return $client->exec();
     }
 
-    static function getForJson(string $url):array
-    {
-        return self::parserJson(self::get($url));
-    }
-
+    /**
+     * @param string $url
+     * @param array  $data
+     * @return array
+     * @throws RequestError
+     */
     static function postJsonForJson(string $url,array $data):array
     {
         return self::parserJson(self::postJson($url, $data));

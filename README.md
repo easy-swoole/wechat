@@ -270,11 +270,6 @@ $buttons = [
     $mediaBean->setData($stream);
     $response = $wechat->officialAccount()->media()->upload($mediaBean);
     
-    // if media type is video
-    $mediaBean->setTitle('title');
-    $mediaBean->setIntroduction('introduction');
-    
-    
     // get 
     $response = $wechat->officialAccount()->media()->get($mediaId);
     if($response instanceof \EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse) {
@@ -287,5 +282,53 @@ $buttons = [
     $response = [
         'video_url': $downUrl
     ]
+```
+
+#### Material
+```php
+    // upload
+    $mediaBean = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest();
+    $mediaBean->setPath('thumb.jpg');
+    $mediaBean->setType(\EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest::TYPE_THUMB);
     
+    // if media type is video must setTitle and setIntroduction
+    // $mediaBean->setTitle('title');
+    // $mediaBean->setIntroduction('introduction');
+        
+    $mediaUploadResponse = $wechat->officialAccount()->material()->upload($mediaBean)['media_id'];
+    $thumbMediaId = $mediaUploadResponse['media_id'];
+        
+    // upload article
+    $article = [
+        'title' => 'EasySwoole/Wechat！',
+        'thumb_media_id' => $thumbMediaId,
+        'author' => 'EasySwoole/Wechat',
+        'show_cover' => 1,
+        'digest' => 'digest',
+        'content' => 'content',
+        'source_url' => 'https://www.easyswoole.com',
+    ];
+
+    $mediaArticle_0 = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaArticle($article);
+    $mediaArticle_1 = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaArticle($article);
+    // uploadArticle parameter is `Variable-length argument lists` but parameter must be MediaArticle object
+    $uploadArticleResponse = $wechat->officialAccount()->material()->uploadArticle($mediaArticle_0, $mediaArticle_1);
+
+    // get media
+    $materialGetResponse = $wechat->officialAccount()->material()->get($uploadArticleResponse['media_id']);
+
+    // upload article image
+    $mediaBean = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest();
+    $mediaBean->setPath('image.jpg');
+    $mediaBean->setType(\EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest::TYPE_IMAGE);
+    // uploadArticleImage will not return media_id
+    $imageUrl = $wechat->officialAccount()->material()->uploadArticleImage($mediaBean)['url'];
+
+    // update article
+    $newMediaArticle_0 = new \EasySwoole\WeChat\Bean\OfficialAccount\MediaArticle($materialGetResponse['news_item'][0]);
+    $newMediaArticle_0->setContent("<img src='{$imageUrl}' alt='image alt'>");
+    $updateArticleResponse = $wechat->officialAccount()->material()->updateArticle($uploadArticleResponse['media_id'], $newMediaArticle_0, 0);
+
+    // delete media
+    $materialDeleteResponse = $wechat->officialAccount()->material()->delete($uploadArticleResponse['media_id']);
 ```
