@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\Bean\OfficialAccount;
 
 use EasySwoole\HttpClient\Bean\Response;
-use EasySwoole\WeChat\OfficialAccount\File;
+use EasySwoole\Utility\MimeType;
 use Swoole\Coroutine;
 
 class MediaResponse
@@ -27,6 +27,24 @@ class MediaResponse
     public function httpResponse() : Response
     {
         return $this->httpResponse;
+    }
+
+    public function isJson() : bool
+    {
+        if ($this->getContent()[0] === '{') {
+            return true;
+        }
+        return false;
+    }
+
+    public function isEmpty() : bool
+    {
+        return empty($this->getContent());
+    }
+
+    public function getContent() : string
+    {
+        return $this->httpResponse()->getBody();
     }
 
     /**
@@ -48,10 +66,6 @@ class MediaResponse
 
         $contents = $this->httpResponse()->getBody();
 
-        if (empty($contents) || '{' === $contents[0]) {
-            throw new \RuntimeException('Invalid media response content.');
-        }
-
         if (empty($filename)) {
             if (preg_match('/filename="(?<filename>.*?)"/', $this->httpResponse()->getHeaders()['content-disposition'], $match)) {
                 $filename = $match['filename'];
@@ -61,7 +75,7 @@ class MediaResponse
         }
 
         if (empty(pathinfo($filename, PATHINFO_EXTENSION))) {
-            $filename .= File::getStreamExt($contents);
+            $filename .= MimeType::getExtFromStream($contents);
         }
 
         Coroutine::writeFile($directory.'/'.$filename, $contents);
