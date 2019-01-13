@@ -9,7 +9,6 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Utility\HttpClient;
 
 class User extends OfficialAccountBase
@@ -19,7 +18,7 @@ class User extends OfficialAccountBase
      * @param string $openid
      * @param string $lang
      * @return array
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function get(string $openid, string $lang = 'zh_CN')
@@ -38,7 +37,7 @@ class User extends OfficialAccountBase
      * @param array  $openids
      * @param string $lang
      * @return array
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function select(array $openids, string $lang = 'zh_CN')
@@ -63,7 +62,7 @@ class User extends OfficialAccountBase
     /**
      * @param null $nextOpenid
      * @return mixed
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function list($nextOpenid = null)
@@ -81,7 +80,7 @@ class User extends OfficialAccountBase
      * @param string $openid
      * @param string $remark
      * @return mixed
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function remark(string $openid, string $remark)
@@ -101,7 +100,7 @@ class User extends OfficialAccountBase
     /**
      * @param string $beginOpenid
      * @return mixed
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function blacklist(string $beginOpenid = null)
@@ -117,7 +116,7 @@ class User extends OfficialAccountBase
     /**
      * @param $openidList
      * @return mixed
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function block($openidList)
@@ -133,12 +132,12 @@ class User extends OfficialAccountBase
     /**
      * @param $openidList
      * @return mixed
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function unblock($openidList)
     {
-        $url = ApiUrl::generateURL(ApiUrl::BATCHUN_BLACKLIST, [
+        $url = ApiUrl::generateURL(ApiUrl::BATCH_UNBLACKLIST, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
@@ -150,7 +149,7 @@ class User extends OfficialAccountBase
      * @param string $oldAppId
      * @param array  $openidList
      * @return mixed
-     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     public function changeOpenid(string $oldAppId, array $openidList)
@@ -166,19 +165,5 @@ class User extends OfficialAccountBase
 
         $response = HttpClient::postJsonForJson($url, $postData);
         return $this->hasException($response);
-    }
-
-    /**
-     * @param array $response
-     * @return mixed
-     * @throws OfficialAccountError
-     */
-    protected function hasException(array $response)
-    {
-        $ex = OfficialAccountError::hasException($response);
-        if ($ex) {
-            throw $ex;
-        }
-        return $response;
     }
 }
