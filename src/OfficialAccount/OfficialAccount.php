@@ -22,6 +22,7 @@ class OfficialAccount
     private $media;
     private $material;
     private $user;
+    private $userTag;
     private $accessToken;
     private $onError;
     private $customerService;
@@ -124,6 +125,15 @@ class OfficialAccount
             $this->user = new User($this);
         }
         return $this->user;
+    }
+
+    function userTag():UserTag
+    {
+        if(!isset($this->userTag))
+        {
+            $this->userTag = new UserTag($this);
+        }
+        return $this->userTag;
     }
 
     function getConfig():OfficialAccountConfig

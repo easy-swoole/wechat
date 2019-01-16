@@ -163,6 +163,46 @@ class ApiUrl
      */
     const CHANGE_OPENID = 'http://api.weixin.qq.com/cgi-bin/changeopenid?access_token=ACCESS_TOKEN';
 
+    /**
+     * 获取标签列表
+     */
+    const TAG_LIST = 'https://api.weixin.qq.com/cgi-bin/tags/get?access_token=ACCESS_TOKEN';
+
+    /**
+     * 创建标签
+     */
+    const TAG_CREATE = 'https://api.weixin.qq.com/cgi-bin/tags/create?access_token=ACCESS_TOKEN';
+
+    /**
+     * 编辑标签
+     */
+    const TAG_UPDATE = 'https://api.weixin.qq.com/cgi-bin/tags/update?access_token=ACCESS_TOKEN';
+
+    /**
+     * 删除标签
+     */
+    const TAG_DELETE = 'https://api.weixin.qq.com/cgi-bin/tags/delete?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取用户标签列表
+     */
+    const GET_USER_TAG_LIST = 'https://api.weixin.qq.com/cgi-bin/tags/getidlist?access_token=ACCESS_TOKEN';
+
+    /**
+     * 使用标签获取用户列表
+     */
+    const GET_USER_LIST_OF_TAG = 'https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token=ACCESS_TOKEN';
+
+    /**
+     * 批量设置用户标签
+     */
+    const BATCH_TAGGING = 'https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=ACCESS_TOKEN';
+
+    /**
+     * 批量移除用户标签
+     */
+    const BATCH_UNTAGGING = 'https://api.weixin.qq.com/cgi-bin/tags/members/batchuntagging?access_token=ACCESS_TOKEN';
+
     /*
      * 查询分组
      */
