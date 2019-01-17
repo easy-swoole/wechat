@@ -98,15 +98,12 @@ class Media extends OfficialAccountBase
             $response = HttpClient::get($url);
         }
 
-        if (empty($response->getBody()) || '{' === $response->getBody()[0]) {
-            $body = json_decode($response->getBody(), true);
-            $ex = OfficialAccountError::hasException($body);
-            if ($ex) {
-                throw $ex;
-            }
-            return $body;
+        $response = new MediaResponse($response);
+        if ($response->isJson()) {
+            // if an exception is found, it is thrown
+            $this->hasException(json_decode($response->getContent(), true));
         }
-        return new MediaResponse($response);
+        return $response;
     }
 
     /**

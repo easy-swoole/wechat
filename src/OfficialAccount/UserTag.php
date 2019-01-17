@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: yf
- * Date: 2018/12/25
- * Time: 12:19 AM
+ * User: runs
+ * Date: 19-1-13
+ * Time: 下午5:08
  */
 
 namespace EasySwoole\WeChat\OfficialAccount;
@@ -11,22 +11,17 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 use EasySwoole\WeChat\Utility\HttpClient;
 
-class User extends OfficialAccountBase
+class UserTag extends OfficialAccountBase
 {
-
     /**
-     * @param string $openid
-     * @param string $lang
-     * @return array
+     * @return mixed
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function get(string $openid, string $lang = 'zh_CN')
+    public function list()
     {
-        $url = ApiUrl::generateURL(ApiUrl::USER_INFO, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken(),
-            'OPENID' => $openid,
-            'LANG' => $lang
+        $url = ApiUrl::generateURL(ApiUrl::TAG_LIST, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $response = HttpClient::getForJson($url);
@@ -34,25 +29,19 @@ class User extends OfficialAccountBase
     }
 
     /**
-     * @param array  $openids
-     * @param string $lang
-     * @return array
+     * @param string $name
+     * @return mixed
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function select(array $openids, string $lang = 'zh_CN')
+    public function create(string $name)
     {
-        $url = ApiUrl::generateURL(ApiUrl::USER_INFO_BATCHGET, [
+        $url = ApiUrl::generateURL(ApiUrl::TAG_CREATE, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $postData = [
-            'user_list' => array_map(function ($openid) use ($lang){
-                return [
-                    'openid' => $openid,
-                    'lang' => $lang,
-                ];
-            }, $openids),
+            'tag' => ['name' => $name]
         ];
 
         $response = HttpClient::postJsonForJson($url, $postData);
@@ -60,107 +49,126 @@ class User extends OfficialAccountBase
     }
 
     /**
-     * @param null $nextOpenid
+     * @param int    $tagId
+     * @param string $name
      * @return mixed
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function list($nextOpenid = null)
+    public function update(int $tagId, string $name)
     {
-        $url = ApiUrl::generateURL(ApiUrl::USER_GET, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken(),
-            'NEXT_OPENID' => $nextOpenid
+        $url = ApiUrl::generateURL(ApiUrl::TAG_UPDATE, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::getForJson($url);
+        $postData = [
+            'tag' => [
+                'name' => $name,
+                'id' => $tagId
+            ]
+        ];
+
+        $response = HttpClient::postJsonForJson($url, $postData);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @param int $tagId
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function delete(int $tagId)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::TAG_DELETE, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $postData = [
+            'tag' => ['id' => $tagId]
+        ];
+
+        $response = HttpClient::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
     /**
      * @param string $openid
-     * @param string $remark
      * @return mixed
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function remark(string $openid, string $remark)
+    public function userTags(string $openid)
     {
-        $url = ApiUrl::generateURL(ApiUrl::USER_UPDATEREMARK, [
+        $url = ApiUrl::generateURL(ApiUrl::GET_USER_TAG_LIST, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $response = HttpClient::postJsonForJson($url, ['openid' => $openid]);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @param int         $tagId
+     * @param string|null $nextOpenId
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function usersOfTag(int $tagId, string $nextOpenId = null)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::GET_USER_LIST_OF_TAG, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $postData = [
-            'openid' => $openid,
-            'remark' => $remark
+            'tagid' => $tagId,
+            'next_openid' => $nextOpenId
         ];
+
         $response = HttpClient::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
     /**
-     * @param string $beginOpenid
+     * @param array $openids
+     * @param int   $tagId
      * @return mixed
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
+     *
      */
-    public function blacklist(string $beginOpenid = null)
+    public function tagUsers(array $openids, int $tagId)
     {
-        $url = ApiUrl::generateURL(ApiUrl::GET_BLACKLIST, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
-        ]);
-
-        $response = HttpClient::postJsonForJson($url, ['begin_openid' => $beginOpenid]);
-        return $this->hasException($response);
-    }
-
-    /**
-     * @param $openidList
-     * @return mixed
-     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
-     */
-    public function block($openidList)
-    {
-        $url = ApiUrl::generateURL(ApiUrl::BATCH_BLACKLIST, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
-        ]);
-
-        $response = HttpClient::postJsonForJson($url, ['openid_list' => (array) $openidList]);
-        return $this->hasException($response);
-    }
-
-    /**
-     * @param $openidList
-     * @return mixed
-     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
-     */
-    public function unblock($openidList)
-    {
-        $url = ApiUrl::generateURL(ApiUrl::BATCH_UNBLACKLIST, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
-        ]);
-
-        $response = HttpClient::postJsonForJson($url, ['openid_list' => (array) $openidList]);
-        return $this->hasException($response);
-    }
-
-    /**
-     * @param string $oldAppId
-     * @param array  $openidList
-     * @return mixed
-     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
-     */
-    public function changeOpenid(string $oldAppId, array $openidList)
-    {
-        $url = ApiUrl::generateURL(ApiUrl::CHANGE_OPENID, [
+        $url = ApiUrl::generateURL(ApiUrl::BATCH_TAGGING, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $postData = [
-            'from_appid' => $oldAppId,
-            'openid_list' => $openidList
+            'openid_list' => $openids,
+            'tagid' => $tagId
+        ];
+
+        $response = HttpClient::postJsonForJson($url, $postData);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @param array $openids
+     * @param int   $tagId
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function untagUsers(array $openids, int $tagId)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::BATCH_UNTAGGING, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $postData = [
+            'openid_list' => $openids,
+            'tagid' => $tagId
         ];
 
         $response = HttpClient::postJsonForJson($url, $postData);

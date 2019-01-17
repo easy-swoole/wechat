@@ -21,6 +21,8 @@ class OfficialAccount
     private $menu;
     private $media;
     private $material;
+    private $user;
+    private $userTag;
     private $accessToken;
     private $onError;
     private $customerService;
@@ -116,6 +118,24 @@ class OfficialAccount
         return $this->material;
     }
 
+    function user():User
+    {
+        if(!isset($this->user))
+        {
+            $this->user = new User($this);
+        }
+        return $this->user;
+    }
+
+    function userTag():UserTag
+    {
+        if(!isset($this->userTag))
+        {
+            $this->userTag = new UserTag($this);
+        }
+        return $this->userTag;
+    }
+
     function getConfig():OfficialAccountConfig
     {
         return $this->config;
@@ -127,10 +147,9 @@ class OfficialAccount
     }
 
     /**
-     * get wechat ip list
-     *
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     function ipList():array
     {
@@ -150,6 +169,7 @@ class OfficialAccount
      * @param NetCheckRequest $request
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
     function netCheck(NetCheckRequest $request):array
     {

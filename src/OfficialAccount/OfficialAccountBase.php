@@ -9,6 +9,8 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
+use EasySwoole\WeChat\Exception\OfficialAccountError;
+
 class OfficialAccountBase
 {
     private $officialAccount;
@@ -21,5 +23,19 @@ class OfficialAccountBase
     public function getOfficialAccount():OfficialAccount
     {
         return $this->officialAccount;
+    }
+
+    /**
+     * @param array $response
+     * @return mixed
+     * @throws OfficialAccountError
+     */
+    protected function hasException(array $response)
+    {
+        $ex = OfficialAccountError::hasException($response);
+        if ($ex) {
+            throw $ex;
+        }
+        return $response;
     }
 }
