@@ -20,14 +20,15 @@ class TemplateMsg extends OfficialAccountBase
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function send(MsgBean $templateMsg):bool
+    public function send(MsgBean $templateMsg) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_SEND, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $response = HttpClient::postJsonForJson($url, $templateMsg->toArray(null, MsgBean::FILTER_NOT_NULL));
-        return $this->hasException($response);
+        $this->hasException($response);
+        return true;
     }
 
     /**
@@ -36,14 +37,15 @@ class TemplateMsg extends OfficialAccountBase
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function deletePrivateTemplate($templateId)
+    public function deletePrivateTemplate($templateId) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_DELETE, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $response = HttpClient::postJsonForJson($url, ['template_id' => $templateId]);
-        return $this->hasException($response);
+        $this->hasException($response);
+        return true;
     }
 
     /**
@@ -63,7 +65,7 @@ class TemplateMsg extends OfficialAccountBase
 
     /**
      * @param $shortId
-     * @return mixed
+     * @return string
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
@@ -74,23 +76,24 @@ class TemplateMsg extends OfficialAccountBase
         ]);
 
         $response = HttpClient::postJsonForJson($url, ['template_id_short' => $shortId]);
-        return $this->hasException($response);
+        return $this->hasException($response)['template_id_short'];
     }
 
     /**
      * @param  mixed ...$industryId
-     * @return mixed
+     * @return bool
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function setIndustry(...$industryId)
+    public function setIndustry(...$industryId) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_SET_INDUSTRY, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $response = HttpClient::postJsonForJson($url, $industryId);
-        return $this->hasException($response);
+        $this->hasException($response);
+        return true;
     }
 
     /**
