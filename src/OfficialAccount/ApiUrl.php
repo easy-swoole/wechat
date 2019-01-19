@@ -263,6 +263,41 @@ class ApiUrl
      */
     const GET_CURRENT_SELFMENU_INFO = 'https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN';
 
+    /**
+     * 发送模板消息
+     */
+    const TEMPLATE_SEND = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN';
+
+    /**
+     * 删除模板消息
+     */
+    const TEMPLATE_DELETE = 'https://api.weixin.qq.com/cgi-bin/template/del_private_template?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取模板消息列表
+     */
+    const TEMPLATE_GET_ALL = 'https://api.weixin.qq.com/cgi-bin/template/get_all_private_template?access_token=ACCESS_TOKEN';
+
+    /**
+     * 添加模板消息
+     */
+    const TEMPLATE_ADD = 'https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=ACCESS_TOKEN';
+
+    /**
+     * 设置所属行业
+     */
+    const TEMPLATE_SET_INDUSTRY = 'https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取行业信息
+     */
+    const TEMPLATE_GET_INDUSTRY = 'https://api.weixin.qq.com/cgi-bin/template/get_industry?access_token=ACCESS_TOKEN';
+
+    /**
+     * 发送一次性订阅消息
+     */
+    const TEMPLATE_SEND_SUBSCRIBE = 'https://api.weixin.qq.com/cgi-bin/message/template/subscribe?access_token=ACCESS_TOKEN';
+
     /*
      * 客服消息-添加客服账号
      */

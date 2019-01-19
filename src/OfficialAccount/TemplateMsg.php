@@ -7,12 +7,120 @@
  */
 
 namespace EasySwoole\WeChat\OfficialAccount;
+
+
 use EasySwoole\WeChat\Bean\OfficialAccount\TemplateMsg as MsgBean;
+use EasySwoole\WeChat\Utility\HttpClient;
 
 class TemplateMsg extends OfficialAccountBase
 {
-    function send(MsgBean $templateMsg):bool
+    /**
+     * @param MsgBean $templateMsg
+     * @return bool
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function send(MsgBean $templateMsg):bool
     {
+        $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_SEND, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
 
+        $response = HttpClient::postJsonForJson($url, $templateMsg->toArray(null, MsgBean::FILTER_NOT_NULL));
+        return $this->hasException($response);
+    }
+
+    /**
+     * @param $templateId
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function deletePrivateTemplate($templateId)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_DELETE, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $response = HttpClient::postJsonForJson($url, ['template_id' => $templateId]);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function getPrivateTemplates()
+    {
+        $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_GET_ALL, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $response = HttpClient::getForJson($url);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @param $shortId
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function addTemplate($shortId)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_ADD, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $response = HttpClient::postJsonForJson($url, ['template_id_short' => $shortId]);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @param  mixed ...$industryId
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function setIndustry(...$industryId)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_SET_INDUSTRY, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $response = HttpClient::postJsonForJson($url, $industryId);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function getIndustry()
+    {
+        $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_GET_INDUSTRY, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $response = HttpClient::getForJson($url);
+        return $this->hasException($response);
+    }
+
+    /**
+     * @param MsgBean $templateMsg
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function sendSubscription(MsgBean $templateMsg)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::TEMPLATE_SEND_SUBSCRIBE, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $response = HttpClient::postJsonForJson($url, $templateMsg->toArray(null, MsgBean::FILTER_NOT_NULL));
+        return $this->hasException($response);
     }
 }
