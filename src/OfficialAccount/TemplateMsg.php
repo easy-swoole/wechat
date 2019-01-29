@@ -26,7 +26,8 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, $templateMsg->toArray(null, MsgBean::FILTER_NOT_NULL));
+        $templateMsg->setAppid($this->getOfficialAccount()->getConfig()->getAppId());
+        $response = HttpClient::postJsonForJson($url, $templateMsg->getSendMessage());
         $this->hasException($response);
         return true;
     }
@@ -123,7 +124,8 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, $templateMsg->toArray(null, MsgBean::FILTER_NOT_NULL));
+        $templateMsg->setAppid($this->getOfficialAccount()->getConfig()->getAppId());
+        $response = HttpClient::postJsonForJson($url, $templateMsg->getSendMessage());
         return $this->hasException($response);
     }
 }
