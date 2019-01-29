@@ -17,11 +17,10 @@ class TemplateMsg extends SplBean
     protected $template_id;
     protected $url;
     protected $miniprogram;
+    protected $scene;
     protected $appid;
     protected $pagepath;
     protected $data = [];
-    protected $color;
-
     /**
      * @return mixed
      */
@@ -68,6 +67,22 @@ class TemplateMsg extends SplBean
     public function setUrl($url): void
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScene()
+    {
+        return $this->scene;
+    }
+
+    /**
+     * @param mixed $scene
+     */
+    public function setScene($scene): void
+    {
+        $this->scene = $scene;
     }
 
     /**
@@ -135,18 +150,31 @@ class TemplateMsg extends SplBean
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getColor()
+    public function getSendMessage() : array
     {
-        return $this->color;
-    }
+        $message = $this->toArray(null, self::FILTER_NOT_NULL);
 
-    /**
-     * @param mixed $color
-     */
-    public function setColor($color): void
-    {
-        $this->color = $color;
+        $tmpData = Array();
+        foreach ($message['data'] as $key => $val) {
+            if (is_array($val)) {
+                if (isset($val['value'])) {
+                    $tmpData[$key] = $val;
+                    continue;
+                }
+
+                if (count($val) >= 2) {
+                    $tmpData[$key] = [
+                        'value' => $val[0],
+                        'color' => $val[1]
+                    ];
+                    continue;
+                }
+            }
+            $tmpData[$key] = ['value' => $val];
+        }
+        $message['data'] = $tmpData;
+        return $message;
     }
 }
