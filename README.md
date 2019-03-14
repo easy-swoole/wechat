@@ -221,7 +221,7 @@ $buttons = [
     $snsAuthBean->getRefreshToken();
     
     // access token to user info
-    $userInfo = $jsApi->auth()->tokenToUser($snsAuthBean->getAccessToken());
+    $user = $jsApi->auth()->tokenToUser($snsAuthBean->getAccessToken());
     $user->getOpenid();
     $user->getHeadimgurl();
     $user->getNickname(); // ... and more
@@ -240,7 +240,7 @@ $buttons = [
     
     $url = '';  // current request url given by yourself
     // jsApi signature (this is the information wx.config needs)
-    $jsApiSignaturePack = $jsApi->sdk()->signature($url);
+    $jsApiSignaturePack = $jsApi->jsApi()->sdk()->signature($url);
     $jsApiSignaturePack->getAppId();
     $jsApiSignaturePack->getNonceStr();
     $jsApiSignaturePack->getSignature();
