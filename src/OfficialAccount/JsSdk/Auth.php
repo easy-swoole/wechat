@@ -94,7 +94,7 @@ class Auth extends JsApiBase
     function codeToUser($authCode): ?User
     {
         $authBean = $this->codeToToken($authCode);
-        return $this->tokenToUser($authBean->getAccessToken());
+        return $this->tokenToUser($authBean);
     }
 
     /**
