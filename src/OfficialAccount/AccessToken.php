@@ -8,15 +8,20 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
-
+use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\HttpClient;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 
 
 class AccessToken extends OfficialAccountBase
 {
-    /*
+    /**
      * 默认刷新一次
+     *
+     * @param int $refreshTimes
+     * @return string|null
+     * @throws OfficialAccountError
+     * @throws RequestError
      */
     function getToken($refreshTimes = 1):?string
     {
@@ -32,11 +37,18 @@ class AccessToken extends OfficialAccountBase
         }
     }
 
-    function refresh():string
+    /**
+     * refresh
+     *
+     * @return string
+     * @throws OfficialAccountError
+     * @throws RequestError
+     */
+    public function refresh():string
     {
         $config = $this->getOfficialAccount()->getConfig();
         $url = ApiUrl::generateURL(ApiUrl::ACCESS_TOKEN,[
-            'APP_ID'=>$config->getAppId(),
+            'APPID'=>$config->getAppId(),
             'APP_SECRET'=>$config->getAppSecret()
         ]);
         $json = HttpClient::getForJson($url);
