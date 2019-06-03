@@ -336,3 +336,46 @@ $buttons = [
     // delete media
     $materialDeleteResponse = $wechat->officialAccount()->material()->delete($uploadArticleResponse['media_id']);
 ```
+
+
+## WeChat MiniProgram (New)
+
+Current support auth、qrcode with WeChat MiniProgram ( Automatic access token management )
+
+### create wxa instance
+
+First you need to initialize an instance
+
+```php
+$wxa = new \EasySwoole\WeChat\MiniProgram\MiniProgram;
+$wxa->getConfig()->setAppId('your appid')->setAppSecret('your appsecret');
+```
+
+### wxa session
+
+You can see [open-ability-login](https://developers.weixin.qq.com/miniprogram/en/dev/framework/open-ability/login.html) for details. Suppose you've got the code you need to log in: 
+
+```php
+$code = '';
+$session = $wxa->auth()->session($code);
+```
+
+You will get an array containing the fields described in the document, see [code2Session](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html)
+
+### create qrcode
+
+From the [documentation](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.createQRCode.html), we can see that there are three ways to create qccodes.
+
+```
+$response1 = $wxa->qrCode()->getWxaCode('/pages/index/index', 450);
+$response2 = $wxa->qrCode()->getWxaCodeUnLimit('/pages/index/index', 'scene');
+$response3 = $wxa->qrCode()->createWxaQrCode('/pages/index/index', 450);
+```
+
+This seems too simple, and the method can support more parameters, as follows:
+
+```
+ function getWxaCode($path, $width = 430, $autoColor = false, $lineColor = null, $isHyaline = false){}
+ function getWxaCodeUnLimit($path, $scene, $width = 430, $autoColor = false, $lineColor = null, $isHyaline = false)
+ function createWxaQrCode($path, $width = 430)
+```
