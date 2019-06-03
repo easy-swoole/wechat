@@ -25,7 +25,7 @@ class ApiUrl
     /*
      * 获取ACCESS_TOKEN
      */
-    const ACCESS_TOKEN = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APP_ID&secret=APP_SECRET';
+    const ACCESS_TOKEN = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APP_SECRET';
 
     /*
      * 获取微信服务器IP地址

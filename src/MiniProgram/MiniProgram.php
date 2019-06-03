@@ -12,8 +12,33 @@ namespace EasySwoole\WeChat\MiniProgram;
 class MiniProgram
 {
     private $config;
-    function __construct(MiniProgramConfig $config)
+    private $auth;
+    public function __construct(MiniProgramConfig $config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * getConfig
+     *
+     * @return MiniProgramConfig
+     */
+    public function getConfig() : MiniProgramConfig
+    {
+        return $this->config;
+    }
+
+    /**
+     * auth
+     *
+     * @return Auth
+     */
+    public function auth() : Auth
+    {
+        if (!isset($this->auth)) {
+            $this->auth = new Auth($this);
+        }
+
+        return $this->auth;
     }
 }
