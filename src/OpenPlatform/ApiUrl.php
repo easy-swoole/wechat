@@ -10,6 +10,12 @@ namespace EasySwoole\WeChat\OpenPlatform;
 
 class ApiUrl
 {
+    // 获取预授权CODE
+    const CREATE_PREAUTHCODE = 'https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=ACCESS_TOKEN';
+
+    // 获取授权页URL
+    const COMPONENT_LOGIN_PAGE = 'https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=APPID&pre_auth_code=PRE_AUTH_CODE&redirect_uri=REDIRECT_URI&auth_type=AUTH_TYPE&biz_appid=BIZ_APPID';
+
     // 授权跳转URL
     const PRE_AUTHORIZATION = 'https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
 
