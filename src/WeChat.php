@@ -8,6 +8,7 @@
 
 namespace EasySwoole\WeChat;
 
+use EasySwoole\Component\Singleton;
 use EasySwoole\WeChat\MiniProgram\MiniProgram;
 use EasySwoole\WeChat\OfficialAccount\OfficialAccount;
 use EasySwoole\WeChat\OpenPlatform\OpenPlatform;

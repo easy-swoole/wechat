@@ -28,7 +28,7 @@ class QrCode extends MinProgramBase
     function getWxaCode($path, $width = 430, $autoColor = false, $lineColor = null, $isHyaline = false)
     {
         $token = $this->getMiniProgram()->accessToken()->getToken();
-        $url = ApiUrl::generateURL(ApiUrl::QRCODE_GETWXACODE, [
+        $url = ApiUrl::generateURL(ApiUrl::WXACODE_GET, [
             'ACCESS_TOKEN' => $token
         ]);
         $data = ['path' => $path, 'width' => $width, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
@@ -58,7 +58,7 @@ class QrCode extends MinProgramBase
     function getWxaCodeUnLimit($path, $scene, $width = 430, $autoColor = false, $lineColor = null, $isHyaline = false)
     {
         $token = $this->getMiniProgram()->accessToken()->getToken();
-        $url = ApiUrl::generateURL(ApiUrl::QRCODE_GETWXACODE_UNLIMIT, [
+        $url = ApiUrl::generateURL(ApiUrl::WXACODE_GET_UNLIMITED, [
             'ACCESS_TOKEN' => $token
         ]);
         $data = ['path' => $path, 'width' => $width, 'scene' => $scene, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
@@ -84,7 +84,7 @@ class QrCode extends MinProgramBase
     function createWxaQrCode($path, $width = 430)
     {
         $token = $this->getMiniProgram()->accessToken()->getToken();
-        $url = ApiUrl::generateURL(ApiUrl::QRCODE_CREATE_WXACODE, [
+        $url = ApiUrl::generateURL(ApiUrl::WXACODE_CREATE_QRCODE, [
             'ACCESS_TOKEN' => $token
         ]);
         $data = ['path' => $path, 'width' => $width];

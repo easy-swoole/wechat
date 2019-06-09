@@ -13,17 +13,16 @@ use EasySwoole\WeChat\Utility\HttpClient;
 use EasySwoole\WeChat\Exception\MiniProgramError;
 
 /**
+ * 访问令牌管理
  * Class AccessToken
- *
  * @package EasySwoole\WeChat\MiniProgram
  */
 class AccessToken extends MinProgramBase
 {
+
     /**
-     * getToken
-     *  默认刷新一次
-     *
-     * @param int $refreshTimes
+     * 获取访问令牌 默认刷新一次
+     * @param int $refreshTimes 获取失败的重试次数
      * @return string|null
      * @throws MiniProgramError
      * @throws RequestError
@@ -43,8 +42,7 @@ class AccessToken extends MinProgramBase
     }
 
     /**
-     * refresh
-     *
+     * 刷新访问令牌
      * @return string
      * @throws MiniProgramError
      * @throws RequestError
@@ -52,24 +50,17 @@ class AccessToken extends MinProgramBase
     public function refresh(): string
     {
         $config = $this->getMiniProgram()->getConfig();
-        $url = ApiUrl::generateURL(ApiUrl::ACCESS_TOKEN, [
+        $url = ApiUrl::generateURL(ApiUrl::AUTH_GET_ACCESS_TOKEN, [
             'APPID'     => $config->getAppId(),
-            'APP_SECRET' => $config->getAppSecret()
+            'APPSECRET' => $config->getAppSecret()
         ]);
-
         $responseArray = HttpClient::getForJson($url);
         $ex = MiniProgramError::hasException($responseArray);
-
         if ($ex) {
             throw $ex;
         }
-
         $token = $responseArray['access_token'];
-        /*
-         * 这里故意设置为7180
-         */
-        $config->getStorage()->set('access_token', $token, time() + 7180);
-
+        $config->getStorage()->set('access_token', $token, time() + 7180); // 这里故意设置为7180 提前刷新
         return $token;
     }
 }
