@@ -8,11 +8,16 @@
 
 namespace EasySwoole\WeChat\MiniProgram;
 
-
+use EasySwoole\Spl\SplBean;
 use EasySwoole\WeChat\AbstractInterface\StorageInterface;
 use EasySwoole\WeChat\Utility\FileStorage;
 
-class MiniProgramConfig
+/**
+ * 小程序配置文件
+ * Class MiniProgramConfig
+ * @package EasySwoole\WeChat\MiniProgram
+ */
+class MiniProgramConfig extends SplBean
 {
     private $appId;
     private $appSecret;
@@ -20,6 +25,20 @@ class MiniProgramConfig
     private $tempDir;
 
     /**
+     * 初始化小程序配置
+     * @return void
+     */
+    protected function initialize(): void
+    {
+        // 如果没有设置临时目录则设置为系统临时目录
+        if (empty($this->tempDir)) {
+            $this->tempDir = sys_get_temp_dir();
+        }
+    }
+
+
+    /**
+     * 获取AppId
      * @return mixed
      */
     public function getAppId()
@@ -28,8 +47,7 @@ class MiniProgramConfig
     }
 
     /**
-     * setAppId
-     *
+     * 设置AppId
      * @param $appId
      * @return MiniProgramConfig
      */
@@ -40,6 +58,7 @@ class MiniProgramConfig
     }
 
     /**
+     * 获取AppSecret
      * @return mixed
      */
     public function getAppSecret()
@@ -48,8 +67,7 @@ class MiniProgramConfig
     }
 
     /**
-     * setAppSecret
-     *
+     * 设置AppSecret
      * @param $appSecret
      * @return MiniProgramConfig
      */
@@ -60,21 +78,19 @@ class MiniProgramConfig
     }
 
     /**
-     * getStorage
-     *
+     * 获取储存器
      * @return StorageInterface
      */
-    public function getStorage():StorageInterface
+    public function getStorage(): StorageInterface
     {
-        if(!isset($this->storage)){
-            $this->storage = new FileStorage($this->tempDir,$this->getAppId());
+        if (!isset($this->storage)) {
+            $this->storage = new FileStorage($this->getTempDir(), $this->getAppId());
         }
         return $this->storage;
     }
 
     /**
-     * setStorage
-     *
+     * 设置储存器
      * @param StorageInterface $storage
      * @return MiniProgramConfig
      */
@@ -83,4 +99,26 @@ class MiniProgramConfig
         $this->storage = $storage;
         return $this;
     }
+
+    /**
+     * 获取临时目录
+     * @return mixed
+     */
+    public function getTempDir()
+    {
+        if (empty($this->tempDir)) {
+            $this->tempDir = sys_get_temp_dir();
+        }
+        return $this->tempDir;
+    }
+
+    /**
+     * 设置临时目录
+     * @param mixed $tempDir
+     */
+    public function setTempDir($tempDir): void
+    {
+        $this->tempDir = $tempDir;
+    }
+
 }

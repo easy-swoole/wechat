@@ -8,10 +8,16 @@
 
 namespace EasySwoole\WeChat\OpenPlatform;
 
+use EasySwoole\Spl\SplBean;
 use EasySwoole\WeChat\AbstractInterface\StorageInterface;
 use EasySwoole\WeChat\Utility\FileStorage;
 
-class OpenPlatformConfig
+/**
+ * 开放平台配置
+ * Class OpenPlatformConfig
+ * @package EasySwoole\WeChat\OpenPlatform
+ */
+class OpenPlatformConfig extends SplBean
 {
     private $appId;
     private $appSecret;
@@ -19,7 +25,20 @@ class OpenPlatformConfig
     private $tempDir;
 
     /**
-     * AppIdGetter
+     * 初始化开放平台配置
+     * @return void
+     */
+    protected function initialize(): void
+    {
+        // 如果没有设置临时目录则设置为系统临时目录
+        if (empty($this->tempDir)) {
+            $this->tempDir = sys_get_temp_dir();
+        }
+    }
+
+
+    /**
+     * 获取AppId
      * @return mixed
      */
     public function getAppId()
@@ -28,7 +47,7 @@ class OpenPlatformConfig
     }
 
     /**
-     * AppIdSetter
+     * 设置AppId
      * @param mixed $appId
      * @return OpenPlatformConfig
      */
@@ -39,7 +58,7 @@ class OpenPlatformConfig
     }
 
     /**
-     * AppSecretGetter
+     * 获取AppSecret
      * @return mixed
      */
     public function getAppSecret()
@@ -48,7 +67,7 @@ class OpenPlatformConfig
     }
 
     /**
-     * AppSecretSetter
+     * 设置AppSecret
      * @param mixed $appSecret
      * @return OpenPlatformConfig
      */
@@ -59,19 +78,19 @@ class OpenPlatformConfig
     }
 
     /**
-     * StorageGetter
+     * 获取储存器
      * @return mixed
      */
     public function getStorage(): StorageInterface
     {
         if (!isset($this->storage)) {
-            $this->storage = new FileStorage($this->tempDir, $this->getAppId());
+            $this->storage = new FileStorage($this->getTempDir(), $this->getAppId());
         }
         return $this->storage;
     }
 
     /**
-     * StorageSetter
+     * 设置储存器
      * @param mixed $storage
      * @return OpenPlatformConfig
      */
@@ -82,16 +101,19 @@ class OpenPlatformConfig
     }
 
     /**
-     * TempDirGetter
+     * 获取临时目录
      * @return mixed
      */
     public function getTempDir()
     {
+        if (empty($this->tempDir)) {
+            $this->tempDir = sys_get_temp_dir();
+        }
         return $this->tempDir;
     }
 
     /**
-     * TempDirSetter
+     * 设置临时目录
      * @param mixed $tempDir
      * @return OpenPlatformConfig
      */
