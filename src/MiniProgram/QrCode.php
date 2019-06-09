@@ -2,6 +2,7 @@
 
 namespace EasySwoole\WeChat\MiniProgram;
 
+use EasySwoole\HttpClient\Exception\InvalidUrl;
 use EasySwoole\WeChat\Exception\MiniProgramError;
 use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\HttpClient;
@@ -15,13 +16,14 @@ class QrCode extends MinProgramBase
 {
 
     /**
-     * 生成小程序码接口A
+     * 二维码 - 永久小程序码
      * @param $path
      * @param int $width
      * @param bool $autoColor
      * @param null $lineColor
      * @param bool $isHyaline
      * @return array
+     * @throws InvalidUrl
      * @throws MiniProgramError
      * @throws RequestError
      */
@@ -34,17 +36,22 @@ class QrCode extends MinProgramBase
         $data = ['path' => $path, 'width' => $width, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
         if ($lineColor) $data['line_color'] = $lineColor;
 
-        $responseArray = HttpClient::postForJson($url, $data);
-        $ex = MiniProgramError::hasException($responseArray);
-        if ($ex) {
+        $responseBuffer = HttpClient::postJson($url, $data)->getBody();
+
+        // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
+        $responseData = json_decode($responseBuffer, true);
+
+        if (is_array($responseData)) { // 能解析说明请求失败
+            $ex = new MiniProgramError;
+            $ex->setErrorCode($responseData['errcode']);
             throw $ex;
         }
 
-        return $responseArray;
+        return $responseBuffer;
     }
 
     /**
-     * 生成小程序码接口B - 不限数量
+     * 二维码 - 临时小程序码
      * @param $path
      * @param $scene
      * @param int $width
@@ -52,6 +59,7 @@ class QrCode extends MinProgramBase
      * @param null $lineColor
      * @param bool $isHyaline
      * @return array
+     * @throws InvalidUrl
      * @throws MiniProgramError
      * @throws RequestError
      */
@@ -64,22 +72,28 @@ class QrCode extends MinProgramBase
         $data = ['path' => $path, 'width' => $width, 'scene' => $scene, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
         if ($lineColor) $data['line_color'] = $lineColor;
 
-        $responseArray = HttpClient::postForJson($url, $data);
-        $ex = MiniProgramError::hasException($responseArray);
-        if ($ex) {
+        $responseBuffer = HttpClient::postJson($url, $data)->getBody();
+
+        // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
+        $responseData = json_decode($responseBuffer, true);
+
+        if (is_array($responseData)) { // 能解析说明请求失败
+            $ex = new MiniProgramError;
+            $ex->setErrorCode($responseData['errcode']);
             throw $ex;
         }
 
-        return $responseArray;
+        return $responseBuffer;
     }
 
     /**
-     * 生成小程序码接口C
+     * 二维码 - 永久二维码
      * @param $path
      * @param int $width
-     * @return mixed
+     * @return string
      * @throws MiniProgramError
      * @throws RequestError
+     * @throws InvalidUrl
      */
     function createWxaQrCode($path, $width = 430)
     {
@@ -88,12 +102,17 @@ class QrCode extends MinProgramBase
             'ACCESS_TOKEN' => $token
         ]);
         $data = ['path' => $path, 'width' => $width];
-        $responseArray = HttpClient::postForJson($url, $data);
-        $ex = MiniProgramError::hasException($responseArray);
-        if ($ex) {
+        $responseBuffer = HttpClient::postJson($url, $data)->getBody();
+
+        // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
+        $responseData = json_decode($responseBuffer, true);
+
+        if (is_array($responseData)) { // 能解析说明请求失败
+            $ex = new MiniProgramError;
+            $ex->setErrorCode($responseData['errcode']);
             throw $ex;
         }
 
-        return $responseArray;
+        return $responseBuffer;
     }
 }
