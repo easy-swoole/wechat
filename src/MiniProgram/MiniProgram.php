@@ -16,8 +16,11 @@ class MiniProgram
     private $accessToken;
     private $qrCode;
 
-    public function __construct(MiniProgramConfig $config)
+    public function __construct(MiniProgramConfig $config = null)
     {
+        if (is_null($config)) {
+            $config = new MiniProgramConfig;
+        }
         $this->config = $config;
     }
 
