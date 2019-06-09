@@ -484,6 +484,11 @@ class ApiUrl
      */
     const JSAPI_GET_TICKET = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi';
 
+    /**
+     * @param string $baseUrl
+     * @param array $data
+     * @return string
+     */
     public static function generateURL(string $baseUrl, array $data): string
     {
         foreach ($data as $key => $item) {

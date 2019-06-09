@@ -8,11 +8,15 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
+use EasySwoole\HttpClient\Bean\Response;
+use EasySwoole\HttpClient\Exception\InvalidUrl;
+use EasySwoole\Utility\Mime\MimeDetectorException;
 use EasySwoole\Utility\MimeType;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
 use EasySwoole\WeChat\Bean\OfficialAccount\PostFile;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
+use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\HttpClient;
 use Swoole\Coroutine;
 
@@ -23,72 +27,77 @@ use Swoole\Coroutine;
  */
 class Media extends OfficialAccountBase
 {
+
     /**
+     * 上传临时素材
      * @param MediaRequest $mediaBean
      * @return array
+     * @throws InvalidUrl
+     * @throws MimeDetectorException
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws RequestError
      */
     public function upload(MediaRequest $mediaBean)
     {
         $url = ApiUrl::generateURL(ApiUrl::MEDIA_UPLOAD, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken(),
-            'TYPE' => $mediaBean->getType()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken(),
+            'TYPE'         => $mediaBean->getType()
         ]);
 
         return $this->uploadMedia($url, $this->crateFileBean($mediaBean));
     }
 
     /**
+     * 获取临时素材
      * @param $mediaId
-     * @return MediaResponse || array
+     * @return MediaResponse|mixed
+     * @throws InvalidUrl
      * @throws OfficialAccountError
+     * @throws RequestError
      */
     public function get($mediaId)
     {
         $url = ApiUrl::generateURL(ApiUrl::MEDIA_GET, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken(),
-            'MEDIA_ID' => $mediaId
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken(),
+            'MEDIA_ID'     => $mediaId
         ]);
 
         return $this->getMedia($url);
     }
 
     /**
-     * @param string     $url
-     * @param PostFile   $fileBean
+     * 执行素材上传
+     * @param string $url
+     * @param PostFile $fileBean
      * @param array|null $form
+     * @param int $timeout
      * @return array
-     * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws InvalidUrl
+     * @throws RequestError
      */
-    protected function uploadMedia(string $url, PostFile $fileBean, array $form = null) : array
+    protected function uploadMedia(string $url, PostFile $fileBean, array $form = null, $timeout = 30): array
     {
-        $postData = Array();
-        array_push($postData, [$fileBean->getData(), $fileBean->getName(), $fileBean->getMimeType(), $fileBean->getFilename()]);
-        if (!is_null($form)) {
-            foreach ($form as $name => $content) {
-                if (version_compare(phpversion('swoole'), '4.2.12', '<')) {
-                    array_push($postData, [$name, $content, null, null]);
-                } else {
-                    array_push($postData, [$name, $content]);
-                }
-            }
-        }
+        $response = HttpClient::uploadFileByPath($url, $fileBean->getPath(), $fileBean->getName(), $fileBean->getMimeType(), $fileBean->getFilename(), $fileBean->getOffset(), $fileBean->getLength(), $timeout, $form);
+        $content = $response->getBody();
+        $json = json_decode($content, true);
 
-        $responseArray = HttpClient::postForJson($url, $postData, 30);
-        $ex = OfficialAccountError::hasException($responseArray);
-        if($ex){
+        // 解包失败认为请求出错
+        if (!is_array($json)) {
+            $ex = new RequestError();
+            $ex->setResponse($response);
             throw $ex;
         }
-        return $responseArray;
+
+        return $json;
     }
 
     /**
+     * 获取微信素材
      * @param string $url
-     * @param array  $data
-     * @return MediaResponse|mixed
+     * @param array|null $data
+     * @return Response|MediaResponse
      * @throws OfficialAccountError
+     * @throws InvalidUrl
      */
     protected function getMedia(string $url, array $data = null)
     {
@@ -106,11 +115,14 @@ class Media extends OfficialAccountBase
         return $response;
     }
 
+
     /**
+     * 创建一个文件对象
      * @param MediaRequest $mediaBean
      * @return PostFile
+     * @throws MimeDetectorException
      */
-    protected function crateFileBean(MediaRequest $mediaBean) : PostFile
+    protected function crateFileBean(MediaRequest $mediaBean): PostFile
     {
         $fileBean = new PostFile($mediaBean->toArray(null, MediaRequest::FILTER_NOT_EMPTY));
         $fileBean->setName('media');
@@ -118,8 +130,10 @@ class Media extends OfficialAccountBase
         if (!is_null($fileBean->getPath())) {
             $fileBean->setData(Coroutine::readFile($fileBean->getPath()));
         }
+
+        $fileBean->setFilename(basename($fileBean->getPath()));
         $fileBean->setMimeType(MimeType::getMimeTypeFromStream($fileBean->getData()));
-        $fileBean->setFilename($fileBean->getName(). MimeType::getExtByMimeType($fileBean->getMimeType()));
+        $fileBean->setFilename($fileBean->getFilename());
 
         return $fileBean;
     }

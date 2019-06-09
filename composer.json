@@ -2,9 +2,14 @@
     "name": "easyswoole/wechat",
     "type": "library",
     "description": "An efficient swoole framework",
-    "keywords" : ["swoole", "framework", "async","easyswoole"],
-    "homepage" : "https://www.easyswoole.com/",
-    "license" : "Apache-2.0",
+    "keywords": [
+        "swoole",
+        "framework",
+        "async",
+        "easyswoole"
+    ],
+    "homepage": "https://www.easyswoole.com/",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "YF",
@@ -25,6 +30,7 @@
         }
     },
     "require-dev": {
-        "easyswoole/phpunit": "^1.0"
+        "easyswoole/phpunit": "^1.0",
+        "easyswoole/swoole-ide-helper": "^1.3"
     }
 }

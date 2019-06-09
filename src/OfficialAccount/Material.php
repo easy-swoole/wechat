@@ -9,10 +9,13 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
+use EasySwoole\HttpClient\Exception\InvalidUrl;
+use EasySwoole\Utility\Mime\MimeDetectorException;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaArticle;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
+use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\HttpClient;
 
 /**
@@ -22,17 +25,21 @@ use EasySwoole\WeChat\Utility\HttpClient;
  */
 class Material extends Media
 {
+
     /**
+     * 上传永久素材
      * @param MediaRequest $mediaBean
      * @return array
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws InvalidUrl
+     * @throws MimeDetectorException
+     * @throws RequestError
      */
     public function upload(MediaRequest $mediaBean)
     {
         $url = ApiUrl::generateURL(ApiUrl::MATERIAL_UPLOAD, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken(),
-            'TYPE' => $mediaBean->getType()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken(),
+            'TYPE'         => $mediaBean->getType()
         ]);
 
         // video type additional parameters
@@ -44,29 +51,34 @@ class Material extends Media
     }
 
     /**
+     * 获取永久素材
      * @param $mediaId
-     * @return MediaResponse|mixed
+     * @return \EasySwoole\HttpClient\Bean\Response|MediaResponse|mixed
+     * @throws InvalidUrl
      * @throws OfficialAccountError
+     * @throws RequestError
      */
     public function get($mediaId)
     {
         $url = ApiUrl::generateURL(ApiUrl::MATERIAL_GET, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         return $this->getMedia($url, ['media_id' => $mediaId]);
     }
 
     /**
+     * 删除永久素材
      * @param $mediaId
      * @return array
+     * @throws InvalidUrl
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws RequestError
      */
     public function delete($mediaId)
     {
         $url = ApiUrl::generateURL(ApiUrl::MATERIAL_DELETE, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $response = HttpClient::postJsonForJson($url, ['media_id' => $mediaId]);
@@ -77,15 +89,18 @@ class Material extends Media
         return $response;
     }
 
+
     /**
+     * 获取永久素材数量
      * @return array
+     * @throws InvalidUrl
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws RequestError
      */
     public function stats()
     {
         $url = ApiUrl::generateURL(ApiUrl::MATERIAL_COUNT, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $response = HttpClient::getForJson($url);
@@ -97,23 +112,25 @@ class Material extends Media
     }
 
     /**
+     * 获取永久素材列表
      * @param string $mediaType
-     * @param int    $offset
-     * @param int    $count
+     * @param int $offset
+     * @param int $count
      * @return array
+     * @throws InvalidUrl
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws RequestError
      */
     public function list(string $mediaType, int $offset = 0, int $count = 20)
     {
-        $url = ApiUrl::generateURL(ApiUrl::MATERIAL_COUNT, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        $url = ApiUrl::generateURL(ApiUrl::MATERIAL_LIST, [
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $postData = [
-            'type' => $mediaType,
+            'type'   => $mediaType,
             'offset' => $offset,
-            'count' => $count
+            'count'  => $count
         ];
 
         $response = HttpClient::postJsonForJson($url, $postData);
@@ -125,15 +142,17 @@ class Material extends Media
     }
 
     /**
+     * 更新多个永久素材
      * @param MediaArticle ...$articles
      * @return array
+     * @throws InvalidUrl
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws RequestError
      */
     public function uploadArticle(MediaArticle ...$articles)
     {
         $url = ApiUrl::generateURL(ApiUrl::MATERIAL_UPLOAD_NEWS, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $postData = ['articles' => []];
@@ -150,22 +169,24 @@ class Material extends Media
     }
 
     /**
-     * @param              $mediaId
+     * 更新永久素材
+     * @param $mediaId
      * @param MediaArticle $article
-     * @param int          $index
+     * @param int $index
      * @return array
+     * @throws InvalidUrl
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws RequestError
      */
     public function updateArticle($mediaId, MediaArticle $article, int $index = 0)
     {
         $url = ApiUrl::generateURL(ApiUrl::MATERIAL_UPDATE_NEWS, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         $postData = [
             'media_id' => $mediaId,
-            'index' => $index,
+            'index'    => $index,
             'articles' => $article->toArray(null, MediaRequest::FILTER_NOT_NULL)
         ];
 
@@ -178,15 +199,18 @@ class Material extends Media
     }
 
     /**
+     * 上传永久素材使用的图片
      * @param MediaRequest $mediaBean
      * @return array
+     * @throws InvalidUrl
+     * @throws MimeDetectorException
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws RequestError
      */
     public function uploadArticleImage(MediaRequest $mediaBean)
     {
         $url = ApiUrl::generateURL(ApiUrl::MATERIAL_UPLOAD_NEWS_IMG, [
-            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
         return $this->uploadMedia($url, $this->crateFileBean($mediaBean));

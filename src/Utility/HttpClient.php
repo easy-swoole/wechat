@@ -132,12 +132,16 @@ class HttpClient
      * @param string|null $filename 文件的名称
      * @param int $offset 上传的偏移量
      * @param int $length 需要发送的长度
+     * @param int $timeout
+     * @param null $extraPostData
+     * @return Response
      * @throws InvalidUrl
      */
-    static function uploadFileByPath($url, string $uploadFile, string $uploadName = 'upload', string $mimeType = null, string $filename = null, int $offset = 0, int $length = 0)
+    static function uploadFileByPath($url, string $uploadFile, string $uploadName = 'upload', string $mimeType = null, string $filename = null, int $offset = 0, int $length = 0, $timeout = 30, $extraPostData = null)
     {
         $client = self::client($url);
-        $client->uploadByFileRequest($uploadFile, $uploadName, $mimeType, $filename, $offset, $length);
+        $client->setTimeout($timeout);
+        return $client->uploadByFileRequest($uploadFile, $uploadName, $mimeType, $filename, $offset, $length, $extraPostData);
     }
 
     /**
@@ -147,12 +151,16 @@ class HttpClient
      * @param string $uploadName 上传的表单名称
      * @param string|null $mimeType 文件的 MIME 不传则按照扩展名判断
      * @param string|null $filename 文件的名称
+     * @param int $timeout
+     * @param null $extraPostData
+     * @return Response
      * @throws InvalidUrl
      */
-    static function uploadFileByContent($url, string $uploadFile, string $uploadName = 'upload', string $mimeType = null, string $filename = null)
+    static function uploadFileByContent($url, string $uploadFile, string $uploadName = 'upload', string $mimeType = null, string $filename = null, $timeout = 30, $extraPostData = null)
     {
         $client = self::client($url);
-        $client->uploadByStringRequest($uploadFile, $uploadName, $mimeType, $filename);
+        $client->setTimeout($timeout);
+        return $client->uploadByStringRequest($uploadFile, $uploadName, $mimeType, $filename, $extraPostData);
     }
 
     /**
