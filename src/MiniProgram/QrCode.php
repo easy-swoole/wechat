@@ -39,13 +39,15 @@ class QrCode extends MinProgramBase
         $responseBuffer = HttpClient::postJson($url, $data)->getBody();
 
         // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
-        $responseData = json_decode($responseBuffer, true);
-
-        if (is_array($responseData)) { // 能解析说明请求失败
-            $ex = new MiniProgramError;
-            $ex->setErrorCode($responseData['errcode']);
-            throw $ex;
+        if (substr($responseBuffer, 0, 1) == "{") {
+            $responseData = json_decode($responseBuffer, true);
+            if (is_array($responseData)) { // 能解析说明请求失败
+                $ex = new MiniProgramError($responseData['errmsg']);
+                $ex->setErrorCode($responseData['errcode']);
+                throw $ex;
+            }
         }
+
 
         return $responseBuffer;
     }
@@ -75,12 +77,13 @@ class QrCode extends MinProgramBase
         $responseBuffer = HttpClient::postJson($url, $data)->getBody();
 
         // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
-        $responseData = json_decode($responseBuffer, true);
-
-        if (is_array($responseData)) { // 能解析说明请求失败
-            $ex = new MiniProgramError;
-            $ex->setErrorCode($responseData['errcode']);
-            throw $ex;
+        if (substr($responseBuffer, 0, 1) == "{") {
+            $responseData = json_decode($responseBuffer, true);
+            if (is_array($responseData)) { // 能解析说明请求失败
+                $ex = new MiniProgramError($responseData['errmsg']);
+                $ex->setErrorCode($responseData['errcode']);
+                throw $ex;
+            }
         }
 
         return $responseBuffer;
@@ -105,14 +108,14 @@ class QrCode extends MinProgramBase
         $responseBuffer = HttpClient::postJson($url, $data)->getBody();
 
         // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
-        $responseData = json_decode($responseBuffer, true);
-
-        if (is_array($responseData)) { // 能解析说明请求失败
-            $ex = new MiniProgramError;
-            $ex->setErrorCode($responseData['errcode']);
-            throw $ex;
+        if (substr($responseBuffer, 0, 1) == "{") {
+            $responseData = json_decode($responseBuffer, true);
+            if (is_array($responseData)) { // 能解析说明请求失败
+                $ex = new MiniProgramError($responseData['errmsg']);
+                $ex->setErrorCode($responseData['errcode']);
+                throw $ex;
+            }
         }
-
         return $responseBuffer;
     }
 }

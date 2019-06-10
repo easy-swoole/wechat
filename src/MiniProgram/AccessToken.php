@@ -8,6 +8,7 @@
 
 namespace EasySwoole\WeChat\MiniProgram;
 
+use EasySwoole\HttpClient\Exception\InvalidUrl;
 use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\HttpClient;
 use EasySwoole\WeChat\Exception\MiniProgramError;
@@ -26,6 +27,7 @@ class AccessToken extends MinProgramBase
      * @return string|null
      * @throws MiniProgramError
      * @throws RequestError
+     * @throws InvalidUrl
      */
     public function getToken($refreshTimes = 1): ?string
     {
@@ -46,6 +48,7 @@ class AccessToken extends MinProgramBase
      * @return string
      * @throws MiniProgramError
      * @throws RequestError
+     * @throws InvalidUrl
      */
     public function refresh(): string
     {
