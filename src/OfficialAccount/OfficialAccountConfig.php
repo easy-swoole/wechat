@@ -19,13 +19,13 @@ use EasySwoole\WeChat\Utility\FileStorage;
  */
 class OfficialAccountConfig extends SplBean
 {
-    private $token;
-    private $aesKey;
-    private $appId;
-    private $appSecret;
-    private $encrypt = false;
-    private $storage;
-    private $tempDir;
+    protected $token;
+    protected $aesKey;
+    protected $appId;
+    protected $appSecret;
+    protected $encrypt = false;
+    protected $storage;
+    protected $tempDir;
 
     /**
      * 初始化公众号配置

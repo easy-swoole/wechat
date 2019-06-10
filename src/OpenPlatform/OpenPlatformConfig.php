@@ -19,10 +19,10 @@ use EasySwoole\WeChat\Utility\FileStorage;
  */
 class OpenPlatformConfig extends SplBean
 {
-    private $appId;
-    private $appSecret;
-    private $storage;
-    private $tempDir;
+    protected $appId;
+    protected $appSecret;
+    protected $storage;
+    protected $tempDir;
 
     /**
      * 初始化开放平台配置
