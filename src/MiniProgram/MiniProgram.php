@@ -13,6 +13,7 @@ class MiniProgram
 {
     private $config;
     private $auth;
+    private $encryptor;
     private $accessToken;
     private $qrCode;
 
@@ -46,6 +47,20 @@ class MiniProgram
         }
 
         return $this->auth;
+    }
+
+    /**
+     * encryptor
+     *
+     * @return Encryptor
+     */
+    public function encryptor() : Encryptor
+    {
+        if (!isset($this->encryptor)) {
+            $this->encryptor = new Encryptor($this);
+        }
+
+        return $this->encryptor;
     }
 
     /**
