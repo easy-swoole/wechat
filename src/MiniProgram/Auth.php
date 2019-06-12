@@ -15,11 +15,13 @@ use EasySwoole\WeChat\Utility\HttpClient;
 class Auth extends MinProgramBase
 {
     /**
-     * Code换取Session
+     * session
+     *
      * @param string $code
      * @return array
      * @throws MiniProgramError
      * @throws RequestError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      */
     public function session(string $code): array
     {
@@ -40,11 +42,13 @@ class Auth extends MinProgramBase
 
     /**
      * 支付后获取UNI_ID(微信订单号)
+     *
      * @param $openid
      * @param $transaction_id
      * @return array
      * @throws MiniProgramError
      * @throws RequestError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      */
     public function getPadiUnionidByTransaction($openid, $transaction_id)
     {
@@ -71,6 +75,7 @@ class Auth extends MinProgramBase
      * @return array
      * @throws MiniProgramError
      * @throws RequestError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      */
     public function getPadiUnionidByOutTradeNo($openid, $mch_id, $out_trade_no)
     {

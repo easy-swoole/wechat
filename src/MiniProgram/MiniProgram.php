@@ -16,6 +16,7 @@ class MiniProgram
     private $encryptor;
     private $accessToken;
     private $qrCode;
+    private $templateMsg;
 
     public function __construct(MiniProgramConfig $config = null)
     {
@@ -54,7 +55,7 @@ class MiniProgram
      *
      * @return Encryptor
      */
-    public function encryptor() : Encryptor
+    public function encryptor(): Encryptor
     {
         if (!isset($this->encryptor)) {
             $this->encryptor = new Encryptor($this);
@@ -89,5 +90,19 @@ class MiniProgram
         }
 
         return $this->qrCode;
+    }
+
+    /**
+     * templateMsg
+     *
+     * @return TemplateMsg
+     */
+    public function templateMsg(): TemplateMsg
+    {
+        if (!isset($this->templateMsg)) {
+            $this->templateMsg = new TemplateMsg($this);
+        }
+
+        return $this->templateMsg;
     }
 }
