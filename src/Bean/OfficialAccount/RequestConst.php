@@ -20,6 +20,7 @@ class RequestConst
     const MSG_TYPE_TEXT = 'text';
     const MSG_TYPE_EVENT = 'event';
     const MSG_TYPE_IMAGE = 'image';
+    const MSG_TYPE_MUSIC = 'music';
     const MSG_TYPE_VOICE = 'voice';
     const MSG_TYPE_VIDEO = 'video';
     const MSG_TYPE_SHORT_VIDEO = 'shortvideo';
