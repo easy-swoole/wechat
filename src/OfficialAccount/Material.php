@@ -16,7 +16,7 @@ use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Exception\RequestError;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 /**
  * Class Material
@@ -81,7 +81,7 @@ class Material extends Media
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, ['media_id' => $mediaId]);
+        $response = NetWork::postJsonForJson($url, ['media_id' => $mediaId]);
         $ex = OfficialAccountError::hasException($response);
         if ($ex) {
             throw $ex;
@@ -103,7 +103,7 @@ class Material extends Media
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::getForJson($url);
+        $response = NetWork::getForJson($url);
         $ex = OfficialAccountError::hasException($response);
         if ($ex) {
             throw $ex;
@@ -133,7 +133,7 @@ class Material extends Media
             'count'  => $count
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         $ex = OfficialAccountError::hasException($response);
         if ($ex) {
             throw $ex;
@@ -160,7 +160,7 @@ class Material extends Media
             array_push($postData['articles'], $article->toArray(null, MediaArticle::FILTER_NOT_NULL));
         }
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         $ex = OfficialAccountError::hasException($response);
         if ($ex) {
             throw $ex;
@@ -190,7 +190,7 @@ class Material extends Media
             'articles' => $article->toArray(null, MediaRequest::FILTER_NOT_NULL)
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         $ex = OfficialAccountError::hasException($response);
         if ($ex) {
             throw $ex;

@@ -10,7 +10,7 @@ namespace EasySwoole\WeChat\Utility;
 
 use EasySwoole\HttpClient\Bean\Response;
 use EasySwoole\HttpClient\Exception\InvalidUrl;
-use EasySwoole\HttpClient\HttpClient as Client;
+use EasySwoole\HttpClient\HttpClient;
 use EasySwoole\WeChat\Exception\RequestError;
 
 /**
@@ -18,13 +18,12 @@ use EasySwoole\WeChat\Exception\RequestError;
  * Class HttpClient
  * @package EasySwoole\WeChat\Utility
  */
-class HttpClient
+class NetWork
 {
     /*
      * 一个应用内，基本没有必要实现不同的APP_ID 超时不同
      */
-    static $CONNECT_TIMEOUT = 1;
-    static $TIMEOUT = 1;
+    static $TIMEOUT = 15;
 
     /**
      * @param string $url
@@ -39,7 +38,7 @@ class HttpClient
      */
     static function get(string $url): Response
     {
-        return self::client($url)->getRequest();
+        return (new HttpClient($url))->setTimeout(self::$TIMEOUT)->get($url);
     }
 
 
@@ -63,16 +62,11 @@ class HttpClient
      * @return Response
      * @throws InvalidUrl
      */
-    static function post(string $url, $data = null, int $timeout = null)
+    static function post(string $url, $data = null)
     {
-        $client = self::client($url);
-
-        // 定义了独立的超时则使用独立设置
-        if (!is_null($timeout) && $timeout > self::$TIMEOUT) {
-            $client->setTimeout($timeout);
-        }
-
-        return $client->postRequest($data);
+        $client = new HttpClient($url);
+        $client->setTimeout(self::$TIMEOUT);
+        return $client->postJson($data);
     }
 
     /**
@@ -84,9 +78,9 @@ class HttpClient
      * @throws InvalidUrl
      * @throws RequestError
      */
-    static function postForJson(string $url, $data, int $timeout = null)
+    static function postForJson(string $url, $data)
     {
-        return self::parserJson(self::post($url, $data, $timeout));
+        return self::parserJson(self::post($url, $data));
     }
 
     /**
@@ -98,15 +92,13 @@ class HttpClient
      */
     static function postJson(string $url, $data): Response
     {
-
-        $client = self::client($url);
-
         // 传入的数据需要提前编码为Json
         if (is_array($data)) {
             $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
-
-        return $client->postJsonRequest($data);
+        $client = new HttpClient($url);
+        $client->setTimeout(self::$TIMEOUT);
+        return $client->postJson($data);
     }
 
     /**
@@ -139,29 +131,10 @@ class HttpClient
      */
     static function uploadFileByPath($url, string $uploadFile, string $uploadName = 'upload', string $mimeType = null, string $filename = null, int $offset = 0, int $length = 0, $timeout = 30, $extraPostData = null)
     {
-        $client = self::client($url);
-        $client->setTimeout($timeout);
-        return $client->uploadByFileRequest($uploadFile, $uploadName, $mimeType, $filename, $offset, $length, $extraPostData);
+
     }
 
-    /**
-     * 以字符串为内容上传
-     * @param string $url 上传URL
-     * @param string $uploadFile 本地文件的路径
-     * @param string $uploadName 上传的表单名称
-     * @param string|null $mimeType 文件的 MIME 不传则按照扩展名判断
-     * @param string|null $filename 文件的名称
-     * @param int $timeout
-     * @param null $extraPostData
-     * @return Response
-     * @throws InvalidUrl
-     */
-    static function uploadFileByContent($url, string $uploadFile, string $uploadName = 'upload', string $mimeType = null, string $filename = null, $timeout = 30, $extraPostData = null)
-    {
-        $client = self::client($url);
-        $client->setTimeout($timeout);
-        return $client->uploadByStringRequest($uploadFile, $uploadName, $mimeType, $filename, $extraPostData);
-    }
+
 
     /**
      * 返回Json进行解析
@@ -173,28 +146,12 @@ class HttpClient
     {
         $content = $response->getBody();
         $json = json_decode($content, true);
-
         // 解包失败认为请求出错
         if (!is_array($json)) {
             $ex = new RequestError();
             $ex->setResponse($response);
             throw $ex;
         }
-
         return $json;
-    }
-
-    /**
-     * 获取一个协程客户端
-     * @param string $url 需要请求的URL
-     * @return Client 返回客户端
-     * @throws InvalidUrl 链接无效抛出异常
-     */
-    private static function client(string $url): Client
-    {
-        $client = new Client($url);
-        $client->setTimeout(self::$TIMEOUT);
-        $client->setConnectTimeout(self::$CONNECT_TIMEOUT);
-        return $client;
     }
 }

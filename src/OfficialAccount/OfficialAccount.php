@@ -10,7 +10,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 use EasySwoole\WeChat\Bean\OfficialAccount\NetCheckRequest;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 class OfficialAccount
 {
@@ -150,7 +150,7 @@ class OfficialAccount
             'ACCESS_TOKEN'=>$this->accessToken()->getToken()
         ]);
 
-        $json = HttpClient::getForJson($url);
+        $json = NetWork::getForJson($url);
         $ex = OfficialAccountError::hasException($json);
         if($ex){
             throw $ex;
@@ -170,7 +170,7 @@ class OfficialAccount
             'ACCESS_TOKEN'=>$this->accessToken()->getToken()
         ]);
 
-        $json = HttpClient::postJsonForJson($url,$request->toArray());
+        $json = NetWork::postJsonForJson($url,$request->toArray());
         $ex = OfficialAccountError::hasException($json);
         if($ex){
             throw $ex;

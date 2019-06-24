@@ -5,7 +5,7 @@ namespace EasySwoole\WeChat\MiniProgram;
 use EasySwoole\HttpClient\Exception\InvalidUrl;
 use EasySwoole\WeChat\Exception\MiniProgramError;
 use EasySwoole\WeChat\Exception\RequestError;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 /**
  * 二维码生成
@@ -36,7 +36,7 @@ class QrCode extends MinProgramBase
         $data = ['path' => $path, 'width' => $width, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
         if ($lineColor) $data['line_color'] = $lineColor;
 
-        $responseBuffer = HttpClient::postJson($url, $data)->getBody();
+        $responseBuffer = NetWork::postJson($url, $data)->getBody();
 
         // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
         if (substr($responseBuffer, 0, 1) == "{") {
@@ -74,7 +74,7 @@ class QrCode extends MinProgramBase
         $data = ['path' => $path, 'width' => $width, 'scene' => $scene, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
         if ($lineColor) $data['line_color'] = $lineColor;
 
-        $responseBuffer = HttpClient::postJson($url, $data)->getBody();
+        $responseBuffer = NetWork::postJson($url, $data)->getBody();
 
         // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
         if (substr($responseBuffer, 0, 1) == "{") {
@@ -105,7 +105,7 @@ class QrCode extends MinProgramBase
             'ACCESS_TOKEN' => $token
         ]);
         $data = ['path' => $path, 'width' => $width];
-        $responseBuffer = HttpClient::postJson($url, $data)->getBody();
+        $responseBuffer = NetWork::postJson($url, $data)->getBody();
 
         // 如果调用成功，会直接返回图片二进制内容，如果请求失败，会返回 JSON 格式的数据
         if (substr($responseBuffer, 0, 1) == "{") {

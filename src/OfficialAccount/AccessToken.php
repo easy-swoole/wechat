@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 use EasySwoole\WeChat\Exception\RequestError;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 
 
@@ -51,7 +51,7 @@ class AccessToken extends OfficialAccountBase
             'APPID'=>$config->getAppId(),
             'APP_SECRET'=>$config->getAppSecret()
         ]);
-        $json = HttpClient::getForJson($url);
+        $json = NetWork::getForJson($url);
         $ex = OfficialAccountError::hasException($json);
         if($ex){
             throw $ex;

@@ -12,7 +12,7 @@ use EasySwoole\WeChat\Bean\OfficialAccount\JsApiSignaturePack;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\OfficialAccount\AccessToken;
 use EasySwoole\WeChat\OfficialAccount\ApiUrl;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 class JsSdk extends JsApiBase
 {
@@ -48,7 +48,7 @@ class JsSdk extends JsApiBase
     {
         $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
         $accessToken = (new AccessToken($this->getJsApi()->getOfficialAccount()))->getToken();
-        $response = HttpClient::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_GET_TICKET, [
+        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_GET_TICKET, [
             'ACCESS_TOKEN' => $accessToken,
         ]));
         $ex = OfficialAccountError::hasException($response);

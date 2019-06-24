@@ -9,7 +9,7 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 class User extends OfficialAccountBase
 {
@@ -29,7 +29,7 @@ class User extends OfficialAccountBase
             'LANG' => $lang
         ]);
 
-        $response = HttpClient::getForJson($url);
+        $response = NetWork::getForJson($url);
         return $this->hasException($response);
     }
 
@@ -55,7 +55,7 @@ class User extends OfficialAccountBase
             }, $openids),
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -72,7 +72,7 @@ class User extends OfficialAccountBase
             'NEXT_OPENID' => $nextOpenid
         ]);
 
-        $response = HttpClient::getForJson($url);
+        $response = NetWork::getForJson($url);
         return $this->hasException($response);
     }
 
@@ -93,7 +93,7 @@ class User extends OfficialAccountBase
             'openid' => $openid,
             'remark' => $remark
         ];
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -109,7 +109,7 @@ class User extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, ['begin_openid' => $beginOpenid]);
+        $response = NetWork::postJsonForJson($url, ['begin_openid' => $beginOpenid]);
         return $this->hasException($response);
     }
 
@@ -125,7 +125,7 @@ class User extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, ['openid_list' => (array) $openidList]);
+        $response = NetWork::postJsonForJson($url, ['openid_list' => (array) $openidList]);
         return $this->hasException($response);
     }
 
@@ -141,7 +141,7 @@ class User extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, ['openid_list' => (array) $openidList]);
+        $response = NetWork::postJsonForJson($url, ['openid_list' => (array) $openidList]);
         return $this->hasException($response);
     }
 
@@ -163,7 +163,7 @@ class User extends OfficialAccountBase
             'openid_list' => $openidList
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -178,7 +178,7 @@ class User extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::getForJson($url);
+        $response = NetWork::getForJson($url);
         return $this->hasException($response);
     }
 
@@ -198,7 +198,7 @@ class User extends OfficialAccountBase
             'tag' => ['name' => $name]
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -222,7 +222,7 @@ class User extends OfficialAccountBase
             ]
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -242,7 +242,7 @@ class User extends OfficialAccountBase
             'tag' => ['id' => $tagId]
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -258,7 +258,7 @@ class User extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, ['openid' => $openid]);
+        $response = NetWork::postJsonForJson($url, ['openid' => $openid]);
         return $this->hasException($response);
     }
 
@@ -280,7 +280,7 @@ class User extends OfficialAccountBase
             'next_openid' => $nextOpenId
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -303,7 +303,7 @@ class User extends OfficialAccountBase
             'tagid' => $tagId
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 
@@ -325,7 +325,7 @@ class User extends OfficialAccountBase
             'tagid' => $tagId
         ];
 
-        $response = HttpClient::postJsonForJson($url, $postData);
+        $response = NetWork::postJsonForJson($url, $postData);
         return $this->hasException($response);
     }
 }

@@ -10,7 +10,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 
 use EasySwoole\WeChat\Bean\OfficialAccount\TemplateMsg as MsgBean;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 class TemplateMsg extends OfficialAccountBase
 {
@@ -27,7 +27,7 @@ class TemplateMsg extends OfficialAccountBase
         ]);
 
         $templateMsg->setAppid($this->getOfficialAccount()->getConfig()->getAppId());
-        $response = HttpClient::postJsonForJson($url, $templateMsg->getSendMessage());
+        $response = NetWork::postJsonForJson($url, $templateMsg->getSendMessage());
         $this->hasException($response);
         return true;
     }
@@ -44,7 +44,7 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, ['template_id' => $templateId]);
+        $response = NetWork::postJsonForJson($url, ['template_id' => $templateId]);
         $this->hasException($response);
         return true;
     }
@@ -60,7 +60,7 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::getForJson($url);
+        $response = NetWork::getForJson($url);
         return $this->hasException($response);
     }
 
@@ -76,7 +76,7 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, ['template_id_short' => $shortId]);
+        $response = NetWork::postJsonForJson($url, ['template_id_short' => $shortId]);
         return $this->hasException($response)['template_id_short'];
     }
 
@@ -92,7 +92,7 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postJsonForJson($url, $industryId);
+        $response = NetWork::postJsonForJson($url, $industryId);
         $this->hasException($response);
         return true;
     }
@@ -108,7 +108,7 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::getForJson($url);
+        $response = NetWork::getForJson($url);
         return $this->hasException($response);
     }
 
@@ -125,7 +125,7 @@ class TemplateMsg extends OfficialAccountBase
         ]);
 
         $templateMsg->setAppid($this->getOfficialAccount()->getConfig()->getAppId());
-        $response = HttpClient::postJsonForJson($url, $templateMsg->getSendMessage());
+        $response = NetWork::postJsonForJson($url, $templateMsg->getSendMessage());
         return $this->hasException($response);
     }
 }

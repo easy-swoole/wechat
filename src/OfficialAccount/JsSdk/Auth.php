@@ -14,7 +14,7 @@ use EasySwoole\WeChat\Bean\OfficialAccount\SnsAuthBean;
 use EasySwoole\WeChat\Bean\OfficialAccount\User;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\OfficialAccount\ApiUrl;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 class Auth extends JsApiBase
 {
@@ -50,7 +50,7 @@ class Auth extends JsApiBase
         $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
         $appid = $officialAccountConfig->getAppId();
         $secret = $officialAccountConfig->getAppSecret();
-        $response = HttpClient::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_CODE_TO_TOKEN, [
+        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_CODE_TO_TOKEN, [
             'APPID' => $appid,
             'SECRET' => $secret,
             'CODE' => $authCode
@@ -72,7 +72,7 @@ class Auth extends JsApiBase
      */
     function tokenToUser(SnsAuthBean $authBean): ?User
     {
-        $response = HttpClient::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_SNS_USERINFO, [
+        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_SNS_USERINFO, [
             'ACCESS_TOKEN' => $authBean->getAccessToken(),
             'OPENID' => $authBean->getOpenid(),
         ]));
@@ -108,7 +108,7 @@ class Auth extends JsApiBase
     {
         $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
         $appid = $officialAccountConfig->getAppId();
-        $response = HttpClient::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_REFRESH_TOKEN, [
+        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_REFRESH_TOKEN, [
             'APPID' => $appid,
             'REFRESH_TOKEN' => $refreshToken,
         ]));
@@ -130,7 +130,7 @@ class Auth extends JsApiBase
      */
     function authCheck(SnsAuthBean $authBean)
     {
-        $response = HttpClient::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_REFRESH_TOKEN, [
+        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_REFRESH_TOKEN, [
             'OPENID' => $authBean->getOpenid(),
             'ACCESS_TOKEN' => $authBean->getAccessToken(),
         ]));

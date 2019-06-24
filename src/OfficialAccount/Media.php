@@ -17,7 +17,7 @@ use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
 use EasySwoole\WeChat\Bean\OfficialAccount\PostFile;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Exception\RequestError;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 use Swoole\Coroutine;
 
 /**
@@ -77,7 +77,7 @@ class Media extends OfficialAccountBase
      */
     protected function uploadMedia(string $url, PostFile $fileBean, array $form = null, $timeout = 30): array
     {
-        $response = HttpClient::uploadFileByPath($url, $fileBean->getPath(), $fileBean->getName(), $fileBean->getMimeType(), $fileBean->getFilename(), $fileBean->getOffset(), $fileBean->getLength(), $timeout, $form);
+        $response = NetWork::uploadFileByPath($url, $fileBean->getPath(), $fileBean->getName(), $fileBean->getMimeType(), $fileBean->getFilename(), $fileBean->getOffset(), $fileBean->getLength(), $timeout, $form);
         $content = $response->getBody();
         $json = json_decode($content, true);
 
@@ -102,9 +102,9 @@ class Media extends OfficialAccountBase
     protected function getMedia(string $url, array $data = null)
     {
         if (!is_null($data)) {
-            $response = HttpClient::postJson($url, $data);
+            $response = NetWork::postJson($url, $data);
         } else {
-            $response = HttpClient::get($url);
+            $response = NetWork::get($url);
         }
 
         $response = new MediaResponse($response);

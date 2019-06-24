@@ -5,7 +5,7 @@ namespace EasySwoole\WeChat\MiniProgram;
 
 use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Exception\MiniProgramError;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 /**
  * Class Auth
@@ -31,7 +31,7 @@ class Auth extends MinProgramBase
             'JSCODE' => $code
         ]);
 
-        $responseArray = HttpClient::getForJson($url);
+        $responseArray = NetWork::getForJson($url);
         $ex = MiniProgramError::hasException($responseArray);
         if ($ex) {
             throw $ex;
@@ -58,7 +58,7 @@ class Auth extends MinProgramBase
             'OPENID'       => $openid
         ], ['transaction_id' => $transaction_id]);
 
-        $responseArray = HttpClient::getForJson($url);
+        $responseArray = NetWork::getForJson($url);
         $ex = MiniProgramError::hasException($responseArray);
         if ($ex) {
             throw $ex;
@@ -85,7 +85,7 @@ class Auth extends MinProgramBase
             'OPENID'       => $openid
         ], ['out_trade_no' => $out_trade_no, 'mch_id' => $mch_id]);
 
-        $responseArray = HttpClient::getForJson($url);
+        $responseArray = NetWork::getForJson($url);
         $ex = MiniProgramError::hasException($responseArray);
         if ($ex) {
             throw $ex;

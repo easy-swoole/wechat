@@ -5,7 +5,7 @@ namespace EasySwoole\WeChat\MiniProgram;
 
 use EasySwoole\WeChat\Exception\MiniProgramError;
 use EasySwoole\WeChat\Bean\MiniProgram\TemplateMsg as TemplateMsgBean;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 /**
  * 小程序模板消息
@@ -31,7 +31,7 @@ class TemplateMsg extends MinProgramBase
             'ACCESS_TOKEN' => $this->getMiniProgram()->accessToken()->getToken()
         ]);
 
-        $responseArrays = HttpClient::postForJson($url, [
+        $responseArrays = NetWork::postForJson($url, [
             'offset' => $offset,
             'count'  => $count
         ]);
@@ -58,7 +58,7 @@ class TemplateMsg extends MinProgramBase
             'ACCESS_TOKEN' => $this->getMiniProgram()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postForJson($url, ['id' => $id]);
+        $response = NetWork::postForJson($url, ['id' => $id]);
         $ex = MiniProgramError::hasException($response);
         if ($ex) {
             throw $ex;
@@ -83,7 +83,7 @@ class TemplateMsg extends MinProgramBase
             'ACCESS_TOKEN' => $this->getMiniProgram()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postForJson($url, [
+        $response = NetWork::postForJson($url, [
             'id'              => $id,
             'keyword_id_list' => $keywordIdList
         ]);
@@ -110,7 +110,7 @@ class TemplateMsg extends MinProgramBase
             'ACCESS_TOKEN' => $this->getMiniProgram()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postForJson($url, ['template_id' => $templateId]);
+        $response = NetWork::postForJson($url, ['template_id' => $templateId]);
         $ex = MiniProgramError::hasException($response);
         if ($ex) {
             throw $ex;
@@ -135,7 +135,7 @@ class TemplateMsg extends MinProgramBase
             'ACCESS_TOKEN' => $this->getMiniProgram()->accessToken()->getToken()
         ]);
 
-        $responseArrays = HttpClient::postForJson($url, [
+        $responseArrays = NetWork::postForJson($url, [
             'offset' => $offset,
             'count'  => $count
         ]);
@@ -162,7 +162,7 @@ class TemplateMsg extends MinProgramBase
             'ACCESS_TOKEN' => $this->getMiniProgram()->accessToken()->getToken()
         ]);
 
-        $response = HttpClient::postForJson($url, $templateMsg->getSendMessage());
+        $response = NetWork::postForJson($url, $templateMsg->getSendMessage());
         $ex = MiniProgramError::hasException($response);
         if ($ex) {
             throw $ex;

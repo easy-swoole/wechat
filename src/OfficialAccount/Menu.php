@@ -10,7 +10,7 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 
 use EasySwoole\WeChat\Exception\OfficialAccountError;
-use EasySwoole\WeChat\Utility\HttpClient;
+use EasySwoole\WeChat\Utility\NetWork;
 
 class Menu extends OfficialAccountBase
 {
@@ -35,7 +35,7 @@ class Menu extends OfficialAccountBase
             ]);
         }
 
-        $json = HttpClient::postJsonForJson($url, $postData);
+        $json = NetWork::postJsonForJson($url, $postData);
         $ex = OfficialAccountError::hasException($json);
         if($ex){
             throw $ex;
@@ -58,7 +58,7 @@ class Menu extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $json = HttpClient::postJsonForJson($url, Array('user_id' => $userId));
+        $json = NetWork::postJsonForJson($url, Array('user_id' => $userId));
         $ex = OfficialAccountError::hasException($json);
         if($ex){
             throw $ex;
@@ -77,7 +77,7 @@ class Menu extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $json = HttpClient::getForJson($url);
+        $json = NetWork::getForJson($url);
         $ex = OfficialAccountError::hasException($json);
         if($ex){
             throw $ex;
@@ -99,12 +99,12 @@ class Menu extends OfficialAccountBase
             $url = ApiUrl::generateURL(ApiUrl::MENU_DELETE, [
                 'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
             ]);
-            $json = HttpClient::getForJson($url);
+            $json = NetWork::getForJson($url);
         }else{
             $url = ApiUrl::generateURL(ApiUrl::MENU_DELETE_CONDITIONAL, [
                 'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
             ]);
-            $json = HttpClient::postJsonForJson($url, Array('menuid' => $menuId));
+            $json = NetWork::postJsonForJson($url, Array('menuid' => $menuId));
         }
 
         $ex = OfficialAccountError::hasException($json);
