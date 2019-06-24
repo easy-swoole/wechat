@@ -11,6 +11,7 @@ namespace EasySwoole\WeChat\Utility;
 use EasySwoole\HttpClient\Bean\Response;
 use EasySwoole\HttpClient\Exception\InvalidUrl;
 use EasySwoole\HttpClient\HttpClient;
+use EasySwoole\WeChat\Bean\OfficialAccount\PostFile;
 use EasySwoole\WeChat\Exception\RequestError;
 
 /**
@@ -116,22 +117,21 @@ class NetWork
     }
 
     /**
-     * 上传一个本地文件
-     * @param string $url 上传URL
-     * @param string $uploadFile 本地文件的路径
-     * @param string $uploadName 上传的表单名称
-     * @param string|null $mimeType 文件的 MIME 不传则按照扩展名判断
-     * @param string|null $filename 文件的名称
-     * @param int $offset 上传的偏移量
-     * @param int $length 需要发送的长度
-     * @param int $timeout
-     * @param null $extraPostData
+     * 上传URL
+     *
+     * @param            $url
+     * @param PostFile   $postFile
+     * @param array|null $extraData
+     * @param int        $timeout
      * @return Response
      * @throws InvalidUrl
      */
-    static function uploadFileByPath($url, string $uploadFile, string $uploadName = 'upload', string $mimeType = null, string $filename = null, int $offset = 0, int $length = 0, $timeout = 30, $extraPostData = null)
+    static function uploadFileByPath($url, PostFile $postFile, array $extraData = null, int $timeout = 30)
     {
-
+        $client = new HttpClient($url);
+        $client->setTimeout($timeout);
+        $client->getClient()->addFile($postFile->getPath(), $postFile->getName(), $postFile->getMimeType(), $postFile->getFilename(), $postFile->getOffset(), $postFile->getLength());
+        return $client->post($extraData);
     }
 
 
