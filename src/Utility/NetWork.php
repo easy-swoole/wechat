@@ -38,7 +38,7 @@ class NetWork
      */
     static function get(string $url): Response
     {
-        return (new HttpClient($url))->setTimeout(self::$TIMEOUT)->get($url);
+        return (new HttpClient($url))->setTimeout(self::$TIMEOUT)->get();
     }
 
 
