@@ -30,6 +30,7 @@ class Media extends OfficialAccountBase
 
     /**
      * 上传临时素材
+     *
      * @param MediaRequest $mediaBean
      * @return array
      * @throws InvalidUrl
@@ -49,6 +50,7 @@ class Media extends OfficialAccountBase
 
     /**
      * 获取临时素材
+     *
      * @param $mediaId
      * @return MediaResponse|mixed
      * @throws InvalidUrl
@@ -67,17 +69,18 @@ class Media extends OfficialAccountBase
 
     /**
      * 执行素材上传
-     * @param string $url
-     * @param PostFile $fileBean
+     *
+     * @param string     $url
+     * @param PostFile   $fileBean
      * @param array|null $form
-     * @param int $timeout
+     * @param int        $timeout
      * @return array
      * @throws InvalidUrl
      * @throws RequestError
      */
-    protected function uploadMedia(string $url, PostFile $fileBean, array $form = null, $timeout = 30): array
+    protected function uploadMedia(string $url, PostFile $fileBean, array $form = null, int $timeout = 30): array
     {
-        $response = NetWork::uploadFileByPath($url, $fileBean->getPath(), $fileBean->getName(), $fileBean->getMimeType(), $fileBean->getFilename(), $fileBean->getOffset(), $fileBean->getLength(), $timeout, $form);
+        $response = NetWork::uploadFileByPath($url, $fileBean, $form, $timeout);
         $content = $response->getBody();
         $json = json_decode($content, true);
 
@@ -93,7 +96,8 @@ class Media extends OfficialAccountBase
 
     /**
      * 获取微信素材
-     * @param string $url
+     *
+     * @param string     $url
      * @param array|null $data
      * @return Response|MediaResponse
      * @throws OfficialAccountError
@@ -118,6 +122,7 @@ class Media extends OfficialAccountBase
 
     /**
      * 创建一个文件对象
+     *
      * @param MediaRequest $mediaBean
      * @return PostFile
      * @throws MimeDetectorException
