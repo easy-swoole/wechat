@@ -184,7 +184,65 @@ class ApiUrl
      */
     const WXACODE_GET_UNLIMITED = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN';
 
-    // TODO 插件管理 附近的小程序 内容安全 物流助手 生物认证
+    /**
+     * 向插件开发者发起使用插件的申请
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.applyPlugin.html
+     */
+    const APPLY_PLUGIN = 'https://api.weixin.qq.com/wxa/plugin?access_token=TOKEN';
+
+    /**
+     * 获取当前所有插件使用方（供插件开发者调用）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginDevApplyList.html
+     */
+     const GET_PLUGIN_DEV_APPLY_LIST = 'https://api.weixin.qq.com/wxa/devplugin?access_token=TOKEN';
+
+    /**
+     * 查询已添加的插件
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginList.html
+     */
+    const GET_PLUGIN_LiST = 'https://api.weixin.qq.com/wxa/plugin?access_token=TOKEN';
+
+    /**
+     * 修改插件使用申请的状态（供插件开发者调用）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.setDevPluginApplyStatus.html
+     */
+    const SET_DEV_PLUGIN_APPLY_STATUS = 'https://api.weixin.qq.com/wxa/devplugin?access_token=TOKEN';
+
+    /**
+     * 删除已添加的插件
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.unbindPlugin.html
+     */
+    const UNBIND_PLUGIN = 'https://api.weixin.qq.com/wxa/plugin?access_token=TOKEN';
+
+    /**
+     * 添加地点
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.add.html
+     */
+    const ADD = 'https://api.weixin.qq.com/wxa/addnearbypoi?access_token=ACCESS_TOKEN';
+    /**
+     * 删除地点
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.delete.html
+     */
+    const DELETE = 'https://api.weixin.qq.com/wxa/delnearbypoi?access_token=ACCESS_TOKEN';
+
+    /**
+     * 查看地点列表
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.getList.html
+     */
+    const GET_LIST = 'https://api.weixin.qq.com/wxa/getnearbypoilist?page=PAGE&page_rows=PAGE_ROWS&access_token=ACCESS_TOKEN';
+
+    /**
+     * 展示/取消展示附近小程序
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.setShowStatus.html
+     */
+    const SET_SHOW_STATUS = 'https://api.weixin.qq.com/wxa/setnearbypoishowstatus?access_token=ACCESS_TOKEN';
+
+    /**
+     * 校验一张图片是否含有违法违规内容。
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.imgSecCheck.html
+     */
+    const IMG_SEC_CHECK = 'https://api.weixin.qq.com/wxa/img_sec_check?access_token=ACCESS_TOKEN';
+    // TODO  内容安全 物流助手 生物认证
 
     /**
      * 生成访问链接
