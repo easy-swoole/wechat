@@ -184,7 +184,38 @@ class ApiUrl
      */
     const WXACODE_GET_UNLIMITED = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN';
 
-    // TODO 插件管理 附近的小程序 内容安全 物流助手 生物认证
+    /**
+     * 向插件开发者发起使用插件的申请
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.applyPlugin.html
+     */
+    const APPLY_PLUGIN = 'https://api.weixin.qq.com/wxa/plugin?access_token=TOKEN';
+
+    /**
+     * 获取当前所有插件使用方（供插件开发者调用）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginDevApplyList.html
+     */
+     const GET_PLUGIN_DEV_APPLY_LIST = 'https://api.weixin.qq.com/wxa/devplugin?access_token=TOKEN';
+
+    /**
+     * 查询已添加的插件
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginList.html
+     */
+    const GET_PLUGIN_LiST = 'https://api.weixin.qq.com/wxa/plugin?access_token=TOKEN';
+
+    /**
+     * 修改插件使用申请的状态（供插件开发者调用）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.setDevPluginApplyStatus.html
+     */
+    const SET_DEV_PLUGIN_APPLY_STATUS = 'https://api.weixin.qq.com/wxa/devplugin?access_token=TOKEN';
+
+    /**
+     * 删除已添加的插件
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.unbindPlugin.html
+     */
+    const UNBIND_PLUGIN = 'https://api.weixin.qq.com/wxa/plugin?access_token=TOKEN';
+
+
+    // TODO 附近的小程序 内容安全 物流助手 生物认证
 
     /**
      * 生成访问链接
