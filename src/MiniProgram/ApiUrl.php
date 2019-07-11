@@ -242,7 +242,19 @@ class ApiUrl
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.imgSecCheck.html
      */
     const IMG_SEC_CHECK = 'https://api.weixin.qq.com/wxa/img_sec_check?access_token=ACCESS_TOKEN';
-    // TODO  内容安全 物流助手 生物认证
+
+    /**
+     * 异步校验图片/音频是否含有违法违规内容
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html
+     */
+    const MEDIA_CHECK_ASYNC = 'https://api.weixin.qq.com/wxa/media_check_async?access_token=ACCESS_TOKEN';
+
+    /**
+     * 检查一段文本是否含有违法违规内容。
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
+     */
+    const MSG_SEC_CHECK = 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token=ACCESS_TOKEN';
+    // TODO   物流助手 生物认证
 
     /**
      * 生成访问链接
