@@ -22,13 +22,13 @@ class Plugin extends MinProgramBase
     /**
      *向插件开发者发起使用插件的申请
      * @param string $action
-     * @param string $plugin_appid
+     * @param string $pluginAppid
      * @param string $reason
      * @return bool
      * @throws MiniProgramError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    function applyPlugin(string $action = 'apply' ,string $plugin_appid ,string $reason = '')
+    function applyPlugin(string $action = 'apply' ,string $pluginAppid ,string $reason = '')
     {
         $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::APPLY_PLUGIN,[
@@ -36,7 +36,7 @@ class Plugin extends MinProgramBase
         ]);
         $data = [
             'action'        => $action,
-            'plugin_appid'  => $plugin_appid,
+            'plugin_appid'  => $pluginAppid,
             'reason'        => $reason
         ];
         $response =  NetWork::postForJson($url,$data);
@@ -139,12 +139,12 @@ class Plugin extends MinProgramBase
     /**
      * 删除已添加的插件
      * @param string $action
-     * @param string $plugin_appid
+     * @param string $pluginAppid
      * @return bool
      * @throws MiniProgramError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    function unbindPlugin(string $action = 'unbind' ,string $plugin_appid)
+    function unbindPlugin(string $action = 'unbind' ,string $pluginAppid)
     {
         $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::UNBIND_PLUGIN,[
@@ -152,7 +152,7 @@ class Plugin extends MinProgramBase
         ]);
         $data = [
             'action'        => $action,
-            'plugin_appid'  => $plugin_appid
+            'plugin_appid'  => $pluginAppid
         ];
         $response = NetWork::postForJson($url,$data);
         $ex = MiniProgramError::hasException($response);
