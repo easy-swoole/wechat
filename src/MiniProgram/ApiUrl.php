@@ -254,8 +254,72 @@ class ApiUrl
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
      */
     const MSG_SEC_CHECK = 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token=ACCESS_TOKEN';
-    // TODO   物流助手 生物认证
 
+    /**
+     * SOTER 生物认证秘钥签名验证
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/soter/soter.verifySignature.html
+     */
+    const VERIFY_SIGNATURE =  'https://api.weixin.qq.com/cgi-bin/soter/verify_signature?access_token=ACCESS_TOKEN';
+
+    /**
+     *绑定、解绑物流账号
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.bindAccount.html
+     */
+    const BIND_ACCOUNT = 'https://api.weixin.qq.com/cgi-bin/express/business/account/bind?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取所有绑定的物流账号
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getallAccount.html
+     */
+    const GET_ALL_ACCOUNT = 'https://api.weixin.qq.com/cgi-bin/express/business/account/getall?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取电子面单余额。仅在使用加盟类快递公司时，才可以调用
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getQuota.html
+     */
+    const GET_QUOTA = 'https://api.weixin.qq.com/cgi-bin/express/business/quota/get?access_token=ACCESS_TOKEN';
+
+    /**
+     * 生成运单
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.addOrder.html
+     */
+    const ADD_ORDER = 'https://api.weixin.qq.com/cgi-bin/express/business/order/add?access_token=ACCESS_TOKEN';
+
+    /**
+     * 取消运单
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.cancelOrder.html
+     */
+    const CANCEL_ORDER = 'https://api.weixin.qq.com/cgi-bin/express/business/order/cancel?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取支持的快递公司列表
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getAllDelivery.html
+     */
+    const GET_ALL_DELIVERY = 'https://api.weixin.qq.com/cgi-bin/express/business/delivery/getall?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取运单数据
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getOrder.html
+     */
+    const GET_ORDER = 'https://api.weixin.qq.com/cgi-bin/express/business/order/get?access_token=ACCESS_TOKEN';
+
+    /**
+     * 查询运单轨迹
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getPath.html
+     */
+    const GET_PATH = 'https://api.weixin.qq.com/cgi-bin/express/business/path/get?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取打印员。若需要使用微信打单 PC 软件，才需要调用。
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getPrinter.html
+     */
+    const GET_PRINTER = 'https://api.weixin.qq.com/cgi-bin/express/business/printer/getall?access_token=ACCESS_TOKEN';
+
+    /**
+     * 配置面单打印员,若需要使用微信打单 PC 软件，才需要调用。
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.updatePrinter.html
+     */
+    const UPDATE_PRINTER = 'https://api.weixin.qq.com/cgi-bin/express/business/printer/update?access_token=ACCESS_TOKEN';
     /**
      * 生成访问链接
      * @param string $baseUrl 基础链接
