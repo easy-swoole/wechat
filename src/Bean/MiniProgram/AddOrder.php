@@ -23,6 +23,20 @@ class AddOrder extends SplBean
     protected $bizId;
     /** @var string */
     protected $customRemark;
+    /** @var int */
+    protected $tagid;
+    /** @var object */
+    protected $sender;
+    /** @var object */
+    protected $receiver;
+    /** @var object */
+    protected $cargo;
+    /** @var object */
+    protected $shop;
+    /** @var object */
+    protected $insured;
+    /** @var object */
+    protected $service;
 
     /**
      * @return int
@@ -263,21 +277,6 @@ class AddOrder extends SplBean
     {
         $this->service = $service;
     }
-    /** @var int */
-    protected $tagid;
-    /** @var object */
-    protected $sender;
-    /** @var object */
-    protected $receiver;
-    /** @var object */
-    protected $cargo;
-    /** @var object */
-    protected $shop;
-    /** @var object */
-    protected $insured;
-    /** @var object */
-    protected $service;
-
 
 
 }
