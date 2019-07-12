@@ -254,7 +254,18 @@ class ApiUrl
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
      */
     const MSG_SEC_CHECK = 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token=ACCESS_TOKEN';
-    // TODO   物流助手 生物认证
+
+    /**
+     * SOTER 生物认证秘钥签名验证
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/soter/soter.verifySignature.html
+     */
+    const VERIFY_SIGNATURE =  'https://api.weixin.qq.com/cgi-bin/soter/verify_signature?access_token=ACCESS_TOKEN';
+
+    /**
+     *绑定、解绑物流账号
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.bindAccount.html
+     */
+    const BIND_ACCOUNT = 'https://api.weixin.qq.com/cgi-bin/express/business/account/bind?access_token=ACCESS_TOKEN';
 
     /**
      * 生成访问链接
