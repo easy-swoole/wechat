@@ -320,6 +320,31 @@ class ApiUrl
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.updatePrinter.html
      */
     const UPDATE_PRINTER = 'https://api.weixin.qq.com/cgi-bin/express/business/printer/update?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取面单联系人信息
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.getContact.html
+     */
+    const GET_CONTACT = 'https://api.weixin.qq.com/cgi-bin/express/delivery/contact/get?access_token=ACCESS_TOKEN';
+
+    /**
+     * 预览面单模板。用于调试面单模板使用
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.previewTemplate.html
+     */
+    const PREVIEW_TEMPLATE =  'https://api.weixin.qq.com/cgi-bin/express/delivery/template/preview?access_token=ACCESS_TOKEN';
+
+    /**
+     * 更新商户审核结果
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.updateBusiness.html
+     */
+    const UPDATE_BUSINESS = 'https://api.weixin.qq.com/cgi-bin/express/delivery/service/business/update?access_token=ACCESS_TOKEN';
+
+    /**
+     * 更新运单轨迹
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.updatePath.html
+     */
+    const UPDATE_PATH = 'https://api.weixin.qq.com/cgi-bin/express/delivery/path/update?access_token=ACCESS_TOKEN';
+
     /**
      * 生成访问链接
      * @param string $baseUrl 基础链接
