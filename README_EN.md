@@ -221,7 +221,7 @@ $buttons = [
     $snsAuthBean->getRefreshToken();
     
     // access token to user info
-    $user = $jsApi->auth()->tokenToUser($snsAuthBean->getAccessToken());
+    $user = $jsApi->auth()->tokenToUser($snsAuthBean);
     $user->getOpenid();
     $user->getHeadimgurl();
     $user->getNickname(); // ... and more
