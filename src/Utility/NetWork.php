@@ -42,6 +42,17 @@ class NetWork
         return (new HttpClient($url))->setTimeout(self::$TIMEOUT)->get();
     }
 
+    /**
+     * 发起一次Get请求并获得返回
+     * @param string $url
+     * @param array $data
+     * @return Response
+     * @throws InvalidUrl
+     */
+    static function getByArray(string $url, array $data): Response
+    {
+        return (new HttpClient($url))->setTimeout(self::$TIMEOUT)->setQuery($data)->get();
+    }
 
     /**
      * 返回内容进行Json解析
@@ -50,9 +61,13 @@ class NetWork
      * @throws InvalidUrl
      * @throws RequestError
      */
-    static function getForJson(string $url): array
+    static function getForJson(string $url, array $data = []): array
     {
-        return self::parserJson(self::get($url));
+        if ($data) {
+            return self::parserJson(self::getByArray($url, $data));
+        } else {
+            return self::parserJson(self::get($url));
+        }
     }
 
     /**
@@ -65,9 +80,7 @@ class NetWork
      */
     static function post(string $url, $data = null)
     {
-        $client = new HttpClient($url);
-        $client->setTimeout(self::$TIMEOUT);
-        return $client->postJson($data);
+        return self::postJson($url, $data);
     }
 
     /**

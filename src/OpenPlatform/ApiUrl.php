@@ -31,6 +31,15 @@ class ApiUrl
     // 获取用户信息
     const GET_USER_INFO = 'https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID';
 
+    /*
+     * 三方平台代替小程序 code 换取 session_key
+     * @see https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1492585163_FtTNA&token=&lang=
+    */
+    const COMPONENT_AUTH_CODE2SESSION = 'https://api.weixin.qq.com/sns/component/jscode2session';
+
+    //获取第三方平台component_access_token
+    const API_COMPONENT_TOKEN = 'https://api.weixin.qq.com/cgi-bin/component/api_component_token';
+    
     public static function generateURL(string $baseUrl, array $data): string
     {
         foreach ($data as $key => $item) {

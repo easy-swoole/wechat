@@ -42,4 +42,46 @@ class OpenPlatform
     {
         return $this->config;
     }
+
+    /**
+     * accessToken
+     *
+     * @return AccessToken
+     */
+    public function accessToken(): AccessToken
+    {
+        if (!isset($this->accessToken)) {
+            $this->accessToken = new AccessToken($this);
+        }
+
+        return $this->accessToken;
+    }
+
+    /**
+     * VerifyTicket
+     *
+     * @return VerifyTicket
+     */
+    public function verifyTicket(): VerifyTicket
+    {
+        if (!isset($this->verifyTicket)) {
+            $this->verifyTicket = new VerifyTicket($this);
+        }
+
+        return $this->verifyTicket;
+    }
+
+    /**
+     * encryptor
+     *
+     * @return Encryptor
+     */
+    public function encryptor(): Encryptor
+    {
+        if (!isset($this->encryptor)) {
+            $this->encryptor = new Encryptor($this);
+        }
+
+        return $this->encryptor;
+    }
 }
