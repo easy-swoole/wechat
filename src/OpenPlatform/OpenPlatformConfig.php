@@ -122,4 +122,44 @@ class OpenPlatformConfig extends SplBean
         $this->tempDir = $tempDir;
         return $this;
     }
+
+    /**
+     * 获取第三方平台appid
+     * @return mixed
+     */
+    public function getComponentAppId()
+    {
+        return $this->componentAppId;
+    }
+
+    /**
+     * 设置第三方平台appid
+     * @param mixed 
+     * @return OpenPlatformConfig
+     */
+    public function setComponentAppId($componentAppId): OpenPlatformConfig
+    {
+        $this->componentAppId = $componentAppId;
+        return $this;
+    }
+
+    /**
+     * 获取第三方平台appsecret
+     * @return mixed
+     */
+    public function getComponentAppSecret()
+    {
+        return $this->componentAppSecret;
+    }
+
+    /**
+     * 设置第三方平台appsecret
+     * @param mixed 
+     * @return OpenPlatformConfig
+     */
+    public function setComponentAppSecret($componentAppSecret): OpenPlatformConfig
+    {
+        $this->componentAppSecret = $componentAppSecret;
+        return $this;
+    }
 }
