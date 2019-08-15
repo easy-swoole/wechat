@@ -70,4 +70,33 @@ class Auth extends OpenPlatformBase
     {
 
     }
+
+    /**
+     * session2code
+     *
+     * @param string $code
+     * @return array
+     * @throws OpenPlatformError
+     * @throws RequestError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     */
+    public function session(string $code): array
+    {
+        $accessToken = $this->getOpenPlatform()->accessToken()->getComponentAccessToken();
+        $config = $this->getOpenPlatform()->getConfig();
+        $data = [
+            'appid'  => $config->getAppId(),
+            'js_code' => $code,
+            'grant_type' => 'authorization_code',
+            'component_appid' => $config->getComponentAppId(),
+            'component_access_token' => $accessToken,
+        ];
+        $responseArray = NetWork::getForJson(ApiUrl::COMPONENT_AUTH_CODE2SESSION, $data);
+        $ex = OpenPlatformError::hasException($responseArray);
+        if ($ex) {
+            throw $ex;
+        }
+
+        return $responseArray;
+    }
 }
