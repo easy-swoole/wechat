@@ -8,13 +8,21 @@
 
 namespace EasySwoole\WeChat\OpenPlatform;
 
+use EasySwoole\WeChat\MiniProgram\MiniProgram;
+use EasySwoole\WeChat\MiniProgram\MiniProgramConfig;
+use EasySwoole\WeChat\OfficialAccount\OfficialAccount;
+use EasySwoole\WeChat\OfficialAccount\OfficialAccountConfig;
+
 class OpenPlatform
 {
     private $config;
-
+    private $verifyTicket;
+    private $server;
     private $auth;
+    private $officialAccounts = [];
+    private $miniPrograms = [];
 
-    function __construct(OpenPlatformConfig $config = null)
+    public function __construct(OpenPlatformConfig $config = null)
     {
         if (is_null($config)) {
             $config = new OpenPlatformConfig;
@@ -24,9 +32,10 @@ class OpenPlatform
 
     /**
      * authorization
+     *
      * @return Auth
      */
-    function auth()
+    public function auth(): Auth
     {
         if (!isset($this->auth)) {
             $this->auth = new Auth($this);
@@ -34,8 +43,37 @@ class OpenPlatform
         return $this->auth;
     }
 
+    public function server(): Server
+    {
+        if (!isset($this->server)) {
+            $this->server = new Server($this);
+        }
+        return $this->server;
+    }
+
+    public function officialAccount(string $appId): OfficialAccount
+    {
+        if (!isset($this->officialAccounts[$appId])) {
+            $config = new OfficialAccountConfig();
+            $config->setAppId($appId);
+            $this->officialAccounts[$appId] = new OfficialAccount($config);
+        }
+        return $this->officialAccounts[$appId];
+    }
+
+    public function miniProgram(string $appId): MiniProgram
+    {
+        if (!isset($this->miniPrograms[$appId])) {
+            $config = new MiniProgramConfig();
+            $config->setAppId($appId);
+            $this->miniPrograms[$appId] = new MiniProgram($config);
+        }
+        return $this->miniPrograms[$appId];
+    }
+
     /**
      * ConfigGetter
+     *
      * @return OpenPlatformConfig
      */
     public function getConfig(): OpenPlatformConfig
@@ -46,12 +84,12 @@ class OpenPlatform
     /**
      * accessToken
      *
-     * @return AccessToken
+     * @return ComponentAccessToken
      */
-    public function accessToken(): AccessToken
+    public function componentAccessToken(): ComponentAccessToken
     {
         if (!isset($this->accessToken)) {
-            $this->accessToken = new AccessToken($this);
+            $this->accessToken = new ComponentAccessToken($this);
         }
 
         return $this->accessToken;
@@ -69,19 +107,5 @@ class OpenPlatform
         }
 
         return $this->verifyTicket;
-    }
-
-    /**
-     * encryptor
-     *
-     * @return Encryptor
-     */
-    public function encryptor(): Encryptor
-    {
-        if (!isset($this->encryptor)) {
-            $this->encryptor = new Encryptor($this);
-        }
-
-        return $this->encryptor;
     }
 }

@@ -11,6 +11,8 @@ namespace EasySwoole\WeChat\OpenPlatform;
 use EasySwoole\WeChat\Bean\OpenPlatform\AuthRequest;
 use EasySwoole\WeChat\Bean\OpenPlatform\SnsAuthBean;
 use EasySwoole\WeChat\Bean\OpenPlatform\User;
+use EasySwoole\WeChat\Exception\OpenPlatformError;
+use EasySwoole\WeChat\Utility\NetWork;
 
 class Auth extends OpenPlatformBase
 {
@@ -19,7 +21,7 @@ class Auth extends OpenPlatformBase
      * @param AuthRequest $request
      * @return string
      */
-    function generateURL(AuthRequest $request): string
+    public function generateURL(AuthRequest $request): string
     {
 
     }
@@ -29,7 +31,7 @@ class Auth extends OpenPlatformBase
      * @param $authCode
      * @return SnsAuthBean
      */
-    function codeToToken($authCode): SnsAuthBean
+    public function codeToToken($authCode): SnsAuthBean
     {
 
     }
@@ -39,7 +41,7 @@ class Auth extends OpenPlatformBase
      * @param SnsAuthBean $authBean
      * @return User
      */
-    function tokenToUser(SnsAuthBean $authBean): User
+    public function tokenToUser(SnsAuthBean $authBean): User
     {
 
     }
@@ -48,7 +50,7 @@ class Auth extends OpenPlatformBase
      * CODE直接获取用户信息
      * @return User
      */
-    function codeToUser(): User
+    public function codeToUser(): User
     {
 
     }
@@ -57,7 +59,7 @@ class Auth extends OpenPlatformBase
      * 刷新访问令牌有效期
      * @param $refreshToken
      */
-    function refreshToken($refreshToken)
+    public function refreshToken($refreshToken)
     {
 
     }
@@ -66,26 +68,27 @@ class Auth extends OpenPlatformBase
      * 确认访问令牌是否有效
      * @param SnsAuthBean $authBean
      */
-    function authCheck(SnsAuthBean $authBean)
+    public function authCheck(SnsAuthBean $authBean)
     {
 
     }
 
     /**
-     * session2code
+     * session
      *
+     * @param string $appId
      * @param string $code
      * @return array
      * @throws OpenPlatformError
-     * @throws RequestError
      * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function session(string $code): array
+    public function session(string $appId, string $code): array
     {
-        $accessToken = $this->getOpenPlatform()->accessToken()->getComponentAccessToken();
+        $accessToken = $this->getOpenPlatform()->componentAccessToken()->getToken();
         $config = $this->getOpenPlatform()->getConfig();
         $data = [
-            'appid'  => $config->getAppId(),
+            'appid'  => $appId,
             'js_code' => $code,
             'grant_type' => 'authorization_code',
             'component_appid' => $config->getComponentAppId(),

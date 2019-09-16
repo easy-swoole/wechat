@@ -10,6 +10,9 @@ namespace EasySwoole\WeChat\OpenPlatform;
 
 class ApiUrl
 {
+    /** @var string 获取开放平台 第三方token */
+    const COMPONENT_API_COMPONENT_TOKEN = 'https://api.weixin.qq.com/cgi-bin/component/api_component_token';
+
     // 获取预授权CODE
     const CREATE_PREAUTHCODE = 'https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=ACCESS_TOKEN';
 
