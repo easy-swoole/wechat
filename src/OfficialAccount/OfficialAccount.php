@@ -8,6 +8,7 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
+use EasySwoole\WeChat\AbstractInterface\AccessTokenInterface;
 use EasySwoole\WeChat\Bean\OfficialAccount\NetCheckRequest;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Utility\NetWork;
@@ -27,47 +28,51 @@ class OfficialAccount
     private $customerService;
     private $templateMsg;
 
-    function onError(callable $onError)
+    public function onError(callable $onError)
     {
         $this->onError = $onError;
     }
 
-    function __construct(OfficialAccountConfig $config = null)
+    public function __construct(OfficialAccountConfig $config = null, AccessTokenInterface $accessToken = null)
     {
         if (is_null($config)) {
             $config = new OfficialAccountConfig;
         }
+
+        if (!is_null($accessToken)) {
+            $this->accessToken = $accessToken;
+        }
+
         $this->config = $config;
     }
 
-    function server():Server
+    public function server(): Server
     {
-        if(!isset($this->server))
-        {
+        if (!isset($this->server)) {
             $this->server = new Server($this);
         }
         return $this->server;
     }
 
-    function jsApi():JsApi
+    public function jsApi(): JsApi
     {
-        if(!isset($this->jsApi)){
+        if (!isset($this->jsApi)) {
             $this->jsApi = new JsApi($this);
         }
         return $this->jsApi;
     }
 
-    function accessToken():AccessToken
+    public function accessToken(): AccessTokenInterface
     {
-        if(!isset($this->accessToken)){
+        if (!isset($this->accessToken)) {
             $this->accessToken = new AccessToken($this);
         }
         return $this->accessToken;
     }
 
-    function templateMsg():TemplateMsg
+    public function templateMsg(): TemplateMsg
     {
-        if(!isset($this->templateMsg)){
+        if (!isset($this->templateMsg)) {
             $this->templateMsg = new TemplateMsg($this);
         }
         return $this->templateMsg;
@@ -76,103 +81,104 @@ class OfficialAccount
     /*
      * 客服消息
      */
-    function customerService()
+    public function customerService()
     {
-        if(!isset($this->customerService)){
+        if (!isset($this->customerService)) {
             $this->customerService = new CustomerService($this);
         }
         return $this->customerService;
     }
 
-    function qrCode():QrCode
+    public function qrCode(): QrCode
     {
-        if(!isset($this->qrCode))
-        {
+        if (!isset($this->qrCode)) {
             $this->qrCode = new QrCode($this);
         }
         return $this->qrCode;
     }
 
-    function menu():Menu
+    public function menu(): Menu
     {
-        if(!isset($this->menu))
-        {
+        if (!isset($this->menu)) {
             $this->menu = new Menu($this);
         }
         return $this->menu;
     }
 
-    function media():Media
+    public function media(): Media
     {
-        if(!isset($this->media))
-        {
+        if (!isset($this->media)) {
             $this->media = new Media($this);
         }
         return $this->media;
     }
 
-    function material():Material
+    public function material(): Material
     {
-        if(!isset($this->material))
-        {
+        if (!isset($this->material)) {
             $this->material = new Material($this);
         }
         return $this->material;
     }
 
-    function user():User
+    public function user(): User
     {
-        if(!isset($this->user))
-        {
+        if (!isset($this->user)) {
             $this->user = new User($this);
         }
         return $this->user;
     }
 
-    function getConfig():OfficialAccountConfig
+    public function getConfig(): OfficialAccountConfig
     {
         return $this->config;
     }
 
-    function getOnError()
+    public function getOnError()
     {
         return $this->onError;
     }
 
     /**
+     * ipList
+     *
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    function ipList():array
+    public function ipList(): array
     {
-        $url = ApiUrl::generateURL(ApiUrl::IP_LIST,[
-            'ACCESS_TOKEN'=>$this->accessToken()->getToken()
+        $url = ApiUrl::generateURL(ApiUrl::IP_LIST, [
+            'ACCESS_TOKEN' => $this->accessToken()->getToken()
         ]);
 
         $json = NetWork::getForJson($url);
         $ex = OfficialAccountError::hasException($json);
-        if($ex){
+        if ($ex) {
             throw $ex;
         }
         return $json['ip_list'];
     }
 
     /**
+     * netCheck
+     *
      * @param NetCheckRequest $request
      * @return array
      * @throws OfficialAccountError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    function netCheck(NetCheckRequest $request):array
+    public function netCheck(NetCheckRequest $request): array
     {
-        $url = ApiUrl::generateURL(ApiUrl::NET_CHECK,[
-            'ACCESS_TOKEN'=>$this->accessToken()->getToken()
+        $url = ApiUrl::generateURL(ApiUrl::NET_CHECK, [
+            'ACCESS_TOKEN' => $this->accessToken()->getToken()
         ]);
 
-        $json = NetWork::postJsonForJson($url,$request->toArray());
+        $json = NetWork::postJsonForJson($url, $request->toArray());
         $ex = OfficialAccountError::hasException($json);
-        if($ex){
+        if ($ex) {
             throw $ex;
         }
         return $json;

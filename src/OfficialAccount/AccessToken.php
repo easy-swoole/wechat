@@ -8,20 +8,23 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
+use EasySwoole\WeChat\AbstractInterface\AccessTokenInterface;
 use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\NetWork;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 
 
-class AccessToken extends OfficialAccountBase
+class AccessToken extends OfficialAccountBase implements AccessTokenInterface
 {
     /**
+     * getToken
      * 默认刷新一次
      *
      * @param int $refreshTimes
      * @return string|null
      * @throws OfficialAccountError
      * @throws RequestError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      */
     function getToken($refreshTimes = 1):?string
     {
@@ -43,6 +46,7 @@ class AccessToken extends OfficialAccountBase
      * @return string
      * @throws OfficialAccountError
      * @throws RequestError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      */
     public function refresh():string
     {

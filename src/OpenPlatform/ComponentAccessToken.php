@@ -8,12 +8,13 @@
 
 namespace EasySwoole\WeChat\OpenPlatform;
 
+use EasySwoole\WeChat\AbstractInterface\AccessTokenInterface;
 use EasySwoole\WeChat\Exception\OpenPlatformError;
 use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\NetWork;
 
 
-class ComponentAccessToken extends OpenPlatformBase
+class ComponentAccessToken extends OpenPlatformBase implements AccessTokenInterface
 {
     /**
      * 默认刷新一次
@@ -67,5 +68,41 @@ class ComponentAccessToken extends OpenPlatformBase
         $expires = $response['expires_in'] - 60;
         $config->getStorage()->set('component_access_token', $token, time() + $expires);
         return $token;
+    }
+
+    /**
+     * getPreauthcode
+     * 获取预授权码
+     *
+     * @return string
+     * @throws OpenPlatformError
+     * @throws RequestError
+     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     */
+    public function getPreauthcode(): string
+    {
+        $config = $this->getOpenPlatform()->getConfig();
+        $preauthcode = $config->getStorage()->get('pre_auth_code');
+        if (!empty($preauthcode)) {
+            return $preauthcode;
+        }
+        $url = ApiUrl::generateURL(ApiUrl::CREATE_PREAUTHCODE, [
+            'COMPONENT_ACCESS_TOKEN' => $this->getToken()
+        ]);
+
+        $data = [
+            'component_appid' => $config->getComponentAppId()
+        ];
+
+        $response = NetWork::postJsonForJson($url, $data);
+        $ex = OpenPlatformError::hasException($response);
+        if ($ex) {
+            throw $ex;
+        }
+        $preauthcode = $response['pre_auth_code'];
+        // 这里减去60秒防止过期
+        $expires = $response['expires_in'] - 60;
+        $config->getStorage()->set('pre_auth_code', $preauthcode, time() + $expires);
+        return $preauthcode;
     }
 }
