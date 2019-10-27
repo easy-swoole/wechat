@@ -15,17 +15,21 @@ use EasySwoole\WeChat\Utility\FileStorage;
 /**
  * 开放平台配置
  * Class OpenPlatformConfig
+ *
  * @package EasySwoole\WeChat\OpenPlatform
  */
 class OpenPlatformConfig extends SplBean
 {
-    protected $appId;
-    protected $appSecret;
     protected $storage;
+    protected $token;
+    protected $aesKey;
     protected $tempDir;
+    protected $componentAppId;
+    protected $componentAppSecret;
 
     /**
      * 初始化开放平台配置
+     *
      * @return void
      */
     protected function initialize(): void
@@ -36,61 +40,22 @@ class OpenPlatformConfig extends SplBean
         }
     }
 
-
-    /**
-     * 获取AppId
-     * @return mixed
-     */
-    public function getAppId()
-    {
-        return $this->appId;
-    }
-
-    /**
-     * 设置AppId
-     * @param mixed $appId
-     * @return OpenPlatformConfig
-     */
-    public function setAppId($appId): OpenPlatformConfig
-    {
-        $this->appId = $appId;
-        return $this;
-    }
-
-    /**
-     * 获取AppSecret
-     * @return mixed
-     */
-    public function getAppSecret()
-    {
-        return $this->appSecret;
-    }
-
-    /**
-     * 设置AppSecret
-     * @param mixed $appSecret
-     * @return OpenPlatformConfig
-     */
-    public function setAppSecret($appSecret): OpenPlatformConfig
-    {
-        $this->appSecret = $appSecret;
-        return $this;
-    }
-
     /**
      * 获取储存器
+     *
      * @return mixed
      */
     public function getStorage(): StorageInterface
     {
         if (!isset($this->storage)) {
-            $this->storage = new FileStorage($this->getTempDir(), $this->getAppId());
+            $this->storage = new FileStorage($this->getTempDir(), $this->getComponentAppId());
         }
         return $this->storage;
     }
 
     /**
      * 设置储存器
+     *
      * @param mixed $storage
      * @return OpenPlatformConfig
      */
@@ -101,7 +66,48 @@ class OpenPlatformConfig extends SplBean
     }
 
     /**
+     * @return mixed
+     */
+    public function getAesKey()
+    {
+        return $this->aesKey;
+    }
+
+    /**
+     * setAesKey
+     *
+     * @param $aesKey
+     * @return OpenPlatformConfig
+     */
+    public function setAesKey($aesKey): OpenPlatformConfig
+    {
+        $this->aesKey = $aesKey;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * setToken
+     *
+     * @param $token
+     * @return OpenPlatformConfig
+     */
+    public function setToken($token): OpenPlatformConfig
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
      * 获取临时目录
+     *
      * @return mixed
      */
     public function getTempDir()
@@ -114,6 +120,7 @@ class OpenPlatformConfig extends SplBean
 
     /**
      * 设置临时目录
+     *
      * @param mixed $tempDir
      * @return OpenPlatformConfig
      */

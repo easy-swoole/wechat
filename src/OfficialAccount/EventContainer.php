@@ -14,39 +14,54 @@ use EasySwoole\WeChat\Bean\OfficialAccount\RequestConst;
 
 class EventContainer extends Event
 {
-    function onSubscribe(callable $call):EventContainer
+    const EVENT_ENCRYPTOR_DECRYPT = 'event_encryptor_decrypt';
+    const EVENT_ENCRYPTOR_ENCRYPT = 'event_encryptor_encrypt';
+
+    function onSubscribe(callable $call): EventContainer
     {
-        $this->set(RequestConst::EVENT_SUBSCRIBE,$call);
+        $this->set(RequestConst::EVENT_SUBSCRIBE, $call);
         return $this;
     }
 
-    function onUnSubscribe(callable $call):EventContainer
+    function onUnSubscribe(callable $call): EventContainer
     {
-        $this->set(RequestConst::EVENT_UNSUBSCRIBE,$call);
+        $this->set(RequestConst::EVENT_UNSUBSCRIBE, $call);
         return $this;
     }
 
-    function onScan(callable $call):EventContainer
+    function onScan(callable $call): EventContainer
     {
-        $this->set(RequestConst::EVENT_SCAN,$call);
+        $this->set(RequestConst::EVENT_SCAN, $call);
         return $this;
     }
 
-    function onLocation(callable $call):EventContainer
+    function onLocation(callable $call): EventContainer
     {
-        $this->set(RequestConst::EVENT_LOCATION,$call);
+        $this->set(RequestConst::EVENT_LOCATION, $call);
         return $this;
     }
 
-    function onClick(callable $call):EventContainer
+    function onClick(callable $call): EventContainer
     {
-        $this->set(RequestConst::EVENT_CLICK,$call);
+        $this->set(RequestConst::EVENT_CLICK, $call);
         return $this;
     }
 
-    function onView(callable $call):EventContainer
+    function onView(callable $call): EventContainer
     {
-        $this->set(RequestConst::EVENT_VIEW,$call);
+        $this->set(RequestConst::EVENT_VIEW, $call);
+        return $this;
+    }
+
+    function onEncryptorDecrypt(callable $call): EventContainer
+    {
+        $this->set(self::EVENT_ENCRYPTOR_DECRYPT, $call);
+        return $this;
+    }
+
+    function onEncryptorEncrypt(callable $call): EventContainer
+    {
+        $this->set(self::EVENT_ENCRYPTOR_ENCRYPT, $call);
         return $this;
     }
 }

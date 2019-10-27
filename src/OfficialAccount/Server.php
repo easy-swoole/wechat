@@ -47,11 +47,15 @@ class Server extends OfficialAccountBase
         libxml_disable_entity_loader(true);
         $array = (array)simplexml_load_string($raw, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-        // 存在加密
-        $aesKey = $this->getOfficialAccount()->getConfig()->getAesKey();
-        if (!empty($aesKey) || !empty($array['Encrypt'])) {
-            // 解密数据
-            $decryptRaw = Encryptor::decrypt($appId, $array['Encrypt'], $aesKey);
+        // 需要解密
+        $isEncrypt = !empty($array['Encrypt']);
+        if ($isEncrypt) {
+            $callBack = $this->onEvent->get(EventContainer::EVENT_ENCRYPTOR_DECRYPT);
+            if (is_callable($callBack)) {
+                $decryptRaw = call_user_func($callBack, $array['Encrypt']);
+            } else {
+                $decryptRaw = Encryptor::decrypt($appId, $array['Encrypt'], $this->getOfficialAccount()->getConfig()->getAesKey());
+            }
             $array = (array)simplexml_load_string($decryptRaw, 'SimpleXMLElement', LIBXML_NOCDATA);
         }
 
@@ -115,11 +119,16 @@ class Server extends OfficialAccountBase
             $response = $data->toXML();
         }
 
-        //  需要加密
-        if (!empty($aesKey) || !empty($array['Encrypt'])) {
+        // 需要加密
+        if ($isEncrypt) {
+            $callBack = $this->onEvent->get(EventContainer::EVENT_ENCRYPTOR_ENCRYPT);
+            if (is_callable($callBack)) {
+                $encrypt = call_user_func($callBack, $response);
+            } else {
+                $encrypt = Encryptor::encrypt($appId, $response, $this->getOfficialAccount()->getConfig()->getAesKey());
+            }
             $tmpArr = [];
-            // 加密数据并签名
-            $tmpArr['Encrypt'] = Encryptor::encrypt($appId, $response, $aesKey);
+            $tmpArr['Encrypt'] = $encrypt;
             $tmpArr['TimeStamp'] = time();
             $tmpArr['Nonce'] = Encryptor::character(9, '0123456789');
             $tmpArr['Token'] = $this->getOfficialAccount()->getConfig()->getToken();
