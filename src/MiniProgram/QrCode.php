@@ -54,7 +54,7 @@ class QrCode extends MinProgramBase
 
     /**
      * 二维码 - 临时小程序码
-     * @param $path
+     * @param $page
      * @param $scene
      * @param int $width
      * @param bool $autoColor
@@ -65,13 +65,13 @@ class QrCode extends MinProgramBase
      * @throws MiniProgramError
      * @throws RequestError
      */
-    function getWxaCodeUnLimit($path, $scene, $width = 430, $autoColor = false, $lineColor = null, $isHyaline = false)
+    function getWxaCodeUnLimit($page, $scene, $width = 430, $autoColor = false, $lineColor = null, $isHyaline = false)
     {
         $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::WXACODE_GET_UNLIMITED, [
             'ACCESS_TOKEN' => $token
         ]);
-        $data = ['path' => $path, 'width' => $width, 'scene' => $scene, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
+        $data = ['page' => $page, 'width' => $width, 'scene' => $scene, 'auto_color' => $autoColor, 'is_hyaline' => $isHyaline];
         if ($lineColor) $data['line_color'] = $lineColor;
 
         $responseBuffer = NetWork::postJson($url, $data)->getBody();
