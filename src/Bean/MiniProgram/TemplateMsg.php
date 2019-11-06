@@ -22,7 +22,7 @@ class TemplateMsg extends SplBean
     /** @var string */
     protected $form_id;
     /** @var array */
-    protected $data;
+    protected $data = [];
     /** @var string */
     protected $emphasis_keyword;
 
@@ -128,13 +128,26 @@ class TemplateMsg extends SplBean
     public function getSendMessage(): array
     {
         $message = $this->toArray(null, self::FILTER_NOT_NULL);
-        if (!empty($message['data'])) {
-            foreach ($message['data'] as $key => $data) {
-                $key = key(reset($data));
-                $value = current(reset($data));
-                $message['data'][$key] = [$key => ['value' => $value]];
+        $tmpData = [];
+        foreach ($message['data'] as $key => $val) {
+            if (is_array($val)) {
+                if (isset($val['value'])) {
+                    $tmpData[$key] = $val;
+                    continue;
+                }
+
+                if (count($val) >= 2) {
+                    $tmpData[$key] = [
+                        'value' => $val[0],
+                        /** 小程序不再支持 color */
+//                        'color' => $val[1]
+                    ];
+                    continue;
+                }
             }
+            $tmpData[$key] = ['value' => $val];
         }
+        $message['data'] = $tmpData;
         return $message;
     }
 }
