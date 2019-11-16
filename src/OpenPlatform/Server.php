@@ -38,7 +38,7 @@ class Server extends OpenPlatformBase
 
         /** Ticket事件 */
         if ($request->getInfoType() === RequestConst::EVENT_VERIFY_TICKET) {
-            $this->getOpenPlatform()->verifyTicket()->setTicket($request->getComponentVerifyTicket());
+            $this->getOpenPlatform()->verifyTicket()->setTicket($request->getComponentVerifyTicket(), $request->getCreateTime());
             return 'success';
         }
 

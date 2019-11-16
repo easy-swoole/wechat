@@ -8,7 +8,6 @@
 
 namespace EasySwoole\WeChat\OpenPlatform;
 
-use EasySwoole\WeChat\Exception\Exception;
 use EasySwoole\WeChat\Exception\OpenPlatformError;
 
 /**
@@ -23,14 +22,15 @@ class VerifyTicket extends OpenPlatformBase
     /**
      * setTicket
      *
-     * @param string $ticket
+     * @param string   $ticket
+     * @param int|null $createTime
      * @return $this
-     * @throws Exception
+     * @throws OpenPlatformError
      */
-    public function setTicket(string $ticket)
+    public function setTicket(string $ticket, int $createTime = null)
     {
         $cacheKey = $this->getCacheKey();
-        $this->getOpenPlatform()->getConfig()->getStorage()->set($cacheKey, $ticket, time() + 580);
+        $this->getOpenPlatform()->getConfig()->getStorage()->set($cacheKey, $ticket, ($createTime ?? time()) + 600);
 
         if (empty($this->getOpenPlatform()->getConfig()->getStorage()->get($this->getCacheKey()))) {
             throw new OpenPlatformError('Failed to cache verify ticket.');
