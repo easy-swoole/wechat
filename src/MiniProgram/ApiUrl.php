@@ -194,7 +194,7 @@ class ApiUrl
      * 获取当前所有插件使用方（供插件开发者调用）
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginDevApplyList.html
      */
-     const GET_PLUGIN_DEV_APPLY_LIST = 'https://api.weixin.qq.com/wxa/devplugin?access_token=TOKEN';
+    const GET_PLUGIN_DEV_APPLY_LIST = 'https://api.weixin.qq.com/wxa/devplugin?access_token=TOKEN';
 
     /**
      * 查询已添加的插件
@@ -259,7 +259,7 @@ class ApiUrl
      * SOTER 生物认证秘钥签名验证
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/soter/soter.verifySignature.html
      */
-    const VERIFY_SIGNATURE =  'https://api.weixin.qq.com/cgi-bin/soter/verify_signature?access_token=ACCESS_TOKEN';
+    const VERIFY_SIGNATURE = 'https://api.weixin.qq.com/cgi-bin/soter/verify_signature?access_token=ACCESS_TOKEN';
 
     /**
      *绑定、解绑物流账号
@@ -331,7 +331,7 @@ class ApiUrl
      * 预览面单模板。用于调试面单模板使用
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.previewTemplate.html
      */
-    const PREVIEW_TEMPLATE =  'https://api.weixin.qq.com/cgi-bin/express/delivery/template/preview?access_token=ACCESS_TOKEN';
+    const PREVIEW_TEMPLATE = 'https://api.weixin.qq.com/cgi-bin/express/delivery/template/preview?access_token=ACCESS_TOKEN';
 
     /**
      * 更新商户审核结果
@@ -344,6 +344,48 @@ class ApiUrl
      * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.updatePath.html
      */
     const UPDATE_PATH = 'https://api.weixin.qq.com/cgi-bin/express/delivery/path/update?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取小程序账号的类目（订阅消息）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getCategory.html
+     */
+    const GET_CATEGORY = 'https://api.weixin.qq.com/wxaapi/newtmpl/getcategory?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取帐号所属类目下的公共模板标题（订阅消息）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateTitleList.html
+     */
+    const GET_PUB_TEMPLATE_TITLES = 'https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatetitles?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取模板标题下的关键词列表（订阅消息）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateKeyWordsById.html
+     */
+    const GET_PUB_TEMPLATE_KEYWORDS = 'https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatekeywords?access_token=ACCESS_TOKEN';
+
+    /**
+     * 删除帐号下的个人模板（订阅消息）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.deleteTemplate.html
+     */
+    const DEL_TEMPLATE = 'https://api.weixin.qq.com/wxaapi/newtmpl/deltemplate?access_token=ACCESS_TOKEN';
+
+    /**
+     * 组合模板并添加至帐号下的个人模板库（订阅信息）
+     * @see  https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html
+     */
+    const ADD_TEMPLATE = 'https://api.weixin.qq.com/wxaapi/newtmpl/addtemplate?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取当前帐号下的个人模板列表（订阅消息）
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html
+     */
+    const GET_TEMPLATE = 'https://api.weixin.qq.com/wxaapi/newtmpl/gettemplate?access_token=ACCESS_TOKEN';
+
+    /**
+     * 发送订阅消息
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html
+     */
+    const SUBSCRIBE_SEND = 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=ACCESS_TOKEN';
 
     /**
      * 生成访问链接
