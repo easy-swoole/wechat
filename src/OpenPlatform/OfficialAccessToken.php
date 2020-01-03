@@ -49,7 +49,7 @@ class OfficialAccessToken extends OpenPlatformBase implements AccessTokenInterfa
         if ($refreshTimes < 0) {
             return null;
         }
-        $data = $this->getOpenPlatform()->getConfig()->getStorage()->get('authorizer_access_token');
+        $data = $this->getOpenPlatform()->getConfig()->getStorage()->get("authorizer_access_token_{$this->getAppId()}");
         if (!empty($data)) {
             return $data;
         } else {
@@ -85,7 +85,7 @@ class OfficialAccessToken extends OpenPlatformBase implements AccessTokenInterfa
         $token = $response['authorizer_access_token'];
         // 这里减去60秒防止过期
         $expires = $response['expires_in'] - 60;
-        $config->getStorage()->set('authorizer_access_token', $token, time() + $expires);
+        $config->getStorage()->set("authorizer_access_token_{$this->getAppId()}", $token, time() + $expires);
         return $token;
     }
 
