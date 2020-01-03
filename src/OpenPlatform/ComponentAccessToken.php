@@ -74,18 +74,23 @@ class ComponentAccessToken extends OpenPlatformBase implements AccessTokenInterf
      * getPreauthcode
      * 获取预授权码
      *
+     * @param string|null $appId
      * @return string
      * @throws OpenPlatformError
      * @throws RequestError
      * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      */
-    public function getPreauthcode(): string
+    public function getPreauthcode(string $appId = null): string
     {
         $config = $this->getOpenPlatform()->getConfig();
-        $preauthcode = $config->getStorage()->get('pre_auth_code');
-        if (!empty($preauthcode)) {
-            return $preauthcode;
+
+        if (!is_null($appId)) {
+            $preauthcode = $config->getStorage()->get("pre_auth_code_{$appId}");
+            if (!empty($preauthcode)) {
+                return $preauthcode;
+            }
         }
+
         $url = ApiUrl::generateURL(ApiUrl::CREATE_PREAUTHCODE, [
             'COMPONENT_ACCESS_TOKEN' => $this->getToken()
         ]);
@@ -100,9 +105,12 @@ class ComponentAccessToken extends OpenPlatformBase implements AccessTokenInterf
             throw $ex;
         }
         $preauthcode = $response['pre_auth_code'];
-        // 这里减去60秒防止过期
-        $expires = $response['expires_in'] - 60;
-        $config->getStorage()->set('pre_auth_code', $preauthcode, time() + $expires);
+
+        if (!is_null($appId)) {
+            // 这里减去60秒防止过期
+            $expires = $response['expires_in'] - 60;
+            $config->getStorage()->set("pre_auth_code_{$appId}", $preauthcode, time() + $expires);
+        }
         return $preauthcode;
     }
 }
