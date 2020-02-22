@@ -103,4 +103,32 @@ class QrCodeRequest extends SplBean
     {
         $this->scene_str = $scene_str;
     }
+
+    /**
+     * @return array
+     */
+    public function buildRequest(): array
+    {
+        if (is_string($this->getActionInfo())) {
+            $this->action_info = json_decode($this->action_info, true);
+        }
+
+        if (!is_null($this->getActionInfo())) {
+            return parent::toArray(['action_name', 'action_info']);
+        }
+
+        $scene = [];
+        if (!is_null($this->getSceneId())) {
+            $scene['scene_id'] = (int)$this->getSceneId();
+        }
+
+        if (!is_null($this->getSceneStr())) {
+            $scene['scene_str'] = (string)$this->getSceneStr();
+        }
+
+        $this->action_info = [
+            'scene' => $scene
+        ];
+        return parent::toArray(['action_name', 'action_info']);
+    }
 }

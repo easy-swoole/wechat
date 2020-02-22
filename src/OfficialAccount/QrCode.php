@@ -8,9 +8,11 @@
 
 namespace EasySwoole\WeChat\OfficialAccount;
 
+use EasySwoole\HttpClient\Exception\InvalidUrl;
 use EasySwoole\WeChat\Bean\OfficialAccount\QrCodeRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\QrCode as QrCodeBean;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
+use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\NetWork;
 
 class QrCode extends OfficialAccountBase
@@ -20,14 +22,15 @@ class QrCode extends OfficialAccountBase
      * @param QrCodeRequest $codeRequest
      * @return QrCodeBean|null
      * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws InvalidUrl
+     * @throws RequestError
      */
     function getTick(QrCodeRequest $codeRequest): ?QrCodeBean
     {
         $token = $this->getOfficialAccount()->accessToken()->getToken();
         $response = NetWork::postJsonForJson(ApiUrl::generateURL(ApiUrl::QRCODE_CREATE, [
             'ACCESS_TOKEN' => $token
-        ]), $codeRequest->toArray());
+        ]), $codeRequest->buildRequest());
 
         $ex = OfficialAccountError::hasException($response);
         if ($ex) {
