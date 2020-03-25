@@ -9,12 +9,18 @@
 namespace EasySwoole\WeChat\Utility;
 
 use EasySwoole\WeChat\AbstractInterface\StorageInterface;
+use Swoole\Coroutine;
 
 class FileStorage implements StorageInterface
 {
     private $file;
+
+    private $tempDir;
+    private $context = [];
+
     public function __construct(string $tempDir, $appId)
     {
+        $this->tempDir = $tempDir;
         $this->file = "{$tempDir}/wx_{$appId}.data";
     }
 
@@ -45,6 +51,34 @@ class FileStorage implements StorageInterface
         ];
         return $this->write($data);
     }
+
+    public function lock(string $appId, float $timeout = 3.0): bool
+    {
+        $cid = Coroutine::getCid();
+        if(!isset($this->context[$cid])){
+            $fp = fopen("{$this->tempDir}/{$appId}.lock",'c+');
+            if(!$fp){
+                return false;
+            }
+            $this->context[$cid] = $fp;
+        }
+        $fp = $this->context[$cid];
+        return flock($fp,LOCK_EX);
+    }
+
+    public function unlock(string $appId, float $timeout = 3.0): bool
+    {
+        $cid = Coroutine::getCid();
+        if(isset($this->context[$cid])){
+            $fp = $this->context[$cid];
+            $ret = flock($fp,LOCK_UN);
+            unset($this->context[$cid]);
+            fclose($fp);
+            return $ret;
+        }
+        return true;
+    }
+
 
     private function read():array
     {

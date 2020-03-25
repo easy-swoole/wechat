@@ -28,15 +28,22 @@ class AccessToken extends OfficialAccountBase implements AccessTokenInterface
      */
     function getToken($refreshTimes = 1):?string
     {
-        if($refreshTimes < 0){
+        try{
+            if(!$this->getOfficialAccount()->getConfig()->getStorage()->lock($this->getOfficialAccount()->getConfig()->getAppId())){
+                return null;
+            }
+            $data = $this->getOfficialAccount()->getConfig()->getStorage()->get('access_token');
+            if(!empty($data)){
+                return $data;
+            }else if($refreshTimes > 0){
+                $this->refresh();
+                return $this->getToken($refreshTimes -1);
+            }
             return null;
-        }
-        $data = $this->getOfficialAccount()->getConfig()->getStorage()->get('access_token');
-        if(!empty($data)){
-            return $data;
-        }else{
-            $this->refresh();
-            return $this->getToken($refreshTimes -1);
+        }catch (\Throwable $throwable){
+            throw $throwable;
+        }finally{
+            $this->getOfficialAccount()->getConfig()->getStorage()->unlock($this->getOfficialAccount()->getConfig()->getAppId());
         }
     }
 
@@ -48,7 +55,7 @@ class AccessToken extends OfficialAccountBase implements AccessTokenInterface
      * @throws RequestError
      * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      */
-    public function refresh():string
+    public function refresh():?string
     {
         $config = $this->getOfficialAccount()->getConfig();
         $url = ApiUrl::generateURL(ApiUrl::ACCESS_TOKEN,[

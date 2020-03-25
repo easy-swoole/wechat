@@ -50,7 +50,7 @@ class AccessToken extends MinProgramBase
      * @throws RequestError
      * @throws InvalidUrl
      */
-    public function refresh(): string
+    public function refresh(): ?string
     {
         $config = $this->getMiniProgram()->getConfig();
         $url = ApiUrl::generateURL(ApiUrl::AUTH_GET_ACCESS_TOKEN, [

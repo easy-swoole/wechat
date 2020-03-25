@@ -8,5 +8,5 @@ interface AccessTokenInterface
 {
     public function getToken($refreshTimes = 1): ?string;
 
-    public function refresh(): string;
+    public function refresh(): ?string;
 }
