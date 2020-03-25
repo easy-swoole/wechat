@@ -22,7 +22,7 @@ class QrCode extends MinProgramBase
      * @param bool $autoColor
      * @param null $lineColor
      * @param bool $isHyaline
-     * @return array
+     * @return string
      * @throws InvalidUrl
      * @throws MiniProgramError
      * @throws RequestError
@@ -60,7 +60,7 @@ class QrCode extends MinProgramBase
      * @param bool $autoColor
      * @param null $lineColor
      * @param bool $isHyaline
-     * @return array
+     * @return string
      * @throws InvalidUrl
      * @throws MiniProgramError
      * @throws RequestError
