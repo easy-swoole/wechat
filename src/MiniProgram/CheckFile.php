@@ -87,7 +87,7 @@ class CheckFile extends MinProgramBase
     function msgSecCheck(string $content)
     {
         $token = $this->getMiniProgram()->accessToken()->getToken();
-        $url = ApiUrl::generateURL(ApiUrl::IMG_SEC_CHECK,[
+        $url = ApiUrl::generateURL(ApiUrl::MSG_SEC_CHECK,[
             'ACCESS_TOKEN'  => $token
         ]);
 
