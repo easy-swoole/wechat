@@ -19,17 +19,16 @@ class AccessToken extends OfficialAccountBase implements AccessTokenInterface
     /**
      * getToken
      * 默认刷新一次
-     *
      * @param int $refreshTimes
      * @return string|null
-     * @throws OfficialAccountError
-     * @throws RequestError
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     * @throws \Throwable
      */
     function getToken($refreshTimes = 1):?string
     {
+        $lockName = 'OfficialAccount_'. $this->getOfficialAccount()->getConfig()->getAppId();
+
         try{
-            if(!$this->getOfficialAccount()->getConfig()->getStorage()->lock($this->getOfficialAccount()->getConfig()->getAppId())){
+            if(!$this->getOfficialAccount()->getConfig()->getStorage()->lock($lockName)){
                 return null;
             }
             $data = $this->getOfficialAccount()->getConfig()->getStorage()->get('access_token');
@@ -43,7 +42,7 @@ class AccessToken extends OfficialAccountBase implements AccessTokenInterface
         }catch (\Throwable $throwable){
             throw $throwable;
         }finally{
-            $this->getOfficialAccount()->getConfig()->getStorage()->unlock($this->getOfficialAccount()->getConfig()->getAppId());
+            $this->getOfficialAccount()->getConfig()->getStorage()->unlock($lockName);
         }
     }
 

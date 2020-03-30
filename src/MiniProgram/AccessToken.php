@@ -22,24 +22,32 @@ class AccessToken extends MinProgramBase
 {
 
     /**
-     * 获取访问令牌 默认刷新一次
-     * @param int $refreshTimes 获取失败的重试次数
+     * 获取访问令牌
+     * 默认刷新一次
+     * @param int $refreshTimes
      * @return string|null
-     * @throws MiniProgramError
-     * @throws RequestError
-     * @throws InvalidUrl
+     * @throws \Throwable
      */
     public function getToken($refreshTimes = 1): ?string
     {
-        if ($refreshTimes < 0) {
+        $lockName = 'MiniProgram_'. $this->getMiniProgram()->getConfig()->getAppId();
+
+        try{
+            if(!$this->getMiniProgram()->getConfig()->getStorage()->lock($lockName)){
+                return null;
+            }
+            $data = $this->getMiniProgram()->getConfig()->getStorage()->get('access_token');
+            if(!empty($data)){
+                return $data;
+            }else if($refreshTimes > 0){
+                $this->refresh();
+                return $this->getToken($refreshTimes -1);
+            }
             return null;
-        }
-        $data = $this->getMiniProgram()->getConfig()->getStorage()->get('access_token');
-        if (!empty($data)) {
-            return $data;
-        } else {
-            $this->refresh();
-            return $this->getToken($refreshTimes - 1);
+        }catch (\Throwable $throwable){
+            throw $throwable;
+        }finally{
+            $this->getMiniProgram()->getConfig()->getStorage()->unlock($lockName);
         }
     }
 
