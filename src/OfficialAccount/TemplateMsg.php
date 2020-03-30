@@ -92,6 +92,13 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
+
+        $data = [];
+
+        foreach ($industryId as $key => $value) {
+            $data['industry_id'.($key+1)] = $value;
+        }
+
         $response = NetWork::postJsonForJson($url, $industryId);
         $this->hasException($response);
         return true;
