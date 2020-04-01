@@ -1,10 +1,10 @@
 {
     "name": "easyswoole/wechat",
     "type": "library",
-    "description": "An efficient swoole framework",
+    "description": "Coroutine safety WeChat library",
     "keywords": [
         "swoole",
-        "framework",
+        "wechat",
         "async",
         "easyswoole"
     ],
@@ -19,6 +19,7 @@
     "require": {
         "php": ">=7.1.0",
         "ext-json": "*",
+        "ext-openssl": "*",
         "ext-swoole": "^4.4.6",
         "easyswoole/component": ">=1.0",
         "easyswoole/spl": "^1.1",
