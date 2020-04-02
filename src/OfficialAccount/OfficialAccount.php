@@ -27,6 +27,7 @@ class OfficialAccount
     private $onError;
     private $customerService;
     private $templateMsg;
+    private $service;
 
     public function onError(callable $onError)
     {
@@ -76,6 +77,14 @@ class OfficialAccount
             $this->templateMsg = new TemplateMsg($this);
         }
         return $this->templateMsg;
+    }
+
+    public function service(): Service
+    {
+        if (!isset($this->service)) {
+            $this->service = new Service($this);
+        }
+        return $this->service;
     }
 
     /*

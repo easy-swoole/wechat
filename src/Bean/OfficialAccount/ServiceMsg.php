@@ -13,7 +13,6 @@ use EasySwoole\Spl\SplBean;
 
 class ServiceMsg extends SplBean
 {
-    /*
-     * 客服消息/主动下发
-     */
+
+
 }

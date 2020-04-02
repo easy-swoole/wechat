@@ -14,7 +14,7 @@ use EasySwoole\Utility\Mime\MimeDetectorException;
 use EasySwoole\Utility\MimeType;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
-use EasySwoole\WeChat\Bean\OfficialAccount\PostFile;
+use EasySwoole\WeChat\Bean\PostFile;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\NetWork;
@@ -40,6 +40,7 @@ class Media extends OfficialAccountBase
      */
     public function upload(MediaRequest $mediaBean)
     {
+
         $url = ApiUrl::generateURL(ApiUrl::MEDIA_UPLOAD, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken(),
             'TYPE'         => $mediaBean->getType()
@@ -135,11 +136,9 @@ class Media extends OfficialAccountBase
         if (!is_null($fileBean->getPath())) {
             $fileBean->setData(Coroutine::readFile($fileBean->getPath()));
         }
-
         $fileBean->setFilename(basename($fileBean->getPath()));
         $fileBean->setMimeType(MimeType::getMimeTypeFromStream($fileBean->getData()));
         $fileBean->setFilename($fileBean->getFilename());
-
         return $fileBean;
     }
 }

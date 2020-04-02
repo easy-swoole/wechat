@@ -6,7 +6,7 @@
  * Time: 20:54
  */
 
-namespace EasySwoole\WeChat\Bean\OfficialAccount;
+namespace EasySwoole\WeChat\Bean;
 
 
 use EasySwoole\Spl\SplBean;
