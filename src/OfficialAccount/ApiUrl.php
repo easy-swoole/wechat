@@ -316,7 +316,7 @@ class ApiUrl
     /*
      * 客服消息-设置客服账号的头像
      */
-    const CUSTOM_SERVICE_KF_ACCOUNT_UPLOAD_HEAD_IMG = 'https://api.weixin.qq.com/customservice/kfaccount/uploadheadimg?access_token=ACCESS_TOKEN&kf_account=KFACCOUNT';
+    const CUSTOM_SERVICE_KF_ACCOUNT_UPLOAD_HEAD_IMG = 'https://api.weixin.qq.com/customservice/kfaccount/uploadheadimg?access_token=ACCESS_TOKEN&kf_account=KF_ACCOUNT';
 
     /*
      * 客服消息-获取所有客服账号
