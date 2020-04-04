@@ -9,14 +9,16 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
+use EasySwoole\HttpClient\Exception\InvalidUrl;
+use EasySwoole\Utility\Mime\MimeDetectorException;
 use EasySwoole\Utility\MimeType;
-use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
+use EasySwoole\Utility\Random;
 use EasySwoole\WeChat\Bean\OfficialAccount\ServiceMessage\RequestedReplyMsg;
 use EasySwoole\WeChat\Bean\PostFile;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 use EasySwoole\WeChat\Exception\RequestError;
 use EasySwoole\WeChat\Utility\NetWork;
-use EasySwoole\WeChat\Bean\OfficialAccount\Service as ServiceBean;
+use EasySwoole\WeChat\Bean\OfficialAccount\CustomerService;
 use Swoole\Coroutine;
 
 class Service extends OfficialAccountBase
@@ -24,20 +26,24 @@ class Service extends OfficialAccountBase
     /**
      * 添加客服账号
      *
-     * @param ServiceBean $service
+     * @param CustomerService $service
      *
      * @return bool
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
-     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws InvalidUrl
+     * @throws OfficialAccountError
+     * @throws RequestError
      */
-    public function addServiceAccount(ServiceBean $service) : bool
+    public function create(CustomerService $service) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::CUSTOM_SERVICE_KF_ACCOUNT_ADD, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = NetWork::postJsonForJson($url, $service->getSendMessage());
+        $data = [
+            'kf_account' => $service->getKfAccount(),
+            'nickname' => $service->getNickname(),
+        ];
+        $response = NetWork::postJsonForJson($url, $data);
 
         $this->hasException($response);
 
@@ -47,20 +53,24 @@ class Service extends OfficialAccountBase
     /**
      * 修改客服账号
      *
-     * @param ServiceBean $service
+     * @param CustomerService $service
      *
      * @return bool
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
-     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws InvalidUrl
+     * @throws OfficialAccountError
+     * @throws RequestError
      */
-    public function editServiceAccont(ServiceBean $service) : bool
+    public function update(CustomerService $service) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::CUSTOM_SERVICE_KF_ACCOUNT_UPDATE, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = NetWork::postJsonForJson($url, $service->getSendMessage());
+        $data = [
+            'kf_account' => $service->getKfAccount(),
+            'nickname' => $service->getNickname(),
+        ];
+        $response = NetWork::postJsonForJson($url, $data);
 
         $this->hasException($response);
 
@@ -70,20 +80,23 @@ class Service extends OfficialAccountBase
     /**
      * 删除客服账号
      *
-     * @param ServiceBean $service
+     * @param string $kfAccount
      *
      * @return bool
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
-     * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
+     * @throws InvalidUrl
+     * @throws OfficialAccountError
+     * @throws RequestError
      */
-    public function delServiceAccont(ServiceBean $service) : bool
+    public function delete(string $kfAccount) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::CUSTOM_SERVICE_KF_ACCOUNT_DELETE, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $response = NetWork::postJsonForJson($url, $service->getSendMessage());
+        $data = [
+            'kf_account' => $kfAccount
+        ];
+        $response = NetWork::postJsonForJson($url, $data);
 
         $this->hasException($response);
 
@@ -91,23 +104,23 @@ class Service extends OfficialAccountBase
     }
 
     /**
-     * 设置客服账户图片
+     * 上传客服头像
      *
-     * @param ServiceBean $serviceBean
-     *
+     * @param string   $kfAccount
+     * @param PostFile $postFile
      * @return bool
+     * @throws InvalidUrl
      * @throws OfficialAccountError
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
-     * @throws \EasySwoole\Utility\Mime\MimeDetectorException
+     * @throws MimeDetectorException
      */
-    public function setServiceAvatar(ServiceBean $serviceBean) : bool
+    public function setAvatar(string $kfAccount, PostFile $postFile) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::CUSTOM_SERVICE_KF_ACCOUNT_UPLOAD_HEAD_IMG, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken(),
-            'KFACCOUNT'    => $serviceBean->getKfAccount(),
+            'KF_ACCOUNT'    => $kfAccount,
         ]);
 
-        return $this->uploadAvatar($url, $this->crateFileBean($serviceBean->getMedia()));
+        return $this->uploadAvatar($url, $this->crateFileBean($postFile));
     }
 
     /**
@@ -120,7 +133,7 @@ class Service extends OfficialAccountBase
      *
      * @return bool
      * @throws OfficialAccountError
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     * @throws InvalidUrl
      */
     protected function uploadAvatar(string $url, PostFile $fileBean, array $form = null, int $timeout = 30) : bool
     {
@@ -138,7 +151,7 @@ class Service extends OfficialAccountBase
      * @return array
      * @throws OfficialAccountError
      * @throws RequestError
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     * @throws InvalidUrl
      */
     public function getAllServiceList() : array
     {
@@ -162,15 +175,13 @@ class Service extends OfficialAccountBase
      * @return bool
      * @throws OfficialAccountError
      * @throws RequestError
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     * @throws InvalidUrl
      */
     public function sendServiceMsg(RequestedReplyMsg $requestedReplyMsg) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::MESSAGE_CUSTOM_SEND, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
-
-        var_dump($requestedReplyMsg->buildMessage());
 
         $response = NetWork::postForJson($url, $requestedReplyMsg->buildMessage());
 
@@ -187,15 +198,13 @@ class Service extends OfficialAccountBase
      * @return bool
      * @throws OfficialAccountError
      * @throws RequestError
-     * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
+     * @throws InvalidUrl
      */
     public function sendServiceCommand(RequestedReplyMsg $requestedReplyMsg) : bool
     {
         $url = ApiUrl::generateURL(ApiUrl::MESSAGE_CUSTOM_TYPING, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
-
-        var_dump($requestedReplyMsg->buildMessage());
 
         $response = NetWork::postForJson($url, $requestedReplyMsg->buildMessage());
 
@@ -207,23 +216,31 @@ class Service extends OfficialAccountBase
     /**
      * 创建一个文件对象
      *
-     * @param MediaRequest $mediaBean
-     *
+     * @param PostFile $fileBean
      * @return PostFile
-     * @throws \EasySwoole\Utility\Mime\MimeDetectorException
+     * @throws MimeDetectorException
+     * @throws OfficialAccountError
      */
-    protected function crateFileBean(MediaRequest $mediaBean) : PostFile
+    protected function crateFileBean(PostFile $fileBean) : PostFile
     {
-        $fileBean = new PostFile($mediaBean->toArray(null, MediaRequest::FILTER_NOT_EMPTY));
-        $fileBean->setName('media');
-
-        if (!is_null($fileBean->getPath())) {
-            $fileBean->setData(Coroutine::readFile($fileBean->getPath()));
+        if (empty($fileBean->getData())) {
+            if (!is_null($fileBean->getPath())) {
+                $fileBean->setData(Coroutine::readFile($fileBean->getPath()));
+                $fileBean->setFilename(basename($fileBean->getPath()));
+            }
+            throw new OfficialAccountError('upload file is empty.');
         }
-        $fileBean->setFilename(basename($fileBean->getPath()));
-        $fileBean->setMimeType(MimeType::getMimeTypeFromStream($fileBean->getData()));
-        $fileBean->setFilename($fileBean->getFilename());
 
+        if (empty($fileBean->getMimeType())) {
+            $fileBean->setMimeType(MimeType::getMimeTypeFromStream($fileBean->getData()));
+        }
+
+        if (empty($fileBean->getFilename())) {
+            $filename = Random::character(). MimeType::getExtByMimeType($fileBean->getMimeType());
+            $fileBean->setFilename($filename);
+        }
+
+        $fileBean->setName('media');
         return $fileBean;
     }
 
