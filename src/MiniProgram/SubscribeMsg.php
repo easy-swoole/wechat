@@ -13,14 +13,6 @@ use EasySwoole\WeChat\Utility\NetWork;
  */
 class SubscribeMsg extends MinProgramBase
 {
-    /**
-     * 获取当前小程序实例
-     * @return MiniProgram
-     */
-    public function miniProgram()
-    {
-        return $this->getMiniProgram();
-    }
 
     /**
      * 获取小程序账号的类目（订阅消息）
@@ -165,6 +157,10 @@ class SubscribeMsg extends MinProgramBase
             'ACCESS_TOKEN' => $token
         ]);
         $responseArray = NetWork::postJsonForJson($url, $data);
+        $ex = MiniProgramError::hasException($responseArray);
+        if ($ex) {
+            throw $ex;
+        }
         return $responseArray;
     }
 }
