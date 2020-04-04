@@ -11,7 +11,7 @@ namespace EasySwoole\WeChat\Utility;
 use EasySwoole\HttpClient\Bean\Response;
 use EasySwoole\HttpClient\Exception\InvalidUrl;
 use EasySwoole\HttpClient\HttpClient;
-use EasySwoole\WeChat\Bean\OfficialAccount\PostFile;
+use EasySwoole\WeChat\Bean\PostFile;
 use EasySwoole\WeChat\Exception\RequestError;
 
 /**
@@ -110,6 +110,7 @@ class NetWork
         if (is_array($data)) {
             $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
+
         $client = new HttpClient($url);
         $client->setTimeout(self::$TIMEOUT);
         return $client->postJson($data);

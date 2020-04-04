@@ -13,6 +13,7 @@ abstract class RequestedReplyMsg extends SplBean
     protected $FromUserName;
     protected $CreateTime;
     protected $MsgType;
+    protected $Touser;
 
     /**
      * buildMessage
@@ -90,5 +91,21 @@ abstract class RequestedReplyMsg extends SplBean
     public function setMsgType($MsgType): void
     {
         $this->MsgType = $MsgType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTouser()
+    {
+        return $this->Touser;
+    }
+
+    /**
+     * @param $touser
+     */
+    public function setTouser($touser): void
+    {
+        $this->Touser = $touser;
     }
 }
