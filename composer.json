@@ -22,7 +22,7 @@
         "ext-openssl": "*",
         "ext-swoole": "^4.4.6",
         "easyswoole/component": ">=1.0",
-        "easyswoole/spl": "^1.1",
+        "easyswoole/spl": ">=1.3.7.",
         "easyswoole/http-client": "^1.0",
         "easyswoole/utility": "^1.0"
     },
