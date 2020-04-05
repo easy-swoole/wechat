@@ -57,7 +57,7 @@ class News extends RequestedReplyMsg
      */
     public function push(NewsItem $newsItem): News
     {
-        $this->Articles[] = ['item' => $newsItem];
+        $this->Articles[] = $newsItem->toArray(null, $newsItem::FILTER_NOT_NULL);
         return $this;
     }
 }
