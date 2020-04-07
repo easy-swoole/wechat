@@ -47,6 +47,11 @@ class ApiUrl
      */
     const MEDIA_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE';
 
+    /*
+     * 上传图文消息素材
+     */
+    const MEDIA_UPLOAD_NEWS = 'https://api.weixin.qq.com/cgi-bin/media/uploadnews?access_token=ACCESS_TOKEN';
+
     /**
      * 上传永久素材
      */
@@ -486,14 +491,16 @@ class ApiUrl
 
     /**
      * @param string $baseUrl
-     * @param array $data
+     * @param array  $data
+     *
      * @return string
      */
-    public static function generateURL(string $baseUrl, array $data): string
+    public static function generateURL(string $baseUrl, array $data) : string
     {
         foreach ($data as $key => $item) {
             $baseUrl = str_replace($key, $item, $baseUrl);
         }
+
         return $baseUrl;
     }
 }

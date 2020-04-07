@@ -12,6 +12,7 @@ use EasySwoole\HttpClient\Bean\Response;
 use EasySwoole\HttpClient\Exception\InvalidUrl;
 use EasySwoole\Utility\Mime\MimeDetectorException;
 use EasySwoole\Utility\MimeType;
+use EasySwoole\WeChat\Bean\OfficialAccount\MediaArticle;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaRequest;
 use EasySwoole\WeChat\Bean\OfficialAccount\MediaResponse;
 use EasySwoole\WeChat\Bean\PostFile;
@@ -27,6 +28,36 @@ use Swoole\Coroutine;
  */
 class Media extends OfficialAccountBase
 {
+
+    /**
+     * 上传图文消息素材（临时素材）
+     *
+     * @param MediaArticle ...$mediaArticle
+     *
+     * @return array
+     * @throws InvalidUrl
+     * @throws OfficialAccountError
+     * @throws RequestError
+     */
+    public function uploadNews(MediaArticle ...$mediaArticle)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::MEDIA_UPLOAD_NEWS, [
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken(),
+        ]);
+
+        $postData = ['articles' => []];
+        foreach ($mediaArticle as $article) {
+            array_push($postData['articles'], $article->toArray(null, MediaArticle::FILTER_NOT_NULL));
+        }
+
+        $response = NetWork::postJsonForJson($url, $postData);
+        $ex = OfficialAccountError::hasException($response);
+
+        if ($ex) {
+            throw $ex;
+        }
+        return $response;
+    }
 
     /**
      * 上传临时素材
