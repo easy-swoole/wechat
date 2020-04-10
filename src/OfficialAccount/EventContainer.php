@@ -64,4 +64,10 @@ class EventContainer extends Event
         $this->set(self::EVENT_ENCRYPTOR_ENCRYPT, $call);
         return $this;
     }
+
+    function onMassSendJobFinish(callable  $call): EventContainer
+    {
+        $this->set(RequestConst::EVENT_MASS_SEND_JOB_FINISH, $call);
+        return $this;
+    }
 }
