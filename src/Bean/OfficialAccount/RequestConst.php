@@ -36,6 +36,10 @@ class RequestConst
     const MSG_TYPE_WXCARD          = 'wxcard';
     const MSG_TYPE_MINIPROGRAMPAGE = 'miniprogrampage';
 
+    /**
+     * 群发消息中出现
+     */
+    const MSG_TYPE_MPVIDEO = 'mpvideo';
 
     /*
      * 事件大小写不同，主要是微信自己本身事件大小写就不一样，不规范
@@ -47,4 +51,5 @@ class RequestConst
     const EVENT_CLICK                    = 'CLICK';
     const EVENT_VIEW                     = 'VIEW';
     const EVENT_TEMPLATE_SEND_JOB_FINISH = 'TEMPLATESENDJOBFINISH';
+    const EVENT_MASS_SEND_JOB_FINISH           = 'MASSSENDJOBFINISH';
 }

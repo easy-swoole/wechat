@@ -28,6 +28,7 @@ class OfficialAccount
     private $customerService;
     private $templateMsg;
     private $service;
+    private $groupSending;
 
     public function onError(callable $onError)
     {
@@ -85,6 +86,14 @@ class OfficialAccount
             $this->service = new Service($this);
         }
         return $this->service;
+    }
+
+    public function groupSending(): GroupSending
+    {
+        if (!isset($this->groupSending)) {
+            $this->groupSending = new GroupSending($this);
+        }
+        return $this->groupSending;
     }
 
     /*

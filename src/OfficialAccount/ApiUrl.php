@@ -48,6 +48,11 @@ class ApiUrl
     const MEDIA_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE';
 
     /*
+     * 群发视频信息的视频media_id转换
+     */
+    const MEDIA_TO_VIDEO = 'https://api.weixin.qq.com/cgi-bin/media/uploadvideo?access_token=ACCESS_TOKEN';
+
+    /*
      * 上传图文消息素材
      */
     const MEDIA_UPLOAD_NEWS = 'https://api.weixin.qq.com/cgi-bin/media/uploadnews?access_token=ACCESS_TOKEN';
