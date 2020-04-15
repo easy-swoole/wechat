@@ -53,7 +53,7 @@ class GroupSending extends OfficialAccountBase
      */
     public function getSendingSpeed()
     {
-        $url = ApiUrl::generateURL(ApiUrl::MESSAGE_MASS_SPEED, [
+        $url = ApiUrl::generateURL(ApiUrl::MESSAGE_MASS_SPEED_GET, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
@@ -82,7 +82,7 @@ class GroupSending extends OfficialAccountBase
             throw new OfficialAccountError('speed is not 0 - 4');
         }
 
-        $url = ApiUrl::generateURL(ApiUrl::MESSAGE_MASS_SPEED, [
+        $url = ApiUrl::generateURL(ApiUrl::MESSAGE_MASS_SPEED_SET, [
             'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
