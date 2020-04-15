@@ -70,4 +70,10 @@ class EventContainer extends Event
         $this->set(RequestConst::EVENT_MASS_SEND_JOB_FINISH, $call);
         return $this;
     }
+
+    function onTemplateSendJobFinish(callable  $call): EventContainer
+    {
+        $this->set(RequestConst::EVENT_TEMPLATE_SEND_JOB_FINISH, $call);
+        return $this;
+    }
 }
