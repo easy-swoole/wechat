@@ -17,6 +17,7 @@ class MiniProgram
     private $accessToken;
     private $qrCode;
     private $templateMsg;
+    private $subscribeMsg;
 
     public function __construct(MiniProgramConfig $config = null)
     {
@@ -104,5 +105,17 @@ class MiniProgram
         }
 
         return $this->templateMsg;
+    }
+
+    /**
+     * @return SubscribeMsg
+     */
+    public function subscribeMsg():SubscribeMsg
+    {
+        if (!isset($this->subscribeMsg)) {
+            $this->subscribeMsg = new SubscribeMsg($this);
+        }
+
+        return $this->subscribeMsg;
     }
 }
