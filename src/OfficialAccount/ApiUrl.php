@@ -125,7 +125,11 @@ class ApiUrl
     /*
      * 获取群发速度
      */
-    const MESSAGE_MASS_SPEED = 'https://api.weixin.qq.com/cgi-bin/message/mass/speed/get?access_token=ACCESS_TOKEN';
+    const MESSAGE_MASS_SPEED_GET = 'https://api.weixin.qq.com/cgi-bin/message/mass/speed/get?access_token=ACCESS_TOKEN';
+/*
+     * 设置群发速度
+     */
+    const MESSAGE_MASS_SPEED_SET = 'https://api.weixin.qq.com/cgi-bin/message/mass/speed/set?access_token=ACCESS_TOKEN';
 
     /*
      * 发送客服消息
