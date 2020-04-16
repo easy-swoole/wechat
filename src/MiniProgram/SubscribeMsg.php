@@ -23,7 +23,7 @@ class SubscribeMsg extends MinProgramBase
      */
     public function getCategory()
     {
-        $token = $this->miniProgram()->accessToken()->getToken();
+        $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::GET_CATEGORY, [
             'ACCESS_TOKEN' => $token
         ]);
@@ -45,7 +45,7 @@ class SubscribeMsg extends MinProgramBase
      */
     public function getPubTemplateTitleList(array $data)
     {
-        $token = $this->miniProgram()->accessToken()->getToken();
+        $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::GET_PUB_TEMPLATE_TITLES, [
             'ACCESS_TOKEN' => $token
         ]);
@@ -67,7 +67,7 @@ class SubscribeMsg extends MinProgramBase
      */
     public function getPubTemplateKeyWordsById(array $data)
     {
-        $token = $this->miniProgram()->accessToken()->getToken();
+        $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::GET_PUB_TEMPLATE_KEYWORDS, [
             'ACCESS_TOKEN' => $token
         ]);
@@ -88,7 +88,7 @@ class SubscribeMsg extends MinProgramBase
      */
     public function deleteTemplate(string $priTmplId)
     {
-        $token = $this->miniProgram()->accessToken()->getToken();
+        $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::DEL_TEMPLATE, [
             'ACCESS_TOKEN' => $token
         ]);
@@ -109,7 +109,7 @@ class SubscribeMsg extends MinProgramBase
      */
     public function addTemplate(array $data)
     {
-        $token = $this->miniProgram()->accessToken()->getToken();
+        $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::ADD_TEMPLATE, [
             'ACCESS_TOKEN' => $token
         ]);
@@ -130,7 +130,7 @@ class SubscribeMsg extends MinProgramBase
      */
     public function getTemplateList()
     {
-        $token = $this->miniProgram()->accessToken()->getToken();
+        $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::GET_TEMPLATE, [
             'ACCESS_TOKEN' => $token
         ]);
@@ -152,7 +152,7 @@ class SubscribeMsg extends MinProgramBase
      */
     public function sendMsg(array $data)
     {
-        $token = $this->miniProgram()->accessToken()->getToken();
+        $token = $this->getMiniProgram()->accessToken()->getToken();
         $url = ApiUrl::generateURL(ApiUrl::SUBSCRIBE_SEND, [
             'ACCESS_TOKEN' => $token
         ]);
