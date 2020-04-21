@@ -11,6 +11,8 @@ namespace EasySwoole\WeChat\Bean\OfficialAccount;
 use EasySwoole\HttpClient\Bean\Response;
 use EasySwoole\Utility\Mime\MimeDetectorException;
 use EasySwoole\Utility\MimeType;
+use EasySwoole\WeChat\Exception\RequestError;
+use EasySwoole\WeChat\Utility\NetWork;
 use InvalidArgumentException;
 use Swoole\Coroutine;
 
@@ -44,6 +46,22 @@ class MediaResponse
         return false;
     }
 
+
+    public function isVideo()
+    {
+        if (isset($this->httpResponse()->getHeaders()['content-type']) && $this->httpResponse()->getHeaders()['content-type'] === 'text/plain') {
+            $data = json_decode($this->getContent(), true);
+            if (isset($data['down_url'])) {
+                return $data['down_url'];
+            }
+            if (isset($data['video_url'])) {
+                return $data['video_url'];
+            }
+        }
+
+        return false;
+    }
+
     public function isEmpty(): bool
     {
         return empty($this->getContent());
@@ -61,7 +79,7 @@ class MediaResponse
      * @return string
      * @throws MimeDetectorException
      */
-    public function save(string $directory, string $filename = null)
+    public function save(string $directory, string $filename = null, int $timeout = 15)
     {
         $directory = rtrim($directory, '/');
 
@@ -73,18 +91,32 @@ class MediaResponse
             throw new InvalidArgumentException(sprintf("'%s' is not writable.", $directory));
         }
 
+        if ($fileUrl = $this->isVideo()) {
+            NetWork::$TIMEOUT = $timeout;
+
+            $fileData = NetWork::get($fileUrl);
+
+            if (($fileData->getClient()->errCode)) {
+                throw new RequestError($fileData->getClient()->errMsg);
+            }
+
+            $this->httpResponse = $fileData;
+        }
+
         $contents = $this->httpResponse()->getBody();
 
         if (empty($filename)) {
-            if (preg_match('/filename="(?<filename>.*?)"/', $this->httpResponse()->getHeaders()['content-disposition'], $match)) {
+            if (isset($this->httpResponse()->getHeaders()['content-disposition']) && preg_match('/filename=["]{0,1}(?<filename>.*)/', $this->httpResponse()->getHeaders()['content-disposition'], $match)) {
                 $filename = $match['filename'];
             } else {
                 $filename = md5($contents);
             }
         }
 
+        $filename = trim($filename, '"');
+
         if (empty(pathinfo($filename, PATHINFO_EXTENSION))) {
-            $filename .= MimeType::getExtFromStream($contents);
+            $filename .= '.'.MimeType::getExtFromStream($contents);
         }
 
         Coroutine::writeFile($directory . '/' . $filename, $contents);

@@ -86,6 +86,26 @@ class Menu extends OfficialAccountBase
     }
 
     /**
+     * @return array    菜单配置
+     * @throws OfficialAccountError
+     * @throws \EasySwoole\WeChat\Exception\RequestError
+     */
+    public function queryConfig()
+    {
+        $url = ApiUrl::generateURL(ApiUrl::GET_CURRENT_SELFMENU_INFO, [
+            'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
+        ]);
+
+        $json = NetWork::getForJson($url);
+        $ex = OfficialAccountError::hasException($json);
+        if($ex){
+            throw $ex;
+        }
+        return $json;
+    }
+
+
+    /**
      * delete
      *
      * @param int|null $menuId      个性化菜单ID (可以通过查询接口获取)　NULL时为删除全部

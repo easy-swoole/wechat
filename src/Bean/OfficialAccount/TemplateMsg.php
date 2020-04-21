@@ -18,9 +18,25 @@ class TemplateMsg extends SplBean
     protected $url;
     protected $miniprogram;
     protected $scene;
-    protected $appid;
-    protected $pagepath;
+    protected $title;
     protected $data = [];
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
     /**
      * @return mixed
      */
@@ -96,7 +112,7 @@ class TemplateMsg extends SplBean
     /**
      * @param mixed $miniprogram
      */
-    public function setMiniprogram($miniprogram): void
+    public function setMiniprogram(array $miniprogram): void
     {
         $this->miniprogram = $miniprogram;
     }
@@ -106,7 +122,7 @@ class TemplateMsg extends SplBean
      */
     public function getAppid()
     {
-        return $this->appid;
+        return $this->miniprogram['appid'];
     }
 
     /**
@@ -114,7 +130,7 @@ class TemplateMsg extends SplBean
      */
     public function setAppid($appid): void
     {
-        $this->appid = $appid;
+        $this->miniprogram['appid'] = $appid;
     }
 
     /**
@@ -122,7 +138,7 @@ class TemplateMsg extends SplBean
      */
     public function getPagepath()
     {
-        return $this->pagepath;
+        return $this->miniprogram['pagepath'];
     }
 
     /**
@@ -130,7 +146,7 @@ class TemplateMsg extends SplBean
      */
     public function setPagepath($pagepath): void
     {
-        $this->pagepath = $pagepath;
+        $this->miniprogram['pagepath'] = $pagepath;
     }
 
     /**

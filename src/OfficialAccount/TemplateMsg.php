@@ -131,7 +131,6 @@ class TemplateMsg extends OfficialAccountBase
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
         ]);
 
-        $templateMsg->setAppid($this->getOfficialAccount()->getConfig()->getAppId());
         $response = NetWork::postJsonForJson($url, $templateMsg->getSendMessage());
         return $this->hasException($response);
     }
