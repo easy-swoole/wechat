@@ -119,7 +119,7 @@ class User extends OfficialAccountBase
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function block($openidList)
+    public function black($openidList)
     {
         $url = ApiUrl::generateURL(ApiUrl::BATCH_BLACKLIST, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()
@@ -135,7 +135,7 @@ class User extends OfficialAccountBase
      * @throws \EasySwoole\WeChat\Exception\OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function unblock($openidList)
+    public function unblack($openidList)
     {
         $url = ApiUrl::generateURL(ApiUrl::BATCH_UNBLACKLIST, [
             'ACCESS_TOKEN'=> $this->getOfficialAccount()->accessToken()->getToken()

@@ -53,7 +53,7 @@ class RequestConst
     const EVENT_SCAN = 'SCAN';
     // 上报地理位置事件
     const EVENT_LOCATION = 'LOCATION';
-    // 点击自定义菜单拉取消息事件
+    // 点击自定义菜单拉取消息事件EVENT_LOCATION
     const EVENT_CLICK = 'CLICK';
     // 点击自定义菜单跳转事件
     const EVENT_VIEW = 'VIEW';
@@ -75,6 +75,5 @@ class RequestConst
     const EVENT_LOCATION_SELECT = 'location_select';
     //点击菜单跳转小程序的事件推送
     const EVENT_VIEW_MINIPROGRAM = 'view_miniprogram';
-
 
 }

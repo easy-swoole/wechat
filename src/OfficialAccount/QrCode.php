@@ -51,4 +51,34 @@ class QrCode extends OfficialAccountBase
             'TICKET' => $code->getTicket()
         ]);
     }
+
+    /**
+     * 将一条长链接转成短链接
+     *
+     * @param string $url
+     *
+     * @return null|string
+     * @throws InvalidUrl
+     * @throws OfficialAccountError
+     * @throws RequestError
+     */
+    public function shorturl(string $url): ?string
+    {
+
+        $response = NetWork::postJsonForJson(ApiUrl::generateURL(ApiUrl::SHORT_URL, [
+            'ACCESS_TOKEN' =>  $this->getOfficialAccount()->accessToken()->getToken()
+        ]), [
+            'action'   => 'long2short',
+            'long_url' => $url
+        ]);
+
+        $ex = OfficialAccountError::hasException($response);
+        if ($ex) {
+            throw $ex;
+        } else {
+            return $response['short_url'];
+        }
+    }
+
+
 }

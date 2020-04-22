@@ -16,6 +16,7 @@ class QrCode extends SplBean
     protected $ticket;
     protected $expire_seconds;
     protected $url;
+    protected $short_url;
 
     /**
      * @return mixed
@@ -63,5 +64,21 @@ class QrCode extends SplBean
     public function setUrl($url): void
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShortUrl()
+    {
+        return $this->short_url;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setShortUrl($url): void
+    {
+        $this->short_url = $url;
     }
 }
