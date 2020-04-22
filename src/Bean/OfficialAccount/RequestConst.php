@@ -53,7 +53,7 @@ class RequestConst
     const EVENT_SCAN = 'SCAN';
     // 上报地理位置事件
     const EVENT_LOCATION = 'LOCATION';
-    // 点击自定义菜单拉取消息事件EVENT_LOCATION
+    // 点击自定义菜单拉取消息事件
     const EVENT_CLICK = 'CLICK';
     // 点击自定义菜单跳转事件
     const EVENT_VIEW = 'VIEW';
