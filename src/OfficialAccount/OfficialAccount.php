@@ -29,6 +29,7 @@ class OfficialAccount
     private $templateMsg;
     private $service;
     private $groupSending;
+    private $comment;
 
     public function onError(callable $onError)
     {
@@ -145,6 +146,14 @@ class OfficialAccount
             $this->user = new User($this);
         }
         return $this->user;
+    }
+
+    public function comment(): Comment
+    {
+        if (!isset($this->comment)) {
+            $this->comment = new Comment($this);
+        }
+        return $this->comment;
     }
 
     public function getConfig(): OfficialAccountConfig

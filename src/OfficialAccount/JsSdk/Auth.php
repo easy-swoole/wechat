@@ -130,7 +130,7 @@ class Auth extends JsApiBase
      */
     function authCheck(SnsAuthBean $authBean)
     {
-        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_REFRESH_TOKEN, [
+        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_SNS_AUTH_CHECK, [
             'OPENID' => $authBean->getOpenid(),
             'ACCESS_TOKEN' => $authBean->getAccessToken(),
         ]));

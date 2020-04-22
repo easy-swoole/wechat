@@ -40,7 +40,12 @@ class ApiUrl
     /*
      * 获取临时素材
      */
-    const MEDIA_GET = 'https://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID';
+    const MEDIA_GET = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID';
+
+    /*
+     * 获取高清语音素材
+     */
+    const MEDIA_HD_GET = 'https://api.weixin.qq.com/cgi-bin/media/get/jssdk?access_token=ACCESS_TOKEN&media_id=MEDIA_ID';
 
     /*
      * 上传临时素材

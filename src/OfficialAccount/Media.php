@@ -100,6 +100,24 @@ class Media extends OfficialAccountBase
     }
 
     /**
+     * 获取JSSDK上传的高清临时语音素材
+     * @param $mediaId
+     *
+     * @return Response|MediaResponse
+     * @throws InvalidUrl
+     * @throws OfficialAccountError
+     */
+    public function getHdVoice($mediaId)
+    {
+        $url = ApiUrl::generateURL(ApiUrl::MEDIA_HD_GET, [
+            'ACCESS_TOKEN' => $this->getOfficialAccount()->accessToken()->getToken(),
+            'MEDIA_ID'     => $mediaId
+        ]);
+
+        return $this->getMedia($url);
+    }
+
+    /**
      * 执行素材上传
      *
      * @param string     $url

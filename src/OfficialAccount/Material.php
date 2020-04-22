@@ -142,7 +142,7 @@ class Material extends Media
     }
 
     /**
-     * 更新多个永久素材
+     * 上传多个永久图文素材
      * @param MediaArticle ...$articles
      * @return array
      * @throws InvalidUrl
