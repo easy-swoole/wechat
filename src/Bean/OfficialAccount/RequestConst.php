@@ -76,5 +76,4 @@ class RequestConst
     //点击菜单跳转小程序的事件推送
     const EVENT_VIEW_MINIPROGRAM = 'view_miniprogram';
 
-
 }

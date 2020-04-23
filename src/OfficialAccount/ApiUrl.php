@@ -348,6 +348,11 @@ class ApiUrl
     const MESSAGE_CUSTOM_TYPING = 'https://api.weixin.qq.com/cgi-bin/message/custom/typing?access_token=ACCESS_TOKEN';
 
     /*
+     * 将一条长链接转成短链接
+     */
+    const SHORT_URL = 'https://api.weixin.qq.com/cgi-bin/shorturl?access_token=ACCESS_TOKEN';
+
+    /*
      * 创建二维码ticket
      */
     const QRCODE_CREATE = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=ACCESS_TOKEN';

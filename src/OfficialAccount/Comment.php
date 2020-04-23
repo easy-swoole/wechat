@@ -92,7 +92,7 @@ class Comment extends OfficialAccountBase
      * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function UnMarkelect($msgDataId, $userCommentId, $index = 0)
+    public function unMarkelect($msgDataId, $userCommentId, $index = 0)
     {
         return $this->send(ApiUrl::COMMENT_UNMARKELECT, [
             'msg_data_id'     => $msgDataId,
@@ -113,7 +113,7 @@ class Comment extends OfficialAccountBase
      * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function Markelect($msgDataId, $userCommentId, $index = 0)
+    public function markelect($msgDataId, $userCommentId, $index = 0)
     {
         return $this->send(ApiUrl::COMMENT_MARKELECT, [
             'msg_data_id'     => $msgDataId,
@@ -136,7 +136,7 @@ class Comment extends OfficialAccountBase
      * @throws \EasySwoole\HttpClient\Exception\InvalidUrl
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    public function View($msgDataId, $begin, $count, $type, $index = 0)
+    public function view($msgDataId, $begin, $count, $type, $index = 0)
     {
         return $this->send(ApiUrl::COMMENT_LIST, [
             'msg_data_id' => $msgDataId,
