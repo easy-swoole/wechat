@@ -14,6 +14,4 @@ interface StorageInterface
     public function __construct(string $tempDir,$appId);
     public function get($key);
     public function set($key,$value,int $expire = null);
-    public function lock(string $appId,float $timeout = 3.0):bool ;
-    public function unlock(string $appId,float $timeout = 3.0):bool ;
 }
