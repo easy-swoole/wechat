@@ -73,6 +73,12 @@ class OfficialAccount
         return $this->accessToken;
     }
 
+    public function setAccessTokenManager(AccessTokenInterface $accessToken):OfficialAccount
+    {
+        $this->accessToken = $accessToken;
+        return $this;
+    }
+
     public function templateMsg(): TemplateMsg
     {
         if (!isset($this->templateMsg)) {
