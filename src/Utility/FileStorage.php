@@ -28,11 +28,7 @@ class FileStorage implements StorageInterface
         $data = $this->read();
         if(isset($data[$key])){
             $data = $data[$key];
-            if(isset($data['expire'])){
-                if(time() <= $data['expire']){
-                    return $data['data'];
-                }
-            }else{
+            if(isset($data['data'])){
                 return $data['data'];
             }
         }
