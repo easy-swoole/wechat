@@ -18,24 +18,15 @@ class JsSdk extends JsApiBase
 {
     /**
      * 获取JsTick
+     * 自带版本不刷新
      * @param int $refreshTimes
      * @return string
      * @throws OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    function jsTick($refreshTimes = 1): string
+    function jsTick($refreshTimes = 1): ?string
     {
-        if ($refreshTimes < 0) {
-            return null;
-        }
-        $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
-        $data = $officialAccountConfig->getStorage()->get('jsapi_ticket');
-        if (!empty($data)) {
-            return $data;
-        } else {
-            $this->refreshJsTick();
-            return $this->jsTick($refreshTimes - 1);
-        }
+        return $this->getJsApi()->getOfficialAccount()->getConfig()->getStorage()->get('jsapi_ticket');
     }
 
     /**
@@ -44,7 +35,7 @@ class JsSdk extends JsApiBase
      * @throws OfficialAccountError
      * @throws \EasySwoole\WeChat\Exception\RequestError
      */
-    function refreshJsTick(): string
+    function refreshJsTick(): ?string
     {
         $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
         $accessToken = (new AccessToken($this->getJsApi()->getOfficialAccount()))->getToken();
