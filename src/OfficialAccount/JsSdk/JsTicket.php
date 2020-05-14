@@ -10,7 +10,7 @@ use EasySwoole\WeChat\OfficialAccount\AccessToken;
 use EasySwoole\WeChat\OfficialAccount\ApiUrl;
 use EasySwoole\WeChat\Utility\NetWork;
 
-class JsTick extends JsApiBase implements JsTicketInterface
+class JsTicket extends JsApiBase implements JsTicketInterface
 {
     /**
      * 获取JsTick

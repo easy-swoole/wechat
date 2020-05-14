@@ -8,16 +8,18 @@
 
 namespace EasySwoole\WeChat\OfficialAccount\JsSdk;
 
+use EasySwoole\WeChat\AbstractInterface\JsTicketInterface;
 use EasySwoole\WeChat\Bean\OfficialAccount\JsApiSignaturePack;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
 
 class JsSdk extends JsApiBase
 {
     private $ticket;
-    function jsTicket()
+
+    function jsTicket():JsTicketInterface
     {
         if(!isset($this->ticket)){
-            $this->ticket = new JsTick($this->getJsApi());
+            $this->ticket = new JsTicket($this->getJsApi());
         }
         return $this->ticket;
     }
@@ -34,7 +36,7 @@ class JsSdk extends JsApiBase
         // 组装签名参数包
         $pack = [
             'noncestr' => $this->generateNonce(16),
-            'jsapi_ticket' => $this->jsTicket()->getJsApi(),
+            'jsapi_ticket' => $this->jsTicket()->getTicket(),
             'timestamp' => time(),
             'url' => $url
         ];
