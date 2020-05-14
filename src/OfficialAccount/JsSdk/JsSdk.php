@@ -23,6 +23,20 @@ class JsSdk extends JsApiBase
         }
         return $this->ticket;
     }
+
+    /**
+     * 自定义Ticket实现
+     *
+     * @param JsTicketInterface $jsTicket
+     *
+     * @return JsSdk
+     */
+    public function setTicketnManager(JsTicketInterface $jsTicket):JsSdk
+    {
+        $this->ticket = $jsTicket;
+        return $this;
+    }
+
     /**
      * 获取前端注册wx.config使用的签名包
      * @param string $url
