@@ -20,7 +20,7 @@ class OfficialAccountBase
         $this->officialAccount = $officialAccount;;
     }
 
-    public function getOfficialAccount():OfficialAccount
+    protected function getOfficialAccount():OfficialAccount
     {
         return $this->officialAccount;
     }

@@ -23,7 +23,7 @@ class JsApiBase
     /**
      * @return JsApi
      */
-    public function getJsApi(): JsApi
+    protected function getJsApi(): JsApi
     {
         return $this->jsApi;
     }

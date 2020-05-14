@@ -34,7 +34,7 @@ class JsTicket extends JsApiBase implements JsTicketInterface
     function refreshTicket(): ?string
     {
         $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
-        $accessToken = (new AccessToken($this->getJsApi()->getOfficialAccount()))->getToken();
+        $accessToken = $this->getJsApi()->getOfficialAccount()->accessToken()->getToken();
         $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_GET_TICKET, [
             'ACCESS_TOKEN' => $accessToken,
         ]));
