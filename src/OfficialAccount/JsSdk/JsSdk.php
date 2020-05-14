@@ -19,7 +19,7 @@ class JsSdk extends JsApiBase
     function jsTicket():JsTicketInterface
     {
         if(!isset($this->ticket)){
-            $this->ticket = new JsTicket($this->getJsApi());
+            $this->ticket = new JsTicket($this->getOfficialAccount());
         }
         return $this->ticket;
     }
@@ -32,7 +32,7 @@ class JsSdk extends JsApiBase
      */
     function signature(string $url)
     {
-        $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
+        $officialAccountConfig = $this->getOfficialAccount()->getConfig();
         // 组装签名参数包
         $pack = [
             'noncestr' => $this->generateNonce(16),

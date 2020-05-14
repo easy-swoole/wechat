@@ -25,7 +25,7 @@ class Auth extends JsApiBase
      */
     function generateURL(JsAuthRequest $request)
     {
-        $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
+        $officialAccountConfig = $this->getOfficialAccount()->getConfig();
         $appid = $officialAccountConfig->getAppId();
         $scope = $request->getType();
         $state = $request->getState();
@@ -47,7 +47,7 @@ class Auth extends JsApiBase
      */
     function codeToToken($authCode): ?SnsAuthBean
     {
-        $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
+        $officialAccountConfig = $this->getOfficialAccount()->getConfig();
         $appid = $officialAccountConfig->getAppId();
         $secret = $officialAccountConfig->getAppSecret();
         $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_CODE_TO_TOKEN, [
@@ -106,7 +106,7 @@ class Auth extends JsApiBase
      */
     function refreshToken($refreshToken)
     {
-        $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
+        $officialAccountConfig = $this->getOfficialAccount()->getConfig();
         $appid = $officialAccountConfig->getAppId();
         $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_REFRESH_TOKEN, [
             'APPID' => $appid,

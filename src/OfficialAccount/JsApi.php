@@ -20,7 +20,7 @@ class JsApi extends OfficialAccountBase
     function auth()
     {
         if (!isset($this->auth)) {
-            $this->auth = new Auth($this);
+            $this->auth = new Auth($this->getOfficialAccount());
         }
         return $this->auth;
     }
@@ -28,7 +28,7 @@ class JsApi extends OfficialAccountBase
     function sdk()
     {
         if (!isset($this->sdk)) {
-            $this->sdk = new JsSdk($this);
+            $this->sdk = new JsSdk($this->getOfficialAccount());
         }
         return $this->sdk;
     }

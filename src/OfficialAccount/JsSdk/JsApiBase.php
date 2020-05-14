@@ -9,22 +9,22 @@
 namespace EasySwoole\WeChat\OfficialAccount\JsSdk;
 
 
-use EasySwoole\WeChat\OfficialAccount\JsApi;
+use EasySwoole\WeChat\OfficialAccount\OfficialAccount;
 
 class JsApiBase
 {
-    private $jsApi;
+    private $officialAccount;
 
-    function __construct(JsApi $jsApi)
+    function __construct(OfficialAccount $account)
     {
-        $this->jsApi = $jsApi;
+        $this->officialAccount = $account;
     }
 
     /**
-     * @return JsApi
+     * @return OfficialAccount
      */
-    protected function getJsApi(): JsApi
+    protected function getOfficialAccount(): OfficialAccount
     {
-        return $this->jsApi;
+        return $this->officialAccount;
     }
 }
