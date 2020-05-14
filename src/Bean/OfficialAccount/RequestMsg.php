@@ -22,6 +22,7 @@ class RequestMsg extends SplBean
     protected $MsgType;
     protected $Content;
     protected $MsgId;
+    protected $MsgID;
     protected $Event;
     protected $EventKey;
     protected $Ticket;
@@ -125,7 +126,15 @@ class RequestMsg extends SplBean
      */
     public function getMsgId()
     {
-        return $this->MsgId;
+        if (!empty($this->MsgId)) {
+            return $this->MsgId;
+        }
+
+        if (!empty($this->MsgID)) {
+            return $this->MsgID;
+        }
+
+        return null;
     }
 
     /**
