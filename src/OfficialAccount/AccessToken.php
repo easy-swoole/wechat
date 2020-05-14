@@ -18,32 +18,11 @@ class AccessToken extends OfficialAccountBase implements AccessTokenInterface
 {
     /**
      * getToken
-     * 默认刷新一次
-     * @param int $refreshTimes
-     * @return string|null
-     * @throws \Throwable
+     * 自带版本不刷新
      */
     function getToken($refreshTimes = 1):?string
     {
-        $lockName = 'OfficialAccount_'. $this->getOfficialAccount()->getConfig()->getAppId();
-
-        try{
-            if(!$this->getOfficialAccount()->getConfig()->getStorage()->lock($lockName)){
-                return null;
-            }
-            $data = $this->getOfficialAccount()->getConfig()->getStorage()->get('access_token');
-            if(!empty($data)){
-                return $data;
-            }else if($refreshTimes > 0){
-                $this->refresh();
-                return $this->getToken($refreshTimes -1);
-            }
-            return null;
-        }catch (\Throwable $throwable){
-            throw $throwable;
-        }finally{
-            $this->getOfficialAccount()->getConfig()->getStorage()->unlock($lockName);
-        }
+        return $this->getOfficialAccount()->getConfig()->getStorage()->get('access_token');
     }
 
     /**

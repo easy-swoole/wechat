@@ -27,16 +27,7 @@ class ComponentAccessToken extends OpenPlatformBase implements AccessTokenInterf
      */
     function getToken($refreshTimes = 1): ?string
     {
-        if ($refreshTimes < 0) {
-            return null;
-        }
-        $data = $this->getOpenPlatform()->getConfig()->getStorage()->get('component_access_token');
-        if (!empty($data)) {
-            return $data;
-        } else {
-            $this->refresh();
-            return $this->getToken($refreshTimes - 1);
-        }
+        return $this->getOpenPlatform()->getConfig()->getStorage()->get('component_access_token');
     }
 
     /**
