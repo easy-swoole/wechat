@@ -10,52 +10,17 @@ namespace EasySwoole\WeChat\OfficialAccount\JsSdk;
 
 use EasySwoole\WeChat\Bean\OfficialAccount\JsApiSignaturePack;
 use EasySwoole\WeChat\Exception\OfficialAccountError;
-use EasySwoole\WeChat\OfficialAccount\AccessToken;
-use EasySwoole\WeChat\OfficialAccount\ApiUrl;
-use EasySwoole\WeChat\Utility\NetWork;
 
 class JsSdk extends JsApiBase
 {
-    /**
-     * 获取JsTick
-     * 自带版本不刷新
-     * @param int $refreshTimes
-     * @return string
-     * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
-     */
-    function jsTick($refreshTimes = 1): ?string
+    private $ticket;
+    function jsTicket()
     {
-        return $this->getJsApi()->getOfficialAccount()->getConfig()->getStorage()->get('jsapi_ticket');
-    }
-
-    /**
-     * 刷新本地的Tick
-     * @return string
-     * @throws OfficialAccountError
-     * @throws \EasySwoole\WeChat\Exception\RequestError
-     */
-    function refreshJsTick(): ?string
-    {
-        $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
-        $accessToken = (new AccessToken($this->getJsApi()->getOfficialAccount()))->getToken();
-        $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_GET_TICKET, [
-            'ACCESS_TOKEN' => $accessToken,
-        ]));
-        $ex = OfficialAccountError::hasException($response);
-        if ($ex) {
-            throw $ex;
-        } else {
-            $ticket = $response['ticket'];
-            /**
-             * 这里故意设置为7180
-             */
-            $officialAccountConfig->getStorage()->set('jsapi_ticket', $ticket, time() + 7180);
-            return $ticket;
+        if(!isset($this->ticket)){
+            $this->ticket = new JsTick($this->getJsApi());
         }
-
+        return $this->ticket;
     }
-
     /**
      * 获取前端注册wx.config使用的签名包
      * @param string $url
@@ -69,7 +34,7 @@ class JsSdk extends JsApiBase
         // 组装签名参数包
         $pack = [
             'noncestr' => $this->generateNonce(16),
-            'jsapi_ticket' => $this->jsTick(),
+            'jsapi_ticket' => $this->jsTicket()->getJsApi(),
             'timestamp' => time(),
             'url' => $url
         ];
@@ -82,7 +47,6 @@ class JsSdk extends JsApiBase
         }
         // 去除最后多拼接的&
         $signatureStr = substr($signatureStr, 0, -1);
-        // signature=sha1(string1)
         $signature = sha1($signatureStr);
         // 返回签名包
         return new JsApiSignaturePack([
