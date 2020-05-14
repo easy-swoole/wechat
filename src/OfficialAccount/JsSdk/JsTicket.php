@@ -22,7 +22,7 @@ class JsTicket extends JsApiBase implements JsTicketInterface
      */
     function getTicket($refreshTimes = 1): ?string
     {
-        return $this->getJsApi()->getOfficialAccount()->getConfig()->getStorage()->get('jsapi_ticket');
+        return $this->getOfficialAccount()->getConfig()->getStorage()->get('jsapi_ticket');
     }
 
     /**
@@ -33,8 +33,8 @@ class JsTicket extends JsApiBase implements JsTicketInterface
      */
     function refreshTicket(): ?string
     {
-        $officialAccountConfig = $this->getJsApi()->getOfficialAccount()->getConfig();
-        $accessToken = $this->getJsApi()->getOfficialAccount()->accessToken()->getToken();
+        $officialAccountConfig = $this->getOfficialAccount()->getConfig();
+        $accessToken = $this->getOfficialAccount()->accessToken()->getToken();
         $response = NetWork::getForJson(ApiUrl::generateURL(ApiUrl::JSAPI_GET_TICKET, [
             'ACCESS_TOKEN' => $accessToken,
         ]));
