@@ -19,10 +19,6 @@ class Encryptor extends MinProgramBase
     {
         $jsonString = openssl_decrypt(base64_decode($encryptedData), "aes-128-cbc", base64_decode($sessionKey), OPENSSL_RAW_DATA, base64_decode($iv));
 
-        if (openssl_error_string() !== false) {
-            throw new EncryptorError(openssl_error_string());
-        }
-
         $decryptData = json_decode($jsonString, true);
 
         if (!$decryptData) {
