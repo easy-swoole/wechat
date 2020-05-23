@@ -509,6 +509,106 @@ class ApiUrl
     const JSAPI_GET_TICKET = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi';
 
     /**
+     * 获取用户增减数据
+     */
+    const GET_USER_SUMMARY = 'https://api.weixin.qq.com/datacube/getusersummary?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取累计用户数据
+     */
+    const GET_USER_CUMULATE = 'https://api.weixin.qq.com/datacube/getusercumulate?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取图文群发每日数据
+     */
+    const GET_ARTICLE_SUMMARY = 'https://api.weixin.qq.com/datacube/getarticlesummary?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取图文群发总数据
+     */
+    const GET_ARTICLE_TOTAL = 'https://api.weixin.qq.com/datacube/getarticletotal?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取图文统计数据
+     */
+    const GET_USER_READ = 'https://api.weixin.qq.com/datacube/getuserread?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取图文统计分时数据
+     */
+    const GET_USER_READ_HOUR = 'https://api.weixin.qq.com/datacube/getuserreadhour?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取图文分享转发数据
+     */
+    const GET_USER_SHARE = 'https://api.weixin.qq.com/datacube/getusershare?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取图文分享转发分时数据
+     */
+    const GET_USER_SHARE_HOUR = 'https://api.weixin.qq.com/datacube/getusersharehour?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取消息发送概况数据
+     */
+    const GET_UP_STREAM_MSG = 'https://api.weixin.qq.com/datacube/getupstreammsg?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取消息分送分时数据
+     */
+    const GET_UP_STREAM_MSG_HOUR = 'https://api.weixin.qq.com/datacube/getupstreammsghour?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取消息发送周数据
+     */
+    const GET_UP_STREAM_MSG_WEEK = 'https://api.weixin.qq.com/datacube/getupstreammsgweek?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取消息发送月数据
+     */
+    const GET_UP_STREAM_MSG_MONTH = 'https://api.weixin.qq.com/datacube/getupstreammsgmonth?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取消息发送分布数据
+     */
+    const GET_UP_STREAM_MSG_DIST = 'https://api.weixin.qq.com/datacube/getupstreammsgdist?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取消息发送分布周数据
+     */
+    const GET_UP_STREAM_MSG_DIST_WEEK = 'https://api.weixin.qq.com/datacube/getupstreammsgdistweek?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取消息发送分布月数据
+     */
+    const GET_UP_STREAM_MSG_DIST_MONTH = 'https://api.weixin.qq.com/datacube/getupstreammsgdistmonth?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取公众号分广告位数据
+     */
+    const PUBLISHER_ADPOS_GENERAL = 'https://api.weixin.qq.com/publisher/stat?action=publisher_adpos_general&access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取公众号返佣商品数据
+     */
+    const PUBLISHER_CPS_GENERAL = 'https://api.weixin.qq.com/publisher/stat?action=publisher_cps_general&access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取公众号结算收入数据及结算主体信息
+     */
+    const PUBLISHER_SETTLEMENT = 'https://api.weixin.qq.com/publisher/stat?action=publisher_settlement&access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取接口分析数据
+     */
+    const GET_INTERFACE_SUMMARY = 'https://api.weixin.qq.com/datacube/getinterfacesummary?access_token=ACCESS_TOKEN';
+
+    /**
+     * 获取接口分析分时数据
+     */
+    const GET_INTERFACE_SUMMARY_HOUR = 'https://api.weixin.qq.com/datacube/getinterfacesummaryhour?access_token=ACCESS_TOKEN';
+
+    /**
      * @param string $baseUrl
      * @param array  $data
      *

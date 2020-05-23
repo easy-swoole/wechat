@@ -30,6 +30,7 @@ class OfficialAccount
     private $service;
     private $groupSending;
     private $comment;
+    private $dataCube;
 
     public function onError(callable $onError)
     {
@@ -160,6 +161,14 @@ class OfficialAccount
             $this->comment = new Comment($this);
         }
         return $this->comment;
+    }
+
+    public function dataCube(): DataCube
+    {
+        if (!isset($this->dataCube)) {
+            $this->dataCube = new DataCube($this);
+        }
+        return $this->dataCube;
     }
 
     public function getConfig(): OfficialAccountConfig
