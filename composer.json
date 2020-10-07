@@ -1,0 +1,42 @@
+{
+    "name": "easyswoole/wechat",
+    "description": "Coroutine safety WeChat library",
+    "keywords": [
+        "swoole",
+        "wechat",
+        "async",
+        "easyswoole"
+    ],
+    "homepage": "https://www.easyswoole.com/",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "YF",
+            "email": "291323003@qq.com"
+        },
+        {
+            "name": "runtp",
+            "email": "runstp@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "ext-openssl": "*",
+        "pimple/pimple": "^3.0",
+        "psr/log": "^1.1",
+        "easyswoole/spl": "^1.3",
+        "psr/http-message": "^1.0"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "~4.4.21"
+    },
+    "autoload": {
+        "psr-4": {
+            "EasySwoole\\WeChat\\": "src/"
+        }
+    }
+}
