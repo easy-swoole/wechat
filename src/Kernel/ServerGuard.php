@@ -10,6 +10,7 @@ use EasySwoole\WeChat\Kernel\Messages\Message;
 use EasySwoole\WeChat\Kernel\Messages\Raw;
 use EasySwoole\WeChat\Kernel\Psr\Response;
 use EasySwoole\WeChat\Kernel\Traits\Observable;
+use EasySwoole\WeChat\Kernel\Utility\Random;
 use EasySwoole\WeChat\Kernel\Utility\XML;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -57,11 +58,11 @@ abstract class ServerGuard
             return $this;
         }
 
-        if (($request->getQueryParams()['signature'] ?? null) !== $this->signature([
+        if (($request->getQueryParams()['signature'] ?? null) !== $this->signature(
                 $this->getToken(),
                 $request->getQueryParams()['timestamp'] ?? null,
-                $request->getQueryParams()['nonce'] ?? null,
-            ])) {
+                $request->getQueryParams()['nonce'] ?? null
+            )) {
             throw new BadRequestException('Invalid request signature.', 400);
         }
 
@@ -113,7 +114,12 @@ abstract class ServerGuard
         }
 
         if ($this->isSafeMode($request)) {
-            $replyString = $this->app[ServiceProviders::Encryptor]->encrypt($replyString);
+            $encrypted = $this->app[ServiceProviders::Encryptor]->encrypt(
+                $replyString,
+                $this->app[ServiceProviders::Config]->get("aesKey"),
+                $this->app[ServiceProviders::Config]->get("appId")
+            );
+            $replyString = $this->buildEncryptedReply($encrypted);
         }
 
         return new Response(
@@ -133,7 +139,7 @@ abstract class ServerGuard
         $message = $this->parseMessage($request->getBody()->__toString());
 
         if ($this->isSafeMode($request) && !empty($message['Encrypt'])) {
-            $messageString = $this->decryptMessage($message, $request);
+            $messageString = $this->decryptMessage($message);
 
             $message = json_decode($messageString, true);
             if (!$message || (JSON_ERROR_NONE === json_last_error())) {
@@ -193,10 +199,10 @@ abstract class ServerGuard
     }
 
     /**
-     * @param array $params
+     * @param string ...$params
      * @return string
      */
-    protected function signature(array $params)
+    protected function signature(string ...$params)
     {
         sort($params, SORT_STRING);
 
@@ -215,6 +221,22 @@ abstract class ServerGuard
         return $message->transformToXml($prepends);
     }
 
+    /**
+     * @param string $encrypted
+     * @return string
+     */
+    protected function buildEncryptedReply(string $encrypted): string
+    {
+        $timestamp = time();
+        $nonce = Random::character(9, "0123456789");
+        return XML::build([
+            'Encrypt' => $encrypted,
+            'MsgSignature' => $this->signature($this->getToken(), $timestamp, $nonce, $encrypted),
+            'TimeStamp' => $timestamp,
+            'Nonce' => $nonce,
+        ]);
+    }
+
     protected function isSafeMode(ServerRequestInterface $request): bool
     {
         return ($request->getQueryParams()['signature'] ?? false)
@@ -223,16 +245,14 @@ abstract class ServerGuard
 
     /**
      * @param array                  $message
-     * @param ServerRequestInterface $request
      * @return string|null
      */
-    protected function decryptMessage(array $message, ServerRequestInterface $request): ?string
+    protected function decryptMessage(array $message): ?string
     {
         return $this->app[ServiceProviders::Encryptor]->decrypt(
             $message['Encrypt'],
-            $request->getQueryParams()['msg_signature'] ?? null,
-            $request->getQueryParams()['nonce'] ?? null,
-            $request->getQueryParams()['timestamp'] ?? null
+            $this->app[ServiceProviders::Config]->get("aesKey"),
+            $this->app[ServiceProviders::Config]->get("appId")
         );
     }
 
