@@ -15,7 +15,6 @@ class EchoStrHandler implements EventHandlerInterface
     {
         if ($request instanceof ServerRequestInterface) {
             $str = $request->getQueryParams()['echostr'] ?? null;
-            var_dump($str);
             if (!is_null($str)) {
                 $message = new Raw();
                 $message->setContent($str);
