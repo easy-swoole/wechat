@@ -16,9 +16,6 @@ use Swoole\Coroutine\Http\Client;
 
 class SwooleClientDriver implements ClientInterface
 {
-    /** @var Client|null */
-    protected $client;
-
     /** @var string[] */
     protected $defaultOptions = [
         "timeout" => 5.0
@@ -40,8 +37,8 @@ class SwooleClientDriver implements ClientInterface
     protected $body;
 
     protected $uploadFiles = [
-        'file'   => [],
-        'stream' => []
+        'files'   => [],
+        'streams' => []
     ];
 
     public function setTimeout(float $timeout): ClientInterface
@@ -70,13 +67,13 @@ class SwooleClientDriver implements ClientInterface
 
     public function addFile(string $path, string $dataName): ClientInterface
     {
-        $this->uploadFiles['file'][] = [$dataName => $path];
+        $this->uploadFiles['files'][$dataName] = $path;
         return $this;
     }
 
     public function addStream(StreamInterface $stream, string $dataName): ClientInterface
     {
-        $this->uploadFiles['stream'][] = [$dataName => $stream];
+        $this->uploadFiles['streams'][$dataName] = $stream;
         return $this;
     }
 
@@ -90,51 +87,55 @@ class SwooleClientDriver implements ClientInterface
     public function send(string $url): ResponseInterface
     {
         $urlInfo = $this->initUrl($url);
-        if (!$this->client instanceof Client) {
-            $this->client = $this->createClient($urlInfo['scheme'], $urlInfo['host']);
-        }
+        $client = $this->createClient($urlInfo['scheme'], $urlInfo['host'], $urlInfo['port'] ?? null);
 
-        $this->client->setMethod($this->method);
-        $this->client->setHeaders(array_merge($this->defaultHeaders, $this->headers));
+        $client->setMethod($this->method);
+        $client->setHeaders(array_merge($this->defaultHeaders, $this->headers));
 
         if (!is_null($this->timeout)) {
-            $this->client->set(['timeout' => $this->timeout]);
+            $client->set(['timeout' => $this->timeout]);
         }
 
-        if ($this->client->execute($urlInfo['fullPath'])) {
-            return $this->createResponse();
+        foreach ($this->uploadFiles as $type => $files) {
+            foreach ($files as $name => $file) {
+                if ($type === 'files') {
+                    $client->addFile($file, $name);
+                }else{
+                    $client->addData($file, $name);
+                }
+            }
         }
 
-        switch ($this->client->getStatusCode()) {
+        $flag = $client->execute($urlInfo['fullPath']);
+        $client->close();
+        $this->reset();
+
+        if ($flag) {
+            return $this->createResponse($client);
+        }
+
+        switch ($client->getStatusCode()) {
             case SWOOLE_HTTP_CLIENT_ESTATUS_REQUEST_TIMEOUT:
                 throw new TimeOutException("request timeout.");
             case SWOOLE_HTTP_CLIENT_ESTATUS_SERVER_RESET:
                 throw new RequestException("request server reset.");
             default:
-                throw new RequestException(sprintf(
-                    "request fail, errCode: %",
-                    $this->client->errCode
-                ));
-        }
-    }
-
-    public function __destruct()
-    {
-        if ($this->client instanceof Client) {
-            $this->client->close();
+                throw new RequestException('request fail, errCode: '. $client->errCode);
         }
     }
 
     /**
      * @param string $scheme
      * @param string $host
+     * @param int|null $port
      * @return Client
      */
-    protected function createClient(string $scheme, string $host): Client
+    protected function createClient(string $scheme, string $host, ?int $port = null): Client
     {
         $isSsl = strtolower($scheme) === 'https';
+        $port = $port ?? ($isSsl ? 443 : 80);
 
-        $client = new Client($host, $isSsl ? 443 : 80, $isSsl);
+        $client = new Client($host, $port, $isSsl);
         $client->set($this->defaultOptions);
         return $client;
     }
@@ -148,15 +149,15 @@ class SwooleClientDriver implements ClientInterface
     {
         $info = parse_url($url);
         if (empty($info['scheme'])) {
-            $info = parse_url('//' . $url);
+            $info = parse_url('http://' . $url);
         }
 
         if (false === $info) {
             throw new InvalidUrIException("invalid url: {$url}");
         }
 
-        if (empty($info['host']) || !in_array($info['host'], ['http', 'https'])) {
-            throw new InvalidUrIException("invalid host: {$url}");
+        if (empty($info['scheme']) || !in_array($info['scheme'], ['http', 'https'])) {
+            throw new InvalidUrIException("invalid scheme: {$url}");
         }
 
         $info['path'] = empty($info['path']) ? '/' : $info['path'];
@@ -167,14 +168,27 @@ class SwooleClientDriver implements ClientInterface
     }
 
     /**
+     * @param Client $client
      * @return ResponseInterface
      */
-    protected function createResponse(): ResponseInterface
+    protected function createResponse(Client $client): ResponseInterface
     {
         return new Response(
-            $this->client->getStatusCode(),
-            $this->client->getHeaders(),
-            new SplStream($this->client->getBody())
+            $client->getStatusCode(),
+            $client->getHeaders(),
+            new SplStream($client->getBody())
         );
+    }
+
+    protected function reset()
+    {
+        $this->headers = [];
+        $this->timeout = null;
+        $this->method = null;
+        $this->body = null;
+        $this->uploadFiles = [
+            'file'   => [],
+            'stream' => []
+        ];
     }
 }
