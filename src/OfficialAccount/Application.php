@@ -15,6 +15,8 @@ use EasySwoole\WeChat\OfficialAccount\Server\Guard;
  */
 class Application extends ServiceContainer
 {
+    const BASE = 'base';
+
     protected $providers = [
         Server\ServiceProvider::class
     ];
