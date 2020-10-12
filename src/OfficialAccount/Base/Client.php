@@ -4,7 +4,9 @@
 namespace EasySwoole\WeChat\OfficialAccount\Base;
 
 
-class Client
+use EasySwoole\WeChat\Kernel\BaseClient;
+
+class Client extends BaseClient
 {
 
 }

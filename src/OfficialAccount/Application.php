@@ -8,16 +8,18 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\Server\Guard;
 
 /**
- * Class Application
+ * Class ServiceProvider
  *
  * @package EasySwoole\WeChat\OfficialAccount
  * @property Guard  $server
  */
 class Application extends ServiceContainer
 {
-    const BASE = 'base';
+    const Base = 'base';
+    const Server = 'server';
 
     protected $providers = [
+        Base\ServiceProvider::class,
         Server\ServiceProvider::class
     ];
 }

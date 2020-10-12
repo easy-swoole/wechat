@@ -8,11 +8,11 @@ use EasySwoole\WeChat\OfficialAccount\Application as BaseApplication;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
-class Application implements ServiceProviderInterface
+class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $app)
     {
-        $app[BaseApplication::BASE] = function ($app) {
+        $app[BaseApplication::Base] = function ($app) {
             return new Client($app);
         };
     }
