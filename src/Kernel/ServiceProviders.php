@@ -10,4 +10,5 @@ class ServiceProviders
     const Config = "config";
     const Request = "request";
     const Encryptor = "encryptor";
+    const AccessToken = "accessToken";
 }
