@@ -160,10 +160,7 @@ trait MessageTrait
 
     protected function createStream($body): StreamInterface
     {
-        $stream = new class($body) extends SplStream implements StreamInterface {
-
-        };
-        return $stream;
+        return new Stream($body);
     }
 
     /**
