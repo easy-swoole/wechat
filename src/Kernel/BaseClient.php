@@ -37,7 +37,7 @@ class BaseClient
      */
     protected function getClient():ClientInterface
     {
-        return $this->app[ServiceProviders::Request]->getClient();
+        return $this->app[ServiceProviders::HttpClient]->getClient();
     }
 
     /**
@@ -60,7 +60,7 @@ class BaseClient
 
         if (isset($data['errcode']) && (int)$data['errcode'] !== 0) {
             throw new HttpException(
-                "request wechat error, message: ". $data['errcode'],
+                "request wechat error, message: ({$data['errcode']}) {$data['errmsg']}",
                 $response,
                 $data['errcode']
             );

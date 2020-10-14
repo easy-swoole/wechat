@@ -96,6 +96,10 @@ class SwooleClientDriver implements ClientInterface
             $client->set(['timeout' => $this->timeout]);
         }
 
+        if (!is_null($this->body)) {
+            $client->setData($this->body->__toString());
+        }
+
         foreach ($this->uploadFiles as $type => $files) {
             foreach ($files as $name => $file) {
                 if ($type === 'files') {
