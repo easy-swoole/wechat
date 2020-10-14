@@ -106,7 +106,7 @@ abstract class AccessToken implements AccessTokenInterface
 
         if (isset($data['errcode']) && (int)$data['errcode'] !== 0) {
             throw new HttpException(
-                "refresh access_token fail, message: ". $data['errcode'],
+                "refresh access_token fail, message: ({$data['errcode']}) {$data['errmsg']}",
                 $response,
                 $data['errcode']
             );
@@ -142,7 +142,7 @@ abstract class AccessToken implements AccessTokenInterface
      */
     protected function getClient():ClientInterface
     {
-        return $this->app[ServiceProviders::Request];
+        return $this->app[ServiceProviders::HttpClient]->getClient();
     }
 
     abstract protected function getEndpoint():string;
