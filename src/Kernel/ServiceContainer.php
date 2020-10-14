@@ -4,7 +4,9 @@
 namespace EasySwoole\WeChat\Kernel;
 
 
+use EasySwoole\WeChat\Kernel\Providers\CacheServiceProvider;
 use EasySwoole\WeChat\Kernel\Providers\ConfigServiceProvider;
+use EasySwoole\WeChat\Kernel\Providers\HttpClientServiceProvider;
 use EasySwoole\WeChat\Kernel\Providers\LogServiceProvider;
 use Pimple\Container;
 
@@ -36,7 +38,9 @@ class ServiceContainer extends Container
     {
         return array_merge([
             LogServiceProvider::class,
-            ConfigServiceProvider::class
+            ConfigServiceProvider::class,
+            CacheServiceProvider::class,
+            HttpClientServiceProvider::class
         ], $this->providers);
     }
 

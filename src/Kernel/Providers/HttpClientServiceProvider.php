@@ -11,12 +11,12 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
-class RequestServiceProvider implements ServiceProviderInterface
+class HttpClientServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $pimple)
     {
-        if (!isset($pimple[ServiceProviders::Request])) {
-            $pimple[ServiceProviders::Request] = function (ServiceContainer $app) {
+        if (!isset($pimple[ServiceProviders::HttpClient])) {
+            $pimple[ServiceProviders::HttpClient] = function (ServiceContainer $app) {
                 return new RequestManage(
                     $app[ServiceProviders::Config]->get('request.httpClientDriver') ?? SwooleClientDriver::class
                 );
