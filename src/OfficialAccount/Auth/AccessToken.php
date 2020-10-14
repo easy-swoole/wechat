@@ -5,22 +5,16 @@ namespace EasySwoole\WeChat\OfficialAccount\Auth;
 
 
 use EasySwoole\WeChat\Kernel\AccessToken as BaseAccessToken;
-use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
-use Psr\SimpleCache\InvalidArgumentException;
 
 class AccessToken extends BaseAccessToken
 {
     /**
      * @return string
-     * @throws HttpException
-     * @throws InvalidArgumentException
      */
     protected function getEndpoint(): string
     {
-        return 'https://api.weixin.qq.com/cgi-bin/token?'
-            . $this->getCredentials()
-            .'&access_token='. $this->getToken();
+        return 'https://api.weixin.qq.com/cgi-bin/token?'. $this->getCredentials();
     }
 
     /**
