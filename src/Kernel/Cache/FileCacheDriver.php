@@ -166,6 +166,10 @@ class FileCacheDriver implements CacheInterface
      */
     public function setMultiple($values, $ttl = null): bool
     {
+        if (!is_array($values) && !($values instanceof \Iterator)) {
+            throw new InvalidArgumentException('Not a valid value');
+        }
+
         $result = true;
         foreach ($values as $key => $value) {
             if ($this->set($key, $value, $ttl) === false && $result === true) {
