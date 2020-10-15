@@ -37,7 +37,7 @@ class BaseClient
      */
     protected function getClient():ClientInterface
     {
-        return $this->app[ServiceProviders::HttpClient]->getClient();
+        return $this->app[ServiceProviders::HttpClientManage]->getClient();
     }
 
     /**
