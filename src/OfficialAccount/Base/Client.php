@@ -27,4 +27,20 @@ class Client extends BaseClient
 
         return $this->checkResponse($response);
     }
+
+    /**
+     * @return array
+     * @throws HttpException
+     */
+    public function getValidIps():array
+    {
+        $response = $this->getClient()
+            ->setMethod('GET')
+            ->send($this->buildUrl('/cgi-bin/getcallbackip',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $jsonData);
+        return $jsonData;
+    }
 }
