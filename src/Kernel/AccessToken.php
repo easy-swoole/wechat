@@ -142,7 +142,7 @@ abstract class AccessToken implements AccessTokenInterface
      */
     protected function getClient():ClientInterface
     {
-        return $this->app[ServiceProviders::HttpClientManage]->getClient();
+        return $this->app[ServiceProviders::HttpClientManager]->getClient();
     }
 
     abstract protected function getEndpoint():string;

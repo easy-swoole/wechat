@@ -9,7 +9,7 @@ use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use ReflectionClass;
 use ReflectionException;
 
-class HttpClientManage
+class HttpClientManager
 {
     /** @var string  */
     protected $clientClass;

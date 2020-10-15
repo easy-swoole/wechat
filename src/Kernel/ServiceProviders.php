@@ -9,7 +9,7 @@ class ServiceProviders
     const Logger = "logger";
     const Config = "config";
     const Cache = "cache";
-    const HttpClientManage = "httpClientManage";
+    const HttpClientManager = "httpClientManage";
     const Encryptor = "encryptor";
     const AccessToken = "accessToken";
 }
