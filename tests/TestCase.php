@@ -5,17 +5,15 @@ namespace EasySwoole\WeChat\Tests;
 
 
 use EasySwoole\WeChat\Kernel\Contracts\AccessTokenInterface;
-use EasySwoole\WeChat\Kernel\Contracts\ClientInterface;
 use EasySwoole\WeChat\Kernel\Psr\Response;
 use EasySwoole\WeChat\Kernel\Psr\Stream;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected function mockAccessToken(ServiceContainer $app, AccessTokenInterface $accessToken = null):ServiceContainer
+    protected function mockAccessToken(ServiceContainer $app, AccessTokenInterface $accessToken = null): ServiceContainer
     {
         if (is_null($accessToken)) {
             $accessToken = new class implements AccessTokenInterface {
@@ -38,90 +36,38 @@ class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param callable          $onRequest
      * @param ResponseInterface $response
-     * @param ServiceContainer $app
+     * @param ServiceContainer  $app
      * @return ServiceContainer
      */
-    protected function mockHttpClient(ResponseInterface $response, ServiceContainer $app): ServiceContainer
+    protected function mockHttpClient(callable $onRequest, ResponseInterface $response, ServiceContainer $app): ServiceContainer
     {
-        $app[ServiceProviders::HttpClientManager] = function () use ($response) {
-            return new class($response) {
-                protected $response;
-                public function __construct(ResponseInterface $response)
-                {
-                    $this->response = $response;
-                }
-                public function getClient():ClientInterface
-                {
-                    return new class($this->response) implements ClientInterface
-                    {
-                        private $response;
-
-                        public function __construct(ResponseInterface $response)
-                        {
-                            $this->response = $response;
-                        }
-
-                        public function setTimeout(float $timeout): ClientInterface
-                        {
-                            return $this;
-                        }
-
-                        public function setHeaders(array $headers): ClientInterface
-                        {
-                            return $this;
-                        }
-
-                        public function setMethod(string $method): ClientInterface
-                        {
-                            return $this;
-                        }
-
-                        public function setBody(StreamInterface $body): ClientInterface
-                        {
-                            return $this;
-                        }
-
-                        public function addFile(string $path, string $dataName): ClientInterface
-                        {
-                            return $this;
-                        }
-
-                        public function addStream(StreamInterface $stream, string $dataName): ClientInterface
-                        {
-                            return $this;
-                        }
-
-                        public function send(string $url): ResponseInterface
-                        {
-                            return $this->response;
-                        }
-                    };
-                }
-            };
+        $app[ServiceProviders::HttpClientManager] = function () use ($onRequest, $response) {
+            return new MockHttpClient($onRequest, $response);
         };
         return $app;
     }
 
     /**
-     * @param int $statusCode
+     * @param int        $statusCode
      * @param array|null $body
-     * @param array $headers
+     * @param array      $headers
      * @return ResponseInterface
      */
-    protected function buildJsonResponse(int $statusCode, array $body = null, array $headers = []):ResponseInterface
+    protected function buildJsonResponse(int $statusCode, array $body = null, array $headers = []): ResponseInterface
     {
-        $body = is_null($body) ? "" : json_encode($body, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        $body = is_null($body) ? "" : json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         return $this->buildResponse($statusCode, $body, $headers);
     }
 
     /**
-     * @param int $statusCode
+     * @param int    $statusCode
      * @param string $body
-     * @param array $headers
+     * @param array  $headers
      * @return ResponseInterface
      */
-    protected function buildResponse(int $statusCode, string $body = "", array $headers = []):ResponseInterface
+    protected function buildResponse(int $statusCode, string $body = "", array $headers = []): ResponseInterface
     {
         return new Response($statusCode, $headers, new Stream($body));
     }
