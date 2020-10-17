@@ -17,6 +17,9 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(200, '{"errcode":0,"errmsg":"ok"}');
         $app = $this->mockAccessToken(new ServiceContainer(['appId' => '123456']));
         $app = $this->mockHttpClient(function (MockRequest $request) {
+            $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('/cgi-bin/clear_quota', $request->getPath());
+            $this->assertEquals('access_token=mock_access_token', $request->getQuery());
             $this->assertInstanceOf(Stream::class, $request->getBody());
             $this->assertEquals('{"appid":"123456"}', $request->getBody()->__toString());
         }, $response, $app);
@@ -32,13 +35,12 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(200, $body);
         $app = $this->mockAccessToken(new ServiceContainer());
         $app = $this->mockHttpClient(function (MockRequest $request) {
-
+            $this->assertEquals('GET', $request->getMethod());
+            $this->assertEquals('/cgi-bin/getcallbackip', $request->getPath());
+            $this->assertEquals('access_token=mock_access_token', $request->getQuery());
         }, $response, $app);
 
         $client = new Client($app);
-        $this->assertEqualsCanonicalizing(
-            json_decode($body, true),
-            $client->getValidIps()
-        );
+        $this->assertEqualsCanonicalizing(json_decode($body, true), $client->getValidIps());
     }
 }
