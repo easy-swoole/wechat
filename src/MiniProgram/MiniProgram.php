@@ -9,6 +9,8 @@
 namespace EasySwoole\WeChat\MiniProgram;
 
 
+use EasySwoole\WeChat\AbstractInterface\AccessTokenInterface;
+
 class MiniProgram
 {
     private $config;
@@ -19,11 +21,16 @@ class MiniProgram
     private $templateMsg;
     private $subscribeMsg;
 
-    public function __construct(MiniProgramConfig $config = null)
+    public function __construct(MiniProgramConfig $config = null, AccessTokenInterface $accessToken = null)
     {
         if (is_null($config)) {
             $config = new MiniProgramConfig;
         }
+
+        if (!is_null($accessToken)) {
+            $this->accessToken = $accessToken;
+        }
+
         $this->config = $config;
     }
 
@@ -68,15 +75,21 @@ class MiniProgram
     /**
      * accessToken
      *
-     * @return AccessToken
+     * @return AccessTokenInterface
      */
-    public function accessToken(): AccessToken
+    public function accessToken(): AccessTokenInterface
     {
         if (!isset($this->accessToken)) {
             $this->accessToken = new AccessToken($this);
         }
 
         return $this->accessToken;
+    }
+
+    public function setAccessTokenManager(AccessTokenInterface $accessToken):MiniProgram
+    {
+        $this->accessToken = $accessToken;
+        return $this;
     }
 
     /**
