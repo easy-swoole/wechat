@@ -9,6 +9,7 @@ use EasySwoole\WeChat\Kernel\Psr\Response;
 use EasySwoole\WeChat\Kernel\Psr\Stream;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use EasySwoole\WeChat\Tests\Mock\MockHttpClient;
 use Psr\Http\Message\ResponseInterface;
 
 class TestCase extends \PHPUnit\Framework\TestCase
