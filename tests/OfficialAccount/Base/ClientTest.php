@@ -5,7 +5,6 @@ namespace EasySwoole\WeChat\Tests\OfficialAccount\Base;
 
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
-use EasySwoole\WeChat\Kernel\Psr\Stream;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\Base\Client;
 use EasySwoole\WeChat\Tests\Mock\Message\Status;
@@ -25,8 +24,6 @@ class ClientTest extends TestCase
             $this->assertEquals('POST', $request->getMethod());
             $this->assertEquals('/cgi-bin/clear_quota', $request->getUri()->getPath());
             $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
-            $this->assertInstanceOf(Stream::class, $request->getBody());
-            $this->assertEquals('{"appid":"123456"}', $request->getBody()->__toString());
         }, $response, $app);
 
         $client = new Client($app);
