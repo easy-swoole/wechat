@@ -8,6 +8,7 @@ use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\Psr\Stream;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\Base\Client;
+use EasySwoole\WeChat\Tests\Mock\Message\Status;
 use EasySwoole\WeChat\Tests\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -18,7 +19,7 @@ class ClientTest extends TestCase
      */
     public function testClearQuota()
     {
-        $response = $this->buildResponse(200, '{"errcode":0,"errmsg":"ok"}');
+        $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
         $app = $this->mockAccessToken(new ServiceContainer(['appId' => '123456']));
         $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
             $this->assertEquals('POST', $request->getMethod());
@@ -38,7 +39,7 @@ class ClientTest extends TestCase
     public function testGetValidIps()
     {
         $body = '{"ip_list":["127.0.0.1","127.0.0.2","101.226.103.0/25"]}';
-        $response = $this->buildResponse(200, $body);
+        $response = $this->buildResponse(Status::CODE_OK, $body);
         $app = $this->mockAccessToken(new ServiceContainer());
         $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
             $this->assertEquals('GET', $request->getMethod());
