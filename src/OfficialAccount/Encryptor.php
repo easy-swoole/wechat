@@ -152,7 +152,7 @@ class Encryptor
     public static function decodePKCS($data)
     {
         // 根据PKCS 补位时如果为整数倍块大小 则补上块大小个字节的补位 最后一位必是补位字节
-        $pad = ord($data{strlen($data) - 1});
+        $pad = ord($data[strlen($data) - 1]);
         if ($pad > strlen($data)) {
             return false;
         }
