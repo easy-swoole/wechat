@@ -26,8 +26,7 @@ class DeviceClient extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $parseData);
-        return $parseData;
+        return $this->checkResponse($response);
     }
 
 
@@ -61,8 +60,7 @@ class DeviceClient extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $parseData);
-        return $parseData;
+        return $this->checkResponse($response);
     }
 
     public function list(int $page = 1, int $size = 10)

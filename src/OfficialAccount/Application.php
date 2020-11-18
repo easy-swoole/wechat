@@ -32,7 +32,6 @@ class Application extends ServiceContainer
     const WifiDevice = 'wifiDevice';
     const WifiShop = 'wifShop';
 
-
     protected $providers = [
         Auth\ServiceProvider::class,
         AutoReplay\ServiceProvider::class,

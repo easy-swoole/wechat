@@ -1,0 +1,29 @@
+{
+  "errcode": 0,
+  "data": {
+    "shop_name": "南山店",
+    "ssid": " WX123",
+    "ssid_list": [
+      "WX123",
+      "WX456"
+    ],
+    "ssid_password_list": [
+      {
+        "ssid": "WX123",
+        "password": "123456789"
+      },
+      {
+        "ssid": "WX456",
+        "password": "21332465dge"
+      }
+    ],
+    "password": "123456789",
+    "protocol_type": 4,
+    "ap_count": 2,
+    "template_id": 1,
+    "homepage_url": "http://www.weixin.qq.com/",
+    "bar_type": 1,
+    "sid":"",
+    "poi_id":"285633617"
+  }
+}
