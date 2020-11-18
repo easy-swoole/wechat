@@ -1,0 +1,31 @@
+{
+  "errcode": 0,
+  "data": {
+    "totalcount": 16,
+    "pageindex": 1,
+    "pagecount": 8,
+    "records": [
+      {
+        "shop_id": 429620,
+        "shop_name": "南山店",
+        "ssid": "WX123",
+        "ssid_list": [
+          "WX123",
+          "WX456"
+        ],
+        "protocol_type": 4,
+        "sid": "",
+        "poi_id":"285633617"
+      },
+      {
+        "shop_id": 7921527,
+        "shop_name": "宝安店",
+        "ssid": "",
+        "ssid_list": [],
+        "protocol_type": 0,
+        "sid": "",
+        "poi_id":"285623614"
+      }
+    ]
+  }
+}
