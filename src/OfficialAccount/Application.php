@@ -20,6 +20,8 @@ use EasySwoole\WeChat\OfficialAccount\Server\Guard;
  * @property WiFi\CardClient $wifiCard
  * @property WiFi\DeviceClient $wifiDevice
  * @property WiFi\ShopClient $wifiShop
+ * @property User\UserClient $user
+ * @property User\TagClient $userTag
  */
 class Application extends ServiceContainer
 {
@@ -31,6 +33,8 @@ class Application extends ServiceContainer
     const WifiCard = 'wifiCard';
     const WifiDevice = 'wifiDevice';
     const WifiShop = 'wifShop';
+    const User = 'user';
+    const UserTag = 'userTag';
 
     protected $providers = [
         Auth\ServiceProvider::class,
@@ -38,6 +42,7 @@ class Application extends ServiceContainer
         Broadcasting\ServiceProvider::class,
         Base\ServiceProvider::class,
         Server\ServiceProvider::class,
-        WiFi\ServiceProvider::class
+        WiFi\ServiceProvider::class,
+        User\ServiceProvider::class
     ];
 }
