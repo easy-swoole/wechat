@@ -34,9 +34,11 @@ class TagClient extends BaseClient
             ->setMethod('GET')
             ->send($this->buildUrl(
                 '/cgi-bin/tags/get',
-                array_merge(['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()], $params)
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
         $this->checkResponse($response, $parseData);
+
+        return $parseData;
     }
 
 
