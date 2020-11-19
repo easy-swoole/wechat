@@ -4,7 +4,6 @@ namespace EasySwoole\WeChat\Tests\OfficialAccount\WiFi;
 
 
 use EasySwoole\WeChat\Kernel\ServiceContainer;
-use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OfficialAccount\WiFi\ShopClient;
 use EasySwoole\WeChat\Tests\Mock\Message\Status;
 use EasySwoole\WeChat\Tests\TestCase;
