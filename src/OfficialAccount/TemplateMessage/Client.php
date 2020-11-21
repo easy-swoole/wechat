@@ -11,13 +11,6 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 class Client extends BaseClient
 {
 
-    protected $message = [
-        'touser' => '',
-        'template_id' => '',
-        'url' => '',
-        'data' => [],
-        'miniprogram' => '',
-    ];
 
     protected $required = ['touser', 'template_id'];
 
@@ -105,8 +98,6 @@ class Client extends BaseClient
     {
         $params = $this->formatMessage($data);
 
-        $this->restoreMessage();
-
         $response = $this->getClient()
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
@@ -124,8 +115,6 @@ class Client extends BaseClient
     {
         $params = $this->formatMessage($data);
 
-        $this->restoreMessage();
-
         $response = $this->getClient()
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
@@ -140,14 +129,15 @@ class Client extends BaseClient
 
     protected function formatMessage(array $data = [])
     {
-        $params = array_merge($this->message, $data);
+        $message = $this->messageTemplate();
+        $params = array_merge($message, $data);
 
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->required, true) && empty($value) && empty($this->message[$key])) {
+            if (in_array($key, $this->required, true) && empty($value) && empty($message[$key])) {
                 throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $key));
             }
 
-            $params[$key] = empty($value) ? $this->message[$key] : $value;
+            $params[$key] = empty($value) ? $message[$key] : $value;
         }
 
         $params['data'] = $this->formatData($params['data'] ?? []);
@@ -186,8 +176,14 @@ class Client extends BaseClient
         return $formatted;
     }
 
-    protected function restoreMessage()
+    protected function messageTemplate(): array
     {
-        $this->message = (new \ReflectionClass(static::class))->getDefaultProperties()['message'];
+        return [
+            'touser' => '',
+            'template_id' => '',
+            'url' => '',
+            'data' => [],
+            'miniprogram' => '',
+        ];
     }
 }
