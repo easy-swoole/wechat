@@ -25,7 +25,6 @@
 namespace EasySwoole\WeChat\Kernel\Psr;
 
 
-use EasySwoole\Spl\SplStream;
 use InvalidArgumentException;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
