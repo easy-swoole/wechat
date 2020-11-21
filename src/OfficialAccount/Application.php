@@ -23,6 +23,7 @@ use EasySwoole\WeChat\OfficialAccount\Server\Guard;
  * @property User\UserClient $user
  * @property User\TagClient $userTag
  * @property TemplateMessage\Client $templateMessage
+ * @property Store\Client $store
  */
 class Application extends ServiceContainer
 {
@@ -37,6 +38,7 @@ class Application extends ServiceContainer
     const User = 'user';
     const UserTag = 'userTag';
     const TemplateMessage = 'templateMessage';
+    const Store = 'store';
 
     protected $providers = [
         Auth\ServiceProvider::class,
@@ -46,6 +48,7 @@ class Application extends ServiceContainer
         Server\ServiceProvider::class,
         WiFi\ServiceProvider::class,
         User\ServiceProvider::class,
-        TemplateMessage\ServiceProvider::class
+        TemplateMessage\ServiceProvider::class,
+        Store\ServiceProvider::class
     ];
 }
