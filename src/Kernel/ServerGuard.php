@@ -5,6 +5,7 @@ namespace EasySwoole\WeChat\Kernel;
 
 
 use EasySwoole\WeChat\Kernel\Contracts\MessageInterface;
+use EasySwoole\WeChat\Kernel\Contracts\RequestMessage;
 use EasySwoole\WeChat\Kernel\Exceptions\BadRequestException;
 use EasySwoole\WeChat\Kernel\Messages\Message;
 use EasySwoole\WeChat\Kernel\Messages\Raw;
@@ -26,7 +27,7 @@ abstract class ServerGuard
 
     /** @var ServiceContainer */
     protected $app;
-    /** @var bool  */
+    /** @var bool */
     protected $alwaysValidate = false;
 
     public function __construct(ServiceContainer $app)
@@ -91,13 +92,13 @@ abstract class ServerGuard
             return new Response(
                 200,
                 ['Content-Type' => 'application/text'],
-                (string) $replyMessage
+                (string)$replyMessage
             );
         }
 
 
-        $message = $this->parseRequest($request);
-        $replyMessage = $this->dispatch($message->getMsgType(), $message);
+        $requestMessage = $this->parseRequest($request);
+        $replyMessage = $this->dispatch($requestMessage->getType(), $requestMessage);
 
         if (is_null($replyMessage)) {
             return new Response(
@@ -108,9 +109,9 @@ abstract class ServerGuard
         }
 
         if ($replyMessage instanceof Raw) {
-            $replyString = (string) $replyMessage;
+            $replyString = $replyMessage->__toString();
         } else {
-            $replyString = $this->buildReply($message->getFromUserName(), $message->getToUserName(), $replyMessage);
+            $replyString = $this->buildReply($requestMessage->getFromUserName(), $requestMessage->getToUserName(), $replyMessage);
         }
 
         if ($this->isSafeMode($request)) {
@@ -131,10 +132,10 @@ abstract class ServerGuard
 
     /**
      * @param ServerRequestInterface $request
-     * @return MessageInterface
+     * @return RequestMessage
      * @throws BadRequestException
      */
-    public function parseRequest(ServerRequestInterface $request): MessageInterface
+    public function parseRequest(ServerRequestInterface $request): RequestMessage
     {
         $message = $this->parseMessage($request->getBody()->__toString());
 
@@ -212,10 +213,10 @@ abstract class ServerGuard
     protected function buildReply(string $to, string $from, MessageInterface $message): string
     {
         $prepends = [
-            'ToUserName'   => $to,
+            'ToUserName' => $to,
             'FromUserName' => $from,
-            'CreateTime'   => time(),
-            'MsgType'      => $message->getMsgType(),
+            'CreateTime' => time(),
+            'MsgType' => $message->getType(),
         ];
 
         return $message->transformToXml($prepends);
@@ -237,6 +238,10 @@ abstract class ServerGuard
         ]);
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return bool
+     */
     protected function isSafeMode(ServerRequestInterface $request): bool
     {
         return ($request->getQueryParams()['signature'] ?? false)
@@ -244,7 +249,7 @@ abstract class ServerGuard
     }
 
     /**
-     * @param array                  $message
+     * @param array $message
      * @return string|null
      */
     protected function decryptMessage(array $message): ?string
@@ -267,7 +272,7 @@ abstract class ServerGuard
 
     /**
      * @param array $message
-     * @return MessageInterface
+     * @return RequestMessage
      */
-    abstract protected function buildRequestMessage(array $message): MessageInterface;
+    abstract protected function buildRequestMessage(array $message): RequestMessage;
 }

@@ -6,24 +6,31 @@ namespace EasySwoole\WeChat\Kernel\Messages;
 
 class Text extends Message
 {
-    protected $MsgType = Message::TEXT;
+    /** @var string  */
+    protected $type = Message::TEXT;
 
-    /** @var string */
-    protected $Content;
+    /**
+     * Text constructor.
+     * @param string $content
+     */
+    public function __construct(string $content)
+    {
+        parent::__construct(['Content' => $content]);
+    }
 
     /**
      * @return mixed
      */
     public function getContent()
     {
-        return $this->Content;
+        return $this->get('Content');
     }
 
     /**
-     * @param mixed $Content
+     * @param mixed $content
      */
-    public function setContent($Content): void
+    public function setContent($content): void
     {
-        $this->Content = $Content;
+        $this->set('Content', $content);
     }
 }

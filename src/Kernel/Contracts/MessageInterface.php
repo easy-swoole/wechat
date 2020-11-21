@@ -6,15 +6,7 @@ namespace EasySwoole\WeChat\Kernel\Contracts;
 
 interface MessageInterface
 {
-    public function getMsgType(): string;
-
-    public function getMsgId(): ?int;
-
-    public function getToUserName(): ?string;
-
-    public function getFromUserName(): ?string;
-
-    public function getCreateTime(): ?int;
+    public function getType(): string;
 
     public function transformForJsonRequest(array $appends = []): array;
 

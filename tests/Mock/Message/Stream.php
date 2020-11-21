@@ -3,10 +3,9 @@
 namespace EasySwoole\WeChat\Tests\Mock\Message;
 
 
-use EasySwoole\Spl\SplStream;
-use Psr\Http\Message\StreamInterface;
+use EasySwoole\WeChat\Kernel\Psr\Stream as PsrStream;
 
-class Stream extends SplStream implements StreamInterface
+class Stream extends PsrStream
 {
 
 }

@@ -4,8 +4,8 @@
 namespace EasySwoole\WeChat\Kernel\Messages;
 
 
-use EasySwoole\Spl\SplBean;
 use EasySwoole\WeChat\Kernel\Contracts\MessageInterface;
+use EasySwoole\WeChat\Kernel\Traits\HasAttributes;
 use EasySwoole\WeChat\Kernel\Utility\XML;
 
 /**
@@ -13,8 +13,10 @@ use EasySwoole\WeChat\Kernel\Utility\XML;
  *
  * @package EasySwoole\WeChat\Kernel\Messages
  */
-abstract class Message extends SplBean implements MessageInterface
+abstract class Message implements MessageInterface
 {
+    use HasAttributes;
+
     const VALIDATE = 'validate';
     const RAW = 'raw';
     const TEXT = 'text';
@@ -41,91 +43,75 @@ abstract class Message extends SplBean implements MessageInterface
      */
     const MPVIDEO = 'mpvideo';
 
-    protected $MsgType;
-    protected $MsgId;
-    protected $ToUserName;
-    protected $FromUserName;
-    protected $CreateTime;
+    /** @var string */
+    protected $type;
+
+    /** @var string */
+    protected $id;
+
+    /** @var string */
+    protected $to;
+
+    /** @var string */
+    protected $from;
+
+    /** @var string */
+    protected $createTime;
 
     /**
-     * @return mixed
+     * Message constructor.
+     * @param array $attributes
      */
-    public function getMsgId(): ?int
+    public function __construct(array $attributes = [])
     {
-        return $this->MsgId;
+        $this->setAttributes($attributes);
     }
-
-    /**
-     * @param mixed $id
-     */
-    public function setMsgId($id): void
-    {
-        $this->MsgId = $id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getToUserName(): ?string
-    {
-        return $this->ToUserName;
-    }
-
-    /**
-     * @param mixed $to
-     */
-    public function setToUserName($to)
-    {
-        $this->ToUserName = $to;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getFromUserName(): ?string
-    {
-        return $this->FromUserName;
-    }
-
-    /**
-     * @param mixed $from
-     */
-    public function setFromUserName($from)
-    {
-        $this->FromUserName = $from;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getCreateTime(): ? int
-    {
-        return $this->CreateTime;
-    }
-
-    /**
-     * @param mixed $CreateTime
-     */
-    public function setCreateTime($CreateTime)
-    {
-        $this->CreateTime = $CreateTime;
-    }
-
 
     /**
      * @return string
      */
-    public function getMsgType(): string
+    public function getType(): string
     {
-        return $this->MsgType;
+        return $this->type;
     }
 
     /**
-     * @param string $MsgType
+     * @param string $type
+     * @return $this
      */
-    public function setMsgType(string $MsgType)
+    public function setType(string $type):self
     {
-        $this->MsgType = $MsgType;
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @param $property
+     * @return mixed|null
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+
+        return $this->getAttribute($property);
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return $this
+     */
+    public function __set($property, $value)
+    {
+        if (property_exists($this, $property)) {
+            $this->$property = $value;
+        } else {
+            $this->setAttribute($property, $value);
+        }
+
+        return $this;
     }
 
     /**
@@ -134,7 +120,7 @@ abstract class Message extends SplBean implements MessageInterface
      */
     public function transformForJsonRequest(array $appends = []): array
     {
-        return array_merge($this->jsonSerialize(), $appends);
+        return array_merge($this->all(), $appends);
     }
 
     /**
@@ -143,6 +129,6 @@ abstract class Message extends SplBean implements MessageInterface
      */
     public function transformToXml(array $appends = []): string
     {
-        return XML::build(array_merge($this->jsonSerialize(), $appends));
+        return XML::build(array_merge($this->all(), $appends));
     }
 }

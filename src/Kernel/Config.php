@@ -4,13 +4,16 @@
 namespace EasySwoole\WeChat\Kernel;
 
 
-use EasySwoole\Spl\SplBean;
 
-class Config extends SplBean
+use EasySwoole\WeChat\Kernel\Traits\HasAttributes;
+
+class Config
 {
-    public function __construct(array $data = null)
+    use HasAttributes;
+
+    public function __construct(array $data = [])
     {
-        parent::__construct($data, true);
+        $this->setAttributes($data);
     }
 
     /**
@@ -20,7 +23,7 @@ class Config extends SplBean
      */
     public function get(string $path = null, $default = null)
     {
-        $array = $this->jsonSerialize();
+        $array = $this->all();
 
         if (is_null($path)) {
             return $array;
