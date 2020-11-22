@@ -24,6 +24,7 @@ use EasySwoole\WeChat\OfficialAccount\Server\Guard;
  * @property User\TagClient $userTag
  * @property TemplateMessage\Client $templateMessage
  * @property Store\Client $store
+ * @property ShakeAround\ShakeAround $shakeAround
  */
 class Application extends ServiceContainer
 {
@@ -39,6 +40,7 @@ class Application extends ServiceContainer
     const UserTag = 'userTag';
     const TemplateMessage = 'templateMessage';
     const Store = 'store';
+    const ShakeAround = 'shakeAround';
 
     protected $providers = [
         Auth\ServiceProvider::class,
@@ -49,6 +51,7 @@ class Application extends ServiceContainer
         WiFi\ServiceProvider::class,
         User\ServiceProvider::class,
         TemplateMessage\ServiceProvider::class,
-        Store\ServiceProvider::class
+        Store\ServiceProvider::class,
+        ShakeAround\ServiceProvider::class
     ];
 }
