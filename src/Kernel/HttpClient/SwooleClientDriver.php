@@ -105,7 +105,7 @@ class SwooleClientDriver implements ClientInterface
                 if ($type === 'files') {
                     $client->addFile($file, $name);
                 }else{
-                    $client->addData($file, $name);
+                    $client->addData($file->__toString(), $name);
                 }
             }
         }
