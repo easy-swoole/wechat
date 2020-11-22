@@ -5,17 +5,15 @@ namespace EasySwoole\WeChat\OfficialAccount;
 
 
 use EasySwoole\WeChat\Kernel\ServiceContainer;
-use EasySwoole\WeChat\OfficialAccount\Auth\AccessToken;
-use EasySwoole\WeChat\OfficialAccount\Server\Guard;
 
 /**
  * Class ServiceProvider
  *
  * @package EasySwoole\WeChat\OfficialAccount
- * @property AccessToken $accessToken
+ * @property Auth\AccessToken $accessToken
  * @property AutoReplay\Client $autoReplay
  * @property Base\Client $base
- * @property Guard $server
+ * @property Server\Guard $server
  * @property Wifi\Client $wifi
  * @property WiFi\CardClient $wifiCard
  * @property WiFi\DeviceClient $wifiDevice
