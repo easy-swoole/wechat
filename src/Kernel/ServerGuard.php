@@ -59,10 +59,17 @@ abstract class ServerGuard
             return $this;
         }
 
-        if (($request->getQueryParams()['signature'] ?? null) !== $this->signature(
+        if (empty($request->getQueryParams()['signature'])
+            || empty($request->getQueryParams()['timestamp'])
+            || empty($request->getQueryParams()['nonce'])
+        ) {
+            throw new BadRequestException('Invalid request params.', 400);
+        }
+
+        if (($request->getQueryParams()['signature'] ?? "") !== $this->signature(
                 $this->getToken(),
-                $request->getQueryParams()['timestamp'] ?? null,
-                $request->getQueryParams()['nonce'] ?? null
+                $request->getQueryParams()['timestamp'] ?? "",
+                $request->getQueryParams()['nonce'] ?? ""
             )) {
             throw new BadRequestException('Invalid request signature.', 400);
         }
