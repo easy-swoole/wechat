@@ -4,7 +4,7 @@
 namespace EasySwoole\WeChat\OfficialAccount\Server;
 
 
-use EasySwoole\WeChat\Kernel\Contracts\RequestMessage;
+use EasySwoole\WeChat\Kernel\Contracts\RequestMessageInterface;
 use EasySwoole\WeChat\Kernel\Messages\Message;
 use EasySwoole\WeChat\Kernel\ServerGuard;
 use Psr\Http\Message\ServerRequestInterface;
@@ -22,11 +22,11 @@ class Guard extends ServerGuard
 
     /**
      * @param array $message
-     * @return RequestMessage
+     * @return RequestMessageInterface
      */
-    protected function buildRequestMessage(array $message): RequestMessage
+    protected function buildRequestMessage(array $message): RequestMessageInterface
     {
-        return new class($message) extends Message implements RequestMessage
+        return new class($message) extends Message implements RequestMessageInterface
         {
             public function getType(): string
             {

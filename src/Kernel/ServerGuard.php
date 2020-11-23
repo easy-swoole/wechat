@@ -5,7 +5,7 @@ namespace EasySwoole\WeChat\Kernel;
 
 
 use EasySwoole\WeChat\Kernel\Contracts\MessageInterface;
-use EasySwoole\WeChat\Kernel\Contracts\RequestMessage;
+use EasySwoole\WeChat\Kernel\Contracts\RequestMessageInterface;
 use EasySwoole\WeChat\Kernel\Exceptions\BadRequestException;
 use EasySwoole\WeChat\Kernel\Messages\Message;
 use EasySwoole\WeChat\Kernel\Messages\Raw;
@@ -139,10 +139,10 @@ abstract class ServerGuard
 
     /**
      * @param ServerRequestInterface $request
-     * @return RequestMessage
+     * @return RequestMessageInterface
      * @throws BadRequestException
      */
-    public function parseRequest(ServerRequestInterface $request): RequestMessage
+    public function parseRequest(ServerRequestInterface $request): RequestMessageInterface
     {
         $message = $this->parseMessage($request->getBody()->__toString());
 
@@ -279,7 +279,7 @@ abstract class ServerGuard
 
     /**
      * @param array $message
-     * @return RequestMessage
+     * @return RequestMessageInterface
      */
-    abstract protected function buildRequestMessage(array $message): RequestMessage;
+    abstract protected function buildRequestMessage(array $message): RequestMessageInterface;
 }

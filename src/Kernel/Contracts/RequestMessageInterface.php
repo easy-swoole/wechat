@@ -4,7 +4,7 @@
 namespace EasySwoole\WeChat\Kernel\Contracts;
 
 
-interface RequestMessage extends MessageInterface
+interface RequestMessageInterface extends MessageInterface
 {
     public function getId(): ?int;
 
