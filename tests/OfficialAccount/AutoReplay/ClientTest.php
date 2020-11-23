@@ -36,6 +36,6 @@ class ClientTest extends TestCase
      */
     private function readMockResponseJson():string
     {
-        return file_get_contents(dirname(__FILE__). '/mock_data/auto_replay.json');
+        return file_get_contents(dirname(__FILE__). '/auto_replay.json');
     }
 }

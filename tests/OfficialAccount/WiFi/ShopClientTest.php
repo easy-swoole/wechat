@@ -75,6 +75,6 @@ class ShopClientTest extends TestCase
 
     private function readMockResponseJson(string $file): string
     {
-        return file_get_contents(dirname(__FILE__) . '/mock_data/' . $file);
+        return file_get_contents(dirname(__FILE__) . '/' . $file);
     }
 }
