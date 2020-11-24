@@ -1,0 +1,27 @@
+{
+  "data": {
+    "group_id" : 123,
+    "group_name" : "test",
+    "total_count": 100,
+    "devices" :[
+      {
+        "device_id" : 123456,
+        "uuid" : "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+        "major" : 10001,
+        "minor" : 10001,
+        "comment" : "test device1",
+        "poi_id" : 12345
+      },
+      {
+        "device_id" : 123457,
+        "uuid" : "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+        "major" : 10001,
+        "minor" : 10002,
+        "comment" : "test device2",
+        "poi_id" : 12345
+      }
+    ]
+  },
+  "errcode": 0,
+  "errmsg": "success."
+}

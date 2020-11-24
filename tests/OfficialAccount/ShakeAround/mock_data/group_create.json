@@ -1,0 +1,8 @@
+{
+  "data": {
+    "group_id" : 123,
+    "group_name" : "test"
+  },
+  "errcode": 0,
+  "errmsg": "success."
+}
