@@ -159,6 +159,16 @@ abstract class ServerGuard
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @return bool
+     */
+    public function isSafeMode(ServerRequestInterface $request): bool
+    {
+        return ($request->getQueryParams()['signature'] ?? false)
+            && 'aes' === ($request->getQueryParams()['encrypt_type'] ?? null);
+    }
+
+    /**
      * @param $event
      * @param $payload
      * @return MessageInterface
@@ -243,16 +253,6 @@ abstract class ServerGuard
             'TimeStamp' => $timestamp,
             'Nonce' => $nonce,
         ]);
-    }
-
-    /**
-     * @param ServerRequestInterface $request
-     * @return bool
-     */
-    protected function isSafeMode(ServerRequestInterface $request): bool
-    {
-        return ($request->getQueryParams()['signature'] ?? false)
-            && 'aes' === ($request->getQueryParams()['encrypt_type'] ?? null);
     }
 
     /**
