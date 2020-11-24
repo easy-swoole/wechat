@@ -20,7 +20,7 @@ class MaterialClient extends BaseClient
             ->setMethod('POST')
             ->addFile($path, 'media')
             ->send($this->buildUrl(
-                '/shakearound/device/group/adddevice',
+                '/shakearound/material/add',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken(), 'type' => strtolower($type)]
             ));
 
