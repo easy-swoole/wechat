@@ -272,7 +272,7 @@ abstract class ServerGuard
      * @param ServerRequestInterface $request
      * @return bool
      */
-    protected function isValidateRequest(ServerRequestInterface $request): bool
+    public function isValidateRequest(ServerRequestInterface $request): bool
     {
         return false;
     }
