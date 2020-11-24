@@ -18,6 +18,14 @@ class ServerRequest extends Request implements ServerRequestInterface
     {
         $this->serverParams = $serverParams;
         parent::__construct($method, $uri, $headers, $body, $protocolVersion);
+        $query = [];
+        foreach (explode("&", $this->getUri()->getQuery()) as $group) {
+            if (!empty($group)) {
+                $group = explode("=", $group);
+                $query[$group[0]] = $group[1];
+            }
+        }
+        $this->withQueryParams($query);
     }
 
     public function getServerParams()
