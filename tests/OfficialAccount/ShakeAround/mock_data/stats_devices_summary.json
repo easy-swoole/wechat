@@ -1,0 +1,31 @@
+{
+  "data": {
+    "devices": [
+      {
+        "device_id": 10097,
+        "major": 10001,
+        "minor": 12102,
+        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+        "shake_pv": 1,
+        "shake_uv": 2,
+        "click_pv": 3,
+        "click_uv":4
+      },
+      {
+        "device_id": 10097,
+        "major": 10001,
+        "minor": 12102,
+        "uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+        "shake_pv":1,
+        "shake_uv":2,
+        "click_pv":3,
+        "click_uv":4
+      }
+    ]
+  },
+  "date":1435075200,
+  "total_count": 151,
+  "page_index":1,
+  "errcode": 0,
+  "errmsg": "success."
+}

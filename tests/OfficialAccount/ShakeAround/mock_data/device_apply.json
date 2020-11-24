@@ -1,0 +1,9 @@
+{
+  "data": {
+    "apply_id": 123,
+    "audit_status": 1,
+    "audit_comment": "审核中"
+  },
+  "errcode": 0,
+  "errmsg": "success."
+}
