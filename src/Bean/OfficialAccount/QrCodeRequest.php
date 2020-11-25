@@ -113,8 +113,15 @@ class QrCodeRequest extends SplBean
             $this->action_info = json_decode($this->action_info, true);
         }
 
+        $columns = ['action_name', 'action_info'];
+
+        if (!is_null($this->expire_seconds) && is_numeric($this->expire_seconds)) {
+            $this->expire_seconds = min($this->expire_seconds, 30 * 86400);
+            array_push($columns,'expire_seconds');
+        }
+
         if (!is_null($this->getActionInfo())) {
-            return parent::toArray(['action_name', 'action_info']);
+            return parent::toArray($columns);
         }
 
         $scene = [];
@@ -129,14 +136,6 @@ class QrCodeRequest extends SplBean
         $this->action_info = [
             'scene' => $scene
         ];
-
-
-        $columns = ['action_name', 'action_info'];
-
-        if (!is_null($this->expire_seconds) && is_numeric($this->expire_seconds)) {
-            $this->expire_seconds = min($this->expire_seconds, 30 * 86400);
-            array_push($columns,'expire_seconds');
-        }
 
         return parent::toArray($columns);
     }
