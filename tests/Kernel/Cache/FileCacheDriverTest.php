@@ -1,13 +1,15 @@
 <?php
 
 
-namespace EasySwoole\WeChat\Tests;
+namespace EasySwoole\WeChat\Tests\Kernel\Cache;
 
 
 use EasySwoole\WeChat\Kernel\Cache\FileCacheDriver;
+use EasySwoole\WeChat\Tests\TestCase;
+use Iterator;
 use Psr\SimpleCache\CacheInterface;
 
-class TestCache extends TestCase
+class FileCacheDriverTest extends TestCase
 {
 
     /** @var CacheInterface */
@@ -74,7 +76,7 @@ class TestCache extends TestCase
             )
         );
 
-        $iterator = new class implements \Iterator {
+        $iterator = new class implements Iterator {
             private $array = array(
                 "testKey1" => '1',
                 "testKey2" => '2',
@@ -108,7 +110,7 @@ class TestCache extends TestCase
         };
         $this->assertTrue($this->fileCache->setMultiple($iterator));
 
-        $iterator = new class implements \Iterator {
+        $iterator = new class implements Iterator {
             private $array = array(
                 "testKey1",
                 "testKey2",
@@ -182,7 +184,7 @@ class TestCache extends TestCase
         $this->assertTrue($res);
 
         $this->testSetMultiple();
-        $res = $this->fileCache->deleteMultiple($iterator = new class implements \Iterator {
+        $res = $this->fileCache->deleteMultiple($iterator = new class implements Iterator {
             private $array = array(
                 "testKey1",
                 "testKey2",

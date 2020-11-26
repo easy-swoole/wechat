@@ -17,7 +17,7 @@ use ReflectionException;
 use ReflectionProperty;
 use Throwable;
 
-class TestServerGuard extends TestCase
+class ServerGuardTest extends TestCase
 {
     /**
      * @throws BadRequestException

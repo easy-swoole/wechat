@@ -9,7 +9,7 @@ use EasySwoole\WeChat\OfficialAccount\Server\Handlers\EchoStrHandler;
 use EasySwoole\WeChat\Tests\Mock\Message\Request;
 use EasySwoole\WeChat\Tests\TestCase;
 
-class TestEchoStrHandler extends TestCase
+class EchoStrHandlerTest extends TestCase
 {
     public function testHandle()
     {
