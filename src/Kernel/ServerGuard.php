@@ -171,10 +171,10 @@ abstract class ServerGuard
     /**
      * @param $event
      * @param $payload
-     * @return MessageInterface
+     * @return MessageInterface|null
      * @throws Throwable
      */
-    public function dispatch($event, $payload): MessageInterface
+    public function dispatch($event, $payload):? MessageInterface
     {
         return $this->notify($event, $payload);
     }

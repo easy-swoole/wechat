@@ -10,15 +10,68 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\Utility\XML;
 use EasySwoole\WeChat\OfficialAccount\Server\Guard;
 use EasySwoole\WeChat\OfficialAccount\Server\ServiceProvider;
+use EasySwoole\WeChat\Tests\Mock\Message\Status;
 use EasySwoole\WeChat\Tests\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
+use ReflectionProperty;
+use Throwable;
 
 class TestServerGuard extends TestCase
 {
+    /**
+     * @throws BadRequestException
+     * @throws Throwable
+     */
+    public function testServer()
+    {
+        $mockData = $this->readMockData('clear_mode_request.json');
+        $mockData = json_decode($mockData, true);
+        $mockRequest = $this->buildRequest(
+            "POST",
+            "https://test.com?" . http_build_query($mockData['query']),
+            [],
+            $mockData['body']
+        );
+
+        $app = new ServiceContainer([
+            'appId' => '123456',
+            'token' => 'mock_token'
+        ]);
+        $guard = new Guard($app);
+
+        $response = $guard->serve($mockRequest);
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertSame(Status::CODE_OK, $response->getStatusCode());
+        $this->assertSame(Guard::SUCCESS_EMPTY_RESPONSE, $response->getBody()->__toString());
+        $this->assertSame(['Content-Type' => ['application/text']], $response->getHeaders());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testForceValidate()
+    {
+        $app = new ServiceContainer([
+            'appId' => '123456',
+            'token' => 'mock_token'
+        ]);
+        $guard = new Guard($app);
+
+        $reflectionProperty = new ReflectionProperty($guard, 'alwaysValidate');
+        $reflectionProperty->setAccessible(true);
+        $this->assertFalse($reflectionProperty->getValue($guard));
+
+        $guard->forceValidate();
+        $this->assertTrue($reflectionProperty->getValue($guard));
+    }
+
     public function testIsSafeMode()
     {
         $mockRequest = $this->buildRequest(
             "POST",
-            "https://test.com?&signature=xxx&encrypt_type=aes"
+            "https://test.com?signature=xxx&encrypt_type=aes"
         );
 
         $app = new ServiceContainer([
@@ -30,9 +83,30 @@ class TestServerGuard extends TestCase
 
         $mockRequest = $this->buildRequest(
             "POST",
-            "https://test.com?&signature=xxx"
+            "https://test.com?signature=xxx"
         );
         $this->assertFalse($guard->isSafeMode($mockRequest));
+    }
+
+    public function testIsValidateRequest()
+    {
+        $mockRequest = $this->buildRequest(
+            "POST",
+            "https://test.com?echostr=mock-echostr"
+        );
+
+        $app = new ServiceContainer([
+            'appId' => '123456',
+            'token' => 'mock_token'
+        ]);
+        $guard = new Guard($app);
+        $this->assertTrue($guard->isValidateRequest($mockRequest));
+
+        $mockRequest = $this->buildRequest(
+            "POST",
+            "https://test.com?signature=xxx"
+        );
+        $this->assertFalse($guard->isValidateRequest($mockRequest));
     }
 
     /**
