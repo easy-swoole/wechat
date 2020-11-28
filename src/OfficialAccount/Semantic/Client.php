@@ -14,7 +14,7 @@ class Client extends BaseClient
         $params = [
             'query' => $keyword,
             'category' => $categories,
-            'appid' => $this->app['config']['app_id'],
+            'appid' => $this->app->getConfig()['appId'],
         ];
 
         $response = $this->getClient()
