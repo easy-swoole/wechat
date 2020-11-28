@@ -19,6 +19,8 @@ interface ClientInterface
 
     public function addFile(string $path, string $dataName): ClientInterface;
 
+    public function addData(string $data, string $dataName): ClientInterface;
+
     public function addStream(StreamInterface $stream, string $dataName): ClientInterface;
 
     public function send(string $url): ResponseInterface;

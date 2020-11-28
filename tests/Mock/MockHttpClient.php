@@ -61,6 +61,12 @@ class MockHttpClient implements ClientInterface
         return $this;
     }
 
+    public function addData(string $data, string $dataName): ClientInterface
+    {
+        $this->request->withParsedBody([$dataName => $data]);
+        return $this;
+    }
+
     public function addStream(StreamInterface $stream, string $dataName): ClientInterface
     {
         $this->request->withUploadedFiles(array_merge($this->request->getUploadedFiles(), [$dataName, $stream]));

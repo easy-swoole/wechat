@@ -24,7 +24,7 @@ class SwooleClientDriver implements ClientInterface
     /** @var string[] */
     protected $defaultHeaders = [
         "user-agent" => 'EasySwoole-wechat/2.x',
-        'accept'     => '*/*'
+        'accept' => '*/*'
     ];
 
     /** @var float|null */
@@ -36,8 +36,14 @@ class SwooleClientDriver implements ClientInterface
     /** @var StreamInterface|null */
     protected $body;
 
+    /** @var array[] */
+    protected $formData = [
+
+    ];
+
+    /** @var array[] */
     protected $uploadFiles = [
-        'files'   => [],
+        'files' => [],
         'streams' => []
     ];
 
@@ -71,6 +77,12 @@ class SwooleClientDriver implements ClientInterface
         return $this;
     }
 
+    public function addData(string $data, string $dataName): ClientInterface
+    {
+        $this->formData[$dataName] = $data;
+        return $this;
+    }
+
     public function addStream(StreamInterface $stream, string $dataName): ClientInterface
     {
         $this->uploadFiles['streams'][$dataName] = $stream;
@@ -100,11 +112,15 @@ class SwooleClientDriver implements ClientInterface
             $client->setData($this->body->__toString());
         }
 
+        if (!empty($this->formData)) {
+            $client->setData($this->formData);
+        }
+
         foreach ($this->uploadFiles as $type => $files) {
             foreach ($files as $name => $file) {
                 if ($type === 'files') {
                     $client->addFile($file, $name);
-                }else{
+                } else {
                     $client->addData($file->__toString(), $name);
                 }
             }
@@ -124,7 +140,7 @@ class SwooleClientDriver implements ClientInterface
             case SWOOLE_HTTP_CLIENT_ESTATUS_SERVER_RESET:
                 throw new RequestException("request server reset.");
             default:
-                throw new RequestException('request fail, errCode: '. $client->errCode);
+                throw new RequestException('request fail, errCode: ' . $client->errCode);
         }
     }
 
@@ -191,7 +207,7 @@ class SwooleClientDriver implements ClientInterface
         $this->method = null;
         $this->body = null;
         $this->uploadFiles = [
-            'file'   => [],
+            'file' => [],
             'stream' => []
         ];
     }
