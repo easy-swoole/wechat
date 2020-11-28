@@ -23,6 +23,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @property TemplateMessage\Client $templateMessage
  * @property Store\Client $store
  * @property ShakeAround\ShakeAround $shakeAround
+ * @property Menu\Client $menu
  */
 class Application extends ServiceContainer
 {
@@ -39,7 +40,7 @@ class Application extends ServiceContainer
     const TemplateMessage = 'templateMessage';
     const Store = 'store';
     const ShakeAround = 'shakeAround';
-
+    const Menu = 'menu';
     protected $providers = [
         Auth\ServiceProvider::class,
         AutoReplay\ServiceProvider::class,
@@ -50,6 +51,7 @@ class Application extends ServiceContainer
         User\ServiceProvider::class,
         TemplateMessage\ServiceProvider::class,
         Store\ServiceProvider::class,
-        ShakeAround\ServiceProvider::class
+        ShakeAround\ServiceProvider::class,
+        Menu\ServiceProvider::class
     ];
 }
