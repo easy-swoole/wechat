@@ -6,6 +6,8 @@ namespace EasySwoole\WeChat\OfficialAccount\Material;
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
+use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasySwoole\WeChat\Kernel\Messages\Article;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
@@ -60,14 +62,66 @@ class Client extends BaseClient
         return $this->upload('video', $path, $formData);
     }
 
+    /**
+     * @param $articles
+     * @return mixed
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function uploadArticle($articles)
     {
-        // TODO:
+        if ($articles instanceof Article || !empty($articles['title'])) {
+            $articles = [$articles];
+        }
+
+        $params = ['articles' => array_map(function ($article) {
+            if ($article instanceof Article) {
+                return $article->transformForJsonRequest();
+            }
+
+            return $article;
+        }, $articles)];
+
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream($params))
+            ->send($this->buildUrl(
+                '/cgi-bin/material/add_news',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $parseData);
+        return $parseData;
     }
 
+    /**
+     * @param string $mediaId
+     * @param $article
+     * @param int $index
+     * @return bool
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function updateArticle(string $mediaId, $article, int $index = 0)
     {
-        // TODO:
+        if ($article instanceof Article) {
+            $article = $article->transformForJsonRequest();
+        }
+
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream( [
+                'media_id' => $mediaId,
+                'index' => $index,
+                'articles' => isset($article['title']) ? $article : (isset($article[$index]) ? $article[$index] : []),
+            ]))
+            ->send($this->buildUrl(
+                '/cgi-bin/material/update_news',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response);
+        return true;
     }
 
     /**
@@ -107,6 +161,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $mediaId
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(string $mediaId)
     {
         $response = $this->getClient()
@@ -116,7 +175,9 @@ class Client extends BaseClient
                 '/cgi-bin/material/get_material',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
-        var_dump($response);
+
+        $this->checkResponse($response, $parseData);
+        return $parseData;
     }
 
     /**
