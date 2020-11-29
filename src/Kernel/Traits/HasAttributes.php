@@ -4,6 +4,8 @@
 namespace EasySwoole\WeChat\Kernel\Traits;
 
 
+use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
+
 trait HasAttributes
 {
     protected $attributes = [];
@@ -11,9 +13,12 @@ trait HasAttributes
 
     /**
      * @return array
+     * @throws InvalidArgumentException
      */
     public function all(): array
     {
+        $this->checkRequiredAttributes();
+
         return $this->attributes;
     }
 
@@ -94,5 +99,25 @@ trait HasAttributes
     public function __isset($name)
     {
         return isset($this->attributes[$name]);
+    }
+
+    /**
+     * @return array|mixed|null
+     */
+    public function getRequired()
+    {
+        return property_exists($this, 'required') ? $this->required : [];
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    protected function checkRequiredAttributes()
+    {
+        foreach ($this->getRequired() as $attribute) {
+            if (is_null($this->get($attribute))) {
+                throw new InvalidArgumentException(sprintf('"%s" cannot be empty.', $attribute));
+            }
+        }
     }
 }

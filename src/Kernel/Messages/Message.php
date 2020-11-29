@@ -5,6 +5,7 @@ namespace EasySwoole\WeChat\Kernel\Messages;
 
 
 use EasySwoole\WeChat\Kernel\Contracts\MessageInterface;
+use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\Traits\HasAttributes;
 use EasySwoole\WeChat\Kernel\Utility\XML;
 
@@ -117,6 +118,7 @@ abstract class Message implements MessageInterface
     /**
      * @param array $appends
      * @return array
+     * @throws InvalidArgumentException
      */
     public function transformForJsonRequest(array $appends = []): array
     {
@@ -126,6 +128,7 @@ abstract class Message implements MessageInterface
     /**
      * @param array $appends
      * @return string
+     * @throws InvalidArgumentException
      */
     public function transformToXml(array $appends = []): string
     {
