@@ -28,6 +28,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @property Semantic\Client $semantic
  * @property POI\Client $poi
  * @property Goods\Client $goods
+ * @property DataCube\Client $dateCube
  */
 class Application extends ServiceContainer
 {
@@ -49,6 +50,7 @@ class Application extends ServiceContainer
     const Semantic = 'semantic';
     const Poi = 'poi';
     const Goods = 'goods';
+	const DataCube = 'dataCube';
 
 
     protected $providers = [
@@ -66,6 +68,7 @@ class Application extends ServiceContainer
         Menu\ServiceProvider::class,
         Semantic\ServiceProvider::class,
         POI\ServiceProvider::class,
-        Goods\ServiceProvider::class
+        Goods\ServiceProvider::class,
+		DataCube\ServiceProvider::class
     ];
 }
