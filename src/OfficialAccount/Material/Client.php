@@ -12,10 +12,14 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
 {
+    /** @var string[] */
+    protected $allowTypes = ['image', 'voice', 'video', 'thumb', 'news_image'];
+
     /**
      * @param string $path
      * @return mixed
      * @throws HttpException
+     * @throws InvalidArgumentException
      */
     public function uploadImage(string $path)
     {
@@ -26,6 +30,7 @@ class Client extends BaseClient
      * @param string $path
      * @return mixed
      * @throws HttpException
+     * @throws InvalidArgumentException
      */
     public function uploadVoice(string $path)
     {
@@ -35,6 +40,7 @@ class Client extends BaseClient
     /**
      * @param string $path
      * @throws HttpException
+     * @throws InvalidArgumentException
      */
     public function uploadThumb(string $path)
     {
@@ -47,6 +53,7 @@ class Client extends BaseClient
      * @param string $description
      * @return mixed
      * @throws HttpException
+     * @throws InvalidArgumentException
      */
     public function uploadVideo(string $path, string $title, string $description)
     {
@@ -110,7 +117,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
-            ->setBody($this->jsonDataToStream( [
+            ->setBody($this->jsonDataToStream([
                 'media_id' => $mediaId,
                 'index' => $index,
                 'articles' => isset($article['title']) ? $article : (isset($article[$index]) ? $article[$index] : []),
@@ -128,6 +135,7 @@ class Client extends BaseClient
      * @param string $path
      * @return mixed
      * @throws HttpException
+     * @throws InvalidArgumentException
      */
     public function uploadArticleImage(string $path)
     {
@@ -140,9 +148,18 @@ class Client extends BaseClient
      * @param array $formData
      * @return mixed
      * @throws HttpException
+     * @throws InvalidArgumentException
      */
     public function upload(string $type, string $path, array $formData = [])
     {
+        if (!in_array($type, $this->allowTypes, true)) {
+            throw new InvalidArgumentException(sprintf("Unsupported media type: '%s'", $type));
+        }
+
+        if (!file_exists($path) || !is_readable($path)) {
+            throw new InvalidArgumentException(sprintf("File does not exist, or the file is unreadable: '%s'", $path));
+        }
+
         $client = $this->getClient()->setMethod('POST')->addFile($path, 'media');
 
         foreach ($formData as $key => $value) {

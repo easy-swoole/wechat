@@ -4,6 +4,7 @@
 namespace EasySwoole\WeChat\OfficialAccount;
 
 
+use EasySwoole\WeChat\BasicService;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 
 /**
@@ -23,6 +24,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @property TemplateMessage\Client $templateMessage
  * @property Store\Client $store
  * @property ShakeAround\ShakeAround $shakeAround
+ * @property BasicService\Media\Client $media
  * @property Material\Client $material
  * @property Menu\Client $menu
  * @property Semantic\Client $semantic
@@ -50,7 +52,7 @@ class Application extends ServiceContainer
     const Semantic = 'semantic';
     const Poi = 'poi';
     const Goods = 'goods';
-	const DataCube = 'dataCube';
+    const DataCube = 'dataCube';
 
 
     protected $providers = [
@@ -69,6 +71,9 @@ class Application extends ServiceContainer
         Semantic\ServiceProvider::class,
         POI\ServiceProvider::class,
         Goods\ServiceProvider::class,
-		DataCube\ServiceProvider::class
+        DataCube\ServiceProvider::class,
+
+        // Basic Service
+        BasicService\Media\ServiceProvider::class
     ];
 }
