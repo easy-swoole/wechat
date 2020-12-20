@@ -13,6 +13,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @package EasySwoole\WeChat\OfficialAccount
  * @property Auth\AccessToken $accessToken
  * @property AutoReplay\Client $autoReplay
+ * @property Comment\Client $comment
  * @property Base\Client $base
  * @property Server\Guard $server
  * @property Wifi\Client $wifi
@@ -41,6 +42,7 @@ class Application extends ServiceContainer
     const Server = 'server';
     const AutoReplay = 'autoReplay';
     const Broadcasting = 'broadcasting';
+    const Comment = 'comment';
     const Wifi = 'wifi';
     const WifiCard = 'wifiCard';
     const WifiDevice = 'wifiDevice';
@@ -66,6 +68,7 @@ class Application extends ServiceContainer
         AutoReplay\ServiceProvider::class,
         Broadcasting\ServiceProvider::class,
         Base\ServiceProvider::class,
+        Comment\ServiceProvider::class,
         Server\ServiceProvider::class,
         WiFi\ServiceProvider::class,
         User\ServiceProvider::class,
