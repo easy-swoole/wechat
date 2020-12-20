@@ -119,12 +119,6 @@ class Client extends BaseClient
             'user_comment_id' => $commentId,
         ];
 
-        $params = [
-            'msg_data_id' => $msgId,
-            'index' => $index,
-            'user_comment_id' => $commentId,
-        ];
-
         $response = $this->getClient()
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
