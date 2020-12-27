@@ -28,5 +28,9 @@ class ServiceProvider implements ServiceProviderInterface
         $app[Card::GiftCard] = function (ServiceContainer $app) {
             return new GiftCardClient($app);
         };
+
+        $app[Card::GiftCardOrder] = function (ServiceContainer $app) {
+            return new GiftCardOrderClient($app);
+        };
     }
 }
