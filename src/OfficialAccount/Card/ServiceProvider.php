@@ -20,5 +20,13 @@ class ServiceProvider implements ServiceProviderInterface
         $app[Card::BoardingPass] = function (ServiceContainer $app) {
             return new BoardingPassClient($app);
         };
+
+        $app[Card::Code] = function (ServiceContainer $app) {
+            return new CodeClient($app);
+        };
+
+        $app[Card::GiftCard] = function (ServiceContainer $app) {
+            return new GiftCardClient($app);
+        };
     }
 }
