@@ -13,12 +13,14 @@ use EasySwoole\WeChat\OfficialAccount\Application;
  * @property BoardingPassClient $boardingPass
  * @property CodeClient $code
  * @property GiftCardClient $giftCard
+ * @property GiftCardOrderClient $giftCardOrder
  */
 class Card extends Client
 {
     const BoardingPass = 'cardBoardingPass';
     const Code = 'cardCode';
     const GiftCard = 'cardGiftCard';
+    const GiftCardOrder = 'cardGiftCardOrder';
 
     public function __get($property)
     {
