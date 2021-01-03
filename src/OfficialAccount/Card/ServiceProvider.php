@@ -40,5 +40,9 @@ class ServiceProvider implements ServiceProviderInterface
         $app[Card::Invoice] = function (ServiceContainer $app) {
             return new InvoiceClient($app);
         };
+
+        $app[Card::MeetingTicket] = function (ServiceContainer $app) {
+            return new MeetingTicketClient($app);
+        };
     }
 }
