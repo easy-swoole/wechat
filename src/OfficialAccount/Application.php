@@ -34,6 +34,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @property POI\Client $poi
  * @property Goods\Client $goods
  * @property DataCube\Client $dateCube
+ * @property DataCube\PublisherClient $dataCubePublisher
  * @property OCR\Client $ocr
  * @property CustomerService\Client $customerService
  * @property CustomerService\SessionClient $customerServiceSession
@@ -62,6 +63,7 @@ class Application extends ServiceContainer
     const Poi = 'poi';
     const Goods = 'goods';
     const DataCube = 'dataCube';
+    const DataCubePublisher = 'dataCubePublisher';
     const Ocr = 'ocr';
     const CustomerService = 'customerService';
     const CustomerServiceSession = 'customerServiceSession';
