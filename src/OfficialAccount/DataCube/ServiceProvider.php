@@ -20,5 +20,8 @@ class ServiceProvider implements ServiceProviderInterface
         $app[Application::DataCube] = function ($app) {
             return new Client($app);
         };
+        $app[Application::DataCubePublisher] = function($app){
+            return new PublisherClient($app);
+        };
     }
 }
