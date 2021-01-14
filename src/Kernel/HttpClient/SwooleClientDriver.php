@@ -4,12 +4,12 @@
 namespace EasySwoole\WeChat\Kernel\HttpClient;
 
 
-use EasySwoole\Spl\SplStream;
 use EasySwoole\WeChat\Kernel\Contracts\ClientInterface;
 use EasySwoole\WeChat\Kernel\HttpClient\Exception\InvalidUrIException;
 use EasySwoole\WeChat\Kernel\HttpClient\Exception\RequestException;
 use EasySwoole\WeChat\Kernel\HttpClient\Exception\TimeOutException;
 use EasySwoole\WeChat\Kernel\Psr\Response;
+use EasySwoole\WeChat\Kernel\Psr\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Swoole\Coroutine\Http\Client;
@@ -196,7 +196,7 @@ class SwooleClientDriver implements ClientInterface
         return new Response(
             $client->getStatusCode(),
             $client->getHeaders(),
-            new SplStream($client->getBody())
+            new Stream($client->getBody())
         );
     }
 
