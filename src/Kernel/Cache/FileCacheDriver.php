@@ -22,11 +22,10 @@ class FileCacheDriver implements CacheInterface
 
     /**
      * FileCacheDriver constructor.
-     * @param string $tmpDir
+     * @param string $directory
      */
-    public function __construct(string $tmpDir)
+    public function __construct(string $directory)
     {
-        $directory = realpath($tmpDir);
         if (!is_dir($directory)) {
             if(!mkdir($directory, 0644, true)){
                 throw new RuntimeException("create dir {$tmpDir} fail");
