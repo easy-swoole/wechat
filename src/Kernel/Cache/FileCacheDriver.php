@@ -27,8 +27,8 @@ class FileCacheDriver implements CacheInterface
     public function __construct(string $directory)
     {
         if (!is_dir($directory)) {
-            if(!mkdir($directory, 0644, true)){
-                throw new RuntimeException("create dir {$tmpDir} fail");
+            if(!mkdir($directory, 0755, true)){
+                throw new RuntimeException("create dir {$directory} fail");
             }
         }
 
