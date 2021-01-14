@@ -5,6 +5,7 @@ namespace EasySwoole\WeChat\Kernel\Cache;
 
 
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use Psr\SimpleCache\CacheInterface;
 
 class FileCacheDriver implements CacheInterface
@@ -27,7 +28,9 @@ class FileCacheDriver implements CacheInterface
     {
         $directory = realpath($tmpDir);
         if (!is_dir($directory)) {
-            @mkdir($directory, 0777, true);
+            if(!mkdir($directory, 0777, true)){
+                throw new RuntimeException("create dir {$tmpDir} fail");
+            }
         }
 
         $this->tmpDir = $directory;
