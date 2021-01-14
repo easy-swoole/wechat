@@ -28,7 +28,7 @@ class FileCacheDriver implements CacheInterface
     {
         $directory = realpath($tmpDir);
         if (!is_dir($directory)) {
-            if(!mkdir($directory, 0777, true)){
+            if(!mkdir($directory, 0644, true)){
                 throw new RuntimeException("create dir {$tmpDir} fail");
             }
         }
