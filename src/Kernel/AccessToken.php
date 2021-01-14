@@ -43,8 +43,8 @@ abstract class AccessToken implements AccessTokenInterface
         if (!empty($token) || false === $autoRefresh) {
             return $token;
         }
-
-        return $this->refresh()->getToken(false);
+        $this->refresh();
+        return $this->getCache()->get($this->getCacheKey(), null);
     }
 
     /**
