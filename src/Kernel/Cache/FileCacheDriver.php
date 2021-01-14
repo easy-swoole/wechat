@@ -28,14 +28,21 @@ class FileCacheDriver implements CacheInterface
 
     public function get($key, $default = null)
     {
-        // TODO: Implement get() method.
+        $file = $this->key2File($key);
+        if(file_exists($file)){
+            $data = unserialize(file_get_contents($file));
+            if($data && time() < $data['t']){
+                return $data['d'];
+            }
+        }
+        return  $default;
     }
 
     public function set($key, $value, $ttl = null)
     {
         $data = [
             'd'=>$value,
-            't'=>$ttl
+            't'=>$ttl + time()
         ];
         return file_put_contents($this->key2File($key),serialize($data));
     }
