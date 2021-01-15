@@ -19,6 +19,7 @@ use EasySwoole\WeChat\OfficialAccount\Application;
  * @property MeetingTicketClient $meetingTicket
  * @property MemberCardClient $memberCard
  * @property MovieTicketClient $movieTicket
+ * @property SubMerchantClient $subMerchant
  */
 class Card extends Client
 {
@@ -31,6 +32,7 @@ class Card extends Client
     const MeetingTicket = 'cardMeetingTicket';
     const MemberCard = 'cardMemberCard';
     const MovieTicket = 'cardMovieTicket';
+    const SubMerchant = 'cardSubMerchant';
 
     public function __get($property)
     {

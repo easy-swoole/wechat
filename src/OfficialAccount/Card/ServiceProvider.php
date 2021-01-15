@@ -52,5 +52,9 @@ class ServiceProvider implements ServiceProviderInterface
         $app[Card::MovieTicket] = function (ServiceContainer $app) {
             return new MovieTicketClient($app);
         };
+
+        $app[Card::SubMerchant] = function (ServiceContainer $app) {
+            return new SubMerchantClient($app);
+        };
     }
 }
