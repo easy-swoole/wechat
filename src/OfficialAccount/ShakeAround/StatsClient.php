@@ -4,11 +4,18 @@ namespace EasySwoole\WeChat\OfficialAccount\ShakeAround;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class StatsClient extends BaseClient
 {
-
+    /**
+     * @param array $deviceIdentifier
+     * @param int $beginTime
+     * @param int $endTime
+     * @return mixed
+     * @throws HttpException
+     */
     public function deviceSummary(array $deviceIdentifier, int $beginTime, int $endTime)
     {
         $params = [
@@ -30,6 +37,12 @@ class StatsClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param int $timestamp
+     * @param int $pageIndex
+     * @return mixed
+     * @throws HttpException
+     */
     public function devicesSummary(int $timestamp, int $pageIndex)
     {
         $params = [
@@ -50,7 +63,13 @@ class StatsClient extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param int $pageId
+     * @param int $beginTime
+     * @param int $endTime
+     * @return mixed
+     * @throws HttpException
+     */
     public function pageSummary(int $pageId, int $beginTime, int $endTime)
     {
         $params = [
@@ -72,7 +91,12 @@ class StatsClient extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param int $timestamp
+     * @param int $pageIndex
+     * @return mixed
+     * @throws HttpException
+     */
     public function pagesSummary(int $timestamp, int $pageIndex)
     {
         $params = [

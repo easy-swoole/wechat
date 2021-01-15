@@ -4,11 +4,17 @@ namespace EasySwoole\WeChat\OfficialAccount\ShakeAround;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class DeviceClient extends BaseClient
 {
 
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws HttpException
+     */
     public function apply(array $data)
     {
         $response = $this->getClient()
@@ -24,7 +30,11 @@ class DeviceClient extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param int $applyId
+     * @return mixed
+     * @throws HttpException
+     */
     public function status(int $applyId)
     {
         $params = [
@@ -44,7 +54,12 @@ class DeviceClient extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param array $deviceIdentifier
+     * @param string $comment
+     * @return mixed
+     * @throws HttpException
+     */
     public function update(array $deviceIdentifier, string $comment)
     {
         $params = [
@@ -65,7 +80,12 @@ class DeviceClient extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param array $deviceIdentifier
+     * @param int $poiId
+     * @return mixed
+     * @throws HttpException
+     */
     public function bindPoi(array $deviceIdentifier, int $poiId)
     {
         $params = [
@@ -87,6 +107,13 @@ class DeviceClient extends BaseClient
     }
 
 
+    /**
+     * @param array $deviceIdentifier
+     * @param int $poiId
+     * @param string $appId
+     * @return mixed
+     * @throws HttpException
+     */
     public function bindThirdPoi(array $deviceIdentifier, int $poiId, string $appId)
     {
         $params = [
@@ -110,6 +137,11 @@ class DeviceClient extends BaseClient
     }
 
 
+    /**
+     * @param array $deviceIdentifiers
+     * @return mixed
+     * @throws HttpException
+     */
     public function listByIds(array $deviceIdentifiers)
     {
         $params = [
@@ -120,6 +152,12 @@ class DeviceClient extends BaseClient
         return $this->search($params);
     }
 
+    /**
+     * @param int $lastId
+     * @param int $count
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(int $lastId, int $count)
     {
         $params = [
@@ -131,6 +169,13 @@ class DeviceClient extends BaseClient
         return $this->search($params);
     }
 
+    /**
+     * @param int $applyId
+     * @param int $lastId
+     * @param int $count
+     * @return mixed
+     * @throws HttpException
+     */
     public function listByApplyId(int $applyId, int $lastId, int $count)
     {
         $params = [
@@ -144,6 +189,11 @@ class DeviceClient extends BaseClient
     }
 
 
+    /**
+     * @param array $params
+     * @return mixed
+     * @throws HttpException
+     */
     public function search(array $params)
     {
         $response = $this->getClient()

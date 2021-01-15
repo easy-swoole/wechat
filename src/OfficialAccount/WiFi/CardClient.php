@@ -5,6 +5,7 @@ namespace EasySwoole\WeChat\OfficialAccount\WiFi;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class CardClient extends BaseClient
@@ -12,7 +13,7 @@ class CardClient extends BaseClient
     /**
      * @param array $data
      * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function set(array $data)
     {
@@ -30,7 +31,7 @@ class CardClient extends BaseClient
     /**
      * @param int $shopId
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function get(int $shopId = 0)
     {

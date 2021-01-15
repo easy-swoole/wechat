@@ -5,11 +5,17 @@ namespace EasySwoole\WeChat\OfficialAccount\User;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class TagClient extends BaseClient
 {
 
+    /**
+     * @param string $name
+     * @return mixed
+     * @throws HttpException
+     */
     public function create(string $name)
     {
         $params = [
@@ -28,6 +34,10 @@ class TagClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function list()
     {
         $response = $this->getClient()
@@ -42,6 +52,12 @@ class TagClient extends BaseClient
     }
 
 
+    /**
+     * @param int $tagId
+     * @param string $name
+     * @return bool
+     * @throws HttpException
+     */
     public function update(int $tagId, string $name)
     {
         $params = [
@@ -63,6 +79,11 @@ class TagClient extends BaseClient
     }
 
 
+    /**
+     * @param int $tagId
+     * @return bool
+     * @throws HttpException
+     */
     public function delete(int $tagId)
     {
         $params = [
@@ -81,6 +102,11 @@ class TagClient extends BaseClient
     }
 
 
+    /**
+     * @param string $openid
+     * @return mixed
+     * @throws HttpException
+     */
     public function userTags(string $openid)
     {
         $params = ['openid' => $openid];
@@ -98,6 +124,12 @@ class TagClient extends BaseClient
     }
 
 
+    /**
+     * @param int $tagId
+     * @param string $nextOpenId
+     * @return mixed
+     * @throws HttpException
+     */
     public function usersOfTag(int $tagId, string $nextOpenId = '')
     {
         $params = [
@@ -117,6 +149,12 @@ class TagClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param array $openids
+     * @param int $tagId
+     * @return bool
+     * @throws HttpException
+     */
     public function tagUsers(array $openids, int $tagId)
     {
         $params = [
@@ -136,6 +174,12 @@ class TagClient extends BaseClient
     }
 
 
+    /**
+     * @param array $openids
+     * @param int $tagId
+     * @return bool
+     * @throws HttpException
+     */
     public function untagUsers(array $openids, int $tagId)
     {
         $params = [

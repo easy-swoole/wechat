@@ -5,11 +5,16 @@ namespace EasySwoole\WeChat\OfficialAccount\POI;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
 {
 
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function categories()
     {
         $response = $this->getClient()
@@ -25,6 +30,11 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param int $poiId
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(int $poiId)
     {
         $response = $this->getClient()
@@ -41,6 +51,12 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(int $offset = 0, int $limit = 10)
     {
         $params = [
@@ -61,6 +77,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param array $baseInfo
+     * @return mixed
+     * @throws HttpException
+     */
     public function create(array $baseInfo)
     {
         $params = [
@@ -82,7 +103,12 @@ class Client extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param int $poiId
+     * @param array $baseInfo
+     * @return bool
+     * @throws HttpException
+     */
     public function update(int $poiId, array $baseInfo)
     {
         $params = [
@@ -102,7 +128,11 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
-
+    /**
+     * @param int $poiId
+     * @return bool
+     * @throws HttpException
+     */
     public function delete(int $poiId)
     {
         $response = $this->getClient()

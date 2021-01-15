@@ -6,9 +6,16 @@ namespace EasySwoole\WeChat\OfficialAccount\Card;
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 class MemberCardClient extends BaseClient
 {
+    /**
+     * 会员卡激活
+     * @param array $info
+     * @return bool
+     * @throws HttpException
+     */
     public function activate(array $info = [])
     {
         $response = $this->getClient()
@@ -22,6 +29,13 @@ class MemberCardClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * 设置开卡字段
+     * @param string $cardId
+     * @param array $settings
+     * @return bool
+     * @throws HttpException
+     */
     public function setActivationForm(string $cardId, array $settings)
     {
         $params = array_merge(['card_id' => $cardId], $settings);
@@ -37,6 +51,13 @@ class MemberCardClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * 拉取会员信息
+     * @param string $cardId
+     * @param string $code
+     * @return mixed
+     * @throws HttpException
+     */
     public function getUser(string $cardId, string $code)
     {
         $params = [
@@ -56,6 +77,12 @@ class MemberCardClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 更新会员信息
+     * @param array $params
+     * @return mixed
+     * @throws HttpException
+     */
     public function updateUser(array $params = [])
     {
         $response = $this->getClient()
@@ -70,6 +97,12 @@ class MemberCardClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 获取用户提交资料
+     * @param $activateTicket
+     * @return mixed
+     * @throws HttpException
+     */
     public function getActivationForm($activateTicket)
     {
         $params = [
@@ -88,6 +121,12 @@ class MemberCardClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 获取开卡组件链接
+     * @param array $params
+     * @return mixed
+     * @throws HttpException
+     */
     public function getActivateUrl(array $params = [])
     {
         $response = $this->getClient()

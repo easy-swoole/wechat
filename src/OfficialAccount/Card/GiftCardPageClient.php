@@ -6,9 +6,16 @@ namespace EasySwoole\WeChat\OfficialAccount\Card;
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 class GiftCardPageClient extends BaseClient
 {
+    /**
+     * 创建 礼品卡货架
+     * @param array $attributes
+     * @return mixed
+     * @throws HttpException
+     */
     public function add(array $attributes)
     {
         $params = [
@@ -28,6 +35,12 @@ class GiftCardPageClient extends BaseClient
     }
 
 
+    /**
+     * 查询礼品卡货架信息
+     * @param string $pageId
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(string $pageId)
     {
         $params = [
@@ -46,6 +59,14 @@ class GiftCardPageClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 修改礼品卡货架信息
+     * @param string $pageId
+     * @param string $bannerPicUrl
+     * @param array $themeList
+     * @return bool
+     * @throws HttpException
+     */
     public function update(string $pageId, string $bannerPicUrl, array $themeList)
     {
         $params = [
@@ -68,6 +89,11 @@ class GiftCardPageClient extends BaseClient
     }
 
 
+    /**
+     * 查询 礼品卡货架列表
+     * @return mixed
+     * @throws HttpException
+     */
     public function list()
     {
         $response = $this->getClient()
@@ -81,6 +107,12 @@ class GiftCardPageClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 下架-礼品卡货架 (下架某一个货架或者全部货架)
+     * @param string $pageId
+     * @return mixed
+     * @throws HttpException
+     */
     public function setMaintain(string $pageId = '')
     {
         $params = ($pageId ? ['page_id' => $pageId] : ['all' => true]) + [

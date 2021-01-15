@@ -4,12 +4,18 @@ namespace EasySwoole\WeChat\OfficialAccount\WiFi;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 
 class ShopClient extends BaseClient
 {
 
+    /**
+     * @param int $shopId
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(int $shopId)
     {
         $response = $this->getClient()
@@ -25,6 +31,12 @@ class ShopClient extends BaseClient
     }
 
 
+    /**
+     * @param int $page
+     * @param int $size
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(int $page = 1, int $size = 10)
     {
         $data = [
@@ -44,6 +56,13 @@ class ShopClient extends BaseClient
         return $parseData;
     }
 
+
+    /**
+     * @param int $shopId
+     * @param array $data
+     * @return bool
+     * @throws HttpException
+     */
     public function update(int $shopId, array $data)
     {
         $data = array_merge(['shop_id' => $shopId], $data);
@@ -59,6 +78,12 @@ class ShopClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param int $shopId
+     * @param string|null $ssid
+     * @return bool
+     * @throws HttpException
+     */
     public function clearDevice(int $shopId, string $ssid = null)
     {
         $data = [

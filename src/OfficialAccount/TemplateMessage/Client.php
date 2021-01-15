@@ -5,16 +5,21 @@ namespace EasySwoole\WeChat\OfficialAccount\TemplateMessage;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
 {
 
-
     protected $required = ['touser', 'template_id'];
 
-
+    /**
+     * @param $industryOne
+     * @param $industryTwo
+     * @return bool
+     * @throws HttpException
+     */
     public function setIndustry($industryOne, $industryTwo)
     {
         $params = [
@@ -34,6 +39,10 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function getIndustry()
     {
         $response = $this->getClient()
@@ -48,6 +57,11 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param $shortId
+     * @return mixed
+     * @throws HttpException
+     */
     public function addTemplate($shortId)
     {
         $params = ['template_id_short' => $shortId];
@@ -65,6 +79,10 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function getPrivateTemplates()
     {
         $response = $this->getClient()
@@ -79,6 +97,11 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param $templateId
+     * @return bool
+     * @throws HttpException
+     */
     public function deletePrivateTemplate($templateId)
     {
         $params = ['template_id' => $templateId];
@@ -94,6 +117,12 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function send(array $data = [])
     {
         $params = $this->formatMessage($data);
@@ -111,6 +140,12 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param array $data
+     * @return bool
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function sendSubscription(array $data = [])
     {
         $params = $this->formatMessage($data);
@@ -127,6 +162,11 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param array $data
+     * @return array
+     * @throws InvalidArgumentException
+     */
     protected function formatMessage(array $data = [])
     {
         $message = $this->messageTemplate();
@@ -146,6 +186,10 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param array $data
+     * @return array
+     */
     protected function formatData(array $data)
     {
         $formatted = [];
@@ -176,6 +220,10 @@ class Client extends BaseClient
         return $formatted;
     }
 
+
+    /**
+     * @return array
+     */
     protected function messageTemplate(): array
     {
         return [

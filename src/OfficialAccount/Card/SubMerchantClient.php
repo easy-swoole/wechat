@@ -6,10 +6,17 @@ namespace EasySwoole\WeChat\OfficialAccount\Card;
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 class SubMerchantClient extends BaseClient
 {
 
+    /**
+     * 添加子商户
+     * @param array $info
+     * @return mixed
+     * @throws HttpException
+     */
     public function create(array $info = [])
     {
         $params = [
@@ -38,6 +45,13 @@ class SubMerchantClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 更新子商户
+     * @param int $merchantId
+     * @param array $info
+     * @return mixed
+     * @throws HttpException
+     */
     public function update(int $merchantId, array $info = [])
     {
         $info = array_merge(['merchant_id' => $merchantId], array_intersect_key($info, array_flip([
@@ -68,6 +82,12 @@ class SubMerchantClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 获取子商户信息
+     * @param int $merchantId
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(int $merchantId)
     {
         $response = $this->getClient()
@@ -82,6 +102,14 @@ class SubMerchantClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 批量获取子商户信息
+     * @param int $beginId
+     * @param int $limit
+     * @param string $status
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(int $beginId = 0, int $limit = 50, string $status = 'CHECKING')
     {
         $params = [

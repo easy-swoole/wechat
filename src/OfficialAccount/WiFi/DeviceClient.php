@@ -4,12 +4,20 @@ namespace EasySwoole\WeChat\OfficialAccount\WiFi;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 
 class DeviceClient extends BaseClient
 {
 
+    /**
+     * @param int $shopId
+     * @param string $ssid
+     * @param string $password
+     * @return bool
+     * @throws HttpException
+     */
     public function addPasswordDevice(int $shopId, string $ssid, string $password)
     {
         $data = [
@@ -30,6 +38,13 @@ class DeviceClient extends BaseClient
     }
 
 
+    /**
+     * @param int $shopId
+     * @param string $ssid
+     * @param bool $reset
+     * @return mixed
+     * @throws HttpException
+     */
     public function addPortalDevice(int $shopId, string $ssid, bool $reset = false)
     {
         $data = [
@@ -50,6 +65,12 @@ class DeviceClient extends BaseClient
         return $parseData;
     }
 
+
+    /**
+     * @param string $macAddress
+     * @return bool
+     * @throws HttpException
+     */
     public function delete(string $macAddress)
     {
         $response = $this->getClient()
@@ -63,6 +84,12 @@ class DeviceClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param int $page
+     * @param int $size
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(int $page = 1, int $size = 10)
     {
         $data = [
@@ -83,6 +110,13 @@ class DeviceClient extends BaseClient
     }
 
 
+    /**
+     * @param int $shopId
+     * @param int $page
+     * @param int $size
+     * @return mixed
+     * @throws HttpException
+     */
     public function listByShopId(int $shopId, int $page = 1, int $size = 10)
     {
         $data = [

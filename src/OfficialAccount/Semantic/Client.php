@@ -5,10 +5,19 @@ namespace EasySwoole\WeChat\OfficialAccount\Semantic;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
 {
+
+    /**
+     * @param string $keyword
+     * @param string $categories
+     * @param array $optional
+     * @return mixed
+     * @throws HttpException
+     */
     public function query(string $keyword, string $categories, array $optional = [])
     {
         $params = [

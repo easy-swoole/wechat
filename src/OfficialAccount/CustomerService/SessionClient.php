@@ -3,12 +3,18 @@
 namespace EasySwoole\WeChat\OfficialAccount\CustomerService;
 
 
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\Work\BaseClient;
 
 class SessionClient extends BaseClient
 {
 
+    /**
+     * @param string $account
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(string $account)
     {
         $response = $this->getClient()
@@ -23,6 +29,10 @@ class SessionClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function waiting()
     {
         $response = $this->getClient()
@@ -38,6 +48,12 @@ class SessionClient extends BaseClient
     }
 
 
+    /**
+     * @param string $account
+     * @param string $openid
+     * @return bool
+     * @throws HttpException
+     */
     public function create(string $account, string $openid)
     {
         $params = [
@@ -57,6 +73,12 @@ class SessionClient extends BaseClient
     }
 
 
+    /**
+     * @param string $account
+     * @param string $openid
+     * @return bool
+     * @throws HttpException
+     */
     public function close(string $account, string $openid)
     {
         $params = [
@@ -75,6 +97,11 @@ class SessionClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $openid
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(string $openid)
     {
         $response = $this->getClient()

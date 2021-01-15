@@ -5,6 +5,7 @@ namespace EasySwoole\WeChat\OfficialAccount\WiFi;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
@@ -14,7 +15,7 @@ class Client extends BaseClient
      * @param string $endDate
      * @param int $shopId
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function summary(string $beginDate, string $endDate, int $shopId = -1)
     {
@@ -41,7 +42,7 @@ class Client extends BaseClient
      * @param string $ssid
      * @param int $type
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function getQrCodeUrl(int $shopId, string $ssid, int $type = 0)
     {
@@ -67,7 +68,7 @@ class Client extends BaseClient
     /**
      * @param array $data
      * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function setFinishPage(array $data)
     {
@@ -86,7 +87,7 @@ class Client extends BaseClient
     /**
      * @param array $data
      * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function setHomePage(array $data)
     {
