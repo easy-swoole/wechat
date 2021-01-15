@@ -12,6 +12,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  *
  * @package EasySwoole\WeChat\OfficialAccount
  * @property Auth\AccessToken $accessToken
+ * @property JsSdk\JsSdk $jsSdk
  * @property AutoReplay\Client $autoReplay
  * @property Comment\Client $comment
  * @property Card\Card $card
@@ -77,6 +78,7 @@ class Application extends ServiceContainer
         Comment\ServiceProvider::class,
         Card\ServiceProvider::class,
         Device\ServiceProvider::class,
+        JsSdk\ServiceProvider::class,
         Server\ServiceProvider::class,
         WiFi\ServiceProvider::class,
         User\ServiceProvider::class,
