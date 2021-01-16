@@ -15,8 +15,11 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
 class Application extends ServiceContainer
 {
     const Media = 'media';
+    const Jssdk = 'jssdk';
+    const Ticket = 'ticket';
 
     protected $providers = [
         Media\ServiceProvider::class,
+        Jssdk\ServiceProvider::class,
     ];
 }

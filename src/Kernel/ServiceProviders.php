@@ -12,5 +12,4 @@ class ServiceProviders
     const HttpClientManager = "httpClientManager";
     const Encryptor = "encryptor";
     const AccessToken = "accessToken";
-    const JsSdk = "jsSdk";
 }

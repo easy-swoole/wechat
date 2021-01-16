@@ -12,7 +12,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  *
  * @package EasySwoole\WeChat\OfficialAccount
  * @property Auth\AccessToken $accessToken
- * @property JsSdk\JsSdk $jsSdk
+ * @property BasicService\Jssdk\Client $jssdk
  * @property AutoReplay\Client $autoReplay
  * @property Comment\Client $comment
  * @property Card\Card $card
@@ -37,6 +37,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @property DataCube\Client $dateCube
  * @property DataCube\PublisherClient $dataCubePublisher
  * @property OCR\Client $ocr
+ * @property OAuth\Client $oauth
  * @property CustomerService\Client $customerService
  * @property CustomerService\SessionClient $customerServiceSession
  */
@@ -66,6 +67,7 @@ class Application extends ServiceContainer
     const DataCube = 'dataCube';
     const DataCubePublisher = 'dataCubePublisher';
     const Ocr = 'ocr';
+    const OAuth = 'oauth';
     const CustomerService = 'customerService';
     const CustomerServiceSession = 'customerServiceSession';
 
@@ -78,7 +80,6 @@ class Application extends ServiceContainer
         Comment\ServiceProvider::class,
         Card\ServiceProvider::class,
         Device\ServiceProvider::class,
-        JsSdk\ServiceProvider::class,
         Server\ServiceProvider::class,
         WiFi\ServiceProvider::class,
         User\ServiceProvider::class,
@@ -92,8 +93,10 @@ class Application extends ServiceContainer
         Goods\ServiceProvider::class,
         DataCube\ServiceProvider::class,
         OCR\ServiceProvider::class,
+        OAuth\ServiceProvider::class,
 
         // Basic Service
-        BasicService\Media\ServiceProvider::class
+        BasicService\Media\ServiceProvider::class,
+        BasicService\Jssdk\ServiceProvider::class
     ];
 }
