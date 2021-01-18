@@ -4,12 +4,18 @@ namespace EasySwoole\WeChat\OfficialAccount\OCR;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use Psr\Http\Message\StreamInterface;
 
 class Client extends BaseClient
 {
 
+    /**
+     * @param string $url
+     * @return mixed
+     * @throws HttpException
+     */
     public function idCardByUrl(string $url)
     {
         $response = $this->getClient()
@@ -24,6 +30,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param StreamInterface $stream
+     * @return mixed
+     * @throws HttpException
+     */
     public function idCardByStream(StreamInterface $stream)
     {
         $response = $this->getClient()
@@ -39,6 +50,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $path
+     * @return mixed
+     * @throws HttpException
+     */
     public function bankCardByUrl(string $path)
     {
         $response = $this->getClient()
@@ -53,6 +69,12 @@ class Client extends BaseClient
         return $parseData;
     }
 
+
+    /**
+     * @param StreamInterface $stream
+     * @return mixed
+     * @throws HttpException
+     */
     public function bankCardByStream(StreamInterface $stream)
     {
         $response = $this->getClient()
@@ -68,7 +90,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param string $url
+     * @return mixed
+     * @throws HttpException
+     */
     public function vehicleLicenseByUrl(string $url)
     {
         $response = $this->getClient()
@@ -83,6 +109,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param StreamInterface $stream
+     * @return mixed
+     * @throws HttpException
+     */
     public function vehicleLicenseByStream(StreamInterface $stream)
     {
         $response = $this->getClient()

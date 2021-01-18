@@ -5,6 +5,7 @@ namespace EasySwoole\WeChat\OfficialAccount\Device;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 /**
@@ -16,6 +17,14 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
  */
 class Client extends BaseClient
 {
+
+    /**
+     * @param string $deviceId
+     * @param string $openid
+     * @param string $content
+     * @return bool
+     * @throws HttpException
+     */
     public function message(string $deviceId, string $openid, string $content)
     {
         $params = [
@@ -36,6 +45,11 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param array $deviceIds
+     * @return mixed
+     * @throws HttpException
+     */
     public function qrCode(array $deviceIds)
     {
         $params = [
@@ -56,6 +70,13 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param array $devices
+     * @param string $productId
+     * @param int $opType
+     * @return mixed
+     * @throws HttpException
+     */
     public function authorize(array $devices, string $productId, int $opType = 0)
     {
         $params = [
@@ -78,6 +99,12 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 获取 device id 和二维码
+     * @param string $productId
+     * @return mixed
+     * @throws HttpException
+     */
     public function createId(string $productId)
     {
         $response = $this->getClient()
@@ -95,6 +122,13 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $openid
+     * @param string $deviceId
+     * @param string $ticket
+     * @return bool
+     * @throws HttpException
+     */
     public function bind(string $openid, string $deviceId, string $ticket)
     {
         $params = [
@@ -114,6 +148,13 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $openid
+     * @param string $deviceId
+     * @param string $ticket
+     * @return bool
+     * @throws HttpException
+     */
     public function unbind(string $openid, string $deviceId, string $ticket)
     {
         $params = [
@@ -133,6 +174,12 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $openid
+     * @param string $deviceId
+     * @return bool
+     * @throws HttpException
+     */
     public function forceBind(string $openid, string $deviceId)
     {
         $params = [
@@ -151,6 +198,12 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $openid
+     * @param string $deviceId
+     * @return bool
+     * @throws HttpException
+     */
     public function forceUnbind(string $openid, string $deviceId)
     {
         $params = [
@@ -169,6 +222,11 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $deviceId
+     * @return mixed
+     * @throws HttpException
+     */
     public function status(string $deviceId)
     {
         $params = [
@@ -188,6 +246,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $ticket
+     * @return mixed
+     * @throws HttpException
+     */
     public function verify(string $ticket)
     {
         $params = [
@@ -207,6 +270,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $deviceId
+     * @return mixed
+     * @throws HttpException
+     */
     public function openid(string $deviceId)
     {
         $params = [
@@ -227,6 +295,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $openid
+     * @return mixed
+     * @throws HttpException
+     */
     public function listByOpenid(string $openid)
     {
         $params = [

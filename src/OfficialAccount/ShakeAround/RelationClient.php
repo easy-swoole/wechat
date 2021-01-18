@@ -5,11 +5,18 @@ namespace EasySwoole\WeChat\OfficialAccount\ShakeAround;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class RelationClient extends BaseClient
 {
 
+    /**
+     * @param array $deviceIdentifier
+     * @param array $pageIds
+     * @return mixed
+     * @throws HttpException
+     */
     public function bindPages(array $deviceIdentifier, array $pageIds)
     {
         $params = [
@@ -30,6 +37,11 @@ class RelationClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param array $deviceIdentifier
+     * @return mixed
+     * @throws HttpException
+     */
     public function listByDeviceId(array $deviceIdentifier)
     {
         $params = [
@@ -50,6 +62,13 @@ class RelationClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param int $pageId
+     * @param int $begin
+     * @param int $count
+     * @return mixed
+     * @throws HttpException
+     */
     public function listByPageId(int $pageId, int $begin, int $count)
     {
         $params = [

@@ -5,10 +5,15 @@ namespace EasySwoole\WeChat\OfficialAccount\CustomerService;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
 {
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function list()
     {
         $response = $this->getClient()
@@ -23,6 +28,10 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function online()
     {
         $response = $this->getClient()
@@ -37,6 +46,12 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $account
+     * @param string $nickname
+     * @return bool
+     * @throws HttpException
+     */
     public function create(string $account, string $nickname)
     {
         $params = [
@@ -55,6 +70,12 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $account
+     * @param string $nickname
+     * @return bool
+     * @throws HttpException
+     */
     public function update(string $account, string $nickname)
     {
         $params = [
@@ -73,6 +94,11 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $account
+     * @return bool
+     * @throws HttpException
+     */
     public function delete(string $account)
     {
         $response = $this->getClient()
@@ -86,6 +112,12 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $account
+     * @param string $wechatId
+     * @return bool
+     * @throws HttpException
+     */
     public function invite(string $account, string $wechatId)
     {
         $params = [
@@ -104,6 +136,12 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $account
+     * @param string $path
+     * @return bool
+     * @throws HttpException
+     */
     public function setAvatar(string $account, string $path)
     {
         $response = $this->getClient()
@@ -118,6 +156,11 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param array $message
+     * @return bool
+     * @throws HttpException
+     */
     public function send(array $message)
     {
         $response = $this->getClient()
@@ -131,6 +174,11 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $openid
+     * @return bool
+     * @throws HttpException
+     */
     public function showTypingStatusToUser(string $openid)
     {
         $response = $this->getClient()
@@ -147,6 +195,11 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $openid
+     * @return bool
+     * @throws HttpException
+     */
     public function hideTypingStatusToUser(string $openid)
     {
         $response = $this->getClient()
@@ -163,6 +216,14 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param $startTime
+     * @param $endTime
+     * @param int $msgId
+     * @param int $number
+     * @return mixed
+     * @throws HttpException
+     */
     public function messages($startTime, $endTime, int $msgId = 1, int $number = 10000)
     {
         $params = [

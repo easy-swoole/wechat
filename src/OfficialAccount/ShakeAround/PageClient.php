@@ -5,12 +5,18 @@ namespace EasySwoole\WeChat\OfficialAccount\ShakeAround;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 
 class PageClient extends BaseClient
 {
 
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws HttpException
+     */
     public function create(array $data)
     {
         $response = $this->getClient()
@@ -26,6 +32,12 @@ class PageClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param int $pageId
+     * @param array $data
+     * @return mixed
+     * @throws HttpException
+     */
     public function update(int $pageId, array $data)
     {
 
@@ -43,6 +55,11 @@ class PageClient extends BaseClient
     }
 
 
+    /**
+     * @param array $pageIds
+     * @return mixed
+     * @throws HttpException
+     */
     public function listByIds(array $pageIds)
     {
         $params = [
@@ -64,6 +81,12 @@ class PageClient extends BaseClient
     }
 
 
+    /**
+     * @param int $begin
+     * @param int $count
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(int $begin, int $count)
     {
         $params = [
@@ -86,6 +109,11 @@ class PageClient extends BaseClient
     }
 
 
+    /**
+     * @param int $pageId
+     * @return mixed
+     * @throws HttpException
+     */
     public function delete(int $pageId)
     {
         $params = [

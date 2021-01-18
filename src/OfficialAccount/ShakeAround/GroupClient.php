@@ -5,11 +5,17 @@ namespace EasySwoole\WeChat\OfficialAccount\ShakeAround;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class GroupClient extends BaseClient
 {
 
+    /**
+     * @param string $name
+     * @return mixed
+     * @throws HttpException
+     */
     public function create(string $name)
     {
         $params = [
@@ -30,6 +36,12 @@ class GroupClient extends BaseClient
     }
 
 
+    /**
+     * @param int $groupId
+     * @param string $name
+     * @return mixed
+     * @throws HttpException
+     */
     public function update(int $groupId, string $name)
     {
         $params = [
@@ -50,7 +62,11 @@ class GroupClient extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param int $groupId
+     * @return mixed
+     * @throws HttpException
+     */
     public function delete(int $groupId)
     {
         $params = [
@@ -71,6 +87,12 @@ class GroupClient extends BaseClient
     }
 
 
+    /**
+     * @param int $begin
+     * @param int $count
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(int $begin, int $count)
     {
         $params = [
@@ -91,7 +113,13 @@ class GroupClient extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param int $groupId
+     * @param int $begin
+     * @param int $count
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(int $groupId, int $begin, int $count)
     {
         $params = [
@@ -114,6 +142,12 @@ class GroupClient extends BaseClient
     }
 
 
+    /**
+     * @param int $groupId
+     * @param array $deviceIdentifiers
+     * @return mixed
+     * @throws HttpException
+     */
     public function addDevices(int $groupId, array $deviceIdentifiers)
     {
         $params = [
@@ -135,6 +169,12 @@ class GroupClient extends BaseClient
     }
 
 
+    /**
+     * @param int $groupId
+     * @param array $deviceIdentifiers
+     * @return mixed
+     * @throws HttpException
+     */
     public function removeDevices(int $groupId, array $deviceIdentifiers)
     {
         $params = [

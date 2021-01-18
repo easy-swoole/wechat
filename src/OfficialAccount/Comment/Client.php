@@ -6,10 +6,17 @@ namespace EasySwoole\WeChat\OfficialAccount\Comment;
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 class Client extends BaseClient
 {
 
+    /**
+     * @param string $msgId
+     * @param int|null $index
+     * @return bool
+     * @throws HttpException
+     */
     public function open(string $msgId, int $index = null)
     {
         $params = [
@@ -29,6 +36,12 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param string $msgId
+     * @param int|null $index
+     * @return bool
+     * @throws HttpException
+     */
     public function close(string $msgId, int $index = null)
     {
         $params = [
@@ -48,6 +61,15 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param string $msgId
+     * @param int $index
+     * @param int $begin
+     * @param int $count
+     * @param int $type
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(string $msgId, int $index, int $begin, int $count, int $type = 0)
     {
         $params = [
@@ -71,6 +93,13 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param string $msgId
+     * @param int $index
+     * @param int $commentId
+     * @return bool
+     * @throws HttpException
+     */
     public function markElect(string $msgId, int $index, int $commentId)
     {
         $params = [
@@ -91,6 +120,13 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param string $msgId
+     * @param int $index
+     * @param int $commentId
+     * @return bool
+     * @throws HttpException
+     */
     public function unmarkElect(string $msgId, int $index, int $commentId)
     {
         $params = [
@@ -111,6 +147,13 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param string $msgId
+     * @param int $index
+     * @param int $commentId
+     * @return bool
+     * @throws HttpException
+     */
     public function delete(string $msgId, int $index, int $commentId)
     {
         $params = [
@@ -130,6 +173,14 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $msgId
+     * @param int $index
+     * @param int $commentId
+     * @param string $content
+     * @return bool
+     * @throws HttpException
+     */
     public function reply(string $msgId, int $index, int $commentId, string $content)
     {
         $params = [
@@ -150,6 +201,13 @@ class Client extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string $msgId
+     * @param int $index
+     * @param int $commentId
+     * @return bool
+     * @throws HttpException
+     */
     public function deleteReply(string $msgId, int $index, int $commentId)
     {
         $params = [

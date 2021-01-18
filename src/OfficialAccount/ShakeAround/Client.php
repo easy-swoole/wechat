@@ -5,11 +5,17 @@ namespace EasySwoole\WeChat\OfficialAccount\ShakeAround;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class Client extends BaseClient
 {
 
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws HttpException
+     */
     public function register(array $data)
     {
         $response = $this->getClient()
@@ -26,6 +32,10 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
     public function status()
     {
         $response = $this->getClient()
@@ -40,6 +50,12 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $ticket
+     * @param bool $needPoi
+     * @return mixed
+     * @throws HttpException
+     */
     public function user(string $ticket, bool $needPoi = false)
     {
         $params = [
@@ -64,6 +80,11 @@ class Client extends BaseClient
     }
 
 
+    /**
+     * @param string $ticket
+     * @return mixed
+     * @throws HttpException
+     */
     public function userWithPoi(string $ticket)
     {
         return $this->user($ticket, true);

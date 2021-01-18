@@ -6,14 +6,16 @@ namespace EasySwoole\WeChat\OfficialAccount\Card;
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 class CodeClient extends BaseClient
 {
     /**
+     * 导入code
      * @param string $cardId
      * @param array $codes
      * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      * @link https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Distributing_Coupons_Vouchers_and_Cards.html
      */
     public function deposit(string $cardId, array $codes)
@@ -34,6 +36,12 @@ class CodeClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * 查询导入code数目
+     * @param string $cardId
+     * @return mixed
+     * @throws HttpException
+     */
     public function getDepositedCount(string $cardId)
     {
         $params = [
@@ -52,6 +60,13 @@ class CodeClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 核查code
+     * @param string $cardId
+     * @param array $codes
+     * @return mixed
+     * @throws HttpException
+     */
     public function check(string $cardId, array $codes)
     {
         $params = [
@@ -71,6 +86,14 @@ class CodeClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 查询code
+     * @param string $code
+     * @param string $cardId
+     * @param bool $checkConsume
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(string $code, string $cardId = '', bool $checkConsume = true)
     {
         $params = [
@@ -91,6 +114,14 @@ class CodeClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * 更新code
+     * @param string $code
+     * @param string $newCode
+     * @param string $cardId
+     * @return bool
+     * @throws HttpException
+     */
     public function update(string $code, string $newCode, string $cardId = '')
     {
         $params = [
@@ -110,6 +141,13 @@ class CodeClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * 设置卡劵失效
+     * @param string $code
+     * @param string $cardId
+     * @return bool
+     * @throws HttpException
+     */
     public function disable(string $code, string $cardId = '')
     {
         $params = [
@@ -129,6 +167,13 @@ class CodeClient extends BaseClient
     }
 
 
+    /**
+     * 核销code
+     * @param string $code
+     * @param string|null $cardId
+     * @return mixed
+     * @throws HttpException
+     */
     public function consume(string $code, string $cardId = null)
     {
         $params = [
@@ -152,6 +197,12 @@ class CodeClient extends BaseClient
     }
 
 
+    /**
+     * code解码
+     * @param string $encryptedCode
+     * @return mixed
+     * @throws HttpException
+     */
     public function decrypt(string $encryptedCode)
     {
         $params = [

@@ -4,6 +4,7 @@ namespace EasySwoole\WeChat\OfficialAccount\Goods;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 /**
@@ -15,6 +16,11 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
  */
 class Client extends BaseClient
 {
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws HttpException
+     */
     public function add(array $data)
     {
         $response = $this->getClient()
@@ -30,6 +36,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws HttpException
+     */
     public function update(array $data)
     {
         $response = $this->getClient()
@@ -45,7 +56,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * @param string $ticket
+     * @return mixed
+     * @throws HttpException
+     */
     public function status(string $ticket)
     {
 
@@ -62,6 +77,11 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $pid
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(string $pid)
     {
 
@@ -82,6 +102,12 @@ class Client extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param string $context
+     * @param int $page
+     * @param int $size
+     * @return mixed
+     */
     public function list(string $context = '', int $page = 1, int $size = 10)
     {
 

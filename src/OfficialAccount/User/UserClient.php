@@ -5,11 +5,18 @@ namespace EasySwoole\WeChat\OfficialAccount\User;
 
 
 use EasySwoole\WeChat\Kernel\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 class UserClient extends BaseClient
 {
 
+    /**
+     * @param string $openid
+     * @param string $lang
+     * @return mixed
+     * @throws HttpException
+     */
     public function get(string $openid, string $lang = 'zh_CN')
     {
         $params = [
@@ -28,6 +35,12 @@ class UserClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param array $openids
+     * @param string $lang
+     * @return mixed
+     * @throws HttpException
+     */
     public function select(array $openids, string $lang = 'zh_CN')
     {
         $response = $this->getClient()
@@ -50,6 +63,11 @@ class UserClient extends BaseClient
     }
 
 
+    /**
+     * @param string|null $nextOpenId
+     * @return mixed
+     * @throws HttpException
+     */
     public function list(string $nextOpenId = null)
     {
         $params = ['next_openid' => $nextOpenId];
@@ -65,6 +83,13 @@ class UserClient extends BaseClient
         return $parseData;
     }
 
+
+    /**
+     * @param string $openid
+     * @param string $remark
+     * @return bool
+     * @throws HttpException
+     */
     public function remark(string $openid, string $remark)
     {
         $params = [
@@ -83,6 +108,11 @@ class UserClient extends BaseClient
         return $this->checkResponse($response);
     }
 
+    /**
+     * @param string|null $beginOpenid
+     * @return mixed
+     * @throws HttpException
+     */
     public function blacklist(string $beginOpenid = null)
     {
         $params = ['begin_openid' => $beginOpenid];
@@ -99,6 +129,11 @@ class UserClient extends BaseClient
         return $parseData;
     }
 
+    /**
+     * @param array $openidList
+     * @return bool
+     * @throws HttpException
+     */
     public function block(array $openidList)
     {
         $params = ['openid_list' => $openidList];
@@ -115,6 +150,11 @@ class UserClient extends BaseClient
     }
 
 
+    /**
+     * @param array $openidList
+     * @return bool
+     * @throws HttpException
+     */
     public function unblock(array $openidList)
     {
         $params = ['openid_list' => $openidList];
@@ -131,6 +171,12 @@ class UserClient extends BaseClient
     }
 
 
+    /**
+     * @param string $oldAppId
+     * @param array $openidList
+     * @return mixed
+     * @throws HttpException
+     */
     public function changeOpenid(string $oldAppId, array $openidList)
     {
         $params = [
