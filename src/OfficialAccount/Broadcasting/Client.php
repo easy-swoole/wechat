@@ -18,7 +18,7 @@ class Client extends BaseClient
      */
     public function send(array $message): array
     {
-        $path = isset($message['touser']) ? 'cgi-bin/message/mass/send' : 'cgi-bin/message/mass/sendall';
+        $path = isset($message['touser']) ? '/cgi-bin/message/mass/send' : '/cgi-bin/message/mass/sendall';
 
         $response = $this->getClient()->setMethod("POST")
             ->setBody($this->jsonDataToStream($message))
@@ -81,6 +81,6 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response, $jsonData);
+        return $this->checkResponse($response);
     }
 }
