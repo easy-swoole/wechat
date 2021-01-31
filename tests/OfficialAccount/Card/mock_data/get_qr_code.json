@@ -1,0 +1,7 @@
+{
+  "status": 200,
+  "reason": "OK",
+  "headers": [],
+  "body": "{\n  \"status\": 200,\n  \"reason\": \"OK\",\n  \"headers\": [],\n  \"body\": \"{  \\\"url\\\": \\\"https:\\\/\\\/mp.weixin.qq.com\\\/cgi-bin\\\/showqrcode?ticket=gQH47joAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL2taZ2Z3TVRtNzJXV1Brb3ZhYmJJAAIEZ23sUwMEmm3sUw%3D%3D&access_token=mock_access_token\\\",  \\\"status\\\": 200,  \\\"reason\\\": \\\"OK\\\",  \\\"headers\\\": {}}\",\n  \"url\": \"https:\\\/\\\/mp.weixin.qq.com\\\/cgi-bin\\\/showqrcode?ticket=gQH47joAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL2taZ2Z3TVRtNzJXV1Brb3ZhYmJJAAIEZ23sUwMEmm3sUw%3D%3D&access_token=mock_access_token\"\n}\n",
+  "url": "https:\/\/mp.weixin.qq.com\/cgi-bin\/showqrcode?ticket=gQH47joAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL2taZ2Z3TVRtNzJXV1Brb3ZhYmJJAAIEZ23sUwMEmm3sUw%3D%3D&access_token=mock_access_token"
+}
