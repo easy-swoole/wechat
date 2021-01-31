@@ -1,0 +1,13 @@
+{
+  "errcode": 0,
+  "errmsg": "ok",
+  "card": {
+    "card_id": "pbLatjk4T4Hx-QFQGL4zGQy27_Qg",
+    "begin_time": 1457452800,
+    "end_time": 1463155199
+  },
+  "openid": "obLatjm43RA5C6QfMO5szKYnT3dM",
+  "can_consume": true,
+  "outer_str": "12b",
+  "user_card_status": "NORMAL"
+}
