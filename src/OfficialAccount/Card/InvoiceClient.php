@@ -27,7 +27,7 @@ class InvoiceClient extends BaseClient
             ],
         ];
 
-        return $this->setBizAttr('set_pay_mch', $params, false);
+        return $this->setBizAttr('set_pay_mch', $params);
     }
 
     /**
@@ -37,7 +37,7 @@ class InvoiceClient extends BaseClient
      */
     public function get()
     {
-        return $this->setBizAttr('get_pay_mch');
+        return $this->setBizAttr('get_pay_mch', [], true);
     }
 
     /**
@@ -56,7 +56,7 @@ class InvoiceClient extends BaseClient
             ],
         ];
 
-        return $this->setBizAttr('set_auth_field', $params, true);
+        return $this->setBizAttr('set_auth_field', $params);
     }
 
     /**
