@@ -1,0 +1,19 @@
+{
+  "errcode": 0,
+  "errmsg": "ok",
+  "invoice_status": "auth success",
+  "auth_time": 1480342498,
+  "user_auth_info": {
+    "user_field": {
+      "title": "Dhxhhx ",
+      "phone": "5554545",
+      "email": "dhxhxhhx@qq.cind",
+      "custom_field": [
+        {
+          "key": "field1",
+          "value": "管理理论"
+        }
+      ]
+    }
+  }
+}
