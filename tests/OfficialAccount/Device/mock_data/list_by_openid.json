@@ -1,0 +1,13 @@
+{
+  "resp_msg": {
+    "ret_code": 0,
+    "error_info": "ok"
+  },
+  "openid": "OPENID",
+  "device_list": [
+    {
+      "device_type": "dt1",
+      "device_id": "di1"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "errcode": 0,
+  "errmsg": "succ",
+  "device_num": 1,
+  "code_list": [
+    {
+      "device_id": "id1",
+      "ticket": "t1"
+    }
+  ]
+}

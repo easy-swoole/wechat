@@ -1,0 +1,12 @@
+{
+  "resp": [
+    {
+      "base_info": {
+        "device_type": "your_devcie_type",
+        "device_id": "id"
+      },
+      "errcode": 0,
+      "errmsg": "ok"
+    }
+  ]
+}

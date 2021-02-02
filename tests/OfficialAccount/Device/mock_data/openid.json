@@ -1,0 +1,10 @@
+{
+  "open_id": [
+    "omN7ljrpaxQgK4NW4H5cRzFRtfa8",
+    "omN7ljtqrTZuvYLkjPEX_t_Pmmlg"
+  ],
+  "resp_msg": {
+    "ret_code": 0,
+    "error_info": "get open id list OK!"
+  }
+}
