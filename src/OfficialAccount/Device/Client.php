@@ -7,6 +7,7 @@ namespace EasySwoole\WeChat\OfficialAccount\Device;
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Client
@@ -22,13 +23,14 @@ class Client extends BaseClient
      * @param string $deviceId
      * @param string $openid
      * @param string $content
+     * @param string|null $deviceType
      * @return bool
      * @throws HttpException
      */
-    public function message(string $deviceId, string $openid, string $content)
+    public function message(string $deviceId, string $openid, string $content, string $deviceType = null)
     {
         $params = [
-            'device_type' => $this->app['config']['device_type'],
+            'device_type' => $this->app[ServiceProviders::Config]->get('device_type') ?? $deviceType,
             'device_id' => $deviceId,
             'open_id' => $openid,
             'content' => base64_encode($content),
@@ -117,7 +119,15 @@ class Client extends BaseClient
                 ]
             ));
 
-        $this->checkResponse($response, $parseData);
+        $this->checkResponse($response, $parseData, false);
+
+        if (isset($parseData['resp_msg']['ret_code']) && (int)$parseData['resp_msg']['ret_code'] !== 0) {
+            throw new HttpException(
+                "request wechat error, message: ({$parseData['resp_msg']['ret_code']}) {$parseData['resp_msg']['error_info']}",
+                $response,
+                $parseData['resp_msg']['ret_code']
+            );
+        }
 
         return $parseData;
     }
@@ -145,7 +155,17 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $parseData, false);
+
+        if (isset($parseData['base_resp']['errcode']) && (int)$parseData['base_resp']['errcode'] !== 0) {
+            throw new HttpException(
+                "request wechat error, message: ({$parseData['base_resp']['errcode']}) {$parseData['base_resp']['errmsg']}",
+                $response,
+                $parseData['base_resp']['errmsg']
+            );
+        }
+
+        return true;
     }
 
     /**
@@ -171,7 +191,17 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $parseData, false);
+
+        if (isset($parseData['base_resp']['errcode']) && (int)$parseData['base_resp']['errcode'] !== 0) {
+            throw new HttpException(
+                "request wechat error, message: ({$parseData['base_resp']['errcode']}) {$parseData['base_resp']['errmsg']}",
+                $response,
+                $parseData['base_resp']['errmsg']
+            );
+        }
+
+        return true;
     }
 
     /**
@@ -195,7 +225,17 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $parseData, false);
+
+        if (isset($parseData['base_resp']['errcode']) && (int)$parseData['base_resp']['errcode'] !== 0) {
+            throw new HttpException(
+                "request wechat error, message: ({$parseData['base_resp']['errcode']}) {$parseData['base_resp']['errmsg']}",
+                $response,
+                $parseData['base_resp']['errmsg']
+            );
+        }
+
+        return true;
     }
 
     /**
@@ -219,7 +259,17 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $parseData, false);
+
+        if (isset($parseData['base_resp']['errcode']) && (int)$parseData['base_resp']['errcode'] !== 0) {
+            throw new HttpException(
+                "request wechat error, message: ({$parseData['base_resp']['errcode']}) {$parseData['base_resp']['errmsg']}",
+                $response,
+                $parseData['base_resp']['errmsg']
+            );
+        }
+
+        return true;
     }
 
     /**
@@ -272,14 +322,15 @@ class Client extends BaseClient
 
     /**
      * @param string $deviceId
+     * @param string|null $deviceType
      * @return mixed
      * @throws HttpException
      */
-    public function openid(string $deviceId)
+    public function openid(string $deviceId, string $deviceType = null)
     {
         $params = [
             'access_token' => $this->app[ServiceProviders::AccessToken]->getToken(),
-            'device_type' => $this->app['config']['device_type'],
+            'device_type' => $this->app[ServiceProviders::Config]->get('device_type') ?? $deviceType,
             'device_id' => $deviceId,
         ];
 
@@ -314,8 +365,43 @@ class Client extends BaseClient
                 $params
             ));
 
-        $this->checkResponse($response, $parseData);
+        $this->checkResponse($response, $parseData, false);
+
+        if (isset($parseData['resp_msg']['ret_code']) && (int)$parseData['resp_msg']['ret_code'] !== 0) {
+            throw new HttpException(
+                "request wechat error, message: ({$parseData['resp_msg']['ret_code']}) {$parseData['resp_msg']['error_info']}",
+                $response,
+                $parseData['resp_msg']['ret_code']
+            );
+        }
 
         return $parseData;
+    }
+
+    protected function checkResponse(ResponseInterface $response, &$parseData = null, bool $verifyData = true): bool
+    {
+        if (!in_array($response->getStatusCode(), [200])) {
+            throw new HttpException(
+                $response->getBody()->__toString(),
+                $response
+            );
+        }
+
+        $data = $this->parseData($response);
+        $parseData = $data;
+
+        if ($verifyData === false) {
+            return true;
+        }
+
+        if (isset($data['errcode']) && (int)$data['errcode'] !== 0) {
+            throw new HttpException(
+                "request wechat error, message: ({$data['errcode']}) {$data['errmsg']}",
+                $response,
+                $data['errcode']
+            );
+        }
+
+        return true;
     }
 }
