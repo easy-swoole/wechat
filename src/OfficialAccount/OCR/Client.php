@@ -51,11 +51,11 @@ class Client extends BaseClient
     }
 
     /**
-     * @param string $path
+     * @param string $url
      * @return mixed
      * @throws HttpException
      */
-    public function bankCardByUrl(string $path)
+    public function bankCardByUrl(string $url)
     {
         $response = $this->getClient()
             ->setMethod('GET')
