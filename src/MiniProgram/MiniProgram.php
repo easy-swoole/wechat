@@ -20,6 +20,7 @@ class MiniProgram
     private $qrCode;
     private $templateMsg;
     private $subscribeMsg;
+    private $urlscheme;
 
     public function __construct(MiniProgramConfig $config = null, AccessTokenInterface $accessToken = null)
     {
@@ -130,5 +131,17 @@ class MiniProgram
         }
 
         return $this->subscribeMsg;
+    }
+
+    /**
+     * @return UrlScheme
+     */
+    public function urlScheme():UrlScheme
+    {
+        if (!isset($this->urlscheme)) {
+            $this->urlscheme = new UrlScheme($this);
+        }
+
+        return $this->urlscheme;
     }
 }
