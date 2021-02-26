@@ -388,6 +388,13 @@ class ApiUrl
     const SUBSCRIBE_SEND = 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=ACCESS_TOKEN';
 
     /**
+     * 获取小程序scheme码
+     * @see https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/url-scheme/urlscheme.generate.html
+     */
+    const URL_SCHEME_GENERATE = 'https://api.weixin.qq.com/wxa/generatescheme?access_token=ACCESS_TOKEN';
+
+
+    /**
      * 生成访问链接
      * @param string $baseUrl 基础链接
      * @param array $data 字符串替换
