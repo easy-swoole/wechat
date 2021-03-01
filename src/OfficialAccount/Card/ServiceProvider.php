@@ -25,6 +25,14 @@ class ServiceProvider implements ServiceProviderInterface
             return new CodeClient($app);
         };
 
+        $app[Card::Coin] = function (ServiceContainer $app) {
+            return new CoinClient($app);
+        };
+
+        $app[Card::GeneralCard] = function (ServiceContainer $app) {
+            return new GeneralCardClient($app);
+        };
+
         $app[Card::GiftCard] = function (ServiceContainer $app) {
             return new GiftCardClient($app);
         };
@@ -39,6 +47,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $app[Card::Invoice] = function (ServiceContainer $app) {
             return new InvoiceClient($app);
+        };
+
+        $app[Card::Jssdk] = function (ServiceContainer $app) {
+            return new JssdkClient($app);
         };
 
         $app[Card::MeetingTicket] = function (ServiceContainer $app) {
