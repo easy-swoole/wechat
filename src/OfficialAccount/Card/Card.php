@@ -12,10 +12,13 @@ use EasySwoole\WeChat\OfficialAccount\Application;
  * @package EasySwoole\WeChat\OfficialAccount\Card
  * @property BoardingPassClient $boardingPass
  * @property CodeClient $code
+ * @property CoinClient $coin
+ * @property GeneralCardClient $generalCard
  * @property GiftCardClient $giftCard
  * @property GiftCardOrderClient $giftCardOrder
  * @property GiftCardPageClient $giftCardPage
  * @property InvoiceClient $invoice
+ * @property JssdkClient $jssdk
  * @property MeetingTicketClient $meetingTicket
  * @property MemberCardClient $memberCard
  * @property MovieTicketClient $movieTicket
@@ -25,10 +28,13 @@ class Card extends Client
 {
     const BoardingPass = 'cardBoardingPass';
     const Code = 'cardCode';
+    const Coin = 'cardCoin';
+    const GeneralCard = 'generalCard';
     const GiftCard = 'cardGiftCard';
     const GiftCardOrder = 'cardGiftCardOrder';
     const GiftCardPage = 'cardGiftCardPage';
     const Invoice = 'cardInvoice';
+    const Jssdk = 'cardJssdk';
     const MeetingTicket = 'cardMeetingTicket';
     const MemberCard = 'cardMemberCard';
     const MovieTicket = 'cardMovieTicket';
