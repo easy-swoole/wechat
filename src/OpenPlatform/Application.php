@@ -4,6 +4,7 @@
 namespace EasySwoole\WeChat\OpenPlatform;
 
 
+use BadMethodCallException;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OfficialAccount\Application as OfficialAccount;
@@ -82,5 +83,7 @@ class Application extends ServiceContainer
         if (method_exists($this->base, $method)) {
             return $this->base->$method(...$arguments);
         }
+
+        throw new BadMethodCallException(sprintf('Method %s not exists.', $method));
     }
 }
