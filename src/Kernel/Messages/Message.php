@@ -6,6 +6,7 @@ namespace EasySwoole\WeChat\Kernel\Messages;
 
 use EasySwoole\WeChat\Kernel\Contracts\MessageInterface;
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use EasySwoole\WeChat\Kernel\Traits\HasAttributes;
 use EasySwoole\WeChat\Kernel\Utility\XML;
 
@@ -80,7 +81,7 @@ abstract class Message implements MessageInterface
      * @param string $type
      * @return $this
      */
-    public function setType(string $type):self
+    public function setType(string $type): self
     {
         $this->type = $type;
         return $this;
@@ -129,9 +130,19 @@ abstract class Message implements MessageInterface
      * @param array $appends
      * @return string
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public function transformToXml(array $appends = []): string
     {
-        return XML::build(array_merge($this->all(), $appends));
+        return XML::build(array_merge($this->all(), $this->toXmlArray(), $appends));
+    }
+
+    /**
+     * @return array
+     * @throws RuntimeException
+     */
+    public function toXmlArray(): array
+    {
+        throw new RuntimeException(sprintf('Class "%s" cannot support transform to XML message.', __CLASS__));
     }
 }
