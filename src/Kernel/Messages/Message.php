@@ -9,13 +9,17 @@ use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use EasySwoole\WeChat\Kernel\Traits\HasAttributes;
 use EasySwoole\WeChat\Kernel\Utility\XML;
+use \ArrayAccess;
+use \IteratorAggregate;
+use \ArrayIterator;
+
 
 /**
  * Class Message
  *
  * @package EasySwoole\WeChat\Kernel\Messages
  */
-abstract class Message implements MessageInterface
+abstract class Message implements MessageInterface, ArrayAccess, IteratorAggregate
 {
     use HasAttributes;
 
@@ -156,5 +160,48 @@ abstract class Message implements MessageInterface
     public function toXmlArray(): array
     {
         throw new RuntimeException(sprintf('Class "%s" cannot support transform to XML message.', __CLASS__));
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->attributes[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->setAttribute($offset, $value);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed|null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->getAttribute($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->attributes);
+    }
+
+    /**
+     * @return ArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->attributes);
     }
 }
