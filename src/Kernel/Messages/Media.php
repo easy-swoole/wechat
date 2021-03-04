@@ -7,11 +7,13 @@ namespace EasySwoole\WeChat\Kernel\Messages;
 use EasySwoole\Utility\Str;
 use EasySwoole\WeChat\Kernel\Contracts\MediaInterface;
 
+/**
+ * Class Media
+ * @package EasySwoole\WeChat\Kernel\Messages
+ * @property string $mediaId
+ */
 class Media extends Message implements MediaInterface
 {
-    /** @var string */
-    protected $mediaId;
-
     /**
      * Media constructor.
      * @param string $mediaId
@@ -29,7 +31,7 @@ class Media extends Message implements MediaInterface
      */
     public function getMediaId(): string
     {
-        return $this->mediaId;
+        return $this->get('media_id', '');
     }
 
     /**

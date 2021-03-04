@@ -31,6 +31,12 @@ abstract class Message implements MessageInterface
     const LOCATION = 'location';
     const LINK = 'link';
     const NEWS = 'news';
+    const FILE = 'file';
+    const TASK_CARD = 'taskcard';
+    const TEXT_CARD = 'textcard';
+
+    const DEVICE_EVENT = 'device_event';
+    const DEVICE_TEXT = 'device_text';
 
     /**
      * 客服发送消息中出现
@@ -39,11 +45,17 @@ abstract class Message implements MessageInterface
     const MSGMENU = 'msgmenu';
     const WXCARD = 'wxcard';
     const MINIPROGRAMPAGE = 'miniprogrampage';
+    const TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
 
     /**
      * 群发消息中出现
      */
     const MPVIDEO = 'mpvideo';
+
+
+    const MINIPROGRAMPAGE_NOTICE = 'miniprogrampage_notice';
+    const MINIPROGRAMPAGE_PAGE = 'miniprogrampage_page';
+
 
     /** @var string */
     protected $type;
