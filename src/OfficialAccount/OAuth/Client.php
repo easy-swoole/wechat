@@ -107,7 +107,7 @@ class Client extends BaseClient
      */
     public function userFromToken(string $token, string $openId, string $lang = 'zh_CN'): User
     {
-        $url = $this->buildUrl('/sns/sns/userinfo', [
+        $url = $this->buildUrl('/sns/userinfo', [
             "access_token" => $token,
             "openid" => $openId,
             "lang" => $lang
