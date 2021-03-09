@@ -13,6 +13,7 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @package EasySwoole\WeChat\OfficialAccount
  * @property Auth\AccessToken $accessToken
  * @property BasicService\Jssdk\Client $jssdk
+ * @property BasicService\QrCode\Client $qrcode
  * @property AutoReplay\Client $autoReplay
  * @property Comment\Client $comment
  * @property Card\Card $card
@@ -97,6 +98,7 @@ class Application extends ServiceContainer
 
         // Basic Service
         BasicService\Media\ServiceProvider::class,
-        BasicService\Jssdk\ServiceProvider::class
+        BasicService\Jssdk\ServiceProvider::class,
+        BasicService\QrCode\ServiceProvider::class
     ];
 }
