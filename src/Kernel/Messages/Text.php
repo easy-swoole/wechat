@@ -6,7 +6,7 @@ namespace EasySwoole\WeChat\Kernel\Messages;
 
 class Text extends Message
 {
-    /** @var string  */
+    /** @var string */
     protected $type = Message::TEXT;
 
     /**
@@ -32,5 +32,15 @@ class Text extends Message
     public function setContent($content): void
     {
         $this->set('Content', $content);
+    }
+
+    /**
+     * @return array
+     */
+    public function toXmlArray(): array
+    {
+        return [
+            "Content" => $this->get('Content')
+        ];
     }
 }
