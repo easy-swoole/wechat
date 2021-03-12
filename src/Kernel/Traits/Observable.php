@@ -48,7 +48,7 @@ trait Observable
                             continue 2;
                         case false === $response:
                             return null;
-                        case $response instanceof MessageInterface:
+                        case !empty($response):
                             return $response;
                     }
                 }
@@ -124,7 +124,7 @@ trait Observable
         }
     }
 
-    protected function getHandlers():array
+    protected function getHandlers(): array
     {
         $handlers = $this->handlers;
         $handlers['*'] = $this->wildcardHandlers;
@@ -208,10 +208,10 @@ trait Observable
                 $this->app[ServiceProviders::Logger]->error(
                     $e->getCode() . ": " . $e->getMessage(),
                     [
-                        'code'    => $e->getCode(),
+                        'code' => $e->getCode(),
                         'message' => $e->getMessage(),
-                        'file'    => $e->getFile(),
-                        'line'    => $e->getLine(),
+                        'file' => $e->getFile(),
+                        'line' => $e->getLine(),
                     ]
                 );
                 return null;

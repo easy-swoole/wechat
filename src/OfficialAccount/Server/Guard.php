@@ -26,8 +26,7 @@ class Guard extends ServerGuard
      */
     protected function buildRequestMessage(array $message): RequestMessageInterface
     {
-        return new class($message) extends Message implements RequestMessageInterface
-        {
+        return new class($message) extends Message implements RequestMessageInterface {
             public function getType(): string
             {
                 return $this->get('MsgType');
@@ -51,6 +50,11 @@ class Guard extends ServerGuard
             public function getCreateTime(): ?int
             {
                 return $this->get('CreateTime');
+            }
+
+            public function toXmlArray(): array
+            {
+                return $this->all();
             }
         };
     }

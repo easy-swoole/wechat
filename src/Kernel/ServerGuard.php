@@ -7,8 +7,13 @@ namespace EasySwoole\WeChat\Kernel;
 use EasySwoole\WeChat\Kernel\Contracts\MessageInterface;
 use EasySwoole\WeChat\Kernel\Contracts\RequestMessageInterface;
 use EasySwoole\WeChat\Kernel\Exceptions\BadRequestException;
+use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use EasySwoole\WeChat\Kernel\Messages\Message;
+use EasySwoole\WeChat\Kernel\Messages\News;
+use EasySwoole\WeChat\Kernel\Messages\NewsItem;
 use EasySwoole\WeChat\Kernel\Messages\Raw;
+use EasySwoole\WeChat\Kernel\Messages\Text;
 use EasySwoole\WeChat\Kernel\Psr\Response;
 use EasySwoole\WeChat\Kernel\Traits\Observable;
 use EasySwoole\WeChat\Kernel\Utility\Random;
@@ -96,18 +101,15 @@ abstract class ServerGuard
     {
         if ($this->isValidateRequest($request)) {
             $replyMessage = $this->dispatch(Message::VALIDATE, $request);
-            return new Response(
-                200,
-                ['Content-Type' => 'application/text'],
-                (string)$replyMessage
-            );
+        } else {
+            $requestMessage = $this->parseRequest($request);
+            $replyMessage = $this->dispatch($requestMessage->getType(), $requestMessage);
         }
 
-
-        $requestMessage = $this->parseRequest($request);
-        $replyMessage = $this->dispatch($requestMessage->getType(), $requestMessage);
-
-        if (is_null($replyMessage)) {
+        /**
+         * "success", "", []
+         */
+        if (self::SUCCESS_EMPTY_RESPONSE === $replyMessage || (empty($replyMessage) && ($replyMessage !== 0 && $replyMessage !== "0"))) {
             return new Response(
                 200,
                 ['Content-Type' => 'application/text'],
@@ -118,6 +120,20 @@ abstract class ServerGuard
         if ($replyMessage instanceof Raw) {
             $replyString = $replyMessage->__toString();
         } else {
+            if (is_string($replyMessage) || is_numeric($replyMessage)) {
+                $replyMessage = new Text($replyMessage);
+            } elseif (is_array($replyMessage) && reset($replyMessage) instanceof NewsItem) {
+                $replyMessage = new News($replyMessage);
+            }
+
+            if (!$replyMessage instanceof MessageInterface) {
+                throw new InvalidArgumentException(sprintf('Invalid Messages type "%s".', gettype($replyMessage)));
+            }
+
+            /** 除非 Message::VALIDATE 出了问题 否则不会走走这里 */
+            if (!isset($requestMessage)) {
+                throw new RuntimeException("Invalid request message.");
+            }
             $replyString = $this->buildReply($requestMessage->getFromUserName(), $requestMessage->getToUserName(), $replyMessage);
         }
 
@@ -171,10 +187,10 @@ abstract class ServerGuard
     /**
      * @param $event
      * @param $payload
-     * @return MessageInterface|null
+     * @return MessageInterface|null|array|string|bool
      * @throws Throwable
      */
-    public function dispatch($event, $payload):? MessageInterface
+    public function dispatch($event, $payload)
     {
         return $this->notify($event, $payload);
     }
