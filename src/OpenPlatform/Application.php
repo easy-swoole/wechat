@@ -7,7 +7,8 @@ namespace EasySwoole\WeChat\OpenPlatform;
 use BadMethodCallException;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
-use EasySwoole\WeChat\OfficialAccount\Application as OfficialAccount;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount\Application as OfficialAccount;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount\Account\Client as OfficialAccountAccountClient;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
 
 /**
@@ -31,11 +32,12 @@ use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
  */
 class Application extends ServiceContainer
 {
+    const Account = 'account';
     const Base = 'base';
     const Server = 'server';
     const VerifyTicket = 'verifyTicket';
-    const CodeTemplate = 'CodeTemplate';
-    const Component = 'Component';
+    const CodeTemplate = 'codeTemplate';
+    const Component = 'component';
 
 
     protected $providers = [
@@ -57,6 +59,9 @@ class Application extends ServiceContainer
         $officialAccount = new OfficialAccount($this->getAuthorizerConfig($appId, $refreshToken), null, [
             ServiceProviders::AccessToken => $accessToken ?: function ($app) {
                 return new AccessToken($app, $this);
+            },
+            Application::Account => function ($app) {
+                return new OfficialAccountAccountClient($app, $this);
             }
         ]);
 
