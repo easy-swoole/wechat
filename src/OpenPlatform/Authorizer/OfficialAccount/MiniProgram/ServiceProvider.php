@@ -1,9 +1,9 @@
 <?php
 
 
-namespace EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount\MiniProgram;
+namespace EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\MiniProgram;
 
-use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount\Application;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Application;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 

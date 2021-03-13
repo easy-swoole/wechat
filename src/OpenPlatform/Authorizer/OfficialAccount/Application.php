@@ -1,7 +1,7 @@
 <?php
 
 
-namespace EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount;
+namespace EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount;
 
 
 use EasySwoole\WeChat\OfficialAccount\Application as OfficialAccount;

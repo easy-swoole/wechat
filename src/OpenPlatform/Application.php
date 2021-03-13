@@ -7,8 +7,8 @@ namespace EasySwoole\WeChat\OpenPlatform;
 use BadMethodCallException;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
-use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount\Application as OfficialAccount;
-use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount\Account\Client as OfficialAccountAccountClient;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Application as OfficialAccount;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Account\Client as OfficialAccountAccountClient;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\OfficialAccount\Account;
+namespace EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Account;
 
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
