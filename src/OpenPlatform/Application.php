@@ -7,7 +7,9 @@ namespace EasySwoole\WeChat\OpenPlatform;
 use BadMethodCallException;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Auth\Client;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Application as OfficialAccount;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Application as MiniProgram;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Account\Client as OfficialAccountAccountClient;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
 
@@ -66,6 +68,24 @@ class Application extends ServiceContainer
         ]);
 
         return $officialAccount;
+    }
+
+    /**
+     * @param string $appId
+     * @param string|null $refreshToken
+     * @param AccessToken|null $accessToken
+     * @return MiniProgram
+     */
+    public function miniProgram(string $appId, string $refreshToken = null, AccessToken $accessToken = null): MiniProgram
+    {
+        return new MiniProgram($this->getAuthorizerConfig($appId, $refreshToken), null, [
+            ServiceProviders::AccessToken => $accessToken ?: function ($app) {
+                return new AccessToken($app, $this);
+            },
+            MiniProgram::Auth => function ($app) {
+                return new Client($app, $this);
+            }
+        ]);
     }
 
     /**
