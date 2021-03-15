@@ -29,7 +29,7 @@ class FileCacheDriverTest extends TestCase
         $this->assertTrue($result);
 
         $result = $this->fileCache->set($key . '2', $value, -1);
-        $this->assertTrue($result);
+        $this->assertFalse($result);
 
         $result = $this->fileCache->set($key . '3', $value, 1);
         $this->assertTrue($result);

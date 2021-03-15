@@ -5,15 +5,17 @@ namespace EasySwoole\WeChat\Kernel\Cache;
 
 
 use EasySwoole\Utility\File;
+use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use Psr\SimpleCache\CacheInterface;
+use Throwable;
 
 class FileCacheDriver implements CacheInterface
 {
     /**
      * @var string
      */
-    protected $tmpDir;
+    protected $directory;
 
     /**
      * FileCacheDriver constructor.
@@ -28,74 +30,180 @@ class FileCacheDriver implements CacheInterface
             }
         }
 
-        $this->tmpDir = $directory;
+        $this->directory = $directory;
     }
 
     public function get($key, $default = null)
     {
-        $file = $this->key2File($key);
-        if (file_exists($file)) {
-            $data = unserialize(file_get_contents($file));
-            if ($data && ($data['t'] < 0 || time() < $data['t'])) {
-                return $data['d'];
+        return $this->getPayload($key)['data'] ?? $default;
+    }
+
+    protected function getPayload($key)
+    {
+
+        $path = $this->path($key);
+        try {
+            $expire = substr($contents = $this->getFileContents($path, true), 0, 10);
+            $currentTime = time();
+
+            if ($currentTime >= $expire) {
+                $this->delete($key);
+                return ['data' => null, 'time' => null];
             }
+
+            $data = unserialize(substr($contents, 10));
+            $time = $expire - $currentTime;
+
+            return [
+                'data' => $data,
+                'tome' => $time
+            ];
+
+        } catch (Throwable $exception) {
+            $this->delete($key);
+            return ['data' => null, 'time' => null];
         }
-        return $default;
+
+
+    }
+
+    protected function getFileContents($path, $lock = false)
+    {
+        if (!file_exists($path)) {
+            throw new RuntimeException("File does not exist at path {$path}.");
+        }
+
+        if ($lock == false) {
+            return file_get_contents($path);
+        }
+
+        $contents = '';
+
+        $handle = fopen($path, 'rb');
+
+        if (!$handle) {
+            return $contents;
+        }
+
+        try {
+            if (flock($handle, LOCK_SH)) {
+                clearstatcache(true, $path);
+                $contents = fread($handle, filesize($path) ?: 1);
+            }
+        } finally {
+            flock($handle, LOCK_UN);
+            fclose($handle);
+        }
+
+        return $contents;
+    }
+
+    protected function path($key)
+    {
+        $parts = array_slice(str_split($hash = sha1($key), 2), 0, 2);
+        return $this->directory . '/' . implode('/', $parts) . '/' . $hash;
     }
 
     public function set($key, $value, $ttl = null)
     {
-        $data = [
-            'd' => $value,
-            /** 支持不过期 */
-            't' => is_null($ttl) ? -1 : $ttl + time()
-        ];
+        $path = $this->path($key);
 
-        if (file_put_contents($this->key2File($key), serialize($data))) {
+        if (is_int($ttl) && $ttl <= 0) {
+            return $this->delete($key);
+        }
+
+        $expiration = ($ttl === null || $ttl > 9999999999) ? 9999999999 : time() + $ttl;
+        $contents = $expiration . serialize($value);
+
+        if (!file_exists(dirname($path))) {
+            if (!mkdir(dirname($path), 0755, true)) {
+                throw new RuntimeException("create dir {$path} fail");
+            }
+        }
+
+        $size = file_put_contents($path, $contents, LOCK_EX);
+        if ($size !== 0 && $size > 0) {
             return true;
         }
+
         return false;
     }
 
     public function delete($key)
     {
-        $file = $this->key2File($key);
-        if (file_exists($file)) {
-            unlink($file);
+        $file = $this->path($key);
+        try {
+            if (file_exists($file)) {
+                return unlink($file);
+            }
+            return false;
+        } catch (Throwable $exception) {
+            return false;
         }
-        return true;
     }
 
     public function clear()
     {
-        File::cleanDirectory($this->tmpDir);
+        return File::cleanDirectory($this->directory);
     }
 
     public function getMultiple($keys, $default = null)
     {
+        if (!is_array($keys) && !($keys instanceof \Iterator)) {
+            throw new InvalidArgumentException('Not a valid key');
+        }
 
+        if (!($keys instanceof \Iterator) && (range(0, count($keys) - 1) !== array_keys($keys))) {
+            throw new InvalidArgumentException('Not a valid key');
+        }
+
+        $result = [];
+        foreach ($keys as $index => $key) {
+            $result[$key] = $this->get($key, $default);
+        }
+
+        return $result;
     }
 
     public function setMultiple($values, $ttl = null)
     {
+        if (!is_array($values) && !($values instanceof \Iterator)) {
+            throw new InvalidArgumentException('Not a valid value');
+        }
 
+        $result = true;
+        foreach ($values as $key => $value) {
+            if ($this->set($key, $value, $ttl) === false && $result === true) {
+                $result = false;
+            }
+        }
+
+        return $result;
     }
 
     public function deleteMultiple($keys)
     {
-        foreach ($keys as $key) {
-            $this->delete($key);
+        if (!is_array($keys) && !($keys instanceof \Iterator)) {
+            throw new InvalidArgumentException('Not a valid key');
         }
+
+        if (!($keys instanceof \Iterator) && (range(0, count($keys) - 1) !== array_keys($keys))) {
+            throw new InvalidArgumentException('Not a valid key');
+        }
+
+        $success = true;
+        foreach ($keys as $key) {
+            $ret = $this->delete($key);
+            if ($ret !== true && $success) {
+                $success = false;
+            }
+        }
+        return $success;
     }
 
     public function has($key)
     {
-        $file = $this->key2File($key);
+        $file = $this->path($key);
         return file_exists($file);
-    }
-
-    private function key2File($key): string
-    {
-        return $this->tmpDir . "/{$key}";
     }
 }
