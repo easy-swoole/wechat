@@ -24,12 +24,12 @@ class ServiceContainer extends Container
         $this->registerProviders($this->getProviders());
     }
 
-    public function getName():string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getConfig():array
+    public function getConfig(): array
     {
         return $this->config ?? [];
     }
@@ -49,6 +49,12 @@ class ServiceContainer extends Container
         foreach ($providers as $provider) {
             parent::register(new $provider());
         }
+    }
+
+    public function rebind($name, $value)
+    {
+        $this->offsetUnset($name);
+        $this->offsetSet($name, $value);
     }
 
     public function __get($name)
