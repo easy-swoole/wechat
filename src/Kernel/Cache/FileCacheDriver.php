@@ -4,7 +4,7 @@
 namespace EasySwoole\WeChat\Kernel\Cache;
 
 
-use EasySwoole\Utility\File;
+use EasySwoole\Utility\FileSystem;
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use Psr\SimpleCache\CacheInterface;
@@ -17,6 +17,9 @@ class FileCacheDriver implements CacheInterface
      */
     protected $directory;
 
+    /** @var FileSystem */
+    protected $fileSystem;
+
     /**
      * FileCacheDriver constructor.
      * @param string $directory
@@ -24,33 +27,46 @@ class FileCacheDriver implements CacheInterface
      */
     public function __construct(string $directory)
     {
-        if (!is_dir($directory)) {
-            if (!mkdir($directory, 0755, true)) {
-                throw new RuntimeException("create dir {$directory} fail");
-            }
+        $this->fileSystem = new FileSystem();
+
+        // Detect the existence of a folder and create
+        if (!$this->fileSystem->ensureDirectoryExists($directory, 0755, true)) {
+            throw new RuntimeException("create dir {$directory} fail");
         }
 
         $this->directory = $directory;
     }
 
+    /**
+     * @param string $key
+     * @param null $default
+     * @return mixed|null
+     */
     public function get($key, $default = null)
     {
         return $this->getPayload($key)['data'] ?? $default;
     }
 
+    /**
+     * @param $key
+     * @return array|null[]
+     */
     protected function getPayload($key)
     {
-
+        // Get the file path of key
         $path = $this->path($key);
         try {
-            $expire = substr($contents = $this->getFileContents($path, true), 0, 10);
+            // Get expiration time
+            $expire = substr($contents = $this->fileSystem->get($path, true), 0, 10);
             $currentTime = time();
 
             if ($currentTime >= $expire) {
-                $this->delete($key);
+                // Delete as soon as it expires
+                $this->fileSystem->delete($path);
                 return ['data' => null, 'time' => null];
             }
 
+            // Intercept data
             $data = unserialize(substr($contents, 10));
             $time = $expire - $currentTime;
 
@@ -60,68 +76,53 @@ class FileCacheDriver implements CacheInterface
             ];
 
         } catch (Throwable $exception) {
-            $this->delete($key);
+            // Abnormal deletion of the file
+            $this->fileSystem->delete($path);
             return ['data' => null, 'time' => null];
         }
 
 
     }
 
-    protected function getFileContents($path, $lock = false)
-    {
-        if (!file_exists($path)) {
-            throw new RuntimeException("File does not exist at path {$path}.");
-        }
-
-        if ($lock == false) {
-            return file_get_contents($path);
-        }
-
-        $contents = '';
-
-        $handle = fopen($path, 'rb');
-
-        if (!$handle) {
-            return $contents;
-        }
-
-        try {
-            if (flock($handle, LOCK_SH)) {
-                clearstatcache(true, $path);
-                $contents = fread($handle, filesize($path) ?: 1);
-            }
-        } finally {
-            flock($handle, LOCK_UN);
-            fclose($handle);
-        }
-
-        return $contents;
-    }
-
+    /**
+     * @param $key
+     * @return string
+     */
     protected function path($key)
     {
         $parts = array_slice(str_split($hash = sha1($key), 2), 0, 2);
         return $this->directory . '/' . implode('/', $parts) . '/' . $hash;
     }
 
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @param null $ttl
+     * @return bool
+     * @throws RuntimeException
+     */
     public function set($key, $value, $ttl = null)
     {
         $path = $this->path($key);
 
+        //Psr: Delete if ttl is negative or 0
         if (is_int($ttl) && $ttl <= 0) {
-            return $this->delete($key);
+            return $this->fileSystem->delete($path);
         }
 
+        // Set the expiration time to 10 digits
         $expiration = ($ttl === null || $ttl > 9999999999) ? 9999999999 : time() + $ttl;
+        // Splicing data
         $contents = $expiration . serialize($value);
 
-        if (!file_exists(dirname($path))) {
-            if (!mkdir(dirname($path), 0755, true)) {
-                throw new RuntimeException("create dir {$path} fail");
-            }
+        // Detect the existence of a folder and create
+        $directory = dirname($path);
+        if (!$this->fileSystem->ensureDirectoryExists($directory, 0755, true)) {
+            throw new RuntimeException("create dir {$directory} fail");
         }
 
-        $size = file_put_contents($path, $contents, LOCK_EX);
+        // Write to a file
+        $size = $this->fileSystem->put($path, $contents, true);
         if ($size !== 0 && $size > 0) {
             return true;
         }
@@ -129,24 +130,30 @@ class FileCacheDriver implements CacheInterface
         return false;
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function delete($key)
     {
-        $file = $this->path($key);
-        try {
-            if (file_exists($file)) {
-                return unlink($file);
-            }
-            return false;
-        } catch (Throwable $exception) {
-            return false;
-        }
+        $path = $this->path($key);
+        return $this->fileSystem->delete($path);
     }
 
+    /**
+     * @return bool
+     */
     public function clear()
     {
-        return File::cleanDirectory($this->directory);
+        return $this->fileSystem->cleanDirectory($this->directory);
     }
 
+    /**
+     * @param iterable $keys
+     * @param null $default
+     * @return array|iterable
+     * @throws InvalidArgumentException
+     */
     public function getMultiple($keys, $default = null)
     {
         if (!is_array($keys) && !($keys instanceof \Iterator)) {
@@ -165,6 +172,13 @@ class FileCacheDriver implements CacheInterface
         return $result;
     }
 
+    /**
+     * @param iterable $values
+     * @param null $ttl
+     * @return bool
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     */
     public function setMultiple($values, $ttl = null)
     {
         if (!is_array($values) && !($values instanceof \Iterator)) {
@@ -181,6 +195,11 @@ class FileCacheDriver implements CacheInterface
         return $result;
     }
 
+    /**
+     * @param iterable $keys
+     * @return bool
+     * @throws InvalidArgumentException
+     */
     public function deleteMultiple($keys)
     {
         if (!is_array($keys) && !($keys instanceof \Iterator)) {
@@ -201,9 +220,13 @@ class FileCacheDriver implements CacheInterface
         return $success;
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function has($key)
     {
-        $file = $this->path($key);
-        return file_exists($file);
+        $path = $this->path($key);
+        return $this->fileSystem->exists($path);
     }
 }
