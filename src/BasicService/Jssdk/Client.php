@@ -83,12 +83,14 @@ class Client extends BaseClient
      * @param null $timestamp
      * @return array
      */
-    protected function configSignature(string $url = null, string $nonce = null, $timestamp = null): array
+    public function configSignature(string $url = null, string $nonce = null, $timestamp = null): array
     {
+        $nonce = $nonce ?? Random::character(16);
+        $timestamp = $timestamp ?? time();
         return [
             'appId' => $this->app[ServiceProviders::Config]->get('appId'),
-            'nonceStr' => $nonce ?? Random::character(16),
-            'timestamp' => $timestamp ?? time(),
+            'nonceStr' => $nonce,
+            'timestamp' => $timestamp,
             'url' => $url,
             'signature' => $this->getTicketSignature($this->getTicket(), $nonce, $timestamp, $url),
         ];
