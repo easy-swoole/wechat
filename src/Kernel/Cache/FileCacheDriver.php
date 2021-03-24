@@ -77,7 +77,7 @@ class FileCacheDriver implements CacheInterface
 
         } catch (Throwable $exception) {
             // Abnormal deletion of the file
-            $this->fileSystem->delete($path);
+            $this->delete($key);
             return ['data' => null, 'time' => null];
         }
 
@@ -107,7 +107,7 @@ class FileCacheDriver implements CacheInterface
 
         //Psr: Delete if ttl is negative or 0
         if (is_int($ttl) && $ttl <= 0) {
-            return $this->fileSystem->delete($path);
+            return $this->delete($key);
         }
 
         // Set the expiration time to 10 digits
@@ -137,7 +137,7 @@ class FileCacheDriver implements CacheInterface
     public function delete($key)
     {
         $path = $this->path($key);
-        return $this->fileSystem->delete($path);
+        return $this->fileSystem->exists($path) && $this->fileSystem->delete($path);
     }
 
     /**
