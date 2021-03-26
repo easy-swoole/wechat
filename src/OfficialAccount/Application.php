@@ -79,6 +79,7 @@ class Application extends ServiceContainer
         Broadcasting\ServiceProvider::class,
         Base\ServiceProvider::class,
         Comment\ServiceProvider::class,
+        CustomerService\ServiceProvider::class,
         Card\ServiceProvider::class,
         Device\ServiceProvider::class,
         Server\ServiceProvider::class,
