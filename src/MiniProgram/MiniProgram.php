@@ -13,14 +13,20 @@ use EasySwoole\WeChat\AbstractInterface\AccessTokenInterface;
 
 class MiniProgram
 {
+    private $accessToken;
+    private $attest;
     private $config;
     private $auth;
+    private $checkFile;
     private $encryptor;
-    private $accessToken;
+    private $logisticsProgram;
+    private $logisticsService;
+    private $plugin;
+    private $program;
     private $qrCode;
-    private $templateMsg;
     private $subscribeMsg;
-    private $urlscheme;
+    private $urlScheme;
+    private $templateMsg;
 
     public function __construct(MiniProgramConfig $config = null, AccessTokenInterface $accessToken = null)
     {
@@ -87,7 +93,7 @@ class MiniProgram
         return $this->accessToken;
     }
 
-    public function setAccessTokenManager(AccessTokenInterface $accessToken):MiniProgram
+    public function setAccessTokenManager(AccessTokenInterface $accessToken): MiniProgram
     {
         $this->accessToken = $accessToken;
         return $this;
@@ -124,7 +130,7 @@ class MiniProgram
     /**
      * @return SubscribeMsg
      */
-    public function subscribeMsg():SubscribeMsg
+    public function subscribeMsg(): SubscribeMsg
     {
         if (!isset($this->subscribeMsg)) {
             $this->subscribeMsg = new SubscribeMsg($this);
@@ -136,12 +142,80 @@ class MiniProgram
     /**
      * @return UrlScheme
      */
-    public function urlScheme():UrlScheme
+    public function urlScheme(): UrlScheme
     {
-        if (!isset($this->urlscheme)) {
-            $this->urlscheme = new UrlScheme($this);
+        if (!isset($this->urlScheme)) {
+            $this->urlScheme = new UrlScheme($this);
         }
 
-        return $this->urlscheme;
+        return $this->urlScheme;
+    }
+
+    /**
+     * @return CheckFile
+     */
+    public function checkFile()
+    {
+        if (!isset($this->checkFile)) {
+            $this->checkFile = new CheckFile($this);
+        }
+
+        return $this->checkFile;
+    }
+
+    /**
+     * @return Attest
+     */
+    public function attest()
+    {
+        if (!isset($this->attest)) {
+            $this->attest = new Attest($this);
+        }
+
+        return $this->attest;
+    }
+
+    /**
+     * @return LogisticsProgram
+     */
+    public function logisticsProgram()
+    {
+        if (!isset($this->logisticsProgram)) {
+            $this->logisticsProgram = new LogisticsProgram($this);
+        }
+        return $this->logisticsProgram;
+    }
+
+    /**
+     * @return LogisticsService
+     */
+    public function logisticsService()
+    {
+        if (!isset($this->logisticsService)) {
+            $this->logisticsService = new LogisticsService($this);
+        }
+        return $this->logisticsService;
+    }
+
+    /**
+     * @return Plugin
+     */
+    public function plugin()
+    {
+        if (!isset($this->plugin)) {
+            $this->plugin = new Plugin($this);
+        }
+        return $this->plugin;
+    }
+
+    /**
+     * @return Program
+     */
+    public function program()
+    {
+        if (!isset($this->program)) {
+            $this->program = new Program($this);
+        }
+        return $this->program;
     }
 }
