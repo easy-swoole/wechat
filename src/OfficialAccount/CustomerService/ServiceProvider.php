@@ -18,7 +18,7 @@ class ServiceProvider implements ServiceProviderInterface
         };
 
         $app[Application::CustomerServiceSession] = function (ServiceContainer $app) {
-            return new Client($app);
+            return new SessionClient($app);
         };
     }
 }
