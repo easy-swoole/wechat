@@ -194,7 +194,8 @@ class Client extends BaseClient
                 ['component_access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $parseData);
+        return $parseData;
     }
 
     /**
