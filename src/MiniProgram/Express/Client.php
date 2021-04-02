@@ -6,7 +6,7 @@ use EasySwoole\WeChat\MiniProgram\BaseClient;
 
 /**
  * Class Client.
- * @authar master@kyour.cn
+ * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\Express
  */
 class Client extends BaseClient

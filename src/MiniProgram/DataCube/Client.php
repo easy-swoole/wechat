@@ -7,7 +7,7 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 /**
  * Class Client
- * @authar master@kyour.cn
+ * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\DataCube
  */
 class Client extends BaseClient

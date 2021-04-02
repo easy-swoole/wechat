@@ -8,7 +8,7 @@ use Pimple\ServiceProviderInterface;
 
 /**
  * Class ServiceProvider
- * @authar master@kyour.cn
+ * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\OpenData
  */
 class ServiceProvider implements ServiceProviderInterface

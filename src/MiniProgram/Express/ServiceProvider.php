@@ -1,6 +1,6 @@
 <?php
 
-namespace EasyWeChat\MiniProgram\Express;
+namespace EasySwoole\WeChat\MiniProgram\Express;
 
 use EasySwoole\WeChat\MiniProgram\Application;
 use Pimple\Container;
@@ -8,7 +8,7 @@ use Pimple\ServiceProviderInterface;
 
 /**
  * Class ServiceProvider.
- * @authar master@kyour.cn
+ * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\Express
  */
 class ServiceProvider implements ServiceProviderInterface

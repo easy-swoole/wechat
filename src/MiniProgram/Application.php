@@ -16,6 +16,9 @@ use EasySwoole\WeChat\Kernel\ServiceContainer;
  * @property DataCube\Client $dataCube
  * @property Express\Client $express
  * @property OpenData\Client $openData
+ * @property OCR\Client $ocr
+ * @property Search\Client $search
+ * @property TemplateMessage\Client $templateMessage
  */
 class Application extends ServiceContainer
 {
@@ -28,6 +31,10 @@ class Application extends ServiceContainer
     const OpenData = "openData";
     const Plugin = "plugin";
     const PluginDev = "plugin_dev";
+    const OCR = "ocr";
+    const Search = "search";
+    const Soter = "soter";
+    const TemplateMessage = "template_message";
 
     protected $providers = [
         Auth\ServiceProvider::class,
@@ -37,6 +44,10 @@ class Application extends ServiceContainer
         DataCube\ServiceProvider::class,
         Express\ServiceProvider::class,
         OpenData\ServiceProvider::class,
-        Plugin\ServiceProvider::class
+        Plugin\ServiceProvider::class,
+        OCR\ServiceProvider::class,
+        Search\ServiceProvider::class,
+        Soter\ServiceProvider::class,
+        TemplateMessage\ServiceProvider::class
     ];
 }

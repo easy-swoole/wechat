@@ -7,7 +7,7 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 
 /**
  * Class DevClient.
- * @authar master@kyour.cn
+ * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\Live
  */
 class DevClient extends BaseClient

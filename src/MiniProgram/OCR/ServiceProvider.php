@@ -1,8 +1,8 @@
 <?php
 
-namespace EasySwoole\WeChat\MiniProgram\Live;
+namespace EasySwoole\WeChat\MiniProgram\OCR;
 
-use EasySwoole\WeChat\MiniProgram\Application;
+use EasySwoole\WeChat\OfficialAccount\OCR\Client;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
@@ -16,7 +16,7 @@ class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $app)
     {
-        $app[Application::Live] = function ($app) {
+        $app[Application::OCR] = function ($app) {
             return new Client($app);
         };
     }
