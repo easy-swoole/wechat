@@ -9,11 +9,14 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
  * Class Client
  * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\Live
+ * @link https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#2
+ * @desc 【小程序直播】直播间管理接口
  */
 class Client extends BaseClient
 {
     /**
      * Get Room List.
+     * 获取直播房间列表
      *
      * @param int $start
      * @param int $limit
@@ -33,6 +36,7 @@ class Client extends BaseClient
 
     /**
      * Get Playback List.
+     * 获取直播间回放
      *
      * @param int $roomId
      * @param int $start
