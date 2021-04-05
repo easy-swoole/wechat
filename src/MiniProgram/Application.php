@@ -30,11 +30,11 @@ class Application extends ServiceContainer
     const Express = "express";
     const OpenData = "openData";
     const Plugin = "plugin";
-    const PluginDev = "plugin_dev";
+    const PluginDev = "pluginDev";
     const OCR = "ocr";
     const Search = "search";
     const Soter = "soter";
-    const TemplateMessage = "template_message";
+    const TemplateMessage = "templateMessage";
 
     protected $providers = [
         Auth\ServiceProvider::class,

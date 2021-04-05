@@ -2,24 +2,29 @@
 
 namespace EasySwoole\WeChat\MiniProgram\Express;
 
+use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\MiniProgram\BaseClient;
 
 /**
  * Class Client.
  * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\Express
+ * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.addOrder.html
  */
 class Client extends BaseClient
 {
     /**
-    * @return mixed
-    * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * logistics.getAllDelivery
+     * 获取支持的快递公司列表
+     *
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
     public function listProviders()
     {
         $response = $this->getClient()
             ->setMethod('GET')
-            ->send($this->buildUrl('/cgi-bin/express/business/delivery/getall');
+            ->send($this->buildUrl('/cgi-bin/express/business/delivery/getall', ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]));
 
         $this->checkResponse($response, $parseData);
 
@@ -27,6 +32,9 @@ class Client extends BaseClient
     }
 
     /**
+     * logistics.addOrder
+     * 生成运单
+     *
      * @param array $params
      *
      * @return mixed
@@ -38,6 +46,9 @@ class Client extends BaseClient
     }
 
     /**
+     * logistics.cancelOrder
+     * 取消运单
+     *
      * @param array $params
      *
      * @return mixed
@@ -49,6 +60,9 @@ class Client extends BaseClient
     }
 
     /**
+     * logistics.getOrder
+     * 获取运单数据
+     *
      * @param array $params
      *
      * @return mixed
@@ -60,6 +74,9 @@ class Client extends BaseClient
     }
 
     /**
+     * logistics.getPath
+     * 查询运单轨迹
+     *
      * @param array $params
      *
      * @return mixed
@@ -71,6 +88,9 @@ class Client extends BaseClient
     }
 
     /**
+     * logistics.getQuota
+     * 获取电子面单余额
+     *
      * @param string $deliveryId
      * @param string $bizId
      *
@@ -86,15 +106,27 @@ class Client extends BaseClient
     }
 
     /**
-    * @return mixed
-    * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * logistics.getPrinter
+     * 获取打印员
+     *
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
     public function getPrinter()
     {
-        return $this->queryPost('cgi-bin/express/business/printer/getall');
+        $response = $this->getClient()
+            ->setMethod('GET')
+            ->send($this->buildUrl('/cgi-bin/express/business/printer/getall', ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]));
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
     }
 
     /**
+     * logistics.updatePrinter
+     * (绑定打印员) 配置面单打印员，可以设置多个
+     *
      * @param string $openid
      *
      * @return mixed
@@ -102,13 +134,24 @@ class Client extends BaseClient
      */
     public function bindPrinter(string $openid)
     {
-        return $this->queryPost('cgi-bin/express/business/printer/update', [
-            'update_type' => 'bind',
-            'openid' => $openid,
-        ]);
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream([
+                'update_type' => 'bind',
+                'openid' => $openid,
+            ]))
+            ->send($this->buildUrl(
+                '/cgi-bin/express/business/printer/update',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response, $parseData);
     }
 
     /**
+     * logistics.updatePrinter
+     * (解除绑定打印员) 配置面单打印员，可以设置多个
+     *
      * @param string $openid
      *
      * @return mixed
@@ -116,10 +159,18 @@ class Client extends BaseClient
      */
     public function unbindPrinter(string $openid)
     {
-        return $this->queryPost('cgi-bin/express/business/printer/update', [
-            'update_type' => 'unbind',
-            'openid' => $openid,
-        ]);
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream([
+                'update_type' => 'unbind',
+                'openid' => $openid,
+            ]))
+            ->send($this->buildUrl(
+                '/cgi-bin/express/business/printer/update',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response, $parseData);
     }
 
     public function queryPost($api, $param)
@@ -128,7 +179,7 @@ class Client extends BaseClient
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($param))
             ->send($this->buildUrl(
-                '/'.$api,
+                '/' . $api,
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
