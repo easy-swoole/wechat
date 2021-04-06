@@ -175,7 +175,7 @@ class Client extends BaseClient
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
-    protected function query(string $api, string $from, string $to)
+    private function query(string $api, string $from, string $to)
     {
         $params = [
             'begin_date' => $from,

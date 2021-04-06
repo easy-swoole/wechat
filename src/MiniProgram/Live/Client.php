@@ -61,7 +61,7 @@ class Client extends BaseClient
     * @return mixed
     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
     */
-    public function query($param)
+    private function query(array $param)
     {
         $response = $this->getClient()
             ->setMethod('POST')

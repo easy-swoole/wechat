@@ -2,6 +2,7 @@
 
 namespace EasySwoole\WeChat\MiniProgram\TemplateMessage;
 
+use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OfficialAccount\TemplateMessage\Client as BaseClient;
 
 /**
@@ -106,7 +107,7 @@ class Client extends BaseClient
         return $this->queryPost('cgi-bin/wxopen/template/list', compact('offset', 'count'));
     }
 
-    public function queryPost($api, $param)
+    private function queryPost(string $api, array $param)
     {
         $response = $this->getClient()
             ->setMethod('POST')

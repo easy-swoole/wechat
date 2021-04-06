@@ -77,7 +77,7 @@ class Client extends BaseClient
         return $this->checkResponse($response, $parseData);
     }
 
-    public function queryPost($api, $param)
+    private function queryPost(string $api, array $param)
     {
         $response = $this->getClient()
             ->setMethod('POST')
