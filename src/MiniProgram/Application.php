@@ -5,6 +5,7 @@ namespace EasySwoole\WeChat\MiniProgram;
 
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\OCR;
+use EasySwoole\WeChat\OfficialAccount\Server;
 
 /**
  * Class Application
@@ -20,6 +21,7 @@ use EasySwoole\WeChat\OfficialAccount\OCR;
  * @property OCR\Client $ocr
  * @property Search\Client $search
  * @property TemplateMessage\Client $templateMessage
+ * @property Server\Guard $server
  */
 class Application extends ServiceContainer
 {
@@ -36,6 +38,7 @@ class Application extends ServiceContainer
     const Search = "search";
     const Soter = "soter";
     const TemplateMessage = "templateMessage";
+    const Server = 'server';
 
     protected $providers = [
         Auth\ServiceProvider::class,
@@ -49,6 +52,7 @@ class Application extends ServiceContainer
         OCR\ServiceProvider::class,
         Search\ServiceProvider::class,
         Soter\ServiceProvider::class,
-        TemplateMessage\ServiceProvider::class
+        TemplateMessage\ServiceProvider::class,
+        Server\ServiceProvider::class
     ];
 }
