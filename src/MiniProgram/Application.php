@@ -4,6 +4,7 @@ namespace EasySwoole\WeChat\MiniProgram;
 
 
 use EasySwoole\WeChat\Kernel\ServiceContainer;
+use EasySwoole\WeChat\OfficialAccount\OCR;
 
 /**
  * Class Application

@@ -4,12 +4,11 @@ namespace EasySwoole\WeChat\MiniProgram;
 
 use EasySwoole\WeChat\Kernel\Encryptor as BaseEncryptor;
 use EasySwoole\WeChat\Kernel\Exceptions\DecryptException;
-use EasySwoole\WeChat\Kernel\Support\AES;
+use EasySwoole\WeChat\Kernel\Utility\AES;
 
 /**
- * Class Encryptor.
- *
- * @author mingyoung <mingyoungcheung@gmail.com>
+ * Class Encryptor
+ * @package EasySwoole\WeChat\MiniProgram
  */
 class Encryptor extends BaseEncryptor
 {
