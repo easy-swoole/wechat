@@ -8,7 +8,8 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 /**
  * Class Client
  * @author master@kyour.cn
- * @package EasySwoole\WeChat\MiniProgram\Live
+ * @package EasySwoole\WeChat\MiniProgram\Soter
+ * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/soter/soter.verifySignature.html
  */
 class Client extends BaseClient
 {

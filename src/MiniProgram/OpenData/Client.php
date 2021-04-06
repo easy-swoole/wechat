@@ -2,17 +2,22 @@
 
 namespace EasySwoole\WeChat\MiniProgram\OpenData;
 
+use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\MiniProgram\BaseClient;
 
 /**
  * Class Client.
  * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\OpenData
+ *
+ * 微信小游戏-开放数据接口
+ * doc link: https://developers.weixin.qq.com/minigame/dev/api-backend/open-api/data/storage.setUserStorage.html#HTTPS%20%E8%B0%83%E7%94%A8
+ *
  */
 class Client extends BaseClient
 {
-
     /**
+     * storage.removeUserStorage 删除已经上报到微信的key-value数据
      * removeUserStorage.
      *
      * @param string $openid
@@ -40,12 +45,11 @@ class Client extends BaseClient
                 $query)
             );
 
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
+        return $this->checkResponse($response, $parseData);
     }
 
     /**
+     * storage.setUserStorage 上报用户数据后台接口
      * setUserStorage.
      *
      * @param string $openid
@@ -63,7 +67,7 @@ class Client extends BaseClient
         $query = [
             'openid' => $openid,
             'sig_method' => 'hmac_sha256',
-            'signature' => hash_hmac('sha256', json_encode($data), $sessionKey),,
+            'signature' => hash_hmac('sha256', json_encode($data), $sessionKey),
             'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
         ];
 
@@ -75,9 +79,7 @@ class Client extends BaseClient
                 $query)
             );
 
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
+        return $this->checkResponse($response, $parseData);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace EasySwoole\WeChat\MiniProgram\OCR;
 
+use EasySwoole\WeChat\MiniProgram\Application;
 use EasySwoole\WeChat\OfficialAccount\OCR\Client;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;

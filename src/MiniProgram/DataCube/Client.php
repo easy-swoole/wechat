@@ -9,11 +9,14 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
  * Class Client
  * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\DataCube
+ * desc 数据分析
+ * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getDailyRetain.html
  */
 class Client extends BaseClient
 {
     /**
      * Get summary trend.
+     * 获取用户访问小程序数据概况
      *
      * @param string $from
      * @param string $to
@@ -28,6 +31,7 @@ class Client extends BaseClient
 
     /**
      * Get daily visit trend.
+     * 获取用户访问小程序数据日趋势
      *
      * @param string $from
      * @param string $to
@@ -42,6 +46,8 @@ class Client extends BaseClient
 
     /**
      * Get weekly visit trend.
+     * 获取用户访问小程序数据周趋势
+     *
      *
      * @param string $from
      * @param string $to
@@ -56,6 +62,7 @@ class Client extends BaseClient
 
     /**
      * Get monthly visit trend.
+     * 获取用户访问小程序数据月趋势(能查询到的最新数据为上一个自然月的数据)
      *
      * @param string $from
      * @param string $to
@@ -70,6 +77,7 @@ class Client extends BaseClient
 
     /**
      * Get visit distribution.
+     * 获取用户小程序访问分布数据
      *
      * @param string $from
      * @param string $to
@@ -84,6 +92,7 @@ class Client extends BaseClient
 
     /**
      * Get daily retain info.
+     * 获取用户访问小程序日留存
      *
      * @param string $from
      * @param string $to
@@ -98,6 +107,7 @@ class Client extends BaseClient
 
     /**
      * Get weekly retain info.
+     * 获取用户访问小程序周留存
      *
      * @param string $from
      * @param string $to
@@ -112,6 +122,7 @@ class Client extends BaseClient
 
     /**
      * Get monthly retain info.
+     * 获取用户访问小程序月留存
      *
      * @param string $from
      * @param string $to
@@ -126,6 +137,7 @@ class Client extends BaseClient
 
     /**
      * Get visit page.
+     * 访问页面
      *
      * @param string $from
      * @param string $to
@@ -140,6 +152,7 @@ class Client extends BaseClient
 
     /**
      * Get user portrait.
+     * 获取小程序新增或活跃用户的画像分布数据
      *
      * @param string $from
      * @param string $to
@@ -171,7 +184,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
-            ->setBody($this->jsonDataToStream($param))
+            ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/'.$api,
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])

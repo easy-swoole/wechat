@@ -7,7 +7,8 @@ use EasySwoole\WeChat\OfficialAccount\TemplateMessage\Client as BaseClient;
 /**
  * Class Client
  * @author master@kyour.cn
- * @package EasySwoole\WeChat\MiniProgram\Live
+ * @package EasySwoole\WeChat\MiniProgram\TemplateMessage
+ * doc link:
  */
 class Client extends BaseClient
 {
@@ -28,6 +29,9 @@ class Client extends BaseClient
     protected $required = ['touser', 'template_id', 'form_id'];
 
     /**
+     * templateMessage.getTemplateList
+     * 组合模板并添加至帐号下的个人模板库（请注意，小程序模板消息接口【已废弃】，开发者可使用订阅消息功能）
+     *
      * @param int $offset
      * @param int $count
      *
@@ -40,6 +44,9 @@ class Client extends BaseClient
     }
 
     /**
+     * templateMessage.getTemplateLibraryById
+     * 组合模板并添加至帐号下的个人模板库
+     *
      * @param string $id
      *
      * @return mixed
@@ -51,6 +58,9 @@ class Client extends BaseClient
     }
 
     /**
+     * templateMessage.addTemplate
+     * 组合模板并添加至帐号下的个人模板库
+     *
      * @param string $id
      * @param array  $keyword
      *
@@ -66,6 +76,9 @@ class Client extends BaseClient
     }
 
     /**
+     * templateMessage.deleteTemplate
+     * 组合模板并添加至帐号下的个人模板库
+     *
      * @param string $templateId
      *
      * @return mixed
@@ -79,6 +92,9 @@ class Client extends BaseClient
     }
 
     /**
+     * templateMessage.getTemplateLibraryList
+     * 组合模板并添加至帐号下的个人模板库
+     *
      * @param int $offset
      * @param int $count
      *

@@ -8,12 +8,15 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 /**
  * Class DevClient.
  * @author master@kyour.cn
- * @package EasySwoole\WeChat\MiniProgram\Live
+ * @package EasySwoole\WeChat\MiniProgram\Plugin
+ * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginDevApplyList.html
  */
 class DevClient extends BaseClient
 {
     /**
      * Get users.
+     * pluginManager.getPluginDevApplyList
+     * 获取当前所有插件使用方（供插件开发者调用）
      *
      * @param int $page
      * @param int $size
@@ -23,15 +26,26 @@ class DevClient extends BaseClient
      */
     public function getUsers(int $page = 1, int $size = 10)
     {
-        return $this->queryPost('wxa/devplugin', [
-            'action' => 'dev_apply_list',
-            'page' => $page,
-            'num' => $size,
-        ]);
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream([
+                'action' => 'dev_apply_list',
+                'page' => $page,
+                'num' => $size,
+            ]))
+            ->send($this->buildUrl(
+                '/wxa/devplugin',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
     }
 
     /**
      * Agree to use plugin.
+     * (同意申请) 修改插件使用申请的状态（供插件开发者调用）
      *
      * @param string $appId
      *
@@ -48,6 +62,7 @@ class DevClient extends BaseClient
 
     /**
      * Refuse to use plugin.
+     * (拒绝申请) 修改插件使用申请的状态（供插件开发者调用）
      *
      * @param string $reason
      *
@@ -64,6 +79,7 @@ class DevClient extends BaseClient
 
     /**
      * Delete rejected applications.
+     * (删除已拒绝的申请者) 修改插件使用申请的状态（供插件开发者调用）
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
@@ -81,12 +97,10 @@ class DevClient extends BaseClient
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($param))
             ->send($this->buildUrl(
-                '/'.$api,
+                '/' . $api,
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
+        return $this->checkResponse($response, $parseData);
     }
 }
