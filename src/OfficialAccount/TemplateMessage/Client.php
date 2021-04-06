@@ -12,7 +12,29 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 class Client extends BaseClient
 {
 
-    protected $required = ['touser', 'template_id'];
+    public const API_SEND = '/cgi-bin/message/template/send';
+
+    /**
+     * @return array
+     */
+    protected function messageTemplate(): array
+    {
+        return [
+            'touser' => '',
+            'template_id' => '',
+            'url' => '',
+            'data' => [],
+            'miniprogram' => '',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function requiredKeys(): array
+    {
+        return ['touser', 'template_id'];
+    }
 
     /**
      * @param $industryOne
@@ -131,7 +153,7 @@ class Client extends BaseClient
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
-                '/cgi-bin/message/template/send',
+                static::API_SEND,
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
@@ -173,7 +195,7 @@ class Client extends BaseClient
         $params = array_merge($message, $data);
 
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->required, true) && empty($value) && empty($message[$key])) {
+            if (in_array($key, $this->requiredKeys(), true) && empty($value) && empty($message[$key])) {
                 throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $key));
             }
 
@@ -218,20 +240,5 @@ class Client extends BaseClient
         }
 
         return $formatted;
-    }
-
-
-    /**
-     * @return array
-     */
-    protected function messageTemplate(): array
-    {
-        return [
-            'touser' => '',
-            'template_id' => '',
-            'url' => '',
-            'data' => [],
-            'miniprogram' => '',
-        ];
     }
 }
