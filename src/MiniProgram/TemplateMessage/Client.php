@@ -13,21 +13,30 @@ use EasySwoole\WeChat\OfficialAccount\TemplateMessage\Client as BaseClient;
  */
 class Client extends BaseClient
 {
-    public const API_SEND = 'cgi-bin/message/wxopen/template/send';
-
-    protected $message = [
-        'touser' => '',
-        'template_id' => '',
-        'page' => '',
-        'form_id' => '',
-        'data' => [],
-        'emphasis_keyword' => '',
-    ];
+    public const API_SEND = '/cgi-bin/message/wxopen/template/send';
 
     /**
-     * {@inheritdoc}.
+     * @return array
      */
-    protected $required = ['touser', 'template_id', 'form_id'];
+    protected function messageTemplate(): array
+    {
+        return [
+            'touser' => '',
+            'template_id' => '',
+            'page' => '',
+            'form_id' => '',
+            'data' => [],
+            'emphasis_keyword' => '',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function requiredKeys(): array
+    {
+        return ['touser', 'template_id', 'form_id'];
+    }
 
     /**
      * templateMessage.getTemplateList
@@ -41,7 +50,7 @@ class Client extends BaseClient
      */
     public function list(int $offset, int $count)
     {
-        return $this->queryPost('cgi-bin/wxopen/template/library/list', compact('offset', 'count'));
+        return $this->queryPost('/cgi-bin/wxopen/template/library/list', compact('offset', 'count'));
     }
 
     /**
@@ -55,7 +64,7 @@ class Client extends BaseClient
      */
     public function get(string $id)
     {
-        return $this->queryPost('cgi-bin/wxopen/template/library/get', compact('id'));
+        return $this->queryPost('/cgi-bin/wxopen/template/library/get', compact('id'));
     }
 
     /**
@@ -63,14 +72,14 @@ class Client extends BaseClient
      * 组合模板并添加至帐号下的个人模板库
      *
      * @param string $id
-     * @param array  $keyword
+     * @param array $keyword
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
     public function add(string $id, array $keyword)
     {
-        return $this->queryPost('cgi-bin/wxopen/template/add', [
+        return $this->queryPost('/cgi-bin/wxopen/template/add', [
             'id' => $id,
             'keyword_id_list' => $keyword,
         ]);
@@ -87,7 +96,7 @@ class Client extends BaseClient
      */
     public function delete(string $templateId)
     {
-        return $this->queryPost('cgi-bin/wxopen/template/del', [
+        return $this->queryPost('/cgi-bin/wxopen/template/del', [
             'template_id' => $templateId,
         ]);
     }
@@ -104,7 +113,7 @@ class Client extends BaseClient
      */
     public function getTemplates(int $offset, int $count)
     {
-        return $this->queryPost('cgi-bin/wxopen/template/list', compact('offset', 'count'));
+        return $this->queryPost('/cgi-bin/wxopen/template/list', compact('offset', 'count'));
     }
 
     private function queryPost(string $api, array $param)
@@ -113,7 +122,7 @@ class Client extends BaseClient
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($param))
             ->send($this->buildUrl(
-                '/'.$api,
+                $api,
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
