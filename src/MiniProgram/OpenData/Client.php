@@ -45,7 +45,7 @@ class Client extends BaseClient
                 $query)
             );
 
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     /**
@@ -79,7 +79,7 @@ class Client extends BaseClient
                 $query)
             );
 
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     /**

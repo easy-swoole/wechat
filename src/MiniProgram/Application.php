@@ -39,6 +39,14 @@ class Application extends ServiceContainer
     const Soter = "soter";
     const TemplateMessage = "templateMessage";
     const Server = 'server';
+    const ActivityMessage = 'activityMessage';
+    const Broadcast = 'broadcast';
+    const CustomerService = 'customerService';
+    const Mall = 'mall';
+    const MallOrder = 'mall.order';
+    const MallCart = 'mall.cart';
+    const MallProduct = 'mall.product';
+    const MallMedia = 'mall.media';
 
     protected $providers = [
         Auth\ServiceProvider::class,

@@ -8,7 +8,7 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 /**
  * Class Client
  * @author master@kyour.cn
- * @package EasySwoole\WeChat\MiniProgram\Live
+ * @package EasySwoole\WeChat\MiniProgram\Search
  * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/search/search.submitPages.html#HTTPS%20%E8%B0%83%E7%94%A8
  */
 class Client extends BaseClient
@@ -31,6 +31,6 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 }

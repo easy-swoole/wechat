@@ -78,7 +78,7 @@ class Client extends BaseClient
                     'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
                 ])
                 );
-            return $this->checkResponse($response, $parseData);
+            return $this->checkResponse($response);
         }
 
         // 创建菜单
@@ -89,7 +89,7 @@ class Client extends BaseClient
                 'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
             ])
             );
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     /**
@@ -108,7 +108,7 @@ class Client extends BaseClient
                     'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
                 ])
                 );
-            return $this->checkResponse($response, $parseData);
+            return $this->checkResponse($response);
         }
 
         // 删除个性化菜单
@@ -119,7 +119,7 @@ class Client extends BaseClient
                 'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
             ])
             );
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     /**

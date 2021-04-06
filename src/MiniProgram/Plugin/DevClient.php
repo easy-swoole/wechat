@@ -101,6 +101,6 @@ class DevClient extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 }
