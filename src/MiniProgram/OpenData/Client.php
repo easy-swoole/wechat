@@ -44,8 +44,7 @@ class Client extends BaseClient
                 '/wxa/remove_user_storage',
                 $query)
             );
-
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     /**
@@ -79,7 +78,7 @@ class Client extends BaseClient
                 $query)
             );
 
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     /**
