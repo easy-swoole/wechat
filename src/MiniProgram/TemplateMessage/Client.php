@@ -9,7 +9,7 @@ use EasySwoole\WeChat\OfficialAccount\TemplateMessage\Client as BaseClient;
  * Class Client
  * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\TemplateMessage
- * doc link:
+ * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html
  */
 class Client extends BaseClient
 {

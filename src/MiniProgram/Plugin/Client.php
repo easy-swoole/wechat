@@ -8,7 +8,7 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 /**
  * Class Client.
  * @author master@kyour.cn
- * @package EasySwoole\WeChat\MiniProgram\Live
+ * @package EasySwoole\WeChat\MiniProgram\Plugin
  * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.applyPlugin.html
  */
 class Client extends BaseClient
@@ -34,8 +34,7 @@ class Client extends BaseClient
                 '/wxa/plugin',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
-
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     /**
@@ -74,7 +73,7 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response, $parseData);
+        return $this->checkResponse($response);
     }
 
     private function queryPost(string $api, array $param)

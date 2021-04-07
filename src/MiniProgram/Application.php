@@ -20,8 +20,18 @@ use EasySwoole\WeChat\OfficialAccount\Server;
  * @property OpenData\Client $openData
  * @property OCR\Client $ocr
  * @property Search\Client $search
+ * @property Soter\Client $soter
  * @property TemplateMessage\Client $templateMessage
  * @property Server\Guard $server
+ * @property ActivityMessage\Client $activityMessage
+ * @property Broadcast\Client $broadcast
+ * @property Mall\Mall $mall
+ * @property NearbyPoi\Client $nearbyPoi
+ * @property RealtimeLog\Client $realtimeLog
+ * @property RiskControl\Client $riskControl
+ * @property SubscribeMessage\Client $subscribeMessage
+ * @property UniformMessage\Client $uniformMessage
+ * @property Base\Client $base
  */
 class Application extends ServiceContainer
 {
@@ -39,6 +49,17 @@ class Application extends ServiceContainer
     const Soter = "soter";
     const TemplateMessage = "templateMessage";
     const Server = 'server';
+    const ActivityMessage = 'activityMessage';
+    const Broadcast = 'broadcast';
+    const CustomerService = 'customerService';
+    const Mall = 'mall';
+    const NearbyPoi = 'nearbyPoi';
+    const RealtimeLog = 'realtimeLog';
+    const RiskControl = 'riskControl';
+    const SubscribeMessage = 'subscribeMessage';
+    const UniformMessage = 'uniformMessage';
+    const Base = 'base';
+
 
     protected $providers = [
         Auth\ServiceProvider::class,
@@ -53,6 +74,16 @@ class Application extends ServiceContainer
         Search\ServiceProvider::class,
         Soter\ServiceProvider::class,
         TemplateMessage\ServiceProvider::class,
-        Server\ServiceProvider::class
+        Server\ServiceProvider::class,
+        ActivityMessage\ServiceProvider::class,
+        Broadcast\ServiceProvider::class,
+        CustomerService\ServiceProvider::class,
+        Mall\ServiceProvider::class,
+        NearbyPoi\ServiceProvider::class,
+        RealtimeLog\ServiceProvider::class,
+        RiskControl\ServiceProvider::class,
+        SubscribeMessage\ServiceProvider::class,
+        UniformMessage\ServiceProvider::class,
+        Base\ServiceProvider::class,
     ];
 }

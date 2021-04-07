@@ -9,8 +9,8 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
  * Class Client
  * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\Live
- * @link https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#2
- * @desc 【小程序直播】直播间管理接口
+ * doc link https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#2
+ * desc 【小程序直播】直播间管理接口
  */
 class Client extends BaseClient
 {
