@@ -12,22 +12,22 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app[Application::Mall] = function ($app) {
-            return new Mall($app);
+            return new ForwardsMall($app);
         };
 
-        $app[Mall::MallOrder] = function ($app) {
+        $app[ForwardsMall::MallOrder] = function ($app) {
             return new OrderClient($app);
         };
 
-        $app[Mall::MallCart] = function ($app) {
+        $app[ForwardsMall::MallCart] = function ($app) {
             return new CartClient($app);
         };
 
-        $app[Mall::MallProduct] = function ($app) {
+        $app[ForwardsMall::MallProduct] = function ($app) {
             return new ProductClient($app);
         };
 
-        $app[Mall::MallMedia] = function ($app) {
+        $app[ForwardsMall::MallMedia] = function ($app) {
             return new MediaClient($app);
         };
     }
