@@ -3,18 +3,18 @@
 namespace EasySwoole\WeChat\MiniProgram\UniformMessage;
 
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
-use EasySwoole\WeChat\MiniProgram\BaseClient;
+use EasySwoole\WeChat\OfficialAccount\TemplateMessage\Client as BaseClient;
 
 /**
  * Class Client
  * @package EasySwoole\WeChat\MiniProgram\UniformMessage
  * @author: XueSi
  * @email: <1592328848@qq.com>
- * doc link:
+ * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/uniform-message/uniformMessage.send.html
  */
 class Client extends BaseClient
 {
-    public const API_SEND = '';
+    public const API_SEND = '/cgi-bin/message/wxopen/template/uniform_send';
 
     /**
      * @var array
@@ -75,7 +75,7 @@ class Client extends BaseClient
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
-                '/cgi-bin/message/wxopen/template/uniform_send',
+                self::API_SEND,
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
@@ -166,39 +166,5 @@ class Client extends BaseClient
         }
 
         return $params;
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected function formatData(array $data)
-    {
-        $formatted = [];
-
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                if (\array_key_exists('value', $value)) {
-                    $formatted[$key] = $value;
-
-                    continue;
-                }
-
-                if (count($value) >= 2) {
-                    $value = [
-                        'value' => $value[0],
-                        'color' => $value[1],
-                    ];
-                }
-            } else {
-                $value = [
-                    'value' => strval($value),
-                ];
-            }
-
-            $formatted[$key] = $value;
-        }
-
-        return $formatted;
     }
 }
