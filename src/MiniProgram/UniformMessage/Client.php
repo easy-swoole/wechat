@@ -3,7 +3,9 @@
 namespace EasySwoole\WeChat\MiniProgram\UniformMessage;
 
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OfficialAccount\TemplateMessage\Client as BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 /**
  * Class Client
@@ -17,44 +19,50 @@ class Client extends BaseClient
     public const API_SEND = '/cgi-bin/message/wxopen/template/uniform_send';
 
     /**
-     * @var array
+     * @return string[]
      */
-    protected $message = [
-        'touser' => '',
-    ];
+    protected function messageTemplate(): array
+    {
+        return [
+            'touser' => '',
+        ];
+    }
 
     /**
-     * Weapp Attributes.
-     *
-     * @var array
+     * @return array
      */
-    protected $weappMessage = [
-        'template_id' => '',
-        'page' => '',
-        'form_id' => '',
-        'data' => [],
-        'emphasis_keyword' => '',
-    ];
+    protected function weAppMessageTemplate(): array
+    {
+        return [
+            'template_id' => '',
+            'page' => '',
+            'form_id' => '',
+            'data' => [],
+            'emphasis_keyword' => '',
+        ];
+    }
 
     /**
-     * Official account attributes.
-     *
-     * @var array
+     * @return array
      */
-    protected $mpMessage = [
-        'appid' => '',
-        'template_id' => '',
-        'url' => '',
-        'miniprogram' => [],
-        'data' => [],
-    ];
+    protected function mpMessageTemplate()
+    {
+        return [
+            'appid' => '',
+            'template_id' => '',
+            'url' => '',
+            'miniprogram' => [],
+            'data' => [],
+        ];
+    }
 
     /**
-     * Required attributes.
-     *
-     * @var array
+     * @return string[]
      */
-    protected $required = ['touser', 'template_id', 'form_id', 'miniprogram', 'appid'];
+    protected function requiredKeys(): array
+    {
+        return ['touser', 'template_id', 'form_id', 'miniprogram', 'appid'];
+    }
 
     /**
      * uniformMessage.send
@@ -63,13 +71,11 @@ class Client extends BaseClient
      * @param array $data
      * @return bool
      * @throws InvalidArgumentException
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function send(array $data = [])
     {
         $params = $this->formatMessage($data);
-
-        $this->restoreMessage();
 
         $response = $this->getClient()
             ->setMethod('POST')
@@ -83,14 +89,6 @@ class Client extends BaseClient
     }
 
     /**
-     * Restore message.
-     */
-    protected function restoreMessage()
-    {
-        $this->message = (new \ReflectionClass(static::class))->getDefaultProperties()['message'];
-    }
-
-    /**
      * @param array $data
      *
      * @return array
@@ -99,7 +97,8 @@ class Client extends BaseClient
      */
     protected function formatMessage(array $data = [])
     {
-        $params = array_merge($this->message, $data);
+        $message = $this->messageTemplate();
+        $params = array_merge($message, $data);
 
         if (empty($params['touser'])) {
             throw new InvalidArgumentException(sprintf('Attribute "touser" can not be empty!'));
@@ -121,9 +120,9 @@ class Client extends BaseClient
      * @return array
      * @throws InvalidArgumentException
      */
-    protected function formatWeappMessage(array $data = [])
+    protected function formatWeAppMessage(array $data = [])
     {
-        $params = $this->baseFormat($data, $this->weappMessage);
+        $params = $this->baseFormat($data, $this->weAppMessageTemplate());
 
         $params['data'] = $this->formatData($params['data'] ?? []);
 
@@ -137,7 +136,7 @@ class Client extends BaseClient
      */
     protected function formatMpMessage(array $data = [])
     {
-        $params = $this->baseFormat($data, $this->mpMessage);
+        $params = $this->baseFormat($data, $this->mpMessageTemplate());
 
         if (empty($params['miniprogram']['appid'])) {
             $params['miniprogram']['appid'] = $this->app['config']['app_id'];
@@ -158,7 +157,7 @@ class Client extends BaseClient
     {
         $params = array_merge($default, $data);
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->required, true) && empty($value) && empty($default[$key])) {
+            if (in_array($key, $this->requiredKeys(), true) && empty($value) && empty($default[$key])) {
                 throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $key));
             }
 

@@ -8,6 +8,7 @@ use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
+use function \array_key_exists;
 
 class Client extends BaseClient
 {
@@ -218,7 +219,7 @@ class Client extends BaseClient
 
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                if (\array_key_exists('value', $value)) {
+                if (array_key_exists('value', $value)) {
                     $formatted[$key] = $value;
 
                     continue;

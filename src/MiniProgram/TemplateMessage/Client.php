@@ -4,6 +4,7 @@ namespace EasySwoole\WeChat\MiniProgram\TemplateMessage;
 
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OfficialAccount\TemplateMessage\Client as BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 /**
  * Class Client
@@ -46,7 +47,7 @@ class Client extends BaseClient
      * @param int $count
      *
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function list(int $offset, int $count)
     {
@@ -60,7 +61,7 @@ class Client extends BaseClient
      * @param string $id
      *
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function get(string $id)
     {
@@ -75,7 +76,7 @@ class Client extends BaseClient
      * @param array $keyword
      *
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function add(string $id, array $keyword)
     {
@@ -92,7 +93,7 @@ class Client extends BaseClient
      * @param string $templateId
      *
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function delete(string $templateId)
     {
@@ -109,13 +110,19 @@ class Client extends BaseClient
      * @param int $count
      *
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function getTemplates(int $offset, int $count)
     {
         return $this->queryPost('/cgi-bin/wxopen/template/list', compact('offset', 'count'));
     }
 
+    /**
+     * @param string $api
+     * @param array $param
+     * @return mixed
+     * @throws HttpException
+     */
     private function queryPost(string $api, array $param)
     {
         $response = $this->getClient()

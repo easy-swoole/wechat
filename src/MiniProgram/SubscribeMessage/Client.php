@@ -6,6 +6,10 @@ namespace EasySwoole\WeChat\MiniProgram\SubscribeMessage;
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\MiniProgram\BaseClient;
+use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
+use function \array_key_exists;
+use function \compact;
+use function \implode;
 
 /**
  * Class Client
@@ -16,18 +20,27 @@ use EasySwoole\WeChat\MiniProgram\BaseClient;
  */
 class Client extends BaseClient
 {
-    protected $message = [
-        'touser' => '',
-        'template_id' => '',
-        'page' => '',
-        'data' => [],
-    ];
+    /**
+     * @return array
+     */
+    protected function messageTemplate(): array
+    {
+        return [
+            'touser' => '',
+            'template_id' => '',
+            'page' => '',
+            'data' => [],
+        ];
+    }
 
-    protected $required = [
-        'touser',
-        'template_id',
-        'data'
-    ];
+    /**
+     * @return string[]
+     */
+    protected function requiredKeys(): array
+    {
+        return ['touser', 'template_id', 'data'];
+    }
+
 
     /**
      * Send a template message.
@@ -36,13 +49,11 @@ class Client extends BaseClient
      * @param array $data
      * @return mixed
      * @throws InvalidArgumentException
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function send(array $data = [])
     {
         $params = $this->formatMessage($data);
-
-        $this->restoreMessage();
 
         $response = $this->getClient()
             ->setMethod('POST')
@@ -62,19 +73,20 @@ class Client extends BaseClient
      */
     protected function formatMessage(array $data = [])
     {
-        $params = array_merge($this->message, $data);
+        $message = $this->messageTemplate();
+        $params = array_merge($message, $data);
 
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->required, true) && empty($value) && empty($this->message[$key])) {
+            if (in_array($key, $this->requiredKeys(), true) && empty($value) && empty($message[$key])) {
                 throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $key));
             }
 
-            $params[$key] = empty($value) ? $this->message[$key] : $value;
+            $params[$key] = empty($value) ? $message[$key] : $value;
         }
 
         foreach ($params['data'] as $key => $value) {
             if (is_array($value)) {
-                if (\array_key_exists('value', $value)) {
+                if (array_key_exists('value', $value)) {
                     $params['data'][$key] = ['value' => $value['value']];
 
                     continue;
@@ -99,14 +111,6 @@ class Client extends BaseClient
     }
 
     /**
-     * Restore message.
-     */
-    protected function restoreMessage()
-    {
-        $this->message = (new \ReflectionClass(static::class))->getDefaultProperties()['message'];
-    }
-
-    /**
      * Combine templates and add them to your personal template library under your account.
      * 组合模板并添加至帐号下的个人模板库
      *
@@ -114,12 +118,12 @@ class Client extends BaseClient
      * @param array $kidList
      * @param string|null $sceneDesc
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function addTemplate(string $tid, array $kidList, string $sceneDesc = null)
     {
         $sceneDesc = $sceneDesc ?? '';
-        $data = \compact('tid', 'kidList', 'sceneDesc');
+        $data = compact('tid', 'kidList', 'sceneDesc');
 
         $response = $this->getClient()
             ->setMethod('POST')
@@ -140,7 +144,7 @@ class Client extends BaseClient
      *
      * @param string $id
      * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      * @date: 2021/4/7 22:18
      * @author: XueSi
      * @email: <1592328848@qq.com>
@@ -164,7 +168,7 @@ class Client extends BaseClient
      *
      * @param string $tid
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function getTemplateKeywords(string $tid)
     {
@@ -193,12 +197,12 @@ class Client extends BaseClient
      * @param int $start
      * @param int $limit
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      */
     public function getTemplateTitles(array $ids, int $start = 0, int $limit = 30)
     {
-        $ids = \implode(',', $ids);
-        $query = \compact('ids', 'start', 'limit');
+        $ids = implode(',', $ids);
+        $query = compact('ids', 'start', 'limit');
         $query['access_token'] = $this->app[ServiceProviders::AccessToken]->getToken();
 
         $response = $this->getClient()
@@ -217,7 +221,7 @@ class Client extends BaseClient
      * 获取当前帐号下的个人模板列表
      *
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      * @date: 2021/4/7 22:29
      * @author: XueSi
      * @email: <1592328848@qq.com>
@@ -240,7 +244,7 @@ class Client extends BaseClient
      * 获取小程序账号的类目
      *
      * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     * @throws HttpException
      * @date: 2021/4/7 22:30
      * @author: XueSi
      * @email: <1592328848@qq.com>
