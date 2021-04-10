@@ -2,7 +2,9 @@
 
 namespace EasySwoole\WeChat\MiniProgram\Mall;
 
+use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\MiniProgram\Application;
+use Pimple\Container;
 
 /**
  * Class ForwardsMall
@@ -10,10 +12,10 @@ use EasySwoole\WeChat\MiniProgram\Application;
  * @author: XueSi
  * @email: <1592328848@qq.com>
  *
- * @property \EasySwoole\WeChat\MiniProgram\Mall\OrderClient
- * @property \EasySwoole\WeChat\MiniProgram\Mall\CartClient
- * @property \EasySwoole\WeChat\MiniProgram\Mall\ProductClient
- * @property \EasySwoole\WeChat\MiniProgram\Mall\MediaClient
+ * @property OrderClient $order
+ * @property CartClient $cart
+ * @property ProductClient $product
+ * @property MediaClient $media
  */
 class ForwardsMall
 {
@@ -23,12 +25,12 @@ class ForwardsMall
     const MallMedia = 'mallMedia';
 
     /**
-     * @var \EasySwoole\WeChat\Kernel\ServiceContainer
+     * @var Container
      */
     protected $app;
 
     /**
-     * @param \EasySwoole\WeChat\Kernel\ServiceContainer $app
+     * @param Container $app
      */
     public function __construct($app)
     {
@@ -37,12 +39,16 @@ class ForwardsMall
 
     /**
      * @param string $property
-     *
      * @return mixed
+     * @throws InvalidArgumentException
      */
-    public function __get($property)
+    public function __get(string $property)
     {
         $key = Application::Mall . ucfirst($property);
-        return $this->app[$key];
+        if (isset($this->app[$key])) {
+            return $this->app[$key];
+        }
+
+        throw new InvalidArgumentException(sprintf('No mall service named "%s".', $property));
     }
 }
