@@ -10,6 +10,7 @@
 namespace EasySwoole\WeChat\MiniProgram\RiskControl;
 
 
+use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\MiniProgram\BaseClient;
 
 /**
