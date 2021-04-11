@@ -15,33 +15,59 @@ use EasySwoole\WeChat\Work\BaseClient;
 class MessageTemplateClient extends BaseClient
 {
     /**
-     * Required attributes.
-     * @var array
+     * @return string[]
      */
-    protected $required = ['title', 'url', 'pic_media_id', 'appid', 'page'];
+    protected function requiredKeys(): array
+    {
+        return ['title', 'url', 'pic_media_id', 'appid', 'page'];
+    }
 
-    protected $textMessage = [
-        'content' => '',
-    ];
+    /**
+     * @return array
+     */
+    protected function textMessageTemplate(): array
+    {
+        return [
+            'content' => '',
+        ];
+    }
 
-    protected $imageMessage = [
-        'media_id' => '',
-        'pic_url' => '',
-    ];
+    /**
+     * @return array
+     */
+    protected function imageMessageTemplate(): array
+    {
+        return [
+            'media_id' => '',
+            'pic_url' => '',
+        ];
+    }
 
-    protected $linkMessage = [
-        'title' => '',
-        'picurl' => '',
-        'desc' => '',
-        'url' => '',
-    ];
+    /**
+     * @return array
+     */
+    protected function linkMessageTemplate(): array
+    {
+        return [
+            'title' => '',
+            'picurl' => '',
+            'desc' => '',
+            'url' => '',
+        ];
+    }
 
-    protected $miniprogramMessage = [
-        'title' => '',
-        'pic_media_id' => '',
-        'appid' => '',
-        'page' => '',
-    ];
+    /**
+     * @return array
+     */
+    protected function miniprogramMessageTemplate(): array
+    {
+        return [
+            'title' => '',
+            'pic_media_id' => '',
+            'appid' => '',
+            'page' => '',
+        ];
+    }
 
     /**
      * 添加入群欢迎语素材
@@ -159,20 +185,25 @@ class MessageTemplateClient extends BaseClient
     {
         $params = $data;
 
+        $textMessage = $this->textMessageTemplate();
+        $imageMessage = $this->imageMessageTemplate();
+        $linkMessage = $this->linkMessageTemplate();
+        $miniprogramMessage = $this->miniprogramMessageTemplate();
+
         if (!empty($params['text'])) {
-            $params['text'] = $this->formatFields($params['text'], $this->textMessage);
+            $params['text'] = $this->formatFields($params['text'], $textMessage);
         }
 
         if (!empty($params['image'])) {
-            $params['image'] = $this->formatFields($params['image'], $this->imageMessage);
+            $params['image'] = $this->formatFields($params['image'], $imageMessage);
         }
 
         if (!empty($params['link'])) {
-            $params['link'] = $this->formatFields($params['link'], $this->linkMessage);
+            $params['link'] = $this->formatFields($params['link'], $linkMessage);
         }
 
         if (!empty($params['miniprogram'])) {
-            $params['miniprogram'] = $this->formatFields($params['miniprogram'], $this->miniprogramMessage);
+            $params['miniprogram'] = $this->formatFields($params['miniprogram'], $miniprogramMessage);
         }
 
         return $params;
@@ -186,7 +217,7 @@ class MessageTemplateClient extends BaseClient
     {
         $params = array_merge($default, $data);
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->required, true) && empty($value) && empty($default[$key])) {
+            if (in_array($key, $this->requiredKeys(), true) && empty($value) && empty($default[$key])) {
                 throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $key));
             }
 
