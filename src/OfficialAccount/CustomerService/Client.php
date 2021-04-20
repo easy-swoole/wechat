@@ -244,4 +244,10 @@ class Client extends BaseClient
         $this->checkResponse($response, $parseData);
         return $parseData;
     }
+
+    public function message($message)
+    {
+        $messageBuilder = new Messenger($this);
+        return $messageBuilder->message($message);
+    }
 }
