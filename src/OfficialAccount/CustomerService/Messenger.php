@@ -89,7 +89,7 @@ class Messenger
         }
 
         if ($this->message instanceof Raw) {
-            $message = json_decode($this->message->getContent());
+            $message = json_decode($this->message->getContent(), true);
         } else {
             $prepends = [
                 'touser' => $this->to
