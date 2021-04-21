@@ -11,7 +11,6 @@ use EasySwoole\WeChat\Kernel\Contracts\StreamResponseInterface;
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use Psr\Http\Message\StreamInterface;
-use Swoole\Coroutine\System;
 
 /**
  * Class StreamResponse
@@ -93,7 +92,7 @@ class StreamResponse extends Stream implements StreamResponseInterface
     protected function writeFile(string $filename, string $contents)
     {
         $fp = fopen($filename, 'w');
-        $len = System::fwrite($fp, $contents);
+        $len = fwrite($fp, $contents);
         fclose($fp);
         if ($len === false) {
             throw new RuntimeException('Write file error.');
