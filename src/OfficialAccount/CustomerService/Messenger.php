@@ -43,7 +43,7 @@ class Messenger
      */
     public function message($message)
     {
-        if (is_string($message)) {
+        if (is_scalar($message)) {
             $message = new Text($message);
         }
 
@@ -91,7 +91,7 @@ class Messenger
         if ($this->message instanceof Raw) {
             $message = json_decode($this->message->getContent(), true);
         } else {
-            $prepends = [
+            $message = [
                 'touser' => $this->to
             ];
 
@@ -99,8 +99,8 @@ class Messenger
                 $prepends['customservice'] = ['kf_account' => $this->account];
             }
 
-            $prepends['msgtype'] = $this->message->getType();
-            $message = $this->message->transformForJsonRequest($prepends);
+            $message['msgtype'] = $this->message->getType();
+            $message[$this->message->getType()] = $this->message->transformForJsonRequest();
         }
 
         return $this->client->send($message);
