@@ -15,7 +15,7 @@ class Text extends Message
      */
     public function __construct(string $content)
     {
-        parent::__construct(['Content' => $content]);
+        parent::__construct(['content' => $content]);
     }
 
     /**
@@ -23,7 +23,7 @@ class Text extends Message
      */
     public function getContent()
     {
-        return $this->get('Content');
+        return $this->get('content');
     }
 
     /**
@@ -31,7 +31,7 @@ class Text extends Message
      */
     public function setContent($content): void
     {
-        $this->set('Content', $content);
+        $this->set('content', $content);
     }
 
     /**
