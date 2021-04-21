@@ -40,7 +40,7 @@ class Text extends Message
     public function toXmlArray(): array
     {
         return [
-            "Content" => $this->get('Content')
+            "Content" => $this->get('content')
         ];
     }
 }
