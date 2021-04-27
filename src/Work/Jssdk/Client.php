@@ -60,20 +60,19 @@ class Client extends Jssdk
      * 获取企业的jsapi_ticket
      * doc link: https://work.weixin.qq.com/api/doc/90000/90136/90506#获取企业的jsapi_ticket
      *
-     * @param bool $refresh
-     * @param string $type
-     * @return array
+     * @param bool $autoRefresh
+     * @return string
      * @throws RuntimeException
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
-    public function getTicket(bool $refresh = false, string $type = 'config'): array
+    public function getTicket(bool $autoRefresh = true): string
     {
-        $cacheKey = sprintf($this->cachePrefix . '%s_%s', $type, $this->getAppId());
+        $cacheKey = sprintf($this->cachePrefix . 'config_%s', $this->getAppId());
 
         /** @var FileCacheDriver $cache */
         $cache = $this->app[ServiceProviders::Cache];
 
-        if (!$refresh && $cache->has($cacheKey)) {
+        if (!$autoRefresh && $cache->has($cacheKey)) {
             return $cache->get($cacheKey);
         }
 
@@ -85,13 +84,13 @@ class Client extends Jssdk
 
         $this->checkResponse($response, $result);
 
-        $cache->set($cacheKey, $result, $result['expires_in'] - 500);
+        $cache->set($cacheKey, $result['ticket'], $result['expires_in'] - 500);
 
         if (!$cache->has($cacheKey)) {
             throw new RuntimeException('Failed to cache jssdk ticket.');
         }
 
-        return $result;
+        return $result['ticket'];
     }
 
     /**
@@ -132,5 +131,53 @@ class Client extends Jssdk
         }
 
         return $result;
+    }
+
+    /**
+     * Get agent config json for jsapi.
+     *
+     * @param array $jsApiList
+     * @param $agentId
+     * @param bool $debug
+     * @param bool $beta
+     * @param bool $json
+     * @param array $openTagList
+     * @param string|null $url
+     * @return array|false|string
+     */
+    public function buildAgentConfig(
+        array $jsApiList,
+        $agentId,
+        bool $debug = false,
+        bool $beta = false,
+        bool $json = true,
+        array $openTagList = [],
+        string $url = null
+    ) {
+        $config = array_merge(compact('debug', 'beta', 'jsApiList', 'openTagList'), $this->agentConfigSignature($agentId, $url));
+
+        return $json ? json_encode($config) : $config;
+    }
+
+    /**
+     * Return jsapi agent config as a PHP array.
+     *
+     * @param array $apis
+     * @param $agentId
+     * @param bool $debug
+     * @param bool $beta
+     * @param array $openTagList
+     * @param string|null $url
+     * @return array|false|string
+     */
+    public function getAgentConfigArray(
+        array $apis,
+        $agentId,
+        bool $debug = false,
+        bool $beta = false,
+        array $openTagList = [],
+        string $url = null
+    ) {
+        return $this->buildAgentConfig($apis, $agentId, $debug, $beta, false, $openTagList, $url);
     }
 }

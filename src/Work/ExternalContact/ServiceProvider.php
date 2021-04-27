@@ -20,7 +20,7 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app[Application::ExternalContact] = function ($app) {
-            return new Client($app);
+            return new ExternalContact($app);
         };
 
         $app[ExternalContact::ContactWay] = function ($app) {

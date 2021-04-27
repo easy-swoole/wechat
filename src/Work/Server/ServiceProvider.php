@@ -3,6 +3,7 @@
 namespace EasySwoole\WeChat\Work\Server;
 
 use EasySwoole\WeChat\Kernel\Encryptor;
+use EasySwoole\WeChat\Kernel\Messages\Message;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\Work\Application;

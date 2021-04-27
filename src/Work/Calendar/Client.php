@@ -16,7 +16,7 @@ class Client extends BaseClient
     /**
      * Add a calendar.
      * 创建日历
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647#创建日历
      *
      * @param array $calendar
      * @return mixed
@@ -42,7 +42,7 @@ class Client extends BaseClient
     /**
      * Update the calendar.
      * 更新日历
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647#更新日历
      *
      * @param string $id
      * @param array $calendar
@@ -70,7 +70,7 @@ class Client extends BaseClient
     /**
      * Get one or more calendars.
      * 获取日历详情
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647#获取日历详情
      *
      * @param $ids
      * @return bool
@@ -96,7 +96,7 @@ class Client extends BaseClient
     /**
      * Delete a calendar.
      * 删除日历
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/93647#删除日历
      *
      * @param string $id
      * @return bool

@@ -3,6 +3,7 @@
 namespace EasySwoole\WeChat\Work\Mobile;
 
 use EasySwoole\WeChat\Work\Application;
+use EasySwoole\WeChat\Work\Mobile\Auth\Client;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 

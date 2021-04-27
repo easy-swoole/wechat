@@ -16,7 +16,7 @@ class Client extends BaseClient
     /**
      * Create a department.
      * 创建部门
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/92340
+     * doc link: https://work.weixin.qq.com/api/doc/90001/90143/90341
      *
      * @param array $data
      * @return mixed
@@ -41,7 +41,7 @@ class Client extends BaseClient
     /**
      * Update a department.
      * 更新部门
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/92341
+     * doc link: https://work.weixin.qq.com/api/doc/90001/90143/90342
      *
      * @param int $id
      * @param array $data
@@ -66,7 +66,7 @@ class Client extends BaseClient
     /**
      * Delete a department.
      * 删除部门
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/92342
+     * doc link: https://work.weixin.qq.com/api/doc/90001/90143/90343
      *
      * @param $id
      * @return bool
@@ -92,7 +92,7 @@ class Client extends BaseClient
     /**
      * Get department lists.
      * 获取部门列表
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/92343
+     * doc link: https://work.weixin.qq.com/api/doc/90001/90143/90344
      *
      * @param null $id
      * @return bool

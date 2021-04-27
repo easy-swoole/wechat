@@ -1,0 +1,9 @@
+{
+  "query": {
+    "signature": "34a079a3581b6099afebf59cfc1f570ee488f9d0",
+    "timestamp": "1606128379",
+    "nonce": "1095164962",
+    "openid": "o1YYd0mJxkRO0eCi7haWLDVMalts"
+  },
+  "body": "<xml><ToUserName><![CDATA[gh_1d45968d17db]]></ToUserName><FromUserName><![CDATA[o1YYd0mJxkRO0eCi7haWLDVMalts]]></FromUserName><CreateTime>1606128379</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[测试]]></Content><MsgId>22994230328393770</MsgId></xml>"
+}

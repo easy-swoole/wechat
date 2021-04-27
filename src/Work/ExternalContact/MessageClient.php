@@ -92,8 +92,8 @@ class MessageClient extends BaseClient
     }
 
     /**
-     * 获取企业群发消息发送结果
-     * doc link:  https://open.work.weixin.qq.com/api/doc/90000/90135/92109
+     * 获取企业群发成员执行结果
+     * doc link: https://open.work.weixin.qq.com/api/doc/16251
      *
      * @param string $msgId
      * @return mixed

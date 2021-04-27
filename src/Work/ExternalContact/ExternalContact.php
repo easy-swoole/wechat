@@ -11,11 +11,11 @@ use EasySwoole\WeChat\Work\Application;
  * @author: XueSi
  * @email: <1592328848@qq.com>
  * @property ContactWayClient $contactWay
- * @property StatisticsClient $externalContactStatistics
- * @property MessageClient $externalContactMessage
+ * @property StatisticsClient $statistics
+ * @property MessageClient $message
  * @property SchoolClient $school
- * @property MomentClient $externalContactMoment
- * @property MessageTemplateClient $externalContactMessageTemplate
+ * @property MomentClient $moment
+ * @property MessageTemplateClient $messageTemplate
  */
 class ExternalContact extends Client
 {

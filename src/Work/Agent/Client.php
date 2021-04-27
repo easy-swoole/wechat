@@ -11,6 +11,10 @@ use EasySwoole\WeChat\Work\BaseClient;
 class Client extends BaseClient
 {
     /**
+     * 获取应用
+     * Get agent.
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/90227#获取应用
+     *
      * @param int $agentId
      * @return array
      * @throws HttpException
@@ -32,6 +36,10 @@ class Client extends BaseClient
     }
 
     /**
+     * 设置应用
+     * Set agent.
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/90228
+     *
      * @param int $agentId
      * @param array $attributes
      * @return mixed
@@ -48,11 +56,13 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $jsonData);
-        return $jsonData;
+        return $this->checkResponse($response, $jsonData);
     }
 
     /**
+     * 获取access_token对应的应用列表
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/90227#获取access_token对应的应用列表
+     *
      * @return mixed
      * @throws HttpException
      */

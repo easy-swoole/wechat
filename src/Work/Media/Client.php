@@ -3,6 +3,7 @@
 namespace EasySwoole\WeChat\Work\Media;
 
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasySwoole\WeChat\Kernel\Psr\StreamResponse;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\Work\BaseClient;
 
@@ -28,8 +29,7 @@ class Client extends BaseClient
      */
     public function get(string $mediaId)
     {
-        //TODO: 获取临时素材
-        /*$query = [
+        $query = [
             'media_id' => $mediaId,
             'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
         ];
@@ -41,8 +41,11 @@ class Client extends BaseClient
                 $query
             ));
 
-        $this->checkResponse($response, $parseData);
-        return $parseData;*/
+        if (false !== stripos($response->getHeaderLine('Content-disposition'), 'attachment')) {
+            return new StreamResponse($response->getBody());
+        }
+
+        return $this->checkResponse($response);
     }
 
     /**
@@ -93,7 +96,7 @@ class Client extends BaseClient
     /**
      * 上传临时素材(普通文件)
      * Upload File
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/90256
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/90253
      *
      * @param string $path
      * @param array $form

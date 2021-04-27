@@ -127,7 +127,7 @@ class TagClient extends BaseClient
     }
 
     /**
-     * 增加标签成员 (部门)
+     * 增加标签成员
      * doc link: https://open.work.weixin.qq.com/api/doc/90000/90135/90214
      *
      * @param int $tagId
@@ -141,7 +141,7 @@ class TagClient extends BaseClient
     }
 
     /**
-     * 增加标签成员
+     * 增加标签成员 (部门)
      * doc link: https://open.work.weixin.qq.com/api/doc/90000/90135/90214
      *
      * @param int $tagId
