@@ -1,0 +1,16 @@
+{
+  "errcode": 0,
+  "errmsg": "ok",
+  "invaliduser": [
+    "UserID1",
+    "UserID2"
+  ],
+  "invalidparty": [
+    "PartyID1",
+    "PartyID2"
+  ],
+  "invalidtag": [
+    "TagID1",
+    "TagID2"
+  ]
+}

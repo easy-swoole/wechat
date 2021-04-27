@@ -27,7 +27,7 @@ class MomentClient extends BaseClient
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
-                '/ccgi-bin/externalcontact/get_moment_list',
+                '/cgi-bin/externalcontact/get_moment_list',
                 [
                     'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
                 ]

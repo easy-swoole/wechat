@@ -15,5 +15,9 @@ class ServiceProvider implements ServiceProviderInterface
         $app[Application::Agent] = function ($app) {
             return new Client($app);
         };
+
+        $app[Application::AgentWorkbench] = function ($app) {
+            return new WorkbenchClient($app);
+        };
     }
 }

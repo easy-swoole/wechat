@@ -10,11 +10,12 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 class AccessToken extends BaseAccessToken
 {
     /**
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/91039
      * @return string
      */
     protected function getEndpoint(): string
     {
-        return 'https://api.weixin.qq.com/cgi-bin/gettoken?'. $this->getCredentials();
+        return 'https://qyapi.weixin.qq.com/cgi-bin/gettoken?'. $this->getCredentials();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace EasySwoole\WeChat\Work\MiniProgram\Auth;
 
+use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\Work\BaseClient;
 
 /**

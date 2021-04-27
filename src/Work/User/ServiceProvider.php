@@ -17,7 +17,7 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Container $app)
     {
         $app[Application::User] = function ($app) {
-            return new Client($app);
+            return new User($app);
         };
 
         $app[User::Tag] = function ($app) {

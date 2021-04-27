@@ -78,14 +78,16 @@ class Client extends BaseClient
             return $this->batchDelete($userId);
         }
 
+        $query = [
+            'userid' => $userId,
+            'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
+        ];
+
         $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream(['userid' => $userId]))
+            ->setMethod('GET')
             ->send($this->buildUrl(
                 '/cgi-bin/user/delete',
-                [
-                    'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
-                ]
+                $query
             ));
 
         return $this->checkResponse($response);
@@ -156,7 +158,7 @@ class Client extends BaseClient
     {
         $query = [
             'department_id' => $departmentId,
-            'fetch_child' => (int) $fetchChild,
+            'fetch_child' => (int)$fetchChild,
             'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
         ];
 
@@ -185,7 +187,7 @@ class Client extends BaseClient
     {
         $query = [
             'department_id' => $departmentId,
-            'fetch_child' => (int) $fetchChild,
+            'fetch_child' => (int)$fetchChild,
             'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
         ];
 

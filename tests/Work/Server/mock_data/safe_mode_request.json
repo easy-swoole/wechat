@@ -1,0 +1,12 @@
+{
+  "query": {
+    "signature":"35c35a17908ebfaf8540ee11f7590764a88df32e",
+    "timestamp":"1606180982",
+    "nonce":"535086195",
+    "openid":"o1YYd0mJxkRO0eCi7haWLDVMalts",
+    "encrypt_type":"aes",
+    "msg_signature":"4f972a15c29b10ead13819cf575ed6154cb44715"
+  },
+  "body": "<xml><ToUserName><![CDATA[gh_1d45968d17db]]></ToUserName><Encrypt><![CDATA[qmVa+lJyG+ufY1lgh0fu6dzab6oiS2ARXx6dBgFmjPW9s0QL1HI+LONwAuFhZdaX2XKbQ/IFcvVhHk4HyXweqdOM7fRzPY/OvUFWkwE6AX/Iup8eSyB4oHuBSPbXb6BH6nLWK25r75OMzKT7coKjBRWjqrhfQndLrJEjCGQuiJCiZeJENgshlE1L5/nzdiGxLp/1S8hzDkXTpruCpOsSFtwghIGQF119nwX6U8l1TJDiEAcevvf4FdX3VcUdg7u5AVgEr8qfpgwS6BtXJpbbIKbF41l8X9WbitP/M/KMhGdVgtMvrYnZc3EJPVjdBpri8lvER25KVya7AkO9sIg+vd1XAhTs/Wp0t+NDFTROKf1LuSAznxxYjuEZs8YwMyK8e3wxdyFSY/aHOYL7/ac5xCrpTKASNDjT/KyTp1NWFfI=]]></Encrypt></xml>",
+  "clear_body": "<xml><ToUserName><![CDATA[gh_1d45968d17db]]></ToUserName><FromUserName><![CDATA[o1YYd0mJxkRO0eCi7haWLDVMalts]]></FromUserName><CreateTime>1606180982</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[测试]]></Content><MsgId>22994982940022977</MsgId></xml>"
+}

@@ -16,7 +16,7 @@ class Client extends BaseClient
     /**
      * Get callback ip.
      * 获取企业微信服务器的ip段
-     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/90930
+     * doc link: https://work.weixin.qq.com/api/doc/90000/90135/90930#3.3 获取企业微信服务器的ip段
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException

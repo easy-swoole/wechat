@@ -1,0 +1,16 @@
+{
+  "errcode": 0,
+  "errmsg": "ok",
+  "comment_list": [
+    {
+      "external_userid": "xxx",
+      "create_time": 1605172726
+    }
+  ],
+  "like_list": [
+    {
+      "external_userid": "xxx",
+      "create_time": 1605172726
+    }
+  ]
+}

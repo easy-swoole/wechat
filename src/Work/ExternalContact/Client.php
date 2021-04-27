@@ -200,7 +200,7 @@ class Client extends BaseClient
 
     /**
      * 离职成员的外部联系人再分配
-     * doc link: https://open.work.weixin.qq.com/api/doc/90000/90135/92109
+     * doc link: https://open.work.weixin.qq.com/api/doc/14020
      *
      * @param string $externalUserId
      * @param string $handoverUserId
@@ -228,8 +228,7 @@ class Client extends BaseClient
                 ]
             ));
 
-        $this->checkResponse($response, $jsonData);
-        return $jsonData;
+        return $this->checkResponse($response);
     }
 
     /**
