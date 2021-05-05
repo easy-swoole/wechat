@@ -1,0 +1,14 @@
+{
+  "errcode": 0,
+  "errmsg": "success",
+  "follow_buy_check_list": [
+    {
+      "order_id": "AQAATGagQ7KQCxMJEj7kHuUjTxxx",
+      "recommend_openid": "oPuQe5Qqmh141RF-SATE"
+    },
+    {
+      "order_id": "AQAATGagQ7KQCxMJEj7kHuUjTxxx",
+      "errmsg": "wxapp_fb_key错误"
+    }
+  ]
+}

@@ -19,6 +19,7 @@ class Client extends BaseClient
     /**
      * storage.removeUserStorage 删除已经上报到微信的key-value数据
      * removeUserStorage.
+     * doc link: https://developers.weixin.qq.com/minigame/dev/api-backend/open-api/data/storage.removeUserStorage.html
      *
      * @param string $openid
      * @param string $sessionKey
@@ -50,6 +51,7 @@ class Client extends BaseClient
     /**
      * storage.setUserStorage 上报用户数据后台接口
      * setUserStorage.
+     * doc link: https://developers.weixin.qq.com/minigame/dev/api-backend/open-api/data/storage.setUserStorage.html
      *
      * @param string $openid
      * @param string $sessionKey

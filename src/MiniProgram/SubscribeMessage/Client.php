@@ -41,10 +41,168 @@ class Client extends BaseClient
         return ['touser', 'template_id', 'data'];
     }
 
+    /**
+     * Combine templates and add them to your personal template library under your account.
+     * 组合模板并添加至帐号下的个人模板库
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html
+     *
+     * @param string $tid
+     * @param array $kidList
+     * @param string|null $sceneDesc
+     * @return mixed
+     * @throws HttpException
+     */
+    public function addTemplate(string $tid, array $kidList, string $sceneDesc = null)
+    {
+        $sceneDesc = $sceneDesc ?? '';
+        $data = compact('tid', 'kidList', 'sceneDesc');
+
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream($data))
+            ->send($this->buildUrl(
+                '/wxaapi/newtmpl/addtemplate',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
+    }
+
+    /**
+     * Delete personal template under account.
+     * 删除帐号下的个人模板
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.deleteTemplate.html
+     *
+     * @param string $id
+     * @return bool
+     * @throws HttpException
+     * @date: 2021/4/7 22:18
+     * @author: XueSi
+     * @email: <1592328848@qq.com>
+     */
+    public function deleteTemplate(string $id)
+    {
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream(['priTmplId' => $id]))
+            ->send($this->buildUrl(
+                '/wxaapi/newtmpl/deltemplate',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * Get the category of the applet account.
+     * 获取小程序账号的类目
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getCategory.html
+     *
+     * @return mixed
+     * @throws HttpException
+     * @date: 2021/4/7 22:30
+     * @author: XueSi
+     * @email: <1592328848@qq.com>
+     */
+    public function getCategory()
+    {
+        $response = $this->getClient()
+            ->setMethod('GET')
+            ->send($this->buildUrl(
+                '/wxaapi/newtmpl/getcategory', ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
+    }
+
+    /**
+     * Get keyword list under template title.
+     * 获取模板标题下的关键词列表
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateKeyWordsById.html
+     *
+     * @param string $tid
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getTemplateKeywords(string $tid)
+    {
+        $query = [
+            'tid' => $tid,
+            'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
+        ];
+
+        $response = $this->getClient()
+            ->setMethod('GET')
+            ->send($this->buildUrl(
+                '/wxaapi/newtmpl/getpubtemplatekeywords',
+                $query)
+            );
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
+    }
+
+    /**
+     * Get the title of the public template under the category to which the account belongs.
+     * 获取帐号所属类目下的公共模板标题
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateTitleList.html
+     *
+     * @param array $ids
+     * @param int $start
+     * @param int $limit
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getTemplateTitles(array $ids, int $start = 0, int $limit = 30)
+    {
+        $ids = implode(',', $ids);
+        $query = compact('ids', 'start', 'limit');
+        $query['access_token'] = $this->app[ServiceProviders::AccessToken]->getToken();
+
+        $response = $this->getClient()
+            ->setMethod('GET')
+            ->send($this->buildUrl(
+                '/wxaapi/newtmpl/getpubtemplatetitles', $query)
+            );
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
+    }
+
+    /**
+     * Get list of personal templates under the current account.
+     * 获取当前帐号下的个人模板列表
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html
+     *
+     * @return mixed
+     * @throws HttpException
+     * @date: 2021/4/7 22:29
+     * @author: XueSi
+     * @email: <1592328848@qq.com>
+     */
+    public function getTemplates()
+    {
+        $response = $this->getClient()
+            ->setMethod('GET')
+            ->send($this->buildUrl(
+                '/wxaapi/newtmpl/gettemplate', ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
+    }
 
     /**
      * Send a template message.
      * 发送订阅消息
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html
      *
      * @param array $data
      * @return mixed
@@ -108,157 +266,5 @@ class Client extends BaseClient
         }
 
         return $params;
-    }
-
-    /**
-     * Combine templates and add them to your personal template library under your account.
-     * 组合模板并添加至帐号下的个人模板库
-     *
-     * @param string $tid
-     * @param array $kidList
-     * @param string|null $sceneDesc
-     * @return mixed
-     * @throws HttpException
-     */
-    public function addTemplate(string $tid, array $kidList, string $sceneDesc = null)
-    {
-        $sceneDesc = $sceneDesc ?? '';
-        $data = compact('tid', 'kidList', 'sceneDesc');
-
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream($data))
-            ->send($this->buildUrl(
-                '/wxaapi/newtmpl/addtemplate',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
-    }
-
-    /**
-     * Delete personal template under account.
-     * 删除帐号下的个人模板
-     *
-     * @param string $id
-     * @return bool
-     * @throws HttpException
-     * @date: 2021/4/7 22:18
-     * @author: XueSi
-     * @email: <1592328848@qq.com>
-     */
-    public function deleteTemplate(string $id)
-    {
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream(['priTmplId' => $id]))
-            ->send($this->buildUrl(
-                '/wxaapi/newtmpl/deltemplate',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        return $this->checkResponse($response);
-    }
-
-    /**
-     * Get keyword list under template title.
-     * 获取模板标题下的关键词列表
-     *
-     * @param string $tid
-     * @return mixed
-     * @throws HttpException
-     */
-    public function getTemplateKeywords(string $tid)
-    {
-        $query = [
-            'tid' => $tid,
-            'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
-        ];
-
-        $response = $this->getClient()
-            ->setMethod('GET')
-            ->send($this->buildUrl(
-                '/wxaapi/newtmpl/getpubtemplatekeywords',
-                $query)
-            );
-
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
-    }
-
-    /**
-     * Get the title of the public template under the category to which the account belongs.
-     * 获取帐号所属类目下的公共模板标题
-     *
-     * @param array $ids
-     * @param int $start
-     * @param int $limit
-     * @return mixed
-     * @throws HttpException
-     */
-    public function getTemplateTitles(array $ids, int $start = 0, int $limit = 30)
-    {
-        $ids = implode(',', $ids);
-        $query = compact('ids', 'start', 'limit');
-        $query['access_token'] = $this->app[ServiceProviders::AccessToken]->getToken();
-
-        $response = $this->getClient()
-            ->setMethod('GET')
-            ->send($this->buildUrl(
-                '/wxaapi/newtmpl/getpubtemplatetitles', $query)
-            );
-
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
-    }
-
-    /**
-     * Get list of personal templates under the current account.
-     * 获取当前帐号下的个人模板列表
-     *
-     * @return mixed
-     * @throws HttpException
-     * @date: 2021/4/7 22:29
-     * @author: XueSi
-     * @email: <1592328848@qq.com>
-     */
-    public function getTemplates()
-    {
-        $response = $this->getClient()
-            ->setMethod('GET')
-            ->send($this->buildUrl(
-                '/wxaapi/newtmpl/gettemplate', ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
-    }
-
-    /**
-     * Get the category of the applet account.
-     * 获取小程序账号的类目
-     *
-     * @return mixed
-     * @throws HttpException
-     * @date: 2021/4/7 22:30
-     * @author: XueSi
-     * @email: <1592328848@qq.com>
-     */
-    public function getCategory()
-    {
-        $response = $this->getClient()
-            ->setMethod('GET')
-            ->send($this->buildUrl(
-                '/wxaapi/newtmpl/getcategory', ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
     }
 }

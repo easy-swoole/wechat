@@ -67,6 +67,7 @@ class Client extends BaseClient
     /**
      * uniformMessage.send
      * 下发小程序和公众号统一的服务消息
+     * doc link:
      *
      * @param array $data
      * @return bool

@@ -11,6 +11,7 @@ class Client extends BaseClient
     /**
      * Get paid unionid.
      * 用户支付完成后，获取该用户的 UnionId
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.getPaidUnionId.html
      *
      * @param $openid
      * @param array $options

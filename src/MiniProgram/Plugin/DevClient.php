@@ -17,6 +17,7 @@ class DevClient extends BaseClient
      * Get users.
      * pluginManager.getPluginDevApplyList
      * 获取当前所有插件使用方（供插件开发者调用）
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginDevApplyList.html
      *
      * @param int $page
      * @param int $size
@@ -46,6 +47,7 @@ class DevClient extends BaseClient
     /**
      * Agree to use plugin.
      * (同意申请) 修改插件使用申请的状态（供插件开发者调用）
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.setDevPluginApplyStatus.html
      *
      * @param string $appId
      *
@@ -63,6 +65,7 @@ class DevClient extends BaseClient
     /**
      * Refuse to use plugin.
      * (拒绝申请) 修改插件使用申请的状态（供插件开发者调用）
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.setDevPluginApplyStatus.html
      *
      * @param string $reason
      *
@@ -80,6 +83,7 @@ class DevClient extends BaseClient
     /**
      * Delete rejected applications.
      * (删除已拒绝的申请者) 修改插件使用申请的状态（供插件开发者调用）
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.setDevPluginApplyStatus.html
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException

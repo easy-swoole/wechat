@@ -18,6 +18,7 @@ use EasySwoole\WeChat\MiniProgram\BaseClient;
 class Client extends BaseClient
 {
     /****************** 商品管理接口 ****************/
+    # doc link: https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/commodity-api.html
     /**
      * Add broadcast goods.
      * 商品添加并提审
@@ -203,25 +204,28 @@ class Client extends BaseClient
     }
 
     /**************** 直播间接口 ******************/
+    # doc link: https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html
     /**
-     * Add goods to the designated live room.
-     * 直播间导入商品
+     * Create a live room.
+     * 创建直播间
      *
      * @param array $params
-     * @return bool
+     * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
-    public function addGoods(array $params)
+    public function createLiveRoom(array $params)
     {
         $response = $this->getClient()
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
-                '/wxaapi/broadcast/room/addgoods',
+                '/wxaapi/broadcast/room/create',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
     }
 
     /**
@@ -286,26 +290,24 @@ class Client extends BaseClient
     }
 
     /**
-     * Create a live room.
-     * 创建直播间
+     * Add goods to the designated live room.
+     * 直播间导入商品
      *
      * @param array $params
-     * @return mixed
+     * @return bool
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
-    public function createLiveRoom(array $params)
+    public function addGoods(array $params)
     {
         $response = $this->getClient()
             ->setMethod('POST')
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
-                '/wxaapi/broadcast/room/create',
+                '/wxaapi/broadcast/room/addgoods',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
+        return $this->checkResponse($response);
     }
 
     /**
@@ -565,7 +567,7 @@ class Client extends BaseClient
         $response = $this->getClient()
             ->setMethod('GET')
             ->send($this->buildUrl(
-                '/wxaapi/broadcast/room/deletesubanchor',
+                '/wxaapi/broadcast/room/getsubanchor',
                 $params)
             );
 
@@ -659,6 +661,113 @@ class Client extends BaseClient
             );
 
         return $this->checkResponse($response);
+    }
+
+    /**
+     * Change the status of goods on/off shelves in room.
+     * 上下架商品
+     *
+     * @param array $params
+     * @return bool
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
+    public function updateGoodsInRoom(array $params)
+    {
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream($params))
+            ->send($this->buildUrl(
+                '/wxaapi/broadcast/goods/onsale',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * Delete goods in room.
+     * 删除商品
+     *
+     * @param array $params
+     * @return bool
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
+    public function deleteGoodsInRoom(array $params)
+    {
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream($params))
+            ->send($this->buildUrl(
+                '/wxaapi/broadcast/goods/deleteInRoom',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * Push goods in room.
+     * 推送商品
+     *
+     * @param array $params
+     * @return bool
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
+    public function pushGoods(array $params)
+    {
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream($params))
+            ->send($this->buildUrl(
+                '/wxaapi/broadcast/goods/push',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * Change goods sort in room.
+     * 直播间商品排序
+     *
+     * @param array $params
+     * @return bool
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
+    public function sortGoods(array $params)
+    {
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream($params))
+            ->send($this->buildUrl(
+                '/wxaapi/broadcast/goods/sort',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * Download goods explanation video.
+     * 下载商品讲解视频
+     *
+     * @param array $params
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
+    public function downloadGoodsExplanationVideo(array $params)
+    {
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream($params))
+            ->send($this->buildUrl(
+                '/wxaapi/broadcast/goods/getVideo',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        $this->checkResponse($response, $parseData);
+
+        return $parseData;
     }
 
     /************* 成员管理接口 ***********************/
@@ -768,113 +877,6 @@ class Client extends BaseClient
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/wxa/business/push_message',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
-    }
-
-    /**
-     * Change the status of goods on/off shelves in room.
-     * 上下架商品
-     *
-     * @param array $params
-     * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
-     */
-    public function updateGoodsInRoom(array $params)
-    {
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream($params))
-            ->send($this->buildUrl(
-                '/wxaapi/broadcast/goods/onsale',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        return $this->checkResponse($response);
-    }
-
-    /**
-     * Delete goods in room.
-     * 删除商品
-     *
-     * @param array $params
-     * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
-     */
-    public function deleteGoodsInRoom(array $params)
-    {
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream($params))
-            ->send($this->buildUrl(
-                '/wxaapi/broadcast/goods/deleteInRoom',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        return $this->checkResponse($response);
-    }
-
-    /**
-     * Push goods in room.
-     * 推送商品
-     *
-     * @param array $params
-     * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
-     */
-    public function pushGoods(array $params)
-    {
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream($params))
-            ->send($this->buildUrl(
-                '/wxaapi/broadcast/goods/push',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        return $this->checkResponse($response);
-    }
-
-    /**
-     * Change goods sort in room.
-     * 直播间商品排序
-     *
-     * @param array $params
-     * @return bool
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
-     */
-    public function sortGoods(array $params)
-    {
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream($params))
-            ->send($this->buildUrl(
-                '/wxaapi/broadcast/goods/sort',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
-            );
-
-        return $this->checkResponse($response);
-    }
-
-    /**
-     * Download goods explanation video.
-     * 下载商品讲解视频
-     *
-     * @param array $params
-     * @return mixed
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
-     */
-    public function downloadGoodsExplanationVideo(array $params)
-    {
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream($params))
-            ->send($this->buildUrl(
-                '/wxaapi/broadcast/goods/getVideo',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
             );
 

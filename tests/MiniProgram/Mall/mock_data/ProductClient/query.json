@@ -1,0 +1,68 @@
+{
+  "errcode": 0,
+  "errmsg": "success",
+  "product_list": [
+    {
+      "item_code": "00003563372839_00000xxxxxx",
+      "sku_list": [
+        {
+          "sku_id": "00003563372839_100xxxxxxx",
+          "sku_attr_list": [],
+          "price": 1,
+          "status": 1,
+          "poi_list": []
+        }
+      ],
+      "title": "xxxxxxx",
+      "desc": "",
+      "image_list": [
+        "https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ],
+      "attr_list": [],
+      "category_list": [
+        "面部护理套装"
+      ],
+      "src_wxapp_path": ""
+    },
+    {
+      "item_code": "00003563xxxxxxxxxxxxxxxxxxxxxx",
+      "sku_list": [
+        {
+          "sku_id": "00003563372839_xxxxxxxxxxxxxxxxx",
+          "sku_attr_list": [
+            {
+              "name": "颜色",
+              "value": "红色"
+            },
+            {
+              "name": "手机型号",
+              "value": "iPhoneX"
+            }
+          ],
+          "price": 1,
+          "status": 1,
+          "poi_list": []
+        }
+      ],
+      "title": "红包拿来手机壳套装",
+      "desc": "红色 | iPhoneX",
+      "image_list": [
+        "https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ],
+      "attr_list": [
+        {
+          "name": "手机型号",
+          "value": "iPhoneX"
+        },
+        {
+          "name": "颜色",
+          "value": "红色"
+        }
+      ],
+      "category_list": [
+        "面部护理套装"
+      ],
+      "src_wxapp_path": ""
+    }
+  ]
+}

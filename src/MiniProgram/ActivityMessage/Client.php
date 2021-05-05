@@ -21,6 +21,7 @@ class Client extends BaseClient
     /**
      * updatableMessage.createActivityId
      * 创建被分享动态消息或私密消息的 activity_id
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/updatable-message/updatableMessage.createActivityId.html
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
@@ -39,7 +40,18 @@ class Client extends BaseClient
         return $parseData;
     }
 
-
+    /**
+     * updatableMessage.setUpdatableMsg
+     * 修改被分享的动态消息
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/updatable-message/updatableMessage.setUpdatableMsg.html
+     *
+     * @param string $activityId
+     * @param int $state
+     * @param array $params
+     * @return bool
+     * @throws InvalidArgumentException
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
     public function updateMessage(string $activityId, int $state = 0, array $params = [])
     {
         if (!in_array($state, [0, 1], true)) {
