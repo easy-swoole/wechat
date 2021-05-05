@@ -17,6 +17,7 @@ class Client extends BaseClient
     /**
      * Get Room List.
      * 获取直播房间列表
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#2
      *
      * @param int $start
      * @param int $limit
@@ -37,6 +38,7 @@ class Client extends BaseClient
     /**
      * Get Playback List.
      * 获取直播间回放
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#3
      *
      * @param int $roomId
      * @param int $start

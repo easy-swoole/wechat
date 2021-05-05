@@ -70,9 +70,7 @@ class OrderClient extends BaseClient
                 $query)
             );
 
-        $this->checkResponse($response, $parseData);
-
-        return $parseData;
+        return $this->checkResponse($response, $parseData);
     }
 
     /**

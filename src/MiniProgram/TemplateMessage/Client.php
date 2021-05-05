@@ -11,6 +11,8 @@ use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
  * @author master@kyour.cn
  * @package EasySwoole\WeChat\MiniProgram\TemplateMessage
  * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html
+ *
+ * notice: 该接口已经被废弃了
  */
 class Client extends BaseClient
 {
@@ -40,37 +42,9 @@ class Client extends BaseClient
     }
 
     /**
-     * templateMessage.getTemplateList
-     * 组合模板并添加至帐号下的个人模板库（请注意，小程序模板消息接口【已废弃】，开发者可使用订阅消息功能）
-     *
-     * @param int $offset
-     * @param int $count
-     *
-     * @return mixed
-     * @throws HttpException
-     */
-    public function list(int $offset, int $count)
-    {
-        return $this->queryPost('/cgi-bin/wxopen/template/library/list', compact('offset', 'count'));
-    }
-
-    /**
-     * templateMessage.getTemplateLibraryById
-     * 组合模板并添加至帐号下的个人模板库
-     *
-     * @param string $id
-     *
-     * @return mixed
-     * @throws HttpException
-     */
-    public function get(string $id)
-    {
-        return $this->queryPost('/cgi-bin/wxopen/template/library/get', compact('id'));
-    }
-
-    /**
      * templateMessage.addTemplate
-     * 组合模板并添加至帐号下的个人模板库
+     * 【已废弃】组合模板并添加至帐号下的个人模板库
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.addTemplate.html
      *
      * @param string $id
      * @param array $keyword
@@ -88,7 +62,8 @@ class Client extends BaseClient
 
     /**
      * templateMessage.deleteTemplate
-     * 组合模板并添加至帐号下的个人模板库
+     * 【已废弃】组合模板并添加至帐号下的个人模板库
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.deleteTemplate.html
      *
      * @param string $templateId
      *
@@ -97,14 +72,54 @@ class Client extends BaseClient
      */
     public function delete(string $templateId)
     {
-        return $this->queryPost('/cgi-bin/wxopen/template/del', [
-            'template_id' => $templateId,
-        ]);
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream([
+                'template_id' => $templateId,
+            ]))
+            ->send($this->buildUrl(
+                '/cgi-bin/wxopen/template/del',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()])
+            );
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * templateMessage.getTemplateLibraryById
+     * 【已废弃】组合模板并添加至帐号下的个人模板库
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.getTemplateLibraryById.html
+     *
+     * @param string $id
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function get(string $id)
+    {
+        return $this->queryPost('/cgi-bin/wxopen/template/library/get', compact('id'));
+    }
+
+    /**
+     * templateMessage.getTemplateList
+     * 【已废弃】组合模板并添加至帐号下的个人模板库
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.getTemplateLibraryList.html
+     *
+     * @param int $offset
+     * @param int $count
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function list(int $offset, int $count)
+    {
+        return $this->queryPost('/cgi-bin/wxopen/template/library/list', compact('offset', 'count'));
     }
 
     /**
      * templateMessage.getTemplateLibraryList
-     * 组合模板并添加至帐号下的个人模板库
+     * 【已废弃】组合模板并添加至帐号下的个人模板库
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.getTemplateList.html
      *
      * @param int $offset
      * @param int $count

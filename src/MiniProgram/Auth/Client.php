@@ -13,6 +13,15 @@ use EasySwoole\WeChat\MiniProgram\BaseClient;
  */
 class Client extends BaseClient
 {
+    /**
+     * 登录凭证校验
+     * auth.code2Session
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+     *
+     * @param string $code
+     * @return mixed
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
     public function session(string $code)
     {
         $params = [

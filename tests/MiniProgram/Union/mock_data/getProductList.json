@@ -1,0 +1,330 @@
+{
+  "errcode": 0,
+  "errmsg": "",
+  "productList": [
+    {
+      "productId": "7554942",
+      "product": {
+        "productId": "7554942",
+        "status": 5,
+        "info": {
+          "title": "新增商品并保存case_UpProduct",
+          "subTitle": "这是商品子标题",
+          "headImg": [
+            "https://wxamusic.wx.qq.com/wxasr/getminipic/zncFu89-HApz37MU8ZbwXB-7W09r7a2spQoE8wPrMFG4kgySC04JEIgbjTy8izde?media-id=zncFu89-HApz37MU8ZbwXB-7W09r7a2spQoE8wPrMFG4kgySC04JEIgbjTy8izde&amp;appid=wx678687fa5226e237"
+          ],
+          "category": [
+            {
+              "catId": "1247",
+              "name": "家具",
+              "fCatId": "0",
+              "updateTime": "0",
+              "catType": 1,
+              "bizuin": "3845180796",
+              "brandCat": "9223372036854775807",
+              "catInfo": {
+                "isRequired": 0,
+                "isCustomize": 0,
+                "catLevel": 1
+              },
+              "auditId": "0",
+              "desc": "",
+              "priority": 0
+            },
+            {
+              "catId": "1267",
+              "name": "儿童家具",
+              "fCatId": "1247",
+              "catType": 1,
+              "version": 0,
+              "bizuin": "0",
+              "catInfo": {
+                "isRequired": 0,
+                "isCustomize": 0,
+                "catLevel": 2
+              },
+              "auditId": "0",
+              "desc": "",
+              "priority": 0
+            },
+            {
+              "catId": "1270",
+              "name": "儿童床",
+              "fCatId": "1267",
+              "createTime": "0",
+              "updateTime": "0",
+              "catType": 1,
+              "version": 0,
+              "bizuin": "0",
+              "brandCat": "9223372036854775807",
+              "catInfo": {
+                "isRequired": 0,
+                "isCustomize": 0,
+                "specType": 0,
+                "specTypeDesc": "",
+                "attrTemplateId": "0",
+                "attrTemplateName": "",
+                "maxAttrNum": 18,
+                "editByUser": 0,
+                "catLevel": 3,
+                "highestPriceFixing": 0,
+                "wording": "",
+                "description": "",
+                "maxProductNum": 0,
+                "qualification": "",
+                "productQualification": "",
+                "quaNeedAudit": "",
+                "maxQualificationImg": 0,
+                "catGroup": 0,
+                "individualAuditInfo": {
+                  "qualification": "",
+                  "productQualification": "",
+                  "quaNeedAudit": "",
+                  "maxQualificationImg": 0
+                },
+                "enterpriseAuditInfo": {
+                  "qualification": "",
+                  "productQualification": "",
+                  "quaNeedAudit": "",
+                  "maxQualificationImg": 0
+                }
+              },
+              "auditId": "0",
+              "desc": "",
+              "priority": 0
+            }
+          ],
+          "brand": "",
+          "brandId": "2100000000",
+          "model": "",
+          "detail": {
+            "detailImg": [
+              "https://wxamusic.wx.qq.com/wxasr/getminipic/zncFu89-HApz37MU8ZbwXB-7W09r7a2spQoE8wPrMFG4kgySC04JEIgbjTy8izde?media-id=zncFu89-HApz37MU8ZbwXB-7W09r7a2spQoE8wPrMFG4kgySC04JEIgbjTy8izde&amp;appid=wx678687fa5226e237"
+            ],
+            "detailVideos": [],
+            "detailVideoInfo": []
+          },
+          "param": [],
+          "minPrice": 2000,
+          "expressInfo": {
+            "templateId": "37927"
+          },
+          "totalStockNum": 0
+        },
+        "skus": []
+      },
+      "leagueExInfo": {
+        "hasCommission": 1,
+        "commissionRatio": 8000,
+        "commissionValue": 1600
+      },
+      "shopInfo": {
+        "name": "xxx小商店",
+        "guaranteeFlag": 0,
+        "headImgUrl": "http://wx.qlogo.cn/mmhead/Q3auHgzwzM77ia7ibuPAQBJgME8gFF9APicaSpd7evrLCVb5hn2zsUBOw"
+      }
+    },
+    {
+      "productId": "6565746",
+      "product": {
+        "productId": "6565746",
+        "status": 5,
+        "info": {
+          "title": "假发",
+          "subTitle": "假发",
+          "headImg": [
+            "https://snsdy.tc.qq.com/161/20304/snscosdownload/SZ/reserved/5fd316dc0000ef4b0000000043785609000000a000004f50"
+          ],
+          "category": [
+            {
+              "catId": "1001",
+              "name": ""
+            },
+            {
+              "catId": "1030",
+              "name": ""
+            },
+            {
+              "catId": "1031",
+              "name": ""
+            }
+          ],
+          "brandId": "2100000000",
+          "detail": {
+            "detailImg": [],
+            "detailVideos": [],
+            "detailVideoInfo": [],
+            "desc": "测试商品"
+          },
+          "param": [],
+          "minPrice": 100,
+          "expressInfo": {
+            "templateId": "1024691"
+          },
+          "totalStockNum": 39995
+        },
+        "skus": [
+          {
+            "skuId": "11913889",
+            "status": 5,
+            "productSkuInfo": {
+              "saleParam": [
+                {
+                  "categorys": [
+                    {
+                      "catId": "35245",
+                      "name": "选择产品",
+                      "fCatId": "1031",
+                      "catType": 3,
+                      "bizuin": "3853210889",
+                      "brandCat": "0",
+                      "catInfo": {
+                        "isCustomize": 1,
+                        "editByUser": 0
+                      },
+                      "desc": "",
+                      "priority": 0
+                    },
+                    {
+                      "catId": "1000000000000",
+                      "name": "111",
+                      "fCatId": "35245",
+                      "bizuin": "3853210889",
+                      "catInfo": {
+                        "editByUser": 1
+                      },
+                      "desc": "",
+                      "priority": 1
+                    }
+                  ]
+                },
+                {
+                  "categorys": [
+                    {
+                      "catId": "35246",
+                      "name": "选择颜色",
+                      "fCatId": "1031",
+                      "catType": 3,
+                      "bizuin": "3853210889",
+                      "brandCat": "0",
+                      "catInfo": {
+                        "isCustomize": 1,
+                        "editByUser": 0
+                      },
+                      "desc": "",
+                      "priority": 0
+                    },
+                    {
+                      "catId": "1000000000001",
+                      "name": "3333",
+                      "fCatId": "35246",
+                      "bizuin": "3853210889",
+                      "catInfo": {
+                        "editByUser": 1
+                      },
+                      "desc": "",
+                      "priority": 1
+                    }
+                  ]
+                }
+              ],
+              "thumbImg": "",
+              "skuCode": "",
+              "salePrice": 100,
+              "marketPrice": 100,
+              "stockInfo": {
+                "stockNum": 20000
+              },
+              "appidForMedia": ""
+            }
+          },
+          {
+            "skuId": "11915862",
+            "status": 5,
+            "productSkuInfo": {
+              "saleParam": [
+                {
+                  "categorys": [
+                    {
+                      "catId": "35245",
+                      "name": "选择产品",
+                      "fCatId": "1031",
+                      "catType": 3,
+                      "bizuin": "3853210889",
+                      "brandCat": "0",
+                      "catInfo": {
+                        "isCustomize": 1,
+                        "editByUser": 0
+                      },
+                      "desc": "",
+                      "priority": 0
+                    },
+                    {
+                      "catId": "1000000000002",
+                      "name": "1112",
+                      "fCatId": "35245",
+                      "bizuin": "3853210889",
+                      "catInfo": {
+                        "editByUser": 1
+                      },
+                      "desc": "",
+                      "priority": 2
+                    }
+                  ]
+                },
+                {
+                  "categorys": [
+                    {
+                      "catId": "35246",
+                      "name": "选择颜色",
+                      "fCatId": "1031",
+                      "catType": 3,
+                      "bizuin": "3853210889",
+                      "brandCat": "0",
+                      "catInfo": {
+                        "isCustomize": 1,
+                        "editByUser": 0
+                      },
+                      "desc": "",
+                      "priority": 0
+                    },
+                    {
+                      "catId": "1000000000001",
+                      "name": "3333",
+                      "fCatId": "35246",
+                      "bizuin": "3853210889",
+                      "catInfo": {
+                        "editByUser": 1
+                      },
+                      "desc": "",
+                      "priority": 1
+                    }
+                  ]
+                }
+              ],
+              "thumbImg": "",
+              "skuCode": "",
+              "salePrice": 100,
+              "marketPrice": 100,
+              "stockInfo": {
+                "stockNum": 20000
+              },
+              "appidForMedia": ""
+            }
+          }
+        ]
+      },
+      "leagueExInfo": {
+        "hasCommission": 1,
+        "commissionRatio": 3300,
+        "commissionValue": 33
+      },
+      "shopInfo": {
+        "name": "xxx",
+        "guaranteeFlag": 0,
+        "headImgUrl": "http://wx.qlogo.cn/mmhead/574VdhMFwaETvsGUwOpJsHAWaM3UDznibq3MMMiaOPSt7Ir1ecTLOfJQ/0"
+      }
+    }
+  ],
+  "total": 100
+}

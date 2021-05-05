@@ -12,6 +12,24 @@ use EasySwoole\WeChat\MiniProgram\BaseClient;
 class Client extends BaseClient
 {
     /**
+     * 获取小程序二维码
+     * wxacode.createQRCode
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.createQRCode.html
+     *
+     * @param string $path
+     * @param int|null $width
+     * @return StreamResponseInterface
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
+     */
+    public function getQrCode(string $path, int $width = null)
+    {
+        return $this->getStream('/cgi-bin/wxaapp/createwxaqrcode', compact('path', 'width'));
+    }
+
+    /**
+     * 获取小程序码
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
+     *
      * @param string $path
      * @param array $optional
      * @return StreamResponseInterface
@@ -27,6 +45,10 @@ class Client extends BaseClient
     }
 
     /**
+     * 获取小程序码
+     * wxacode.getUnlimited
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
+     *
      * @param string $scene
      * @param array $optional
      * @return StreamResponseInterface
@@ -42,20 +64,9 @@ class Client extends BaseClient
     }
 
     /**
-     * @param string $path
-     * @param int|null $width
-     * @return StreamResponseInterface
-     * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
-     */
-    public function getQrCode(string $path, int $width = null)
-    {
-        return $this->getStream('/cgi-bin/wxaapp/createwxaqrcode', compact('path', 'width'));
-    }
-
-    /**
      * @param string $endpoint
      * @param array $params
-     * @return StreamResponse
+     * @return bool|StreamResponse
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
      */
     protected function getStream(string $endpoint, array $params)
@@ -72,6 +83,6 @@ class Client extends BaseClient
             return new StreamResponse($response->getBody());
         }
 
-        $this->checkResponse($response);
+        return $this->checkResponse($response);
     }
 }

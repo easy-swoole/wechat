@@ -15,6 +15,8 @@ class Client extends BaseClient
 {
     /**
      * 获取小程序scheme码
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/url-scheme/urlscheme.generate.html
+     *
      * @param array $param
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException

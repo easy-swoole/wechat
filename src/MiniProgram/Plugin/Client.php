@@ -16,6 +16,7 @@ class Client extends BaseClient
     /**
      * pluginManager.applyPlugin
      * 向插件开发者发起使用插件的申请
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.applyPlugin.html
      *
      * @param string $appId
      *
@@ -40,6 +41,7 @@ class Client extends BaseClient
     /**
      * pluginManager.getPluginList
      * 查询已添加的插件
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.getPluginList.html
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
@@ -54,6 +56,7 @@ class Client extends BaseClient
     /**
      * pluginManager.unbindPlugin
      * 删除已添加的插件
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.unbindPlugin.html
      *
      * @param string $appId
      *

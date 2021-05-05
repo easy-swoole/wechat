@@ -1,0 +1,18 @@
+{
+  "errcode": 0,
+  "errmsg": "success",
+  "goods_list": [
+    {
+      "biz_uin": 3506967354,
+      "item_code": "00010101010010101010101010alinchiiiii",
+      "sku_id": "sku_id2",
+      "quantity": 1,
+      "create_time": 1557924591,
+      "update_time": 1557924591,
+      "source": 2,
+      "status": 0,
+      "title": "product_name_for_test_alinchalinch",
+      "from_scene": 1
+    }
+  ]
+}

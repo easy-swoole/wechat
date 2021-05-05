@@ -19,6 +19,7 @@ class Client extends BaseClient
     /**
      * Add nearby poi.
      * nearbyPoi.add 添加地点
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.add.html
      *
      * @param array $params
      * @return mixed
@@ -47,6 +48,7 @@ class Client extends BaseClient
     /**
      * Update nearby poi.
      * 更新地点
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.add.html
      *
      * @param string $poiId
      * @param array $params
@@ -76,6 +78,7 @@ class Client extends BaseClient
     /**
      * Delete nearby poi.
      * nearbyPoi.delete 删除地点
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.delete.html
      *
      * @param string $poiId
      * @return mixed
@@ -101,6 +104,7 @@ class Client extends BaseClient
     /**
      * Get nearby poi list.
      * nearbyPoi.getList 查看地点列表
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.getList.html
      *
      *
      * @param int $page
@@ -131,6 +135,7 @@ class Client extends BaseClient
     /**
      * Set nearby poi show status.
      * 展示/取消展示附近小程序
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.setShowStatus.html
      *
      * @param string $poiId
      * @param int $status
