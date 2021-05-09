@@ -12,6 +12,8 @@ namespace EasySwoole\WeChat\Tests\MiniProgram;
 
 use EasySwoole\WeChat\MiniProgram\Application;
 use EasySwoole\WeChat\Tests\TestCase;
+use Psr\Http\Message\ServerRequestInterface;
+use EasySwoole\WeChat\Tests\Mock\Message\Status;
 
 class ApplicationTest extends TestCase
 {
@@ -81,19 +83,32 @@ class ApplicationTest extends TestCase
 
     public function testMagicCall()
     {
-        $app = new Application([
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getPaidUnionid.json'));
+
+        $app = $this->mockAccessToken(new Application([
             'appId' => 'mock_appid',
             'appSecret' => 'mock_secret'
-        ]);
+        ]));
 
-        $app[Application::Base] = new class()
-        {
-            public function dummyMethod()
-            {
-                return 'mock-result';
-            }
-        };
+        $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('GET', $request->getMethod());
+            $this->assertEquals('/wxa/getpaidunionid', $request->getUri()->getPath());
+            $this->assertEquals('openid=mock_openid&transaction_id=mock_transaction_id&access_token=mock_access_token', $request->getUri()->getQuery());
+        }, $response, $app);
 
-        $this->assertSame('mock-result', $app->dummyMethod());
+        $client = $app->base;
+
+        $this->assertIsArray($client->getPaidUnionid('mock_openid', [
+            'transaction_id' => 'mock_transaction_id'
+        ]));
+
+        $this->assertSame(json_decode($this->readMockResponseJson('getPaidUnionid.json'), true), $client->getPaidUnionid('mock_openid', [
+            'transaction_id' => 'mock_transaction_id'
+        ]));
+    }
+
+    private function readMockResponseJson($filename)
+    {
+        return file_get_contents(__DIR__ . '/Base/mock_data/' . $filename);
     }
 }
