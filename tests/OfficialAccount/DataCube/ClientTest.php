@@ -201,7 +201,7 @@ class ClientTest extends TestCase
 
     protected function readMockResponseJson(string $file): string
     {
-        return file_get_contents(dirname(__FILE__) . '/mock_data/' . $file);
+        return file_get_contents(dirname(__FILE__) . '/mock_data/Client/' . $file);
     }
 
     protected function readJsonToArray(string $file): array

@@ -17,6 +17,7 @@ class Client extends BaseClient
 {
     /**
      * 获取用户增减数据.
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Analytics/User_Analysis_Data_Interface.html
      *
      * @param string $from 获取数据的起始日期
      * @param string $to 获取数据的结束日期
@@ -34,6 +35,7 @@ class Client extends BaseClient
 
     /**
      * 获取累计用户数据.
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Analytics/User_Analysis_Data_Interface.html
      *
      * @param string $from 获取数据的起始日期
      * @param string $to 获取数据的结束日期
