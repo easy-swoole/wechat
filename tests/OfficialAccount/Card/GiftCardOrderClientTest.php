@@ -58,7 +58,7 @@ class GiftCardOrderClientTest extends TestCase
 
     protected function readMockResponseJsonByFunction(string $func, bool $jsonDecode = false)
     {
-        $fileName = ucwords(preg_replace('/(.)(?=[A-Z])/u', '$1' . '_', ltrim($func, 'test'))) . '.json';
+        $fileName = strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1' . '_', ltrim($func, 'test'))) . '.json';
         $ret = file_get_contents(dirname(__FILE__) . '/mock_data/gift_card_order_' . $fileName);
         return $jsonDecode ? json_decode($ret, true) : $ret;
     }
