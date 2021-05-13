@@ -1,0 +1,97 @@
+{
+  "authorizer_info": {
+    "nick_name": "找呀找呀找盲盒",
+    "head_img": "http:xxx",
+    "service_type_info": {
+      "id": 0
+    },
+    "verify_type_info": {
+      "id": -1
+    },
+    "user_name": "gh_3dacad47dc6b",
+    "alias": "",
+    "qrcode_url": "http:xxx",
+    "business_info": {
+      "open_pay": 0,
+      "open_shake": 0,
+      "open_scan": 0,
+      "open_card": 0,
+      "open_store": 0
+    },
+    "idc": 1,
+    "principal_name": "个人",
+    "signature": "欢迎小伙伴一起参与盲盒游戏，集齐9款鞋卡，可以兑换大奖！",
+    "MiniProgramInfo": {
+      "network": {
+        "RequestDomain": [
+          "https:xxx",
+          "https:xxxx",
+          "https:xxx"
+        ],
+        "WsRequestDomain": [],
+        "UploadDomain": [],
+        "DownloadDomain": [],
+        "BizDomain": [],
+        "UDPDomain": []
+      },
+      "categories": [
+        {
+          "first": "工具",
+          "second": "效率"
+        }
+      ],
+      "visit_status": 0
+    }
+  },
+  "authorization_info": {
+    "authorizer_appid": "wxf24d2dfc1a974128",
+    "authorizer_refresh_token": "xxxxxx",
+    "func_info": [
+      {
+        "funcscope_category": {
+          "id": 17
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 18
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 19
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 25
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 30
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 31
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 36
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 37
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 40
+        }
+      }
+    ]
+  }
+}

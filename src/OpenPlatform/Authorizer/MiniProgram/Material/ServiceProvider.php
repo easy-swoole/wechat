@@ -1,12 +1,10 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Material;
 
 use EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Application;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-
 
 class ServiceProvider implements ServiceProviderInterface
 {

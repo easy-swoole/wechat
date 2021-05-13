@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Server\Handlers;
-
 
 use EasySwoole\WeChat\Kernel\Contracts\EventHandlerInterface;
 

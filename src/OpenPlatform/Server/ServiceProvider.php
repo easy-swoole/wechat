@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Server;
-
 
 use EasySwoole\WeChat\Kernel\Encryptor;
 use EasySwoole\WeChat\Kernel\ServiceContainer;

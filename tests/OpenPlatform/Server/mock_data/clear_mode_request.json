@@ -1,0 +1,9 @@
+{
+  "query": {
+    "signature": "76480565cbe296026c53aaacd1ad523a1ddba24f",
+    "timestamp": "1409304348",
+    "nonce": "xxxxxx",
+    "encrypt_type": "aes"
+  },
+  "body": "<xml><AppId><![CDATA[some_appid]]></AppId><CreateTime><![CDATA[1413192605]]></CreateTime><InfoType><![CDATA[component_verify_ticket]]></InfoType><ComponentVerifyTicket><![CDATA[some_verify_ticket]]></ComponentVerifyTicket></xml>"
+}

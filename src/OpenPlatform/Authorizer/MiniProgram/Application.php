@@ -1,27 +1,27 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram;
 
-
 use EasySwoole\WeChat\MiniProgram\Application as MiniProgram;
-use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\AggregateServiceProvider;
 
 /**
  * Class Application
  * @package EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram
- * @property Account\Client $account
  * @property Code\Client $code
  * @property Domain\Client $domain
+ * @property Material\Client $material
+ * @property QrCodeJump\Client $qrCodeJump
  * @property Setting\Client $setting
  * @property Tester\Client $tester
- * @property Material\Client $material
  */
 class Application extends MiniProgram
 {
+    const Account = 'account';
     const Code = 'code';
     const Domain = 'domain';
     const Material = 'material';
+    const OpenAuth = 'openAuth';
+    const QrCodeJump = 'qrCodeJump';
     const Setting = 'setting';
     const Tester = 'tester';
 
@@ -30,13 +30,12 @@ class Application extends MiniProgram
         parent::__construct($config, $name, $values);
 
         $providers = [
-            AggregateServiceProvider::class,
             Code\ServiceProvider::class,
             Domain\ServiceProvider::class,
-            Account\ServiceProvider::class,
-            Setting\ServiceProvider::class,
-            Tester\ServiceProvider::class,
             Material\ServiceProvider::class,
+            QrCodeJump\ServiceProvider::class,
+            Setting\ServiceProvider::class,
+            Tester\ServiceProvider::class
         ];
 
         foreach ($providers as $provider) {

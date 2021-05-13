@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Code;
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\Psr\StreamResponse;
@@ -12,6 +10,9 @@ use EasySwoole\WeChat\OpenPlatform\BaseClient;
 class Client extends BaseClient
 {
     /**
+     * 代小程序实现业务 - 代码管理 - 上传代码
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/commit.html
+     *
      * @param int $templateId
      * @param string $extJson
      * @param string $version
@@ -33,53 +34,13 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
-     * @param string|null $path
-     * @return StreamResponse
-     * @throws HttpException
-     */
-    public function getQrCode(string $path = null)
-    {
-        $response = $this->getClient()
-            ->setMethod("GET")
-            ->send($this->buildUrl(
-                "/wxa/get_qrcode",
-                [
-                    'path' => $path,
-                    'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
-                ]
-            ));
-
-        if (false !== stripos($response->getHeaderLine('Content-disposition'), 'attachment')) {
-            return new StreamResponse($response->getBody());
-        }
-
-        $this->checkResponse($response);
-    }
-
-    /**
-     * @return mixed
-     * @throws HttpException
-     */
-    public function getCategory()
-    {
-        $response = $this->getClient()
-            ->setMethod("GET")
-            ->send($this->buildUrl(
-                "/wxa/get_category",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response, $data);
-
-        return $data;
-    }
-
-    /**
+     * 代小程序实现业务 - 代码管理 - 获取已上传的代码的页面列表
+     * doc link：https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_page.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -98,6 +59,36 @@ class Client extends BaseClient
     }
 
     /**
+     * 代小程序实现业务 - 代码管理 - 获取体验版二维码
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_qrcode.html
+     *
+     * @param string|null $path
+     * @return bool|StreamResponse
+     * @throws HttpException
+     */
+    public function getQrCode(string $path = null)
+    {
+        $response = $this->getClient()
+            ->setMethod("GET")
+            ->send($this->buildUrl(
+                "/wxa/get_qrcode",
+                [
+                    'path' => $path,
+                    'access_token' => $this->app[ServiceProviders::AccessToken]->getToken()
+                ]
+            ));
+
+        if (false !== stripos($response->getHeaderLine('Content-disposition'), 'attachment')) {
+            return new StreamResponse($response->getBody());
+        }
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * 代小程序实现业务 - 代码管理 - 提交审核
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/submit_audit.html
+     *
      * @param array $data
      * @param string|null $feedbackInfo
      * @param string|null $feedbackStuff
@@ -130,6 +121,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 代小程序实现业务 - 代码管理 - 查询指定发布审核单的审核状态
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_auditstatus.html
+     *
      * @param int $auditId
      * @return mixed
      * @throws HttpException
@@ -150,6 +144,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 代小程序实现业务 - 代码管理 - 查询最新一次提交的审核状态
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_latest_auditstatus.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -168,24 +165,9 @@ class Client extends BaseClient
     }
 
     /**
-     * @return mixed
-     * @throws HttpException
-     */
-    public function release()
-    {
-        $response = $this->getClient()
-            ->setMethod("POST")
-            ->send($this->buildUrl(
-                "/wxa/release",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response, $data);
-
-        return $data;
-    }
-
-    /**
+     * 代小程序实现业务 - 代码管理 - 小程序审核撤回
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/undocodeaudit.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -198,51 +180,86 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
+     * 代小程序实现业务 - 代码管理 - 发布已通过审核的小程序
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/release.html
+     *
      * @return mixed
      * @throws HttpException
      */
-    public function rollbackRelease()
+    public function release()
     {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody($this->jsonDataToStream([]))
+            ->send($this->buildUrl(
+                "/wxa/release",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * 代小程序实现业务 - 代码管理 - 版本回退
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/revertcoderelease.html
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function rollbackRelease(int $appVersion = null)
+    {
+        $query = [
+            'access_token' => $this->app[ServiceProviders::AccessToken]->getToken(),
+        ];
+
+        if (!is_null($appVersion)) {
+            $query['app_version'] = $appVersion;
+        }
+
         $response = $this->getClient()
             ->setMethod("GET")
             ->send($this->buildUrl(
                 "/wxa/revertcoderelease",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+                $query
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
-     * @param string $action
+     * 代小程序实现业务 - 代码管理 - 获取可回退的小程序版本
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_history_version.html
+     *
      * @return mixed
      * @throws HttpException
      */
-    public function changeVisitStatus(string $action)
+    public function getHistoryVersion()
     {
+        $query = [
+            'access_token' => $this->app[ServiceProviders::AccessToken]->getToken(),
+            'action' => 'get_history_version'
+        ];
+
         $response = $this->getClient()
-            ->setMethod("POST")
-            ->setBody($this->jsonDataToStream(['action' => $action]))
+            ->setMethod("GET")
             ->send($this->buildUrl(
-                "/wxa/change_visitstatus",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+                "/wxa/revertcoderelease",
+                $query
             ));
 
-        $this->checkResponse($response, $data);
+        $this->checkResponse($response, $jsonData);
 
-        return $data;
+        return $jsonData;
     }
 
     /**
-     * 分阶段发布
+     * 代小程序实现业务 - 代码管理 - 分阶段发布
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/grayrelease.html
+     *
      * @param int $grayPercentage
      * @return mixed
      * @throws HttpException
@@ -257,32 +274,13 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
-     * 取消分阶段发布
-     * @return mixed
-     * @throws HttpException
-     */
-    public function revertGrayRelease()
-    {
-        $response = $this->getClient()
-            ->setMethod("GET")
-            ->send($this->buildUrl(
-                "/wxa/revertgrayrelease",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response, $data);
-
-        return $data;
-    }
-
-    /**
-     * 查询当前分阶段发布详情
+     * 代小程序实现业务 - 代码管理 - 查询当前分阶段发布详情
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/getgrayreleaseplan.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -301,7 +299,49 @@ class Client extends BaseClient
     }
 
     /**
-     * 查询当前设置的最低基础库版本及各版本用户占比
+     * 代小程序实现业务 - 代码管理 - 取消分阶段发布
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/revertgrayrelease.html
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function revertGrayRelease()
+    {
+        $response = $this->getClient()
+            ->setMethod("GET")
+            ->send($this->buildUrl(
+                "/wxa/revertgrayrelease",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * 代小程序实现业务 - 代码管理 - 修改小程序服务状态
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/change_visitstatus.html
+     *
+     * @param string $action
+     * @return mixed
+     * @throws HttpException
+     */
+    public function changeVisitStatus(string $action)
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody($this->jsonDataToStream(['action' => $action]))
+            ->send($this->buildUrl(
+                "/wxa/change_visitstatus",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * 代小程序实现业务 - 代码管理 - 查询当前设置的最低基础库版本及各版本用户占比
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/getweappsupportversion.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -320,7 +360,9 @@ class Client extends BaseClient
     }
 
     /**
-     * 设置最低基础库版本
+     * 代小程序实现业务 - 代码管理 - 设置最低基础库版本
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/setweappsupportversion.html
+     *
      * @param string $version
      * @return mixed
      * @throws HttpException
@@ -335,13 +377,13 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response, $data);
     }
 
     /**
-     * 查询服务商的当月提审限额（quota）和加急次数
+     * 代小程序实现业务 - 代码管理 - 查询服务商的当月提审限额（quota）和加急次数
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -360,7 +402,8 @@ class Client extends BaseClient
     }
 
     /**
-     * 加急审核申请
+     * 代小程序实现业务 - 代码管理 - 加急审核申请
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/speedup_audit.html
      *
      * @param int $auditId 审核单ID
      * @return mixed
@@ -376,8 +419,6 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 }

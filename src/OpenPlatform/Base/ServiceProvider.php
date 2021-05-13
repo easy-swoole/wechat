@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Base;
-
 
 use EasySwoole\WeChat\OfficialAccount\Application;
 use Pimple\Container;
