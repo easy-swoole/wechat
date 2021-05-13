@@ -1,6 +1,5 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate;
 
 use Pimple\Container;

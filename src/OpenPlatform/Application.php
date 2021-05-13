@@ -1,16 +1,18 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform;
 
-
 use BadMethodCallException;
+use EasySwoole\WeChat\Kernel\Encryptor;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
-use EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Auth\Client;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Application as OfficialAccount;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Application as MiniProgram;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Account\Client as OfficialAccountAccountClient;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\OpenOAuth\Client as OfficialAccountOAuthClient;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\CallApi\Client as OfficialAccountCallApiClient;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\OpenAuth\Client as MiniProgramOpenAuthClient;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Account\Client as MiniProgramAccountClient;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
 
 /**
@@ -18,10 +20,12 @@ use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
  *
  * @package EasySwoole\WeChat\OpenPlatform
  * @property Auth\AccessToken $accessToken
+ * @property Auth\VerifyTicket $verifyTicket
  * @property Base\Client $base
- * @property Server\Guard $server
  * @property CodeTemplate\Client $codeTemplate
  * @property Component\Client $component
+ * @property Server\Guard $server
+ *
  * @method mixed handleAuthorize(string $authCode)
  * @method mixed createPreAuthorizationCode()
  * @method string getPreAuthorizationUrl(string $callbackUrl, ?string $preAuthCode = null, array $optional = [])
@@ -34,13 +38,11 @@ use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
  */
 class Application extends ServiceContainer
 {
-    const Account = 'account';
-    const Base = 'base';
-    const Server = 'server';
     const VerifyTicket = 'verifyTicket';
+    const Base = 'base';
     const CodeTemplate = 'codeTemplate';
     const Component = 'component';
-
+    const Server = 'server';
 
     protected $providers = [
         Auth\ServiceProvider::class,
@@ -51,6 +53,9 @@ class Application extends ServiceContainer
     ];
 
     /**
+     * 创建代公众号业务实例
+     * Creates the officialAccount application.
+     *
      * @param string $appId
      * @param string|null $refreshToken
      * @param AccessToken|null $accessToken
@@ -62,8 +67,17 @@ class Application extends ServiceContainer
             ServiceProviders::AccessToken => $accessToken ?: function ($app) {
                 return new AccessToken($app, $this);
             },
-            Application::Account => function ($app) {
+            ServiceProviders::Encryptor => function ($app) {
+                return new Encryptor();
+            },
+            OfficialAccount::Account => function ($app) {
                 return new OfficialAccountAccountClient($app, $this);
+            },
+            OfficialAccount::CallApi => function ($app) {
+                return new OfficialAccountCallApiClient($app, $this);
+            },
+            OfficialAccount::OpenOAuth => function ($app) {
+                return new OfficialAccountOAuthClient($app, $this);
             }
         ]);
 
@@ -71,6 +85,9 @@ class Application extends ServiceContainer
     }
 
     /**
+     * Creates the miniProgram application.
+     * 创建代注册小程序实例
+     *
      * @param string $appId
      * @param string|null $refreshToken
      * @param AccessToken|null $accessToken
@@ -82,8 +99,14 @@ class Application extends ServiceContainer
             ServiceProviders::AccessToken => $accessToken ?: function ($app) {
                 return new AccessToken($app, $this);
             },
-            MiniProgram::Auth => function ($app) {
-                return new Client($app, $this);
+            ServiceProviders::Encryptor => function ($app) {
+                return new \EasySwoole\WeChat\MiniProgram\Encryptor();
+            },
+            MiniProgram::Account => function ($app) {
+                return new MiniProgramAccountClient($app, $this);
+            },
+            MiniProgram::OpenAuth => function ($app) {
+                return new MiniProgramOpenAuthClient($app, $this);
             }
         ]);
     }

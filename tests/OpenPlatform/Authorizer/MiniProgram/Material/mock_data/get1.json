@@ -1,0 +1,14 @@
+{
+  "news_item": [
+    {
+      "title": "TITLE",
+      "thumb_media_id": "THUMB_MEDIA_ID",
+      "show_cover_pic": "SHOW_COVER_PIC(0/1)",
+      "author": "AUTHOR",
+      "digest": "DIGEST",
+      "content": "CONTENT",
+      "url": "URL",
+      "content_source_url": "CONTENT_SOURCE_URL"
+    }
+  ]
+}

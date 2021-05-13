@@ -1,0 +1,10 @@
+{
+  "query": {
+    "signature": "76480565cbe296026c53aaacd1ad523a1ddba24f",
+    "timestamp":"1409304348",
+    "nonce":"xxxxxx",
+    "encrypt_type":"aes",
+    "msg_signature":"06b6c0380bbc8ba821f8e21c89cd1a3db1bdeced"
+  },
+  "body": "<xml><Encrypt><![CDATA[HjD6cGR+0+n2e0jirMhZsrt1lfkp7Nar6OydQu3vmNfgysVZBgqW083cTNbOQndZC8Cu/LgjODh6AyBuYFq8uyJ1tuirWxBBOZPFEUkuLcdt5uZPGgLkjG6j2ptYVkve9SM0g8Itzllmrl3vnhwHnTMhlWh48XoyJyDGTxxV3lv7E8ODFcucmPImtXtiuPuhTjKTtraI/BIeM7WWcDkWxamalh44GWy4Xcrc7aC1cobu4gOrHFq4l+FhQBVaQBBedb7ilbrVe7RFt2s3pHxAXQnQ6SVMKlPIm134rtyPec8MKdJVLLldpfQJgmEGeeL2QePo9EcC4w4gcRSoBbgy8g9lHlpD1jSjJDy/8Y62ek3RAaOK9XPhdfJyRgLguwDM]]></Encrypt><MsgSignature><![CDATA[06b6c0380bbc8ba821f8e21c89cd1a3db1bdeced]]></MsgSignature><TimeStamp>1409304348</TimeStamp><Nonce><![CDATA[xxxxxx]]></Nonce></xml>"
+}

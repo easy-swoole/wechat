@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Server;
-
 
 use EasySwoole\WeChat\Kernel\Contracts\RequestMessageInterface;
 use EasySwoole\WeChat\Kernel\Exceptions\BadRequestException;

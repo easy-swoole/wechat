@@ -1,6 +1,5 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\MiniProgram;
 
 use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Application;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\Auth;
-
 
 use EasySwoole\WeChat\Kernel\AccessToken as BaseAccessToken;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
@@ -29,6 +27,9 @@ class AccessToken extends BaseAccessToken
     }
 
     /**
+     * 获取公众号/小程序接口调用令牌
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/api_authorizer_token.html
+     *
      * @return string
      */
     protected function getEndpoint(): string

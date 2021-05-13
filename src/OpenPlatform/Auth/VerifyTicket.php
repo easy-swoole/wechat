@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Auth;
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
@@ -29,6 +27,10 @@ class VerifyTicket
     public function setTicket(string $ticket, int $ttl = 3600): self
     {
         $this->app[ServiceProviders::Cache]->set($this->getCacheKey(), $ticket, $ttl);
+        if (!$this->app[ServiceProviders::Cache]->has($this->getCacheKey())) {
+            throw new RuntimeException('Failed to cache verify ticket.');
+        }
+
         return $this;
     }
 

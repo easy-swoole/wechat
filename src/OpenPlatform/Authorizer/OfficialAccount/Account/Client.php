@@ -1,14 +1,12 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Account;
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\Application;
-use EasySwoole\WeChat\OpenPlatform\BaseClient;
+use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\Account\Client as BaseClient;
 
 class Client extends BaseClient
 {
@@ -29,6 +27,7 @@ class Client extends BaseClient
 
     /**
      * 从第三方平台跳转至微信公众平台授权注册页面, 授权注册小程序.
+     * doc link: 找不到对应文档
      *
      * @param string $callbackUrl
      * @param bool $copyWxVerify
@@ -39,8 +38,8 @@ class Client extends BaseClient
     {
         $queries = [
             'copy_wx_verify' => $copyWxVerify,
-            'component_appid' => $this->component[ServiceProviders::Config]['appId'],
-            'appid' => $this->app[ServiceProviders::Config]['appId'],
+            'component_appid' => $this->component[ServiceProviders::Config]->get('appId'),
+            'appid' => $this->app[ServiceProviders::Config]->get('appId'),
             'redirect_uri' => $callbackUrl,
         ];
 
@@ -48,6 +47,8 @@ class Client extends BaseClient
     }
 
     /**
+     * doc link: 找不到对应文档
+     *
      * @param string $ticket
      * @return mixed
      * @throws HttpException

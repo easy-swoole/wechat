@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Setting;
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
@@ -11,14 +9,16 @@ use EasySwoole\WeChat\OpenPlatform\BaseClient;
 class Client extends BaseClient
 {
     /**
-     * 获取账号可以设置的所有类目
+     * 代小程序实现业务 - 类目管理 - 获取可以设置的所有类目
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/category/getallcategories.html
+     *
      * @return mixed
      * @throws HttpException
      */
     public function getAllCategories()
     {
         $response = $this->getClient()
-            ->setMethod("POST")
+            ->setMethod("GET")
             ->send($this->buildUrl(
                 "/cgi-bin/wxopen/getallcategories",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -30,7 +30,49 @@ class Client extends BaseClient
     }
 
     /**
-     * 添加类目
+     * 代小程序实现业务 - 类目管理 - 获取账号已经设置的所有类目
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/category/getcategory.html
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getCategories()
+    {
+        $response = $this->getClient()
+            ->setMethod("GET")
+            ->send($this->buildUrl(
+                "/cgi-bin/wxopen/getcategory",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $data);
+
+        return $data;
+    }
+
+    /**
+     * 代小程序实现业务 - 类目管理 - 获取不同主体类型的类目
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/category/getcategorybytype.html
+     */
+    public function getCategoriesByType(int $verifyType = 0)
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody($this->jsonDataToStream(['verify_type' => $verifyType]))
+            ->send($this->buildUrl(
+                "/cgi-bin/wxopen/getcategoriesbytype",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $data);
+
+        return $data;
+    }
+
+    /**
+     * 代小程序实现业务 - 类目管理 - 添加类目
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/category/addcategory.html
+     *
      * @param array $categories
      * @return mixed
      * @throws HttpException
@@ -45,13 +87,12 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
-     * 删除类目
+     * 代小程序实现业务 - 类目管理 - 删除类目
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/category/deletecategory.html
      *
      * @param int $firstId 一级类目ID
      * @param int $secondId 二级类目ID
@@ -68,32 +109,13 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response, $data);
     }
 
     /**
-     * 获取账号已经设置的所有类目
-     * @return mixed
-     * @throws HttpException
-     */
-    public function getCategories()
-    {
-        $response = $this->getClient()
-            ->setMethod("POST")
-            ->send($this->buildUrl(
-                "/cgi-bin/wxopen/getcategory",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response, $data);
-
-        return $data;
-    }
-
-    /**
-     * 修改类目
+     * 代小程序实现业务 - 类目管理 - 修改类目资质信息
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/category/modifycategory.html
+     *
      * @param array $category
      * @return mixed
      * @throws HttpException
@@ -108,6 +130,25 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * 代小程序实现业务 - 类目管理 - 获取审核时可填写的类目信息
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/category/get_category.html
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getCategory()
+    {
+        $response = $this->getClient()
+            ->setMethod("GET")
+            ->send($this->buildUrl(
+                "/wxa/get_category",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
         $this->checkResponse($response, $data);
 
         return $data;
@@ -115,6 +156,8 @@ class Client extends BaseClient
 
     /**
      * 小程序名称设置及改名
+     * 代小程序实现业务 - 基础信息设置 - 设置名称
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/setnickname.html
      *
      * @param string $nickname 昵称
      * @param string $idCardMediaId 身份证照片素材ID
@@ -154,29 +197,8 @@ class Client extends BaseClient
     }
 
     /**
-     * 小程序改名审核状态查询
-     *
-     * @param string $auditId 审核单id
-     * @return mixed
-     * @throws HttpException
-     */
-    public function getNicknameAuditStatus(string $auditId)
-    {
-        $response = $this->getClient()
-            ->setMethod("POST")
-            ->setBody($this->jsonDataToStream(['audit_id' => $auditId]))
-            ->send($this->buildUrl(
-                "/wxa/api_wxa_querynickname",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response, $data);
-
-        return $data;
-    }
-
-    /**
-     * 微信认证名称检测.
+     * 代小程序实现业务 - 基础信息设置 - 微信认证名称检测
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/wxverify_checknickname.html
      *
      * @param string $nickname 名称（昵称）
      * @return mixed
@@ -198,7 +220,34 @@ class Client extends BaseClient
     }
 
     /**
+     * 小程序改名审核状态查询
+     * 代小程序实现业务 - 基础信息设置 - 查询改名审核状态
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/api_wxa_querynickname.html
+     *
+     * @param string $auditId 审核单id
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getNicknameAuditStatus(string $auditId)
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody($this->jsonDataToStream(['audit_id' => $auditId]))
+            ->send($this->buildUrl(
+                "/wxa/api_wxa_querynickname",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $data);
+
+        return $data;
+    }
+
+    /**
      * 查询小程序是否可被搜索
+     * 代小程序实现业务 - 基础信息设置 - 查询隐私设置
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/getwxasearchstatus.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -218,6 +267,9 @@ class Client extends BaseClient
 
     /**
      * 设置小程序可被搜素
+     * 代小程序实现业务 - 基础信息设置 - 修改隐私设置
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/changewxasearchstatus.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -231,13 +283,14 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
      * 设置小程序不可被搜素
+     * 代小程序实现业务 - 基础信息设置 - 修改隐私设置
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/changewxasearchstatus.html
+     *
      * @return mixed
      * @throws HttpException
      */
@@ -251,12 +304,13 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
+     * 代小程序实现业务 - 扫码关注组件 - 获取展示的公众号信息
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/subscribe_component/getshowwxaitem.html
+     *
      * 获取展示的公众号信息
      * @return mixed
      * @throws HttpException
@@ -276,36 +330,16 @@ class Client extends BaseClient
     }
 
     /**
-     * 设置展示的公众号
-     * @param $appid
-     * @return mixed
-     * @throws HttpException
-     */
-    public function setDisplayedOfficialAccount($appid)
-    {
-        $response = $this->getClient()
-            ->setMethod("POST")
-            ->setBody($this->jsonDataToStream([
-                'appid' => $appid ?: null,
-                'wxa_subscribe_biz_flag' => $appid ? 1 : 0,
-            ]))->send($this->buildUrl(
-                "/wxa/updateshowwxaitem",
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response, $data);
-
-        return $data;
-    }
-
-    /**
+     * 代小程序实现业务 - 扫码关注组件 - 获取可以用来设置的公众号列表
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/subscribe_component/getwxamplinkforshow.html
+     *
      * 获取可以用来设置的公众号列表
      * @param int $page
      * @param int $num
      * @return mixed
      * @throws HttpException
      */
-    public function getDisplayableOfficialAccounts(int $page, int $num)
+    public function getDisplayableOfficialAccounts(int $page = 0, int $num = 20)
     {
         $response = $this->getClient()
             ->setMethod("GET")
@@ -321,5 +355,29 @@ class Client extends BaseClient
         $this->checkResponse($response, $data);
 
         return $data;
+    }
+
+    /**
+     * 代小程序实现业务 - 扫码关注组件 - 设置展示的公众号信息
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/subscribe_component/updateshowwxaitem.html
+     *
+     * 设置展示的公众号
+     * @param $appid
+     * @return mixed
+     * @throws HttpException
+     */
+    public function setDisplayedOfficialAccount(string $appid = null)
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody($this->jsonDataToStream([
+                'appid' => $appid ?: null,
+                'wxa_subscribe_biz_flag' => $appid ? 1 : 0,
+            ]))->send($this->buildUrl(
+                "/wxa/updateshowwxaitem",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        return $this->checkResponse($response);
     }
 }
