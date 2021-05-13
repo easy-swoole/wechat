@@ -386,7 +386,7 @@ class ClientTest extends TestCase
 
     protected function readMockResponseJsonByFunction(string $func)
     {
-        $fileName = ucwords(preg_replace('/(.)(?=[A-Z])/u', '$1' . '_', ltrim($func, 'test'))) . '.json';
+        $fileName = strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1' . '_', ltrim($func, 'test'))) . '.json';
         return file_get_contents(dirname(__FILE__) . '/mock_data/' . $fileName);
     }
 }

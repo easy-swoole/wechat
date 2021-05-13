@@ -4,20 +4,19 @@
       "type": "view",
       "name": "tx",
       "url": "http://www.qq.com/",
-      "sub_button": [ ]
+      "sub_button": []
     },
     {
       "type": "view",
       "name": "tx",
       "url": "http://www.qq.com/",
-      "sub_button": [ ]
+      "sub_button": []
     },
     {
       "type": "view",
       "name": "tx",
       "url": "http://www.qq.com/",
-      "sub_button": [ ]
+      "sub_button": []
     }
   ]
 }
-
