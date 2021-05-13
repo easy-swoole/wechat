@@ -1,27 +1,21 @@
 <?php
 
-
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Material;
-
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\Psr\StreamResponse;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\BaseClient;
 
-
 class Client extends BaseClient
 {
     /**
-     * Allow media type.
+     * 这个接口位置不对 属于公众号的接口
+     * 公众号 - 素材管理 - 获取永久素材
      *
-     * @var array
-     */
-    protected $allowTypes = ['image', 'voice', 'video', 'thumb', 'news_image'];
-
-    /**
+     * 获取永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
+     *
      * @param string $mediaId
      * @return StreamResponse
      * @throws HttpException
@@ -29,7 +23,7 @@ class Client extends BaseClient
     public function get(string $mediaId)
     {
         $response = $this->getClient()
-            ->setMethod("GET")
+            ->setMethod("POST")
             ->setBody($this->jsonDataToStream(['media_id' => $mediaId]))
             ->send($this->buildUrl(
                 "/cgi-bin/material/get_material",
@@ -40,6 +34,8 @@ class Client extends BaseClient
             return new StreamResponse($response->getBody());
         }
 
-        $this->checkResponse($response);
+        $this->checkResponse($response, $jsonData);
+
+        return $jsonData;
     }
 }

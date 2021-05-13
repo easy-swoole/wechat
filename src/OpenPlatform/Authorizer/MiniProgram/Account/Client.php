@@ -1,24 +1,40 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Account;
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
+use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\Aggregate\Account\Client as BaseClient;
+use EasySwoole\WeChat\OpenPlatform\Application;
 use function strval;
-
 
 class Client extends BaseClient
 {
+    protected $component;
+
     /**
+     * Client constructor.
+     * @param ServiceContainer $app
+     * @param Application $component
+     */
+    public function __construct(ServiceContainer $app, Application $component)
+    {
+        parent::__construct($app);
+
+        $this->component = $component;
+    }
+
+    /**
+     * 代小程序实现业务 - 基本信息设置 - 获取基本信息
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/Mini_Program_Information_Settings.html
      * @return mixed
      * @throws HttpException
      */
     public function getBasicInfo()
     {
         $response = $this->getClient()
-            ->setMethod("POST")
+            ->setMethod("GET")
             ->send($this->buildUrl(
                 "/cgi-bin/account/getaccountbasicinfo",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -29,7 +45,8 @@ class Client extends BaseClient
     }
 
     /**
-     * 修改头像.
+     * 代小程序实现业务 - 基本信息设置 - 修改头像
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/modifyheadimage.html
      *
      * @param string $mediaId 头像素材mediaId
      * @param string $left 剪裁框左上角x坐标（取值范围：[0, 1]）
@@ -61,12 +78,12 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
-     * 修改功能介绍.
+     * 代小程序实现业务 - 基本信息设置 - 修改简介
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/modifysignature.html
      *
      * @param string $signature 功能介绍（简介）
      * @return mixed
@@ -82,7 +99,6 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-        return $data;
+        return $this->checkResponse($response);
     }
 }
