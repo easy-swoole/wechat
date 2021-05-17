@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\Tests\OfficialAccount\Base;
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
@@ -35,7 +33,7 @@ class ClientTest extends TestCase
      */
     public function testGetValidIps()
     {
-        $body = '{"ip_list":["127.0.0.1","127.0.0.2","101.226.103.0/25"]}';
+        $body = $this->readMockResponseJson('getValidIps.json');
         $response = $this->buildResponse(Status::CODE_OK, $body);
         $app = $this->mockAccessToken(new ServiceContainer());
         $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
@@ -45,6 +43,45 @@ class ClientTest extends TestCase
         }, $response, $app);
 
         $client = new Client($app);
-        $this->assertEqualsCanonicalizing(json_decode($body, true), $client->getValidIps());
+
+        $ret = $client->getValidIps();
+
+        $this->assertIsArray($ret);
+        $this->assertSame(json_decode($this->readMockResponseJson('getValidIps.json'), true), $ret);
+        $this->assertEqualsCanonicalizing(json_decode($body, true), $ret);
+    }
+
+    /**
+     * @throws \EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException
+     */
+    public function testCheckCallbackUrl()
+    {
+        $body = $this->readMockResponseJson('checkCallbackUrl.json');
+        $response = $this->buildResponse(Status::CODE_OK, $body);
+        $app = $this->mockAccessToken(new ServiceContainer());
+        $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('/cgi-bin/callback/check', $request->getUri()->getPath());
+            $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
+        }, $response, $app);
+
+        $client = new Client($app);
+
+        $action = 'all';
+        $operator = 'DEFAULT';
+
+        $ret = $client->checkCallbackUrl($action, $operator);
+
+        $this->assertIsArray($ret);
+        $this->assertSame(json_decode($this->readMockResponseJson('checkCallbackUrl.json'), true), $ret);
+        $this->assertEqualsCanonicalizing(json_decode($body, true), $ret);
+    }
+
+    /**
+     * @return string
+     */
+    private function readMockResponseJson(string $filename):string
+    {
+        return file_get_contents(dirname(__FILE__). '/mock_data/' . $filename);
     }
 }

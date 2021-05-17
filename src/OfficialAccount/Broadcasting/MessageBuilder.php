@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OfficialAccount\Broadcasting;
-
 
 use EasySwoole\WeChat\Kernel\Contracts\MessageInterface;
 use EasySwoole\WeChat\Kernel\Exceptions\RuntimeException;
@@ -119,7 +117,13 @@ class MessageBuilder
             $prepends = $this->to;
         }
 
-        return array_merge($prepends, $content, $this->attributes);
+        $messageType = $this->message->getType();
+        $data = [
+            $messageType => $content,
+            'msgtype' => $messageType
+        ];
+
+        return array_merge($prepends, $data, $this->attributes);
     }
 
     /**

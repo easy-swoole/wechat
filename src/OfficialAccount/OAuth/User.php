@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OfficialAccount\OAuth;
-
 
 use EasySwoole\WeChat\Kernel\Contracts\UserInterface;
 

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\Tests\OfficialAccount\Card;
-
 
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\Card\SubMerchantClient;
@@ -12,7 +10,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class SubMerchantClientTest extends TestCase
 {
-
     public function testCreate()
     {
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('sub_merchant_create.json'));

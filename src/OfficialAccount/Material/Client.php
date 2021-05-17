@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OfficialAccount\Material;
-
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
@@ -16,6 +14,9 @@ class Client extends BaseClient
     protected $allowTypes = ['image', 'voice', 'video', 'thumb', 'news_image'];
 
     /**
+     * 新增其他类型永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+     *
      * @param string $path
      * @return mixed
      * @throws HttpException
@@ -27,6 +28,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 新增其他类型永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+     *
      * @param string $path
      * @return mixed
      * @throws HttpException
@@ -38,16 +42,22 @@ class Client extends BaseClient
     }
 
     /**
+     * 新增其他类型永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+     *
      * @param string $path
      * @throws HttpException
      * @throws InvalidArgumentException
      */
     public function uploadThumb(string $path)
     {
-        $this->upload('thumb', $path);
+        return $this->upload('thumb', $path);
     }
 
     /**
+     * 新增其他类型永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+     *
      * @param string $path
      * @param string $title
      * @param string $description
@@ -70,6 +80,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 新增永久图文素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+     *
      * @param $articles
      * @return mixed
      * @throws HttpException
@@ -102,36 +115,9 @@ class Client extends BaseClient
     }
 
     /**
-     * @param string $mediaId
-     * @param $article
-     * @param int $index
-     * @return bool
-     * @throws HttpException
-     * @throws InvalidArgumentException
-     */
-    public function updateArticle(string $mediaId, $article, int $index = 0)
-    {
-        if ($article instanceof Article) {
-            $article = $article->transformForJsonRequest();
-        }
-
-        $response = $this->getClient()
-            ->setMethod('POST')
-            ->setBody($this->jsonDataToStream([
-                'media_id' => $mediaId,
-                'index' => $index,
-                'articles' => isset($article['title']) ? $article : (isset($article[$index]) ? $article[$index] : []),
-            ]))
-            ->send($this->buildUrl(
-                '/cgi-bin/material/update_news',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response);
-        return true;
-    }
-
-    /**
+     * 上传图文消息内的图片获取URL
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+     *
      * @param string $path
      * @return mixed
      * @throws HttpException
@@ -143,6 +129,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 新增永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+     *
      * @param string $type
      * @param string $path
      * @param array $formData
@@ -179,6 +168,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 获取永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
+     *
      * @param string $mediaId
      * @return mixed
      * @throws HttpException
@@ -198,6 +190,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 删除永久素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Deleting_Permanent_Assets.html
+     *
      * @param string $mediaId
      * @return bool
      * @throws HttpException
@@ -212,11 +207,65 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response);
-        return true;
+        return $this->checkResponse($response);
     }
 
     /**
+     * 修改永久图文素材
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Editing_Permanent_Rich_Media_Assets.html
+     *
+     * @param string $mediaId
+     * @param $article
+     * @param int $index
+     * @return bool
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
+    public function updateArticle(string $mediaId, $article, int $index = 0)
+    {
+        if ($article instanceof Article) {
+            $article = $article->transformForJsonRequest();
+        }
+
+        $response = $this->getClient()
+            ->setMethod('POST')
+            ->setBody($this->jsonDataToStream([
+                'media_id' => $mediaId,
+                'index' => $index,
+                'articles' => isset($article['title']) ? $article : (isset($article[$index]) ? $article[$index] : []),
+            ]))
+            ->send($this->buildUrl(
+                '/cgi-bin/material/update_news',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        return $this->checkResponse($response);
+    }
+
+    /**
+     * 获取素材总数
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_the_total_of_all_materials.html
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function stats()
+    {
+        $response = $this->getClient()
+            ->setMethod('GET')
+            ->send($this->buildUrl(
+                '/cgi-bin/material/get_materialcount',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $parseData);
+        return $parseData;
+    }
+
+    /**
+     * 获取素材列表
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_materials_list.html
+     *
      * @param string $type
      * @param int $offset
      * @param int $count
@@ -233,23 +282,6 @@ class Client extends BaseClient
                 'count' => $count,
             ]))->send($this->buildUrl(
                 '/cgi-bin/material/batchget_material',
-                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
-            ));
-
-        $this->checkResponse($response, $parseData);
-        return $parseData;
-    }
-
-    /**
-     * @return mixed
-     * @throws HttpException
-     */
-    public function stats()
-    {
-        $response = $this->getClient()
-            ->setMethod('GET')
-            ->send($this->buildUrl(
-                '/cgi-bin/material/get_materialcount',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
