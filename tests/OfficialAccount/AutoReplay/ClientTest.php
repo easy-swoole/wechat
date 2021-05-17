@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\Tests\OfficialAccount\AutoReplay;
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceContainer;

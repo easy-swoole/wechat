@@ -8,7 +8,6 @@
 
 namespace EasySwoole\WeChat\OfficialAccount\DataCube;
 
-
 use EasySwoole\WeChat\OfficialAccount\Application;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;

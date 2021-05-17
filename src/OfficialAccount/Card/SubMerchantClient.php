@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OfficialAccount\Card;
-
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
@@ -10,9 +8,10 @@ use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 
 class SubMerchantClient extends BaseClient
 {
-
     /**
      * 添加子商户
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Third-party_developer_mode.html#1
+     *
      * @param array $info
      * @return mixed
      * @throws HttpException
@@ -47,6 +46,8 @@ class SubMerchantClient extends BaseClient
 
     /**
      * 更新子商户
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Third-party_developer_mode.html#4
+     *
      * @param int $merchantId
      * @param array $info
      * @return mixed
@@ -83,7 +84,9 @@ class SubMerchantClient extends BaseClient
     }
 
     /**
-     * 获取子商户信息
+     * 获取子商户信息（拉取单个子商户信息接口）
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Third-party_developer_mode.html#5
+     *
      * @param int $merchantId
      * @return mixed
      * @throws HttpException
@@ -103,7 +106,9 @@ class SubMerchantClient extends BaseClient
     }
 
     /**
-     * 批量获取子商户信息
+     * 批量获取子商户信息（批量拉取子商户信息接口）
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Third-party_developer_mode.html#6
+     *
      * @param int $beginId
      * @param int $limit
      * @param string $status

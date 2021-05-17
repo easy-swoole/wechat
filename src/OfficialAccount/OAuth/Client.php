@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OfficialAccount\OAuth;
-
 
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
@@ -28,6 +26,9 @@ class Client extends BaseClient
     }
 
     /**
+     * 构建授权连接
+     * doc link: https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
+     *
      * @param string $redirectUri
      * @param string|null $scope
      * @param string|null $state

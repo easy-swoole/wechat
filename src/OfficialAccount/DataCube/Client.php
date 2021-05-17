@@ -8,7 +8,6 @@
 
 namespace EasySwoole\WeChat\OfficialAccount\DataCube;
 
-
 use EasySwoole\WeChat\Kernel\BaseClient;
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
 use EasySwoole\WeChat\Kernel\ServiceProviders;

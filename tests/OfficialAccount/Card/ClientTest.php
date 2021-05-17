@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\Tests\OfficialAccount\Card;
-
 
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\Card\Client;

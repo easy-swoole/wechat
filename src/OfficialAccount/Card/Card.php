@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OfficialAccount\Card;
-
 
 use EasySwoole\WeChat\Kernel\Exceptions\InvalidArgumentException;
 use EasySwoole\WeChat\OfficialAccount\Application;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EasySwoole\WeChat\OfficialAccount\AutoReplay;
-
 
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\Application;
