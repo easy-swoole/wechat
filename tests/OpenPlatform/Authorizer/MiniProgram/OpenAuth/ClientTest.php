@@ -22,7 +22,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('session.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'

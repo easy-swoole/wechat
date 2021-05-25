@@ -20,7 +20,10 @@ class ClientTest extends TestCase
     public function testGetFastRegistrationUrl()
     {
         /** @var Application $component */
-        $component = new Application(['appId' => 'COMPONENT_APPID']);
+        $component = new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]);
 
         $officialAccount = $component->officialAccount(
             'mock_app_id', 'mock_refresh_token'
@@ -36,7 +39,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('register.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $officialAccount = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
