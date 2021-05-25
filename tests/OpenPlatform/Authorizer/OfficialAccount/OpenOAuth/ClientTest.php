@@ -21,7 +21,10 @@ class ClientTest extends TestCase
     public function testRedirect()
     {
         /** @var Application $component */
-        $component = new Application(['appId' => 'COMPONENT_APPID']);
+        $component = new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]);
 
         $officialAccount = $component->officialAccount(
             'mock_app_id', 'mock_refresh_token'
@@ -37,7 +40,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('snsAuthFromCode.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'mock-componentAppId']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $component = $this->mockAccessToken($component);
 
@@ -67,7 +73,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('userFromToken.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'mock-componentAppId']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $component = $this->mockAccessToken($component);
 

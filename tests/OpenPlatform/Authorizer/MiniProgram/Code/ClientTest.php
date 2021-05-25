@@ -23,7 +23,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -46,7 +49,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getPage.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -76,7 +82,10 @@ class ClientTest extends TestCase
         ]);
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -101,7 +110,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('submitAudit.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -173,7 +185,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getAuditStatus.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -200,7 +215,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getLatestAuditStatus.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -227,7 +245,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -250,7 +271,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -273,7 +297,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -296,7 +323,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getHistoryVersion.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -323,7 +353,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -346,7 +379,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getGrayRelease.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -373,7 +409,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -396,7 +435,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -419,7 +461,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getSupportVersion.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -446,7 +491,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -469,7 +517,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('queryQuota.json'));
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -496,7 +547,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $app */
-        $app = $this->mockAccessToken(new Application(['appId' => 'mock_component-app-id']));
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
 
         $miniProgram = $app->miniProgram(
             'mock_app_id', 'mock_refresh_token'

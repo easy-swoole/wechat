@@ -49,22 +49,14 @@ class ClientTest extends TestCase
         $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
             $this->assertEquals('POST', $request->getMethod());
             $this->assertEquals('/wxa/set_user_storage', $request->getUri()->getPath());
-            $this->assertEquals('openid=mock-openid&sig_method=hmac_sha256&signature=8c1714680d9b0a20d32846e56318f355b9dddd594c2576c75475593b50763af3&access_token=mock_access_token', $request->getUri()->getQuery());
+            $this->assertEquals('openid=mock-openid&sig_method=hmac_sha256&signature=428995f6ef0227629528261163b4c6f722e324744857a3d23b3b0c3dd7490ea2&access_token=mock_access_token', $request->getUri()->getQuery());
         }, $response, $app);
 
         $client = new Client($app);
 
         $kvList = [
-            'kv_list' => [
-                [
-                    'key' => 'mock-key-1',
-                    'value' => 'mock-value-1',
-                ],
-                [
-                    'key' => 'mock-key-2',
-                    'value' => 'mock-value-2',
-                ],
-            ],
+            'mock-key-1' => 'mock-value-1',
+            'mock-key-2' => 'mock-value-2'
         ];
 
         $this->assertTrue($client->setUserStorage('mock-openid', 'mock-session-key', $kvList));

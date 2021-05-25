@@ -22,7 +22,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('get.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -49,7 +52,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('download.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -76,7 +82,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -111,7 +120,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -134,7 +146,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, '{"errcode":0,"errmsg":"ok"}');
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -157,7 +172,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getShorturl.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -184,7 +202,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getUnlimitWxCode.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -215,7 +236,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getWxCode.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
@@ -247,7 +271,10 @@ class ClientTest extends TestCase
         $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getWxCode.json'));
 
         /** @var Application $component */
-        $component = $this->mockAccessToken(new Application(['appId' => 'COMPONENT_APPID']));
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
 
         $miniProgram = $component->miniProgram(
             'mock_app_id', 'mock_refresh_token'
