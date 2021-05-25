@@ -52,6 +52,6 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/co-phpunit tests"
+        "test": "vendor/bin/co-phpunit tests --testdox --color=always"
     }
 }
