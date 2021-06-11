@@ -72,7 +72,7 @@ class FileCacheDriver implements CacheInterface
 
             return [
                 'data' => $data,
-                'tome' => $time
+                'time' => $time
             ];
 
         } catch (Throwable $exception) {
