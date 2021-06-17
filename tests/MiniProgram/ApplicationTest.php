@@ -76,6 +76,8 @@ class ApplicationTest extends TestCase
 
         $this->assertInstanceOf(\EasySwoole\WeChat\MiniProgram\Union\Client::class, $app->union);
 
+        $this->assertInstanceOf(\EasySwoole\WeChat\MiniProgram\UrlLink\Client::class, $app->urlLink);
+
         $this->assertInstanceOf(\EasySwoole\WeChat\MiniProgram\UrlScheme\Client::class, $app->urlScheme);
     }
 
