@@ -36,6 +36,7 @@ use EasySwoole\WeChat\OfficialAccount\Server;
  * @property TemplateMessage\Client $templateMessage
  * @property UniformMessage\Client $uniformMessage
  * @property Union\Client $union
+ * @property UrlLink\Client $urlLink
  * @property UrlScheme\Client $urlScheme
  */
 class Application extends ServiceContainer
@@ -64,6 +65,7 @@ class Application extends ServiceContainer
     const TemplateMessage = "templateMessage";
     const UniformMessage = 'uniformMessage';
     const Union = 'union';
+    const UrlLink = 'urlLink';
     const UrlScheme = 'urlScheme';
 
     protected $providers = [
@@ -90,6 +92,7 @@ class Application extends ServiceContainer
         TemplateMessage\ServiceProvider::class,
         UniformMessage\ServiceProvider::class,
         Union\ServiceProvider::class,
+        UrlLink\ServiceProvider::class,
         UrlScheme\ServiceProvider::class,
     ];
 
