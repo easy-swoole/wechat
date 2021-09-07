@@ -59,6 +59,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($data))
             ->send($this->buildUrl(
                 '/wxaapi/newtmpl/addtemplate',
@@ -86,6 +87,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream(['priTmplId' => $id]))
             ->send($this->buildUrl(
                 '/wxaapi/newtmpl/deltemplate',

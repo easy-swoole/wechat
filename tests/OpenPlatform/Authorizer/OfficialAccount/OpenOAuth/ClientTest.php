@@ -27,12 +27,12 @@ class ClientTest extends TestCase
         ]);
 
         $officialAccount = $component->officialAccount(
-            'mock_app_id', 'mock_refresh_token'
+            'mock_officialAccount_app_id', 'mock_officialAccount_refresh_token'
         );
 
         $client = new Client($officialAccount, $component);
 
-        $this->assertSame('https://open.weixin.qq.com/connect/oauth2/authorize?appid=mock_app_id&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect', $client->redirect('REDIRECT_URI', 'SCOPE', 'STATE'));
+        $this->assertSame('https://open.weixin.qq.com/connect/oauth2/authorize?appid=mock_officialAccount_app_id&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE&component_appid=COMPONENT_APPID#wechat_redirect', $client->redirect('REDIRECT_URI', 'SCOPE', 'STATE'));
     }
 
     public function testSnsAuthFromCode()
@@ -56,7 +56,7 @@ class ClientTest extends TestCase
         $officialAccount = $this->mockHttpClient(function (ServerRequestInterface $request) {
             $this->assertEquals('GET', $request->getMethod());
             $this->assertEquals('/sns/oauth2/component/access_token', $request->getUri()->getPath());
-            $this->assertEquals('appid=mock_app_id&code=mock_code&grant_type=authorization_code&component_access_token=mock_access_token', $request->getUri()->getQuery());
+            $this->assertEquals('appid=mock_app_id&code=mock_code&grant_type=authorization_code&component_appid=COMPONENT_APPID&component_access_token=mock_access_token', $request->getUri()->getQuery());
         }, $response, $officialAccount);
 
         $client = new Client($officialAccount, $component);

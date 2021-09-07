@@ -283,6 +283,7 @@ class ClientTest extends TestCase
 
         $miniProgram = $this->mockHttpClient(function (ServerRequestInterface $request) {
             $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('{}', $request->getBody()->getContents());
             $this->assertEquals('/wxa/release', $request->getUri()->getPath());
             $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
         }, $response, $miniProgram);

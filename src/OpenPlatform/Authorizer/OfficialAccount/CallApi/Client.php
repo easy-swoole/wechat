@@ -48,9 +48,8 @@ class Client extends BaseClient
 
     /**
      * 代公众号实现业务 - 代公众号调用接口 - 第三方平台对其所有 API 调用次数清零（只与第三方平台相关，与公众号无关，接口如 api_component_token）
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Official_Accounts/Official_account_interface.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/Official_Accounts/Official_account_interface.html
      *
-     * @param string $componentAppId
      * @return bool
      * @throws HttpException
      */
@@ -59,7 +58,7 @@ class Client extends BaseClient
         $response = $this->getClient()
             ->setMethod("POST")
             ->setBody($this->jsonDataToStream([
-                'component_appid' => $this->component[ServiceProviders::Config]->get('componentAppId'),
+                'component_appid' => $this->component[ServiceProviders::Config]->get('appId'),
             ]))->send($this->buildUrl(
                 "/cgi-bin/component/clear_quota",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
