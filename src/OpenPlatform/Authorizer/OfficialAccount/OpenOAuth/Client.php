@@ -51,14 +51,14 @@ class Client extends BaseClient
 
     /**
      * 构建请求链接
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Official_Accounts/official_account_website_authorization.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Before_Develop/Official_Accounts/official_account_website_authorization.html
      *
-     * @param string $appId 公众号的 appid
      * @param string $redirectUri
-     * @param string $componentAppid
      * @param $scope
      * @param string|null $state
      * @return string
+     * @date: 2021/9/3 14:36
+     * @author Longhui <1592328848@qq.com>
      */
     public function redirect(string $redirectUri, $scope, string $state = null): string
     {
@@ -84,13 +84,13 @@ class Client extends BaseClient
                 "response_type" => "code",
                 "scope" => $scope,
                 "state" => $state,
-                "component_appid" => $this->component[ServiceProviders::Config]->get('componentAppId')
+                "component_appid" => $this->component[ServiceProviders::Config]->get('appId')
             ]) . "#wechat_redirect";
     }
 
     /**
      * 通过 code 换取 access_token 请求方法
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Official_Accounts/official_account_website_authorization.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Before_Develop/Official_Accounts/official_account_website_authorization.html
      *
      * @param string $code
      * @return mixed
@@ -102,7 +102,7 @@ class Client extends BaseClient
             "appid" => $this->app[ServiceProviders::Config]->get('appId'),
             "code" => $code,
             "grant_type" => "authorization_code",
-            "component_appid" => $this->component[ServiceProviders::Config]->get('componentAppId'),
+            "component_appid" => $this->component[ServiceProviders::Config]->get('appId'),
             "component_access_token" => $this->component[ServiceProviders::AccessToken]->getToken(),
         ]);
 
@@ -155,7 +155,7 @@ class Client extends BaseClient
         ]);
 
         $response = $this->getClient()->setMethod("GET")->send($url);
-        
+
         $this->checkResponse($response, $jsonData);
 
         /**

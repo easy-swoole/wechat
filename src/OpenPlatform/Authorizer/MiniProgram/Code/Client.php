@@ -3,6 +3,7 @@
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Code;
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
+use EasySwoole\WeChat\Kernel\Psr\Stream;
 use EasySwoole\WeChat\Kernel\Psr\StreamResponse;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\BaseClient;
@@ -11,7 +12,7 @@ class Client extends BaseClient
 {
     /**
      * 代小程序实现业务 - 代码管理 - 上传代码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/commit.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/commit.html
      *
      * @param int $templateId
      * @param string $extJson
@@ -39,7 +40,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 获取已上传的代码的页面列表
-     * doc link：https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_page.html
+     * doc link：https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_page.html
      *
      * @return mixed
      * @throws HttpException
@@ -60,7 +61,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 获取体验版二维码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_qrcode.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_qrcode.html
      *
      * @param string|null $path
      * @return bool|StreamResponse
@@ -87,7 +88,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 提交审核
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/submit_audit.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/submit_audit.html
      *
      * @param array $data
      * @param string|null $feedbackInfo
@@ -122,7 +123,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 查询指定发布审核单的审核状态
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_auditstatus.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_auditstatus.html
      *
      * @param int $auditId
      * @return mixed
@@ -145,7 +146,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 查询最新一次提交的审核状态
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_latest_auditstatus.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_latest_auditstatus.html
      *
      * @return mixed
      * @throws HttpException
@@ -166,7 +167,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 小程序审核撤回
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/undocodeaudit.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/undocodeaudit.html
      *
      * @return mixed
      * @throws HttpException
@@ -185,7 +186,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 发布已通过审核的小程序
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/release.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/release.html
      *
      * @return mixed
      * @throws HttpException
@@ -194,7 +195,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
-            ->setBody($this->jsonDataToStream([]))
+            ->setBody(new Stream(json_encode(new \stdClass())))
             ->send($this->buildUrl(
                 "/wxa/release",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -205,7 +206,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 版本回退
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/revertcoderelease.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/revertcoderelease.html
      *
      * @return mixed
      * @throws HttpException
@@ -232,7 +233,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 获取可回退的小程序版本
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/get_history_version.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_history_version.html
      *
      * @return mixed
      * @throws HttpException
@@ -258,7 +259,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 分阶段发布
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/grayrelease.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/grayrelease.html
      *
      * @param int $grayPercentage
      * @return mixed
@@ -279,7 +280,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 查询当前分阶段发布详情
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/getgrayreleaseplan.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/getgrayreleaseplan.html
      *
      * @return mixed
      * @throws HttpException
@@ -300,7 +301,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 取消分阶段发布
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/revertgrayrelease.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/revertgrayrelease.html
      *
      * @return mixed
      * @throws HttpException
@@ -319,7 +320,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 修改小程序服务状态
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/change_visitstatus.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/change_visitstatus.html
      *
      * @param string $action
      * @return mixed
@@ -340,7 +341,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 查询当前设置的最低基础库版本及各版本用户占比
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/getweappsupportversion.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/getweappsupportversion.html
      *
      * @return mixed
      * @throws HttpException
@@ -361,7 +362,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 设置最低基础库版本
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/setweappsupportversion.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/setweappsupportversion.html
      *
      * @param string $version
      * @return mixed
@@ -382,7 +383,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 查询服务商的当月提审限额（quota）和加急次数
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/query_quota.html
      *
      * @return mixed
      * @throws HttpException
@@ -403,7 +404,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 代码管理 - 加急审核申请
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/speedup_audit.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/speedup_audit.html
      *
      * @param int $auditId 审核单ID
      * @return mixed

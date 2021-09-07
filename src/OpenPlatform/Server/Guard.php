@@ -61,7 +61,11 @@ class Guard extends ServerGuard
         return new class($message) extends Message implements RequestMessageInterface {
             public function getType(): string
             {
-                return $this->get('InfoType');
+                $type = $this->__isset('InfoType') ? $this->get('InfoType') : $this->get('MsgType');
+                if (is_null($type)) {
+                    $type = '';
+                }
+                return $type;
             }
 
             public function getId(): ?int

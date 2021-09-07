@@ -2,6 +2,7 @@
 
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\QrCodeJump;
 
+use EasySwoole\WeChat\Kernel\Psr\Stream;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\BaseClient;
 
@@ -9,7 +10,7 @@ class Client extends BaseClient
 {
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取已设置的二维码规则
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/qrcodejumpget.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/qrcodejumpget.html
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
@@ -18,6 +19,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
+            ->setBody(new Stream(json_encode(new \stdClass())))
             ->send($this->buildUrl(
                 "/cgi-bin/wxopen/qrcodejumpget",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -30,7 +32,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取校验文件名称及内容
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/qrcodejumpdownload.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/qrcodejumpdownload.html
      *
      * @return mixed
      * @throws \EasySwoole\WeChat\Kernel\Exceptions\HttpException
@@ -39,6 +41,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
+            ->setBody(new Stream(json_encode(new \stdClass())))
             ->send($this->buildUrl(
                 "/cgi-bin/wxopen/qrcodejumpdownload",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -51,7 +54,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 增加或修改二维码规则
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/qrcodejumpadd.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/qrcodejumpadd.html
      *
      * @param array $jumpData 二维码规则
      * @return mixed
@@ -72,7 +75,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 发布已设置的二维码规则
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/qrcodejumppublish.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/qrcodejumppublish.html
      *
      * @param string $prefix
      * @return mixed
@@ -93,7 +96,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 删除已设置的二维码规则
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/qrcodejumpdelete.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/qrcodejumpdelete.html
      *
      * @param string $prefix
      * @return bool
@@ -114,7 +117,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 将二维码长链接转成短链接
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/shorturl.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/shorturl.html
      *
      * @param string $longUrl
      * @return mixed
@@ -140,7 +143,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取 unlimited 小程序码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/getwxacodeunlimit.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/getwxacodeunlimit.html
      *
      * @param array $param
      * @return mixed
@@ -163,7 +166,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取小程序码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/getwxacode.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/getwxacode.html
      *
      * @param array $param
      * @return mixed
@@ -186,7 +189,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取小程序二维码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/qrcode/getwxacode.html
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/createwxaqrcode.html
      *
      * @param string $path
      * @param int $width

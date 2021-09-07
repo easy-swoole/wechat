@@ -95,15 +95,19 @@ class ClientTest extends TestCase
 
         $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
             $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals([
+                'content-type' => ['application/json'],
+                'Host' => ['api.weixin.qq.com'],
+            ], $request->getHeaders());
             $this->assertEquals('/wxaapi/newtmpl/addtemplate', $request->getUri()->getPath());
             $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
         }, $response, $app);
 
         $client = new Client($app);
 
-        $this->assertIsArray($client->addTemplate(401, [1, 2], '测试数据'));
+        $this->assertIsArray($client->addTemplate('401', [1, 2], '测试数据'));
 
-        $this->assertSame(json_decode($this->readMockResponseJson('addTemplate.json'), true), $client->addTemplate(401, [1, 2], '测试数据'));
+        $this->assertSame(json_decode($this->readMockResponseJson('addTemplate.json'), true), $client->addTemplate('401', [1, 2], '测试数据'));
     }
 
     public function testDeleteTemplate()
@@ -117,6 +121,10 @@ class ClientTest extends TestCase
 
         $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
             $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals([
+                'content-type' => ['application/json'],
+                'Host' => ['api.weixin.qq.com'],
+            ], $request->getHeaders());
             $this->assertEquals('/wxaapi/newtmpl/deltemplate', $request->getUri()->getPath());
             $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
         }, $response, $app);
