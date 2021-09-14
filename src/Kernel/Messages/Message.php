@@ -150,7 +150,7 @@ abstract class Message implements MessageInterface, ArrayAccess, IteratorAggrega
      */
     public function transformToXml(array $appends = []): string
     {
-        return XML::build(array_merge($this->all(), $this->toXmlArray(), $appends));
+        return XML::build(array_merge(['MsgType' => $this->getType()], $this->toXmlArray(), $appends));
     }
 
     /**
