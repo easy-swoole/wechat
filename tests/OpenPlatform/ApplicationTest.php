@@ -21,6 +21,8 @@ class ApplicationTest extends TestCase
 
         $this->assertInstanceOf(\EasySwoole\WeChat\OpenPlatform\Auth\AccessToken::class, $app->accessToken);
 
+        $this->assertInstanceOf(\EasySwoole\WeChat\OpenPlatform\BetaMiniProgram\Client::class, $app->betaMiniProgram);
+
         $this->assertInstanceOf(\EasySwoole\WeChat\OpenPlatform\Auth\VerifyTicket::class, $app->verifyTicket);
 
         $this->assertInstanceOf(\EasySwoole\WeChat\OpenPlatform\Base\Client::class, $app->base);

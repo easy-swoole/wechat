@@ -7,6 +7,8 @@ use EasySwoole\WeChat\MiniProgram\Application as MiniProgram;
 /**
  * Class Application
  * @package EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram
+ * @property Account\Client $account
+ * @property BetaMiniProgram\Client $betaMiniProgram
  * @property Code\Client $code
  * @property Domain\Client $domain
  * @property Material\Client $material
@@ -17,6 +19,7 @@ use EasySwoole\WeChat\MiniProgram\Application as MiniProgram;
 class Application extends MiniProgram
 {
     const Account = 'account';
+    const BetaMiniProgram = 'betaMiniProgram';
     const Code = 'code';
     const Domain = 'domain';
     const Material = 'material';
@@ -30,6 +33,7 @@ class Application extends MiniProgram
         parent::__construct($config, $name, $values);
 
         $providers = [
+            BetaMiniProgram\ServiceProvider::class,
             Code\ServiceProvider::class,
             Domain\ServiceProvider::class,
             Material\ServiceProvider::class,

@@ -22,6 +22,7 @@ use EasySwoole\WeChat\OpenPlatform\Authorizer\Auth\AccessToken;
  * @property Auth\AccessToken $accessToken
  * @property Auth\VerifyTicket $verifyTicket
  * @property Base\Client $base
+ * @property BetaMiniProgram\Client $betaMiniProgram
  * @property CodeTemplate\Client $codeTemplate
  * @property Component\Client $component
  * @property Server\Guard $server
@@ -40,12 +41,14 @@ class Application extends ServiceContainer
 {
     const VerifyTicket = 'verifyTicket';
     const Base = 'base';
+    const BetaMiniProgram = 'betaMiniProgram';
     const CodeTemplate = 'codeTemplate';
     const Component = 'component';
     const Server = 'server';
 
     protected $providers = [
         Auth\ServiceProvider::class,
+        BetaMiniProgram\ServiceProvider::class,
         Base\ServiceProvider::class,
         Server\ServiceProvider::class,
         CodeTemplate\ServiceProvider::class,
