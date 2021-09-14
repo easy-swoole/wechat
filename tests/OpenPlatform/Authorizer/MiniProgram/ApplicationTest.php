@@ -18,6 +18,8 @@ class ApplicationTest extends TestCase
         /** @var Application $miniProgram */
         $miniProgram = new Application(['app_id' => 'mock_appId']);
 
+        $this->assertInstanceOf(\EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\BetaMiniProgram\Client::class, $miniProgram->betaMiniProgram);
+
         $this->assertInstanceOf(\EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Code\Client::class, $miniProgram->code);
 
         $this->assertInstanceOf(\EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Domain\Client::class, $miniProgram->domain);
