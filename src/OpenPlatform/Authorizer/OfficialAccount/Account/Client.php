@@ -69,4 +69,26 @@ class Client extends BaseClient
         $this->checkResponse($response, $data);
         return $data;
     }
+
+    /**
+     * 第三方平台调用快速注册 API 完成管理员换绑
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/fast_registration_of_mini_program.html
+     *
+     * @param string $taskId
+     * @return bool
+     * @throws HttpException
+     */
+    public function componentRebindAdmin(string $taskId)
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody($this->jsonDataToStream([
+                'taskid' => $taskId,
+            ]))->send($this->buildUrl(
+                '/cgi-bin/account/componentrebindadmin',
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        return $this->checkResponse($response, $data);
+    }
 }

@@ -64,6 +64,33 @@ class ClientTest extends TestCase
         $this->assertSame(json_decode($this->readMockResponseJson('register.json'), true), $ret);
     }
 
+    public function testComponentRebindAdmin()
+    {
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('register.json'));
+
+        /** @var Application $component */
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
+
+        $officialAccount = $component->miniProgram(
+            'mock_app_id', 'mock_refresh_token'
+        );
+        $officialAccount = $this->mockAccessToken($officialAccount);
+
+        $officialAccount = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('/cgi-bin/account/componentrebindadmin', $request->getUri()->getPath());
+            $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
+            $this->assertEquals('{"taskid":"b25519093b1e97239eff9d2bfc07e08e"}', $request->getBody()->getContents());
+        }, $response, $officialAccount);
+
+        $client = new Client($officialAccount, $component);
+
+        $this->assertTrue($client->componentRebindAdmin('b25519093b1e97239eff9d2bfc07e08e'));
+    }
+
     protected function readMockResponseJson(string $filename): string
     {
         return file_get_contents(__DIR__ . '/mock_data/' . $filename);

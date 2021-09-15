@@ -63,4 +63,57 @@ class ClientTest extends TestCase
 
         $this->assertTrue($client->getRegistrationStatus($companyName, $legalPersonaWechat, $legalPersonaName));
     }
+
+    public function testRegisterPersonalWeapp()
+    {
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('registerPersonalWeapp.json'));
+
+        $app = $this->mockAccessToken(new ServiceContainer(['appId' => 'mock-componentAppId']));
+
+        $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('/wxa/component/fastregisterpersonalweapp', $request->getUri()->getPath());
+            $this->assertEquals('action=create&component_access_token=mock_access_token', $request->getUri()->getQuery());
+            $this->assertEquals('{"idname":"tencent","wxuser":"wxidnnn","component_phone":"1234567"}', $request->getBody()->getContents());
+        }, $response, $app);
+
+        $client = new Client($app);
+
+        $idName = 'tencent'; // 个人用户名字
+        $wxUser = 'wxidnnn'; // 个人用户微信id
+        $componentPhone = '1234567'; // 第三方联系电话
+
+        $ret = $client->registerPersonalWeapp($idName, $wxUser, $componentPhone);
+
+        $this->assertIsArray($ret);
+
+        $this->assertSame(json_decode($this->readMockResponseJson('registerPersonalWeapp.json'), true), $ret);
+    }
+
+    public function testGetPersonalWeappStatus()
+    {
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getPersonalWeappStatus.json'));
+
+        $app = $this->mockAccessToken(new ServiceContainer(['appId' => 'mock-componentAppId']));
+
+        $app = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('/wxa/component/fastregisterpersonalweapp', $request->getUri()->getPath());
+            $this->assertEquals('action=query&component_access_token=mock_access_token', $request->getUri()->getQuery());
+            $this->assertEquals('{"taskid":"xxxxx"}', $request->getBody()->getContents());
+        }, $response, $app);
+
+        $client = new Client($app);
+
+        $ret = $client->getPersonalWeappStatus('xxxxx');
+
+        $this->assertIsArray($ret);
+
+        $this->assertSame(json_decode($this->readMockResponseJson('getPersonalWeappStatus.json'), true), $ret);
+    }
+
+    protected function readMockResponseJson(string $file): string
+    {
+        return file_get_contents(dirname(__FILE__) . '/mock_data/' . $file);
+    }
 }
