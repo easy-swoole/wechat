@@ -138,10 +138,20 @@ abstract class ServerGuard
         }
 
         if ($this->isSafeMode($request)) {
+
+            $appConfigs = $this->app->getConfig();
+            $appId = $appConfigs['appId'];
+            $aesKey = $appConfigs['aesKey'];
+
+            # 为了兼容开放平台代理公众号/小程序业务时，加密需要使用开放平台的appId
+            if (isset($configs['componentAppId']) && !empty($configs['componentAppId'])) {
+                $appId = $configs['componentAppId'];
+            }
+
             $encrypted = $this->app[ServiceProviders::Encryptor]->encrypt(
                 $replyString,
-                $this->app[ServiceProviders::Config]->get("aesKey"),
-                $this->app[ServiceProviders::Config]->get("appId")
+                $aesKey,
+                $appId
             );
             $replyString = $this->buildEncryptedReply($encrypted);
         }
