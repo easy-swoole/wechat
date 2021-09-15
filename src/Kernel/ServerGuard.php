@@ -277,10 +277,19 @@ abstract class ServerGuard
      */
     protected function decryptMessage(array $message): ?string
     {
+        $configs = $this->app->getConfig();
+        $appId = $configs['appId'];
+        $aesKey = $configs['aesKey'];
+
+        # 为了兼容开放平台代理公众号/小程序业务时，解密需要使用开放平台的appId
+        if (isset($configs['componentAppId']) && !empty($configs['componentAppId'])) {
+            $appId = $configs['componentAppId'];
+        }
+
         return $this->app[ServiceProviders::Encryptor]->decrypt(
             $message['Encrypt'],
-            $this->app[ServiceProviders::Config]->get("aesKey"),
-            $this->app[ServiceProviders::Config]->get("appId")
+            $aesKey,
+            $appId
         );
     }
 

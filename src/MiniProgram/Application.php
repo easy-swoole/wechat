@@ -6,7 +6,8 @@ namespace EasySwoole\WeChat\MiniProgram;
 use EasySwoole\WeChat\Kernel\ServiceContainer;
 use EasySwoole\WeChat\OfficialAccount\CustomerService;
 use EasySwoole\WeChat\OfficialAccount\OCR;
-use EasySwoole\WeChat\OfficialAccount\Server;
+use EasySwoole\WeChat\MiniProgram\Server;
+use EasySwoole\WeChat\OfficialAccount\Server as OfficialAccountServer;
 
 /**
  * Class Application
@@ -30,7 +31,7 @@ use EasySwoole\WeChat\OfficialAccount\Server;
  * @property RealtimeLog\Client $realtimeLog
  * @property RiskControl\Client $riskControl
  * @property Search\Client $search
- * @property Server\Guard $server
+ * @property OfficialAccountServer\Guard $server
  * @property Soter\Client $soter
  * @property SubscribeMessage\Client $subscribeMessage
  * @property TemplateMessage\Client $templateMessage

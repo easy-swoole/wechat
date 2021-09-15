@@ -5,5 +5,5 @@
     "nonce": "1095164962",
     "openid": "o1YYd0mJxkRO0eCi7haWLDVMalts"
   },
-  "body": "<xml><ToUserName><![CDATA[gh_1d45968d17db]]></ToUserName><FromUserName><![CDATA[o1YYd0mJxkRO0eCi7haWLDVMalts]]></FromUserName><CreateTime>1606128379</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[测试]]></Content><MsgId>22994230328393770</MsgId></xml>"
+  "body": "<xml><MsgType><![CDATA[text]]></MsgType><ToUserName><![CDATA[gh_1d45968d17db]]></ToUserName><FromUserName><![CDATA[o1YYd0mJxkRO0eCi7haWLDVMalts]]></FromUserName><CreateTime>1606180982</CreateTime><Content><![CDATA[测试]]></Content><MsgId>22994982940022977</MsgId></xml>"
 }
