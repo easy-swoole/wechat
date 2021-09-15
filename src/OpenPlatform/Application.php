@@ -64,7 +64,7 @@ class Application extends ServiceContainer
      * @param AccessToken|null $accessToken
      * @return OfficialAccount
      */
-    public function officialAccount(string $appId, string $refreshToken = null, AccessToken $accessToken = null): OfficialAccount
+    public function officialAccount(string $appId, string $refreshToken = null, AccessToken $accessToken = null, $reUseLoggerCache = false): OfficialAccount
     {
         $officialAccount = new OfficialAccount($this->getAuthorizerConfig($appId, $refreshToken), null, [
             ServiceProviders::AccessToken => $accessToken ?: function ($app) {
@@ -84,6 +84,14 @@ class Application extends ServiceContainer
             }
         ]);
 
+        if ($reUseLoggerCache) {
+            foreach ([ServiceProviders::Cache, ServiceProviders::Logger] as $reuse) {
+                if (isset($this[$reuse])) {
+                    $officialAccount[$reuse] = $this[$reuse];
+                }
+            }
+        }
+
         return $officialAccount;
     }
 
@@ -96,9 +104,9 @@ class Application extends ServiceContainer
      * @param AccessToken|null $accessToken
      * @return MiniProgram
      */
-    public function miniProgram(string $appId, string $refreshToken = null, AccessToken $accessToken = null): MiniProgram
+    public function miniProgram(string $appId, string $refreshToken = null, AccessToken $accessToken = null, $reUseLoggerCache = false): MiniProgram
     {
-        return new MiniProgram($this->getAuthorizerConfig($appId, $refreshToken), null, [
+        $miniProgram = new MiniProgram($this->getAuthorizerConfig($appId, $refreshToken), null, [
             ServiceProviders::AccessToken => $accessToken ?: function ($app) {
                 return new AccessToken($app, $this);
             },
@@ -112,6 +120,16 @@ class Application extends ServiceContainer
                 return new MiniProgramOpenAuthClient($app, $this);
             }
         ]);
+
+        if ($reUseLoggerCache) {
+            foreach ([ServiceProviders::Cache, ServiceProviders::Logger] as $reuse) {
+                if (isset($this[$reuse])) {
+                    $miniProgram[$reuse] = $this[$reuse];
+                }
+            }
+        }
+
+        return $miniProgram;
     }
 
     /**
