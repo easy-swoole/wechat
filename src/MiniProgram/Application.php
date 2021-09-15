@@ -8,6 +8,7 @@ use EasySwoole\WeChat\OfficialAccount\CustomerService;
 use EasySwoole\WeChat\OfficialAccount\OCR;
 use EasySwoole\WeChat\MiniProgram\Server;
 use EasySwoole\WeChat\OfficialAccount\Server as OfficialAccountServer;
+use EasySwoole\WeChat\BasicService;
 
 /**
  * Class Application
@@ -23,6 +24,7 @@ use EasySwoole\WeChat\OfficialAccount\Server as OfficialAccountServer;
  * @property Express\Client $express
  * @property Live\Client $live
  * @property Mall\ForwardsMall $mall
+ * @property BasicService\Media\Client $media
  * @property NearbyPoi\Client $nearbyPoi
  * @property OCR\Client $ocr
  * @property OpenData\Client $openData
@@ -95,6 +97,9 @@ class Application extends ServiceContainer
         Union\ServiceProvider::class,
         UrlLink\ServiceProvider::class,
         UrlScheme\ServiceProvider::class,
+
+        // Basic Service
+        BasicService\Media\ServiceProvider::class,
     ];
 
     /**
