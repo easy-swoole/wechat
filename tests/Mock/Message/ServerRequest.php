@@ -21,8 +21,15 @@ class ServerRequest extends Request implements ServerRequestInterface
         $query = [];
         foreach (explode("&", $this->getUri()->getQuery()) as $group) {
             if (!empty($group)) {
-                $group = explode("=", $group);
-                $query[$group[0]] = $group[1];
+                $groupArr = explode("=", $group);
+
+                // 针对 value 有 = 符号的做兼容
+                if ($groupArr > 2) {
+                    $firstPos = strpos($group, '=');
+                    $query[$groupArr[0]] = substr($group, $firstPos + 1);
+                } else {
+                    $query[$groupArr[0]] = $groupArr[1];
+                }
             }
         }
         $this->withQueryParams($query);

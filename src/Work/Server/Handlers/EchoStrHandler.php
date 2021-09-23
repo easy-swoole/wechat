@@ -3,7 +3,10 @@
 namespace EasySwoole\WeChat\Work\Server\Handlers;
 
 use EasySwoole\WeChat\Kernel\Contracts\EventHandlerInterface;
+use EasySwoole\WeChat\Kernel\Encryptor;
 use EasySwoole\WeChat\Kernel\Messages\Raw;
+use EasySwoole\WeChat\Kernel\ServiceProviders;
+use Pimple\Container;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -14,10 +17,31 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class EchoStrHandler implements EventHandlerInterface
 {
+    /**
+     * @var Container
+     */
+    protected $app;
+
+    /**
+     * EchoStrHandler constructor.
+     * @param Container $app
+     */
+    public function __construct(Container $app)
+    {
+        $this->app = $app;
+    }
+
     public function handle($request = null)
     {
         if ($request instanceof ServerRequestInterface) {
-            $str = $request->getQueryParams()['echostr'] ?? null;
+            $echoStr = $request->getQueryParams()['echostr'] ?? null;
+            /** @var Encryptor $encryptor */
+            $encryptor = $this->app[ServiceProviders::Encryptor];
+            $str = $encryptor->decrypt(
+                $echoStr,
+                $this->app[ServiceProviders::Config]->get('aesKey'),
+                $this->app[ServiceProviders::Config]->get('corpId')
+            );
             if (!is_null($str)) {
                 return new Raw($str);
             }

@@ -10,7 +10,10 @@
 namespace EasySwoole\WeChat\Tests\Work\Server\Handlers;
 
 
+use EasySwoole\WeChat\Kernel\Encryptor;
 use EasySwoole\WeChat\Kernel\Messages\Raw;
+use EasySwoole\WeChat\Kernel\ServiceContainer;
+use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\Tests\Mock\Message\Request;
 use EasySwoole\WeChat\Tests\TestCase;
 use EasySwoole\WeChat\Work\Server\Handlers\EchoStrHandler;
@@ -19,34 +22,53 @@ class EchoStrHandlerTest extends TestCase
 {
     public function testHandle()
     {
+        $mockData = $this->readMockData('testHandle.json');
+        $mockData = json_decode($mockData, true);
         $mockRequest = $this->buildRequest(
-            "POST",
-            "https://test.com?echostr=mock-echostr"
+            "GET",
+            "https://qy.weixin.qq.com/cgi-bin/wxpush?" . urldecode(http_build_query($mockData['query'])),
+            [],
+            $mockData['body']
         );
 
-        $handle = new EchoStrHandler();
+        $app = new ServiceContainer([
+            'corpId' => 'wx5823bf96d3bd56c7',
+            'corpSecret' => 'mock_corpSecret',
+            'token' => 'QDG6eK',
+            'aesKey' => 'jWmYm7qr5nMoAUwZRjGtBxmz3KA1tkAj3ykkR6q2B2C',
+        ]);
+
+        $app->rebind(ServiceProviders::Encryptor, new Encryptor());
+
+        $handle = new EchoStrHandler($app);
         $result = $handle->handle($mockRequest);
 
         $this->assertInstanceOf(Raw::class, $result);
-        $this->assertSame("mock-echostr", $result->getContent());
-    }
-
-    public function testHandleWithoutEchoStr()
-    {
-        $mockRequest = $this->buildRequest(
-            "POST",
-            "https://test.com?signature=xxx"
-        );
-
-        $handle = new EchoStrHandler();
-
-        $this->assertSame(null, $handle->handle($mockRequest));
+        $this->assertSame("1616140317555161061", $result->getContent());
     }
 
     public function testHandleInvalidRequest()
     {
-        $handle = new EchoStrHandler();
+        $app = new ServiceContainer([
+            'corpId' => 'wx5823bf96d3bd56c7',
+            'corpSecret' => 'mock_corpSecret',
+            'token' => 'QDG6eK',
+            'aesKey' => 'jWmYm7qr5nMoAUwZRjGtBxmz3KA1tkAj3ykkR6q2B2C',
+        ]);
+
+        $app->rebind(ServiceProviders::Encryptor, new Encryptor());
+
+        $handle = new EchoStrHandler($app);
 
         $this->assertSame(null, $handle->handle(new Request()));
+    }
+
+    /**
+     * @param string $filename
+     * @return string
+     */
+    private function readMockData(string $filename): string
+    {
+        return file_get_contents(__DIR__ . '/mock_data/' . $filename);
     }
 }
