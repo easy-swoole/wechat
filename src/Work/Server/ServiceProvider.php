@@ -30,7 +30,7 @@ class ServiceProvider implements ServiceProviderInterface
         if (!isset($app[Application::Server])) {
             $app[Application::Server] = function (ServiceContainer $app) {
                 $guard = new Guard($app);
-                $guard->push(new EchoStrHandler(), Message::VALIDATE);
+                $guard->push(new EchoStrHandler($app), Message::VALIDATE);
                 return $guard;
             };
         }

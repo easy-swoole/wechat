@@ -64,7 +64,7 @@ class Application extends ServiceContainer
      * @param AccessToken|null $accessToken
      * @return OfficialAccount
      */
-    public function officialAccount(string $appId, string $refreshToken = null, AccessToken $accessToken = null, $reUseLoggerCache = false): OfficialAccount
+    public function officialAccount(string $appId, string $refreshToken = null, AccessToken $accessToken = null): OfficialAccount
     {
         $officialAccount = new OfficialAccount($this->getAuthorizerConfig($appId, $refreshToken), null, [
             ServiceProviders::AccessToken => $accessToken ?: function ($app) {
@@ -84,11 +84,10 @@ class Application extends ServiceContainer
             }
         ]);
 
-        if ($reUseLoggerCache) {
-            foreach ([ServiceProviders::Cache, ServiceProviders::Logger] as $reuse) {
-                if (isset($this[$reuse])) {
-                    $officialAccount[$reuse] = $this[$reuse];
-                }
+        // 复用开放平台的logger cache为授权公众号提供服务
+        foreach ([ServiceProviders::Cache, ServiceProviders::Logger] as $reuse) {
+            if (isset($this[$reuse])) {
+                $officialAccount[$reuse] = $this[$reuse];
             }
         }
 
@@ -104,7 +103,7 @@ class Application extends ServiceContainer
      * @param AccessToken|null $accessToken
      * @return MiniProgram
      */
-    public function miniProgram(string $appId, string $refreshToken = null, AccessToken $accessToken = null, $reUseLoggerCache = false): MiniProgram
+    public function miniProgram(string $appId, string $refreshToken = null, AccessToken $accessToken = null): MiniProgram
     {
         $miniProgram = new MiniProgram($this->getAuthorizerConfig($appId, $refreshToken), null, [
             ServiceProviders::AccessToken => $accessToken ?: function ($app) {
@@ -121,11 +120,10 @@ class Application extends ServiceContainer
             }
         ]);
 
-        if ($reUseLoggerCache) {
-            foreach ([ServiceProviders::Cache, ServiceProviders::Logger] as $reuse) {
-                if (isset($this[$reuse])) {
-                    $miniProgram[$reuse] = $this[$reuse];
-                }
+        // 复用开放平台的logger cache为授权小程序提供服务
+        foreach ([ServiceProviders::Cache, ServiceProviders::Logger] as $reuse) {
+            if (isset($this[$reuse])) {
+                $miniProgram[$reuse] = $this[$reuse];
             }
         }
 

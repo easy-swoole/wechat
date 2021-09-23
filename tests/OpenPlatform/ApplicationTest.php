@@ -6,6 +6,8 @@ use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\Application;
 use EasySwoole\WeChat\OpenPlatform\Authorizer\OfficialAccount\Application as OfficialAccount;
 use EasySwoole\WeChat\Tests\Mock\Message\Status;
+use EasySwoole\WeChat\Tests\OpenPlatform\Util\MockCache;
+use EasySwoole\WeChat\Tests\OpenPlatform\Util\MockLogger;
 use EasySwoole\WeChat\Tests\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use EasySwoole\WeChat\OpenPlatform\Base;
@@ -207,6 +209,27 @@ class ApplicationTest extends TestCase
         $this->assertIsArray($client->createPreAuthorizationCode());
 
         $this->assertSame(json_decode($this->readMockResponseJson('createPreAuthorizationCode.json'), true), $client->createPreAuthorizationCode());
+    }
+
+    // 保证开放平台授权的应用和开放平台原本的 logger 和 cache 保持一致
+    public function testLogger()
+    {
+        $app = new Application([
+            'appId' => 'component-app-id',
+            'appSecret' => 'component-secret',
+            'token' => 'component-token',
+            'aesKey' => 'Qqx2S6jV3mp5prWPg5x3eBmeU1kLayZio4Q9ZxWTbmf']);
+
+        $app->rebind(ServiceProviders::Logger, new MockLogger());
+        $app->rebind(ServiceProviders::Cache, new MockCache());
+
+        $miniProgram = $app->miniProgram('mock_miniProgram_app_id', 'mock_miniProgram_refresh-token');
+        $this->assertSame($app->logger, $miniProgram->logger);
+        $this->assertSame($app->cache, $miniProgram->cache);
+
+        $officialAccount = $app->officialAccount('mock_officialAccount_app_id', 'mock_officialAccount_refresh-token');
+        $this->assertSame($app->logger, $officialAccount->logger);
+        $this->assertSame($app->cache, $officialAccount->cache);
     }
 
     protected function readMockResponseJson(string $file): string
