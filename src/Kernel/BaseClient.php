@@ -37,7 +37,13 @@ class BaseClient
      */
     protected function getClient():ClientInterface
     {
-        return $this->app[ServiceProviders::HttpClientManager]->getClient();
+        /** @var ClientInterface $httpClient */
+        $httpClient = $this->app[ServiceProviders::HttpClientManager]->getClient();
+        $timeout = $this->app[ServiceProviders::Config]->get('request.timeout');
+        if (!is_null($timeout)) {
+            $httpClient->setTimeout($timeout);
+        }
+        return $httpClient;
     }
 
     /**
