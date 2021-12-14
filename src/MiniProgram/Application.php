@@ -19,6 +19,7 @@ use EasySwoole\WeChat\BasicService;
  * @property Auth\Client $auth
  * @property Base\Client $base
  * @property Broadcast\Client $broadcast
+ * @property ContentSecurity\Client $contentSecurity
  * @property CustomerService\Client $customerService
  * @property DataCube\Client $dataCube
  * @property Express\Client $express
@@ -49,6 +50,7 @@ class Application extends ServiceContainer
     const Auth = 'auth';
     const Base = 'base';
     const Broadcast = 'broadcast';
+    const ContentSecurity = 'contentSecurity';
     const CustomerService = 'customerService';
     const DataCube = "dataCube";
     const Express = "express";
