@@ -26,6 +26,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream(compact('calendar')))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/calendar/add',
@@ -55,6 +56,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream(compact('calendar')))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/calendar/update',
@@ -80,6 +82,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream(['cal_id_list' => (array)$ids]))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/calendar/get',
@@ -106,6 +109,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream(['cal_id' => $id]))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/calendar/del',

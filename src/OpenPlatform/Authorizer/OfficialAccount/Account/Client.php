@@ -59,6 +59,7 @@ class Client extends BaseClient
         $response = $this->getClient()
             ->setTimeout($timeout)
             ->setMethod("POST")
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream([
                 'ticket' => $ticket,
             ]))->send($this->buildUrl(
