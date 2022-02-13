@@ -25,6 +25,7 @@ class MomentClient extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/externalcontact/get_moment_list',
@@ -57,6 +58,7 @@ class MomentClient extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/externalcontact/get_moment_task',
@@ -91,6 +93,7 @@ class MomentClient extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/externalcontact/get_moment_customer_list',
@@ -125,6 +128,7 @@ class MomentClient extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/externalcontact/get_moment_send_result',
@@ -155,6 +159,7 @@ class MomentClient extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/externalcontact/get_moment_comments',

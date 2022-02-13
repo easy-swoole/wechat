@@ -36,6 +36,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/checkin/getcheckindata',
@@ -67,6 +68,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/checkin/getcheckinoption',
@@ -96,6 +98,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/gettemplatedetail',
@@ -121,6 +124,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($data))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/applyevent',
@@ -158,6 +162,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/getapprovalinfo',
@@ -187,6 +192,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/oa/getapprovaldetail',
@@ -221,6 +227,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/corp/getapprovaldata',
@@ -255,6 +262,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/dial/get_dial_record',

@@ -26,6 +26,7 @@ class WorkbenchClient extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl('/cgi-bin/agent/set_workbench_template',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -50,6 +51,7 @@ class WorkbenchClient extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl('/cgi-bin/agent/get_workbench_template',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -71,6 +73,7 @@ class WorkbenchClient extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl('/cgi-bin/agent/set_workbench_data',
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]

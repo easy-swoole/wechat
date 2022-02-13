@@ -53,6 +53,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($data))
             ->send($this->buildUrl(
                 '/cgi-bin/appchat/create',
@@ -79,6 +80,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream(array_merge(['chatid' => $chatId], $data)))
             ->send($this->buildUrl(
                 '/cgi-bin/appchat/update',
@@ -103,6 +105,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($message))
             ->send($this->buildUrl(
                 '/cgi-bin/appchat/send',

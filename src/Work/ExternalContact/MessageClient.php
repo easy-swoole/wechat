@@ -79,6 +79,7 @@ class MessageClient extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/externalcontact/add_msg_template',
@@ -103,6 +104,7 @@ class MessageClient extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream([
                 'msgid' => $msgId,
             ]))
@@ -137,6 +139,7 @@ class MessageClient extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/externalcontact/send_welcome_msg',

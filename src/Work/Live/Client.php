@@ -37,6 +37,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/living/get_user_livingid',
@@ -93,6 +94,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/living/get_watch_stat',

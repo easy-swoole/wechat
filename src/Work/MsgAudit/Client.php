@@ -27,6 +27,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($data))
             ->send($this->buildUrl(
                 '/cgi-bin/msgaudit/get_permit_user_list',
@@ -55,6 +56,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/msgaudit/check_single_agree',
@@ -83,6 +85,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/msgaudit/check_room_agree',
@@ -111,6 +114,7 @@ class Client extends BaseClient
 
         $response = $this->getClient()
             ->setMethod('POST')
+            ->setHeaders(['content-type' => 'application/json'])
             ->setBody($this->jsonDataToStream($params))
             ->send($this->buildUrl(
                 '/cgi-bin/msgaudit/groupchat/get',
