@@ -29,6 +29,7 @@ use EasySwoole\WeChat\BasicService;
  * @property NearbyPoi\Client $nearbyPoi
  * @property OCR\Client $ocr
  * @property OpenData\Client $openData
+ * @property PhoneNumber\Client $phoneNumber
  * @property Plugin\Client $plugin
  * @property Plugin\DevClient $pluginDev
  * @property RealtimeLog\Client $realtimeLog
@@ -59,6 +60,7 @@ class Application extends ServiceContainer
     const NearbyPoi = 'nearbyPoi';
     const OCR = "ocr";
     const OpenData = "openData";
+    const PhoneNumber = "phoneNumber";
     const Plugin = "plugin";
     const PluginDev = "pluginDev";
     const RealtimeLog = 'realtimeLog';
@@ -87,6 +89,7 @@ class Application extends ServiceContainer
         NearbyPoi\ServiceProvider::class,
         OCR\ServiceProvider::class,
         OpenData\ServiceProvider::class,
+        PhoneNumber\ServiceProvider::class,
         Plugin\ServiceProvider::class,
         RealtimeLog\ServiceProvider::class,
         RiskControl\ServiceProvider::class,
