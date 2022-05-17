@@ -1,0 +1,135 @@
+{
+    "errcode": 0,
+    "errmsg": "ok",
+    "code_exist": 1,
+    "privacy_list": [
+        "UserInfo"
+    ],
+    "setting_list": [
+        {
+            "privacy_key": "EXIDNumber",
+            "privacy_text": "用来登记会员信息xxx",
+            "privacy_label": ""
+        },
+        {
+            "privacy_key": "UserInfo",
+            "privacy_text": "用来展示你的xxxx",
+            "privacy_label": ""
+        }
+    ],
+    "update_time": 1641548861,
+    "owner_setting": {
+        "contact_phone": "",
+        "contact_email": "melody4444@qq.com",
+        "contact_qq": "11111111",
+        "contact_weixin": "",
+        "store_expire_timestamp": "10000天",
+        "ext_file_media_id": "",
+        "notice_method": "弹窗222"
+    },
+    "privacy_desc": {
+        "privacy_desc_list": [
+            {
+                "privacy_key": "UserInfo",
+                "privacy_desc": "用户信息（微信昵称、头像）"
+            },
+            {
+                "privacy_key": "Location",
+                "privacy_desc": "位置信息"
+            },
+            {
+                "privacy_key": "Address",
+                "privacy_desc": "地址"
+            },
+            {
+                "privacy_key": "Invoice",
+                "privacy_desc": "发票信息"
+            },
+            {
+                "privacy_key": "RunData",
+                "privacy_desc": "微信运动数据"
+            },
+            {
+                "privacy_key": "Record",
+                "privacy_desc": "麦克风"
+            },
+            {
+                "privacy_key": "Album",
+                "privacy_desc": "选中的照片或视频信息"
+            },
+            {
+                "privacy_key": "Camera",
+                "privacy_desc": "摄像头"
+            },
+            {
+                "privacy_key": "PhoneNumber",
+                "privacy_desc": "手机号"
+            },
+            {
+                "privacy_key": "Contact",
+                "privacy_desc": "通讯录（仅写入）权限"
+            },
+            {
+                "privacy_key": "DeviceInfo",
+                "privacy_desc": "设备信息"
+            },
+            {
+                "privacy_key": "EXIDNumber",
+                "privacy_desc": "身份证号码"
+            },
+            {
+                "privacy_key": "EXOrderInfo",
+                "privacy_desc": "订单信息"
+            },
+            {
+                "privacy_key": "EXUserPublishContent",
+                "privacy_desc": "发布内容"
+            },
+            {
+                "privacy_key": "EXUserFollowAcct",
+                "privacy_desc": "所关注账号"
+            },
+            {
+                "privacy_key": "EXUserOpLog",
+                "privacy_desc": "操作日志"
+            },
+            {
+                "privacy_key": "AlbumWriteOnly",
+                "privacy_desc": "相册（仅写入）权限"
+            },
+            {
+                "privacy_key": "LicensePlate",
+                "privacy_desc": "车牌号"
+            },
+            {
+                "privacy_key": "BlueTooth",
+                "privacy_desc": "蓝牙"
+            },
+            {
+                "privacy_key": "CalendarWriteOnly",
+                "privacy_desc": "日历（仅写入）权限"
+            },
+            {
+                "privacy_key": "Email",
+                "privacy_desc": "邮箱"
+            },
+            {
+                "privacy_key": "MessageFile",
+                "privacy_desc": "选中的文件"
+            }
+        ]
+    },
+    "sdk_privacy_info_list": [
+        {
+            "sdk_name": "测试sdk",
+            "sdk_biz_name": "小麦有限公司",
+            "sdk_list": [
+                {
+                    "privacy_key": "自定义",
+                    "privacy_text": "用来展示你的美貌",
+                    "privacy_label": "头像信息"
+                }
+            ]
+        }
+    ]
+}

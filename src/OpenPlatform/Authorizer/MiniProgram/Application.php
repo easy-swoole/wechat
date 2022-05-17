@@ -12,6 +12,7 @@ use EasySwoole\WeChat\MiniProgram\Application as MiniProgram;
  * @property Code\Client $code
  * @property Domain\Client $domain
  * @property Material\Client $material
+ * @property PrivacyConfig\Client $privacyConfig
  * @property QrCodeJump\Client $qrCodeJump
  * @property Setting\Client $setting
  * @property Tester\Client $tester
@@ -24,6 +25,7 @@ class Application extends MiniProgram
     const Domain = 'domain';
     const Material = 'material';
     const OpenAuth = 'openAuth';
+    const PrivacyConfig = 'privacyConfig';
     const QrCodeJump = 'qrCodeJump';
     const Setting = 'setting';
     const Tester = 'tester';
@@ -37,6 +39,7 @@ class Application extends MiniProgram
             Code\ServiceProvider::class,
             Domain\ServiceProvider::class,
             Material\ServiceProvider::class,
+            PrivacyConfig\ServiceProvider::class,
             QrCodeJump\ServiceProvider::class,
             Setting\ServiceProvider::class,
             Tester\ServiceProvider::class
