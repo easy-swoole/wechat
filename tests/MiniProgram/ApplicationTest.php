@@ -36,6 +36,8 @@ class ApplicationTest extends TestCase
 
         $this->assertInstanceOf(\EasySwoole\WeChat\OfficialAccount\CustomerService\Client::class, $app->customerService);
 
+        $this->assertInstanceOf(\EasySwoole\WeChat\MiniProgram\ContentSecurity\Client::class, $app->contentSecurity);
+
         $this->assertInstanceOf(\EasySwoole\WeChat\MiniProgram\DataCube\Client::class, $app->dataCube);
 
         $this->assertInstanceOf(\EasySwoole\WeChat\MiniProgram\Express\Client::class, $app->express);
