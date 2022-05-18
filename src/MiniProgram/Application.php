@@ -81,6 +81,7 @@ class Application extends ServiceContainer
         Auth\ServiceProvider::class,
         Base\ServiceProvider::class,
         Broadcast\ServiceProvider::class,
+        ContentSecurity\ServiceProvider::class,
         CustomerService\ServiceProvider::class,
         DataCube\ServiceProvider::class,
         Express\ServiceProvider::class,
