@@ -9,6 +9,7 @@
 
 namespace EasySwoole\WeChat\Tests\OpenPlatform\Authorizer\MiniProgram\QrCodeJump;
 
+use EasySwoole\WeChat\Kernel\Psr\StreamResponse;
 use EasySwoole\WeChat\Tests\Mock\Message\Status;
 use EasySwoole\WeChat\Tests\TestCase;
 use EasySwoole\WeChat\OpenPlatform\Application;
@@ -103,15 +104,15 @@ class ClientTest extends TestCase
         $client = new Client($miniProgram);
 
         $jumpData = [
-            'prefix' => 'https://weixin.qq.com/qrcodejump',
+            'prefix'          => 'https://weixin.qq.com/qrcodejump',
             'permit_sub_rule' => 1,
-            'path' => 'pages/index/index',
-            'open_version' => 1,
-            'debug_url' => [
+            'path'            => 'pages/index/index',
+            'open_version'    => 1,
+            'debug_url'       => [
                 'https://weixin.qq.com/qrcodejump?a=1',
                 'https://weixin.qq.com/qrcodejump?a=2'
             ],
-            'is_edit' => 0,
+            'is_edit'         => 0,
         ];
 
         $this->assertTrue($client->add($jumpData));
@@ -201,7 +202,12 @@ class ClientTest extends TestCase
 
     public function testGetUnlimitWxCode()
     {
-        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getUnlimitWxCode.json'));
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('appCode.jpg'), [
+            'Content-disposition' => [
+                'attachment',
+                'filename="appCode.jpg'
+            ]
+        ]);
 
         /** @var Application $component */
         $component = $this->mockAccessToken(new Application([
@@ -226,16 +232,17 @@ class ClientTest extends TestCase
             'scene' => 'a=1'
         ];
 
-        $ret = $client->getUnlimitWxCode($params);
-
-        $this->assertIsArray($ret);
-
-        $this->assertSame(json_decode($this->readMockResponseJson('getUnlimitWxCode.json'), true), $ret);
+        $this->assertInstanceOf(StreamResponse::class, $client->getUnlimitWxCode($params));
     }
 
     public function testGetWxCode()
     {
-        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getWxCode.json'));
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('appCode.jpg'), [
+            'Content-disposition' => [
+                'attachment',
+                'filename="appCode.jpg'
+            ]
+        ]);
 
         /** @var Application $component */
         $component = $this->mockAccessToken(new Application([
@@ -257,20 +264,21 @@ class ClientTest extends TestCase
         $client = new Client($miniProgram);
 
         $params = [
-            'path' => 'page/index/index',
+            'path'  => 'page/index/index',
             'width' => 430,
         ];
 
-        $ret = $client->getWxCode($params);
-
-        $this->assertIsArray($ret);
-
-        $this->assertSame(json_decode($this->readMockResponseJson('getWxCode.json'), true), $ret);
+        $this->assertInstanceOf(StreamResponse::class, $client->getWxCode($params));
     }
 
     public function testGetWxQrCode()
     {
-        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getWxCode.json'));
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('appCode.jpg'), [
+            'Content-disposition' => [
+                'attachment',
+                'filename="appCode.jpg'
+            ]
+        ]);
 
         /** @var Application $component */
         $component = $this->mockAccessToken(new Application([
@@ -291,11 +299,7 @@ class ClientTest extends TestCase
 
         $client = new Client($miniProgram);
 
-        $ret = $client->getWxQrCode('page/index/index', 430);
-
-        $this->assertIsArray($ret);
-
-        $this->assertSame(json_decode($this->readMockResponseJson('getWxCode.json'), true), $ret);
+        $this->assertInstanceOf(StreamResponse::class, $client->getWxQrCode('page/index/index', 430));
     }
 
     protected function readMockResponseJson(string $filename): string
