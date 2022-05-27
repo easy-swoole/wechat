@@ -3,6 +3,7 @@
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\QrCodeJump;
 
 use EasySwoole\WeChat\Kernel\Psr\Stream;
+use EasySwoole\WeChat\Kernel\Psr\StreamResponse;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\BaseClient;
 
@@ -143,7 +144,7 @@ class Client extends BaseClient
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取 unlimited 小程序码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/getwxacodeunlimit.html
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
      *
      * @param array $param
      * @return mixed
@@ -159,14 +160,16 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $jsonData);
+        if (false !== stripos($response->getHeaderLine('Content-disposition'), 'attachment')) {
+            return new StreamResponse($response->getBody());
+        }
 
-        return $jsonData;
+        return $this->checkResponse($response);
     }
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取小程序码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/getwxacode.html
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
      *
      * @param array $param
      * @return mixed
@@ -182,14 +185,16 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $jsonData);
+        if (false !== stripos($response->getHeaderLine('Content-disposition'), 'attachment')) {
+            return new StreamResponse($response->getBody());
+        }
 
-        return $jsonData;
+        return $this->checkResponse($response);
     }
 
     /**
      * 代小程序实现业务 - 普通链接二维码与小程序码 - 获取小程序二维码
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/qrcode/createwxaqrcode.html
+     * doc link: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.createQRCode.html
      *
      * @param string $path
      * @param int $width
@@ -209,8 +214,10 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $jsonData);
+        if (false !== stripos($response->getHeaderLine('Content-disposition'), 'attachment')) {
+            return new StreamResponse($response->getBody());
+        }
 
-        return $jsonData;
+        return $this->checkResponse($response);
     }
 }
