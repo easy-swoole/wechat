@@ -86,6 +86,47 @@ class ClientTest extends TestCase
         $this->assertTrue($client->setWebviewDomain($params));
     }
 
+    public function testModifyServerDomainDirectly()
+    {
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('modify_server.json'));
+
+        /** @var Application $component */
+        $component = $this->mockAccessToken(new Application([
+            'appId' => 'COMPONENT_APPID',
+            'token' => 'COMPONENT_TOKEN'
+        ]));
+
+        $miniProgram = $component->miniProgram(
+            'mock_app_id', 'mock_refresh_token'
+        );
+        $miniProgram = $this->mockAccessToken($miniProgram);
+
+        $miniProgram = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('/wxa/modify_domain_directly', $request->getUri()->getPath());
+            $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
+        }, $response, $miniProgram);
+
+        $client = new Client($miniProgram);
+
+        $params = [
+            'action' => 'add',
+            'requestdomain' => ['https://www.qq.com', 'https://www.qq.com'],
+            'wsrequestdomain' => ['wss://www.qq.com', 'wss://www.qq.com'],
+            'uploaddomain' => ['https://www.qq.com', 'https://www.qq.com'],
+            'downloaddomain' => ['https://www.qq.com', 'https://www.qq.com'],
+            'udpdomain' => ['udp://melody.weixin.melody.com'],
+            'tcpdomain' => ['tcp://melody.weixin.melody.com'],
+        ];
+
+        $ret = $client->modifyServerDomainDirectly($params);
+
+        $this->assertIsArray($ret);
+
+        $this->assertSame(json_decode($this->readMockResponseJson('modify_server.json'), true), $ret);
+    }
+
+
     protected function readMockResponseJson(string $filename): string
     {
         return file_get_contents(__DIR__ . '/mock_data/' . $filename);
