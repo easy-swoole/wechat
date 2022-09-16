@@ -55,4 +55,51 @@ class Client extends BaseClient
 
         return $this->checkResponse($response);
     }
+
+    /**
+     * 代小程序实现业务 - 小程序域名管理 - 快速配置小程序服务器域名
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/domain-management/modifyServerDomainDirectly.html
+     * 快速配置小程序服务器域名
+     *
+     * @param array $domains
+     * @param string $action
+     * @return mixed
+     * @throws HttpException
+     */
+    public function modifyServerDomainDirectly(array $params)
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody($this->jsonDataToStream($params))
+            ->send($this->buildUrl(
+                "/wxa/modify_domain_directly",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $data);
+
+        return $data;
+    }
+
+    /**
+     * 代小程序实现业务 - 小程序域名管理 - 获取业务域名校验文件
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/domain-management/getJumpDomainConfirmFile.html
+     * 获取业务域名校验文件
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getJumpDomainConfirmFile()
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->send($this->buildUrl(
+                "/wxa/get_webviewdomain_confirmfile",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $data);
+
+        return $data;
+    }
 }
