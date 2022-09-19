@@ -94,7 +94,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
-            ->setBody(new Stream(json_encode(new \stdClass())))
+            ->setBody(new Stream('{}'))
             ->send($this->buildUrl(
                 "/wxa/get_webviewdomain_confirmfile",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -142,7 +142,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
-            ->setBody(new Stream(json_encode(new \stdClass())))
+            ->setBody(new Stream('{}'))
             ->send($this->buildUrl(
                 "/wxa/get_effective_domain",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -163,7 +163,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
-            ->setBody(new Stream(json_encode(new \stdClass())))
+            ->setBody(new Stream('{}'))
             ->send($this->buildUrl(
                 "/wxa/get_effective_webviewdomain",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
