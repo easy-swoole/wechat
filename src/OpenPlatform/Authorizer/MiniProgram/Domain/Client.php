@@ -3,6 +3,7 @@
 namespace EasySwoole\WeChat\OpenPlatform\Authorizer\MiniProgram\Domain;
 
 use EasySwoole\WeChat\Kernel\Exceptions\HttpException;
+use EasySwoole\WeChat\Kernel\Psr\Stream;
 use EasySwoole\WeChat\Kernel\ServiceProviders;
 use EasySwoole\WeChat\OpenPlatform\BaseClient;
 
@@ -93,6 +94,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
+            ->setBody(new Stream(json_encode(new \stdClass())))
             ->send($this->buildUrl(
                 "/wxa/get_webviewdomain_confirmfile",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -140,6 +142,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
+            ->setBody(new Stream(json_encode(new \stdClass())))
             ->send($this->buildUrl(
                 "/wxa/get_effective_domain",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
@@ -160,6 +163,7 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
+            ->setBody(new Stream(json_encode(new \stdClass())))
             ->send($this->buildUrl(
                 "/wxa/get_effective_webviewdomain",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
