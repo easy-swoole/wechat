@@ -422,4 +422,47 @@ class Client extends BaseClient
 
         return $this->checkResponse($response);
     }
+
+
+    /**
+     * 代小程序实现业务 - 代码管理 - 查询小程序版本信息
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/code-management/getVersionInfo.html
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getVersionInfo()
+    {
+        $response = $this->getClient()
+            ->setMethod("POST")
+            ->setBody(new Stream('{}'))
+            ->send($this->buildUrl(
+                "/wxa/getversioninfo",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        return $this->checkResponse($response);
+    }
+
+
+    /**
+     * 代小程序实现业务 - 代码管理 - 获取隐私接口检测结果
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/code-management/getCodePrivacyInfo.html
+     *
+     * @return mixed
+     * @throws HttpException
+     */
+    public function getCodePrivacyInfo()
+    {
+        $response = $this->getClient()
+            ->setMethod("GET")
+            ->send($this->buildUrl(
+                "/wxa/security/get_code_privacy_info",
+                ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
+            ));
+
+        $this->checkResponse($response, $data);
+
+        return $data;
+    }
 }

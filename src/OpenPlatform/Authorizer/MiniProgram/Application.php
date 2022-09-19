@@ -17,6 +17,8 @@ use EasySwoole\WeChat\MiniProgram\Application as MiniProgram;
  * @property QrCodeJump\Client $qrCodeJump
  * @property Setting\Client $setting
  * @property Tester\Client $tester
+ * @property Embedded\Client $embedded
+ * @property Record\Client $record
  */
 class Application extends MiniProgram
 {
@@ -31,6 +33,8 @@ class Application extends MiniProgram
     const QrCodeJump = 'qrCodeJump';
     const Setting = 'setting';
     const Tester = 'tester';
+    const Embedded = 'embedded';
+    const Record = 'record';
 
     public function __construct(array $config = null, string $name = null, array $values = [])
     {
@@ -45,7 +49,9 @@ class Application extends MiniProgram
             PrivacyInterface\ServiceProvider::class,
             QrCodeJump\ServiceProvider::class,
             Setting\ServiceProvider::class,
-            Tester\ServiceProvider::class
+            Tester\ServiceProvider::class,
+            Embedded\ServiceProvider::class,
+            Record\ServiceProvider::class
         ];
 
         foreach ($providers as $provider) {
