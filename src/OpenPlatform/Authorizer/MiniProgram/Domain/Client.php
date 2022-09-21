@@ -127,7 +127,9 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -148,7 +150,9 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -169,7 +173,9 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -189,7 +195,9 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -213,6 +221,8 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 }
