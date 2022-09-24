@@ -569,6 +569,66 @@ class ClientTest extends TestCase
         $this->assertTrue($client->speedupAudit(12345));
     }
 
+    public function testGetVersionInfo()
+    {
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getVersionInfo.json'));
+
+        /** @var Application $app */
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
+
+        $miniProgram = $app->miniProgram(
+            'mock_app_id', 'mock_refresh_token'
+        );
+        $miniProgram = $this->mockAccessToken($miniProgram);
+
+        $miniProgram = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('POST', $request->getMethod());
+            $this->assertEquals('/wxa/getversioninfo', $request->getUri()->getPath());
+            $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
+        }, $response, $miniProgram);
+
+        $client = new Client($miniProgram);
+
+        $ret = $client->getVersionInfo();
+
+        $this->assertIsArray($ret);
+
+        $this->assertSame(json_decode($this->readMockResponseJson('getVersionInfo.json'), true), $ret);
+    }
+
+    public function testGetCodePrivacyInfo()
+    {
+        $response = $this->buildResponse(Status::CODE_OK, $this->readMockResponseJson('getCodePrivacyInfo.json'));
+
+        /** @var Application $app */
+        $app = $this->mockAccessToken(new Application([
+            'appId' => 'mock_component-app-id',
+            'token' => 'mock_component-token',
+        ]));
+
+        $miniProgram = $app->miniProgram(
+            'mock_app_id', 'mock_refresh_token'
+        );
+        $miniProgram = $this->mockAccessToken($miniProgram);
+
+        $miniProgram = $this->mockHttpClient(function (ServerRequestInterface $request) {
+            $this->assertEquals('GET', $request->getMethod());
+            $this->assertEquals('/wxa/security/get_code_privacy_info', $request->getUri()->getPath());
+            $this->assertEquals('access_token=mock_access_token', $request->getUri()->getQuery());
+        }, $response, $miniProgram);
+
+        $client = new Client($miniProgram);
+
+        $ret = $client->getCodePrivacyInfo();
+
+        $this->assertIsArray($ret);
+
+        $this->assertSame(json_decode($this->readMockResponseJson('getCodePrivacyInfo.json'), true), $ret);
+    }
+
     protected function readMockResponseJson(string $filename): string
     {
         return file_get_contents(__DIR__ . '/mock_data/' . $filename);

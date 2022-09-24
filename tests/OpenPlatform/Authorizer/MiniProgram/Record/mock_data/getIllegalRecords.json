@@ -1,0 +1,22 @@
+{
+    "errcode": 0,
+    "errmsg": "ok",
+    "records": [
+        {
+            "illegal_record_id": "2_11100",
+            "create_time": 1600051800,
+            "illegal_reason": "内容涉嫌欺诈",
+            "illegal_content": "违规内容",
+            "rule_url": "https://developers.weixin.qq.com/miniprogram/product/#_6-2-色情低俗内容",
+            "rule_name": "《微信小程序平台运营规范》"
+        },
+        {
+            "illegal_record_id": "3_11102",
+            "create_time": 1600051802,
+            "illegal_reason": "内容低俗",
+            "illegal_content": "违规内容",
+            "rule_url": "https://developers.weixin.qq.com/miniprogram/product/#_5-11-欺诈行为",
+            "rule_name": "《微信小程序平台运营规范》"
+        }
+    ]
+}
