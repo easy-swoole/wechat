@@ -10,7 +10,7 @@ use EasySwoole\WeChat\OpenPlatform\BaseClient;
 class Client extends BaseClient
 {
     /**
-     * 代小程序实现业务 - 基础信息设置 - 设置服务器域名
+     * 代小程序实现业务 - 小程序域名管理 - 配置小程序服务器域名
      * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/Server_Address_Configuration.html
      *
      * @param array $params
@@ -33,8 +33,8 @@ class Client extends BaseClient
     }
 
     /**
-     * 代小程序实现业务 - 基础信息设置 - 设置业务域名
-     * doc link: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/Server_Address_Configuration.html
+     * 代小程序实现业务 - 小程序域名管理 - 配置小程序业务域名
+     * doc link: https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/domain-management/modifyJumpDomain.html
      * 设置小程序业务域名
      *
      * @param array $domains
@@ -77,9 +77,7 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        $this->checkResponse($response, $data);
-
-        return $data;
+        return $this->checkResponse($response);
     }
 
     /**
@@ -127,7 +125,9 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -142,13 +142,15 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
-            ->setBody(new Stream(json_encode(new \stdClass())))
+            ->setBody(new Stream('{}'))
             ->send($this->buildUrl(
                 "/wxa/get_effective_domain",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -163,13 +165,15 @@ class Client extends BaseClient
     {
         $response = $this->getClient()
             ->setMethod("POST")
-            ->setBody(new Stream(json_encode(new \stdClass())))
+            ->setBody(new Stream('{}'))
             ->send($this->buildUrl(
                 "/wxa/get_effective_webviewdomain",
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -189,7 +193,9 @@ class Client extends BaseClient
                 ['access_token' => $this->app[ServiceProviders::AccessToken]->getToken()]
             ));
 
-        return $this->checkResponse($response);
+        $this->checkResponse($response, $data);
+
+        return $data;
     }
 
     /**
@@ -197,16 +203,16 @@ class Client extends BaseClient
      * doc link: https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/domain-management/setPrefetchDomain.html
      * 设置 DNS 预解析域名
      *
-     * @param $dns_domain
+     * @param $prefetchDnsDomain
      * @return mixed
      * @throws HttpException
      */
-    public function setPrefetchDomain(array $dns_domain)
+    public function setPrefetchDomain(array $prefetchDnsDomain)
     {
         $response = $this->getClient()
             ->setMethod("POST")
             ->setBody($this->jsonDataToStream([
-                'prefetch_dns_domain' => $dns_domain,
+                'prefetch_dns_domain' => $prefetchDnsDomain,
             ]))
             ->send($this->buildUrl(
                 "/wxa/set_prefetchdnsdomain",
